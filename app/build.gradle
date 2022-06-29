@@ -21,6 +21,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
+
+    // Spring Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
 application {
