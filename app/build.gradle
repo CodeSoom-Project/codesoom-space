@@ -33,6 +33,9 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+
+    // AssertJ
+    testImplementation 'org.assertj:assertj-core:3.18.1'
 }
 
 application {
