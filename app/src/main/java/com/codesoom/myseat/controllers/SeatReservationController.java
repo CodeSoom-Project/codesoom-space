@@ -1,5 +1,6 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.dto.SeatReservationRequest;
 import com.codesoom.myseat.dto.SeatReservationResponse;
 import com.codesoom.myseat.services.SeatReservationService;
@@ -18,14 +19,22 @@ public class SeatReservationController {
         this.seatReservationService = seatReservationService;
     }
 
-    // TODO: 좌석 예약
+    /**
+     * 좌석을 예약한 후 상태코드 201과 예약 정보를 응답한다.
+     *
+     * @param id 예약할 좌석 id
+     * @param seatReservationRequest 좌석 예약 요청 정보
+     * @return 좌석 예약 정보
+     */
     @PostMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public SeatReservationResponse reservationAdd(
             @PathVariable Long id,
             @RequestBody SeatReservationRequest seatReservationRequest
     ) {
-        return null;
+        SeatReservation seatReservation
+                = seatReservationService.addReservation(id, seatReservationRequest);
+        return getResult(seatReservation);
     }
 
     // TODO: 좌석 예약 내역 조회
@@ -33,4 +42,20 @@ public class SeatReservationController {
     // TODO: 좌석 예약 수정
     
     // TODO: 좌석 예약 취소
+
+    /**
+     * 좌석 예약 정보 DTO를 반환한다
+     *
+     * @param seatReservation 좌석 예약 정보
+     * @return 좌석 예약 정보 DTO
+     */
+    private SeatReservationResponse getResult(SeatReservation seatReservation) {
+        return SeatReservationResponse.builder()
+                .userId(seatReservation.getUserId())
+                .seatId(seatReservation.getSeatId())
+                .date(seatReservation.getDate())
+                .checkIn(seatReservation.getCheckIn())
+                .checkOut(seatReservation.getCheckOut())
+                .build();
+    }
 }
