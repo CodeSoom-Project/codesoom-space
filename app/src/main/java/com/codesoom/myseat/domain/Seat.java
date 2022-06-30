@@ -10,25 +10,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * 좌석 예약 엔티티
+ * 좌석 엔티티
  */
 @Entity
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class SeatReservation {
+@AllArgsConstructor
+public class Seat {
     @Id
     @GeneratedValue
     private Long id;
 
-    private Long seatId;
+    @Builder.Default
+    private boolean isReserved = false;
 
-    private Long userId;
-
-    private String date;
-
-    private String checkIn;
-
-    private String checkOut;
+    public void reserve() {
+        isReserved = true;
+    }
 }
