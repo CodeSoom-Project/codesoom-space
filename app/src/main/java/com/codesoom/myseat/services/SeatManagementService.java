@@ -1,5 +1,7 @@
 package com.codesoom.myseat.services;
 
+import com.codesoom.myseat.domain.Seat;
+import com.codesoom.myseat.dto.SeatAddRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,6 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SeatManagementService {
     // TODO: 좌석 추가
+    public Seat addSeat(SeatAddRequest seatAddRequest) {
+        return null;
+    }
     
     // TODO: 좌석 목록 조회
     
