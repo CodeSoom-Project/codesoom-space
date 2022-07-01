@@ -22,6 +22,8 @@ public class Seat {
     @GeneratedValue
     private Long id;
 
+    private int number;
+
     @Builder.Default
     private boolean isReserved = false;
 

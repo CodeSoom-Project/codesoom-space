@@ -26,6 +26,8 @@ public class SeatReservation {
 
     private Long userId;
 
+    private int seatNumber;
+
     private String date;
 
     private String checkIn;
