@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +24,7 @@ class SeatReservationServiceTest {
     private static final Long SEAT_ID = 3L;
     private static final Long USER_ID = 1L;
     private static final Long SEAT_RESERVATION_ID = 1L;
-    private static final String DATE = "2022-06-30";
+    private static final String DATE = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     private static final String CHECK_IN = "09:30";
     private static final String CHECK_OUT = "17:30";
 

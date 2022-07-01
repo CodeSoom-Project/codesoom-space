@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:h2:~/data/my-seat-db
+  jpa:
+    hibernate:
+      ddl-auto: update
