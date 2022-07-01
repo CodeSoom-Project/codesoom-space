@@ -34,6 +34,8 @@ public class SeatReservationService {
      * @param number 예약할 좌석 번호
      * @param seatReservationRequest 좌석 예약 요청 정보
      * @return 좌석 예약 정보
+     * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
+     * @throws SeatAlreadyReservedException 좌석이 이미 예약된 상태일 경우 예외를 던진다.
      */
     public SeatReservation addReservation(
             int number,
@@ -62,6 +64,7 @@ public class SeatReservationService {
      *
      * @param number 좌석 번호
      * @return 좌석
+     * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
      */
     private Seat findSeat(int number) {
         return seatRepository.findByNumber(number)
