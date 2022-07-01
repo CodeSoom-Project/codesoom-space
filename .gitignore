@@ -12,6 +12,7 @@ build
 
 # Intellij IDEA
 .idea
+out/
 
 # Windows thumbnail cache files
 Thumbs.db
