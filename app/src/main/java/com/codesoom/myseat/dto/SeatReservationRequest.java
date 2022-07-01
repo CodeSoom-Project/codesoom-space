@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SeatReservationRequest {
-    private Long userId;
+    private String userName;
     private String checkIn;
     private String checkOut;
 }

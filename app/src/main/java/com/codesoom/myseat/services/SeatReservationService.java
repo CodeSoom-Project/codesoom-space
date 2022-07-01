@@ -31,18 +31,18 @@ public class SeatReservationService {
     /**
      * 생성된 좌석 예약 정보를 반환한다.
      *
-     * @param id 예약할 좌석 id
+     * @param number 예약할 좌석 번호
      * @param seatReservationRequest 좌석 예약 요청 정보
      * @return 좌석 예약 정보
      */
     public SeatReservation addReservation(
-            Long id,
+            int number,
             SeatReservationRequest seatReservationRequest
     ) {
-        Seat seat = findSeat(id);
+        Seat seat = findSeat(number);
         if(seat.isReserved() == true) {
             throw new SeatAlreadyInUseException(
-                    "좌석 [" + id + "]이 이미 사용중이어서 예약에 실패했습니다.");
+                    "[" + number + "]번 좌석이 이미 사용중이어서 예약에 실패했습니다.");
         }
 
         LocalDateTime now = LocalDateTime.now();
@@ -50,8 +50,8 @@ public class SeatReservationService {
 
         return seatReservationRepository.save(
                 SeatReservation.builder()
-                        .seatId(id)
-                        .userId(seatReservationRequest.getUserId())
+                        .seatNumber(number)
+                        .userName(seatReservationRequest.getUserName())
                         .date(date)
                         .checkIn(seatReservationRequest.getCheckIn())
                         .checkOut(seatReservationRequest.getCheckOut())
@@ -67,12 +67,12 @@ public class SeatReservationService {
     /**
      * 조회된 좌석을 반환한다.
      *
-     * @param id 좌석 id
+     * @param number 좌석 번호
      * @return 좌석
      */
-    private Seat findSeat(Long id) {
-        return seatRepository.findById(id)
+    private Seat findSeat(int number) {
+        return seatRepository.findByNumber(number)
                 .orElseThrow(() -> new SeatNotFoundException(
-                        "좌석 [" + id + "]을 찾을 수 없어서 조회에 실패했습니다."));
+                        "[" + number + "]번 좌석을 찾을 수 없어서 조회에 실패했습니다."));
     }
 }

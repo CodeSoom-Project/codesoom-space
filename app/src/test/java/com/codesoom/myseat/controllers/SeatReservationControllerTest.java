@@ -25,8 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(SeatReservationController.class)
 class SeatReservationControllerTest {
-    private static final Long SEAT_ID = 3L;
-    private static final Long USER_ID = 1L;
+    private static final int SEAT_NUMBER = 3;
+    private static final String USER_NAME = "코드숨";
     private static final Long SEAT_RESERVATION_ID = 1L;
     private static final String DATE = "2022-06-30";
     private static final String CHECK_IN = "09:30";
@@ -47,21 +47,21 @@ class SeatReservationControllerTest {
         @BeforeEach
         void setUp() {
             seatReservationRequest = SeatReservationRequest.builder()
-                    .userId(USER_ID)
+                    .userName(USER_NAME)
                     .checkIn(CHECK_IN)
                     .checkOut(CHECK_OUT)
                     .build();
 
             seatReservation = SeatReservation.builder()
                     .id(SEAT_RESERVATION_ID)
-                    .seatId(SEAT_ID)
-                    .userId(USER_ID)
+                    .seatNumber(SEAT_NUMBER)
+                    .userName(USER_NAME)
                     .date(DATE)
                     .checkIn(CHECK_IN)
                     .checkOut(CHECK_OUT)
                     .build();
 
-            given(seatReservationService.addReservation(eq(SEAT_ID), any(SeatReservationRequest.class)))
+            given(seatReservationService.addReservation(eq(SEAT_NUMBER), any(SeatReservationRequest.class)))
                     .willReturn(seatReservation);
         }
 
@@ -69,7 +69,7 @@ class SeatReservationControllerTest {
         @DisplayName("상태 코드 201과 좌석 예약 정보를 응답한다")
         class It_responses_status_code_201_and_seat_reservation_data {
             ResultActions subject() throws Exception {
-                return mockMvc.perform(post("/seat/{id}", SEAT_ID)
+                return mockMvc.perform(post("/seat/{number}", SEAT_NUMBER)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(toJson(seatReservationRequest)));
             }
@@ -77,8 +77,8 @@ class SeatReservationControllerTest {
             @Test
             void test() throws Exception {
                 subject().andExpect(status().isCreated())
-                        .andExpect(jsonPath("$.userId").value(USER_ID))
-                        .andExpect(jsonPath("$.seatId").value(SEAT_ID))
+                        .andExpect(jsonPath("$.userName").value(USER_NAME))
+                        .andExpect(jsonPath("$.seatNumber").value(SEAT_NUMBER))
                         .andExpect(jsonPath("$.date").value(DATE))
                         .andExpect(jsonPath("$.checkIn").value(CHECK_IN))
                         .andExpect(jsonPath("$.checkOut").value(CHECK_OUT));

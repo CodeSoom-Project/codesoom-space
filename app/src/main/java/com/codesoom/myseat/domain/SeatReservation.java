@@ -22,11 +22,9 @@ public class SeatReservation {
     @GeneratedValue
     private Long id;
 
-    private Long seatId;
-
-    private Long userId;
-
     private int seatNumber;
+
+    private String userName;
 
     private String date;
 

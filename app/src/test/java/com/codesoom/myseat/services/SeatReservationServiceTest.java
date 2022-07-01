@@ -21,8 +21,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class SeatReservationServiceTest {
-    private static final Long SEAT_ID = 3L;
-    private static final Long USER_ID = 1L;
+    private static final Long SEAT_ID = 1L;
+    private static final int SEAT_NUMBER = 3;
+    private static final String USER_NAME = "코드숨";
     private static final Long SEAT_RESERVATION_ID = 1L;
     private static final String DATE = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     private static final String CHECK_IN = "09:30";
@@ -49,14 +50,15 @@ class SeatReservationServiceTest {
         @BeforeEach
         void setUp() {
             seatReservationRequest = SeatReservationRequest.builder()
-                    .userId(USER_ID)
+                    .userName(USER_NAME)
                     .checkIn(CHECK_IN)
                     .checkOut(CHECK_OUT)
                     .build();
 
-            given(seatRepository.findById(eq(SEAT_ID)))
+            given(seatRepository.findByNumber(eq(SEAT_NUMBER)))
                     .willReturn(Optional.of(Seat.builder()
                             .id(SEAT_ID)
+                            .number(SEAT_NUMBER)
                             .isReserved(false)
                             .build()));
 
@@ -66,8 +68,8 @@ class SeatReservationServiceTest {
 
                         return SeatReservation.builder()
                                 .id(SEAT_RESERVATION_ID)
-                                .seatId(seatReservation.getSeatId())
-                                .userId(seatReservation.getUserId())
+                                .seatNumber(seatReservation.getSeatNumber())
+                                .userName(seatReservation.getUserName())
                                 .date(seatReservation.getDate())
                                 .checkIn(seatReservation.getCheckIn())
                                 .checkOut(seatReservation.getCheckOut())
@@ -79,14 +81,14 @@ class SeatReservationServiceTest {
         @DisplayName("예약 정보를 반환한다")
         class It_returns_seat_reservation_data {
             SeatReservation subject() {
-                return seatReservationService.addReservation(SEAT_ID, seatReservationRequest);
+                return seatReservationService.addReservation(SEAT_NUMBER, seatReservationRequest);
             }
 
             @Test
             void test() {
                 assertThat(subject().getId()).isEqualTo(SEAT_RESERVATION_ID);
-                assertThat(subject().getSeatId()).isEqualTo(SEAT_ID);
-                assertThat(subject().getUserId()).isEqualTo(USER_ID);
+                assertThat(subject().getSeatNumber()).isEqualTo(SEAT_NUMBER);
+                assertThat(subject().getUserName()).isEqualTo(USER_NAME);
                 assertThat(subject().getDate()).isEqualTo(DATE);
                 assertThat(subject().getCheckIn()).isEqualTo(CHECK_IN);
                 assertThat(subject().getCheckOut()).isEqualTo(CHECK_OUT);
