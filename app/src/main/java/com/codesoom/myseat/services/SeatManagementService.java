@@ -16,9 +16,17 @@ public class SeatManagementService {
         this.seatRepository = seatRepository;
     }
 
-    // TODO: 좌석 추가
+    /**
+     * 추가된 좌석 정보를 반환한다.
+     * 
+     * @param seatAddRequest 추가할 좌석 정보
+     * @return 좌석 정보
+     */
     public Seat addSeat(SeatAddRequest seatAddRequest) {
-        return null;
+        return seatRepository.save(
+                Seat.builder()
+                        .number(seatAddRequest.getNumber())
+                        .build());
     }
     
     // TODO: 좌석 목록 조회
