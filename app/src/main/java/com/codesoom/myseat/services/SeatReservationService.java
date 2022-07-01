@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 좌석 예약 생성, 조회, 수정, 삭제 서비스
+ * 좌석 예약 서비스
  */
 @Service
 public class SeatReservationService {
