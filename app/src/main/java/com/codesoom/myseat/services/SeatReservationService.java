@@ -41,7 +41,8 @@ public class SeatReservationService {
             int number,
             SeatReservationRequest seatReservationRequest
     ) {
-        checkReservationStatus(number);
+        Seat seat = checkReservationStatus(number);
+        seat.reserve();
 
         return seatReservationRepository.save(
                 SeatReservation.builder()
@@ -76,16 +77,19 @@ public class SeatReservationService {
      * 좌석이 이미 예약된 상태인지 확인한다.
      *
      * @param number 좌석 번호
+     * @return 좌석
      * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
      * @throws SeatAlreadyReservedException 좌석이 이미 예약된 상태일 경우 예외를 던진다.
      */
-    private void checkReservationStatus(int number) {
+    private Seat checkReservationStatus(int number) {
         Seat seat = findSeat(number);
 
         if(seat.isReserved()) {
             throw new SeatAlreadyReservedException(
                     "[" + number + "]번 좌석은 이미 예약된 좌석이므로 예약에 실패했습니다.");
         }
+
+        return seat;
     }
 
     /**
