@@ -13,19 +13,19 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class SeatManagementServiceTest {
+class SeatAddServiceTest {
     private static final Long SEAT_ID = 1L;
     private static final int SEAT_NUMBER = 3;
 
-    private SeatManagementService seatManagementService;
+    private SeatAddService service;
 
-    private final SeatRepository seatRepository = mock(SeatRepository.class);
+    private final SeatRepository repository = mock(SeatRepository.class);
 
-    private SeatAddRequest seatAddRequest;
+    private SeatAddRequest request;
 
     @BeforeEach
     void setUp() {
-        seatManagementService = new SeatManagementService(seatRepository);
+        service = new SeatAddService(repository);
     }
 
     @Nested
@@ -33,11 +33,11 @@ class SeatManagementServiceTest {
     class Describe_addSeat_method {
         @BeforeEach
         void setUp() {
-            seatAddRequest = SeatAddRequest.builder()
+            request = SeatAddRequest.builder()
                     .number(SEAT_NUMBER)
                     .build();
 
-            given(seatRepository.save(any(Seat.class)))
+            given(repository.save(any(Seat.class)))
                     .will(invocation -> {
                         Seat seat = invocation.getArgument(0);
 
@@ -52,7 +52,7 @@ class SeatManagementServiceTest {
         @DisplayName("좌석 정보를 반환한다")
         class It_returns_seat_data {
             Seat subject() {
-                return seatManagementService.addSeat(seatAddRequest);
+                return service.addSeat(request);
             }
 
             @Test

@@ -18,75 +18,69 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class SeatReservationService {
     private final SeatRepository seatRepository;
-    private final SeatReservationRepository seatReservationRepository;
+    private final SeatReservationRepository reservationRepository;
 
     public SeatReservationService(
             SeatRepository seatRepository,
-            SeatReservationRepository seatReservationRepository
+            SeatReservationRepository reservationRepository
     ) {
         this.seatRepository = seatRepository;
-        this.seatReservationRepository = seatReservationRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     /**
      * 생성된 좌석 예약 정보를 반환한다.
      *
-     * @param number 예약할 좌석 번호
-     * @param seatReservationRequest 좌석 예약 요청 정보
+     * @param seatNumber 예약할 좌석 번호
+     * @param request 좌석 예약 요청 정보
      * @return 좌석 예약 정보
      * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
      * @throws SeatAlreadyReservedException 좌석이 이미 예약된 상태일 경우 예외를 던진다.
      */
     public SeatReservation addReservation(
-            int number,
-            SeatReservationRequest seatReservationRequest
+            int seatNumber,
+            SeatReservationRequest request
     ) {
-        Seat seat = checkReservationStatus(number);
+        Seat seat = checkReservationStatus(seatNumber);
         seat.reserve();
 
-        return seatReservationRepository.save(
+        return reservationRepository.save(
                 SeatReservation.builder()
-                        .seatNumber(number)
-                        .userName(seatReservationRequest.getUserName())
-                        .date(getDate())
-                        .checkIn(seatReservationRequest.getCheckIn())
-                        .checkOut(seatReservationRequest.getCheckOut())
+                        .seatNumber(seatNumber)
+                        .userName(request.getUserName())
+                        .date(today())
+                        .checkIn(request.getCheckIn())
+                        .checkOut(request.getCheckOut())
                         .build());
     }
-
-    // TODO: 좌석 예약 조회
-
-    // TODO: 좌석 예약 수정
-
-    // TODO: 좌석 예약 삭제
 
     /**
      * 조회된 좌석을 반환한다.
      *
-     * @param number 좌석 번호
+     * @param seatNumber 좌석 번호
      * @return 좌석
      * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
      */
-    private Seat findSeat(int number) {
-        return seatRepository.findByNumber(number)
+    private Seat seat(int seatNumber) {
+        return seatRepository.findByNumber(seatNumber)
                 .orElseThrow(() -> new SeatNotFoundException(
-                        "[" + number + "]번 좌석을 찾을 수 없어서 조회에 실패했습니다."));
+                        "[" + seatNumber + "]번 좌석을 찾을 수 없어서 조회에 실패했습니다."));
     }
 
     /**
      * 좌석이 이미 예약된 상태인지 확인한다.
      *
-     * @param number 좌석 번호
+     * @param seatNumber 좌석 번호
      * @return 좌석
      * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
      * @throws SeatAlreadyReservedException 좌석이 이미 예약된 상태일 경우 예외를 던진다.
      */
-    private Seat checkReservationStatus(int number) {
-        Seat seat = findSeat(number);
+    private Seat checkReservationStatus(int seatNumber) {
+        Seat seat = seat(seatNumber);
 
         if(seat.isReserved()) {
             throw new SeatAlreadyReservedException(
-                    "[" + number + "]번 좌석은 이미 예약된 좌석이므로 예약에 실패했습니다.");
+                    "[" + seatNumber + "]번 좌석은 이미 예약된 좌석이므로 예약에 실패했습니다.");
         }
 
         return seat;
@@ -97,7 +91,7 @@ public class SeatReservationService {
      *
      * @return 오늘 날짜
      */
-    private String getDate() {
+    private String today() {
         LocalDateTime now = LocalDateTime.now();
         return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
