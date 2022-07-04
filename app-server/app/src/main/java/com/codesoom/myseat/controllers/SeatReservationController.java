@@ -8,55 +8,47 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 좌석 예약 관련 요청 컨트롤러
+ * 좌석 예약 요청 컨트롤러
  */
 @RestController
 @RequestMapping("/seat")
 @CrossOrigin
 public class SeatReservationController {
-    private final SeatReservationService seatReservationService;
+    private final SeatReservationService service;
 
-    public SeatReservationController(SeatReservationService seatReservationService) {
-        this.seatReservationService = seatReservationService;
+    public SeatReservationController(SeatReservationService service) {
+        this.service = service;
     }
 
     /**
      * 좌석을 예약한 후 상태코드 201과 예약 정보를 응답한다.
      *
-     * @param number 예약할 좌석 번호
-     * @param seatReservationRequest 좌석 예약 요청 정보
+     * @param seatNumber 예약할 좌석 번호
+     * @param request 좌석 예약 요청 정보
      * @return 좌석 예약 정보
      */
-    @PostMapping("{number}")
+    @PostMapping("{seatNumber}")
     @ResponseStatus(HttpStatus.CREATED)
-    public SeatReservationResponse reservationAdd(
-            @PathVariable int number,
-            @RequestBody SeatReservationRequest seatReservationRequest
+    public SeatReservationResponse addReservation(
+            @PathVariable int seatNumber,
+            @RequestBody SeatReservationRequest request
     ) {
-        SeatReservation seatReservation
-                = seatReservationService.addReservation(number, seatReservationRequest);
-        return getResult(seatReservation);
+        return toResponse(service.addReservation(seatNumber, request));
     }
 
-    // TODO: 좌석 예약 내역 조회
-
-    // TODO: 좌석 예약 수정
-    
-    // TODO: 좌석 예약 취소
-
     /**
-     * 좌석 예약 정보 DTO를 반환한다
+     * 응답 정보를 반환한다.
      *
-     * @param seatReservation 좌석 예약 정보
-     * @return 좌석 예약 정보 DTO
+     * @param data 예약한 좌석 정보
+     * @return 응답 정보
      */
-    private SeatReservationResponse getResult(SeatReservation seatReservation) {
+    private SeatReservationResponse toResponse(SeatReservation data) {
         return SeatReservationResponse.builder()
-                .userName(seatReservation.getUserName())
-                .seatNumber(seatReservation.getSeatNumber())
-                .date(seatReservation.getDate())
-                .checkIn(seatReservation.getCheckIn())
-                .checkOut(seatReservation.getCheckOut())
+                .userName(data.getUserName())
+                .seatNumber(data.getSeatNumber())
+                .date(data.getDate())
+                .checkIn(data.getCheckIn())
+                .checkOut(data.getCheckOut())
                 .build();
     }
 }

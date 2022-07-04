@@ -2,7 +2,7 @@ package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.dto.SeatAddRequest;
-import com.codesoom.myseat.services.SeatManagementService;
+import com.codesoom.myseat.services.SeatAddService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,8 +22,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SeatManagementController.class)
-class SeatManagementControllerTest {
+@WebMvcTest(SeatAddController.class)
+class SeatAddControllerTest {
     private static final Long SEAT_ID = 1L;
     private static final int SEAT_NUMBER = 3;
 
@@ -31,9 +31,9 @@ class SeatManagementControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private SeatManagementService seatManagementService;
+    private SeatAddService service;
 
-    private SeatAddRequest seatAddRequest;
+    private SeatAddRequest request;
     private Seat seat;
 
     @Nested
@@ -41,7 +41,7 @@ class SeatManagementControllerTest {
     class Describe_seat_add_request {
         @BeforeEach
         void setUp() {
-            seatAddRequest = SeatAddRequest.builder()
+            request = SeatAddRequest.builder()
                     .number(SEAT_NUMBER)
                     .build();
 
@@ -50,7 +50,7 @@ class SeatManagementControllerTest {
                     .number(SEAT_NUMBER)
                     .build();
 
-            given(seatManagementService.addSeat(any(SeatAddRequest.class)))
+            given(service.addSeat(any(SeatAddRequest.class)))
                     .willReturn(seat);
         }
 
@@ -60,13 +60,13 @@ class SeatManagementControllerTest {
             ResultActions subject() throws Exception {
                 return mockMvc.perform(post("/seat")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(seatAddRequest)));
+                        .content(toJson(request)));
             }
 
             @Test
             void test() throws Exception {
                 subject().andExpect(status().isCreated())
-                        .andExpect(jsonPath("$.number").value(SEAT_NUMBER));
+                        .andExpect(jsonPath("$.seatNumber").value(SEAT_NUMBER));
             }
         }
     }

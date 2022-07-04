@@ -36,23 +36,23 @@ class SeatReservationControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private SeatReservationService seatReservationService;
+    private SeatReservationService service;
 
-    private SeatReservationRequest seatReservationRequest;
-    private SeatReservation seatReservation;
+    private SeatReservationRequest request;
+    private SeatReservation reservation;
 
     @Nested
     @DisplayName("좌석 예약 요청 시")
     class Describe_seat_reservation_request {
         @BeforeEach
         void setUp() {
-            seatReservationRequest = SeatReservationRequest.builder()
+            request = SeatReservationRequest.builder()
                     .userName(USER_NAME)
                     .checkIn(CHECK_IN)
                     .checkOut(CHECK_OUT)
                     .build();
 
-            seatReservation = SeatReservation.builder()
+            reservation = SeatReservation.builder()
                     .id(SEAT_RESERVATION_ID)
                     .seatNumber(SEAT_NUMBER)
                     .userName(USER_NAME)
@@ -61,8 +61,8 @@ class SeatReservationControllerTest {
                     .checkOut(CHECK_OUT)
                     .build();
 
-            given(seatReservationService.addReservation(eq(SEAT_NUMBER), any(SeatReservationRequest.class)))
-                    .willReturn(seatReservation);
+            given(service.addReservation(eq(SEAT_NUMBER), any(SeatReservationRequest.class)))
+                    .willReturn(reservation);
         }
 
         @Nested
@@ -71,7 +71,7 @@ class SeatReservationControllerTest {
             ResultActions subject() throws Exception {
                 return mockMvc.perform(post("/seat/{number}", SEAT_NUMBER)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(seatReservationRequest)));
+                        .content(toJson(request)));
             }
 
             @Test
