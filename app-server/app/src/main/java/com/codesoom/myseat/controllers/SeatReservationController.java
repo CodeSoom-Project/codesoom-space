@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/seat")
+@CrossOrigin
 public class SeatReservationController {
     private final SeatReservationService seatReservationService;
 
