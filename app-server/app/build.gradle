@@ -42,6 +42,9 @@ dependencies {
 
     // H2
     runtimeOnly 'com.h2database:h2'
+
+    // MariaDB
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
 }
 
 application {

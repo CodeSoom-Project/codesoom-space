@@ -7,3 +7,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+---
+
+spring:
+  profiles: mariadb
+  datasource:
+    url: jdbc:mariadb://mariadb:3306/my-seat-mariadb
+    username: root
+    password: password
