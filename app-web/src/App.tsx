@@ -16,24 +16,24 @@ function Reservation() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
 
-  const onChangeSeatNumber = (e) => {
+  const onChangeSeatNumber = (e:any) => {
     e.preventDefault();
     setSeatNumber(e.target.value);
   };
-  const onChangeUserName = (e) => {
+  const onChangeUserName = (e:any) => {
     e.preventDefault();
     setUserName(e.target.value);
   };
-  const onChangeCheckIn = (e) => {
+  const onChangeCheckIn = (e:any) => {
     e.preventDefault();
     setCheckIn(e.target.value);
   };
-  const onChangeCheckOut = (e) => {
+  const onChangeCheckOut = (e:any) => {
     e.preventDefault();
     setCheckOut(e.target.value);
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async(e:any) => {
     e.preventDefault();
 
     const body = {
