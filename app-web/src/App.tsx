@@ -36,7 +36,7 @@ function Reservation() {
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    let body = {
+    const body = {
       name: userName,
       checkIn: checkIn,
       checkOut: checkOut
