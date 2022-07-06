@@ -66,7 +66,7 @@ class SeatAddControllerTest {
             @Test
             void test() throws Exception {
                 subject().andExpect(status().isCreated())
-                        .andExpect(jsonPath("$.seatNumber").value(SEAT_NUMBER));
+                        .andExpect(jsonPath("$.number").value(SEAT_NUMBER));
             }
         }
     }
