@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 function Header() {
   return (
       <header>
-        <h2>코드숨 공부방 좌석 예약 앱</h2>
+        <h1>코드숨 공부방 좌석 예약 앱</h1>
       </header>
   );
 }
