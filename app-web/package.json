@@ -1,5 +1,4 @@
 {
-  "homepage": "https://0hu.github.io/my-seat/",
   "name": "app-web",
   "private": true,
   "version": "0.0.0",
@@ -7,24 +6,35 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "test:unit": "jest",
+    "coverage": "npm run test:unit -- --coverage",
+    "test": "jest"
   },
   "dependencies": {
     "@emotion/styled": "^11.9.3",
+    "@reduxjs/toolkit": "^1.8.3",
     "axios": "^0.27.2",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-query": "^3.39.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
+    "@testing-library/react": "^13.3.0",
+    "@types/jest": "^28.1.4",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "@vitejs/plugin-react": "^1.3.0",
+    "babel-jest": "^28.1.2",
     "eslint": "^8.19.0",
     "eslint-plugin-react": "^7.30.1",
     "gh-pages": "^4.0.0",
+    "jest": "^28.1.2",
     "typescript": "^4.6.3",
     "vite": "^2.9.9"
   }
