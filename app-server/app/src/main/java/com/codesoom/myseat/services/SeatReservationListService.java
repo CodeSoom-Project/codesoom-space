@@ -4,6 +4,8 @@ import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.domain.SeatReservationRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -18,6 +20,16 @@ public class SeatReservationListService {
     }
 
     public List<SeatReservation> seatReservations() {
-        return null;
+        return repository.findAllByDate(today());
+    }
+
+    /**
+     * 오늘 날짜를 반환한다.
+     *
+     * @return 오늘 날짜
+     */
+    private String today() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }
