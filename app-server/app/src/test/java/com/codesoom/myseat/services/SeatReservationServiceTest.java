@@ -86,12 +86,13 @@ class SeatReservationServiceTest {
 
             @Test
             void test() {
-                assertThat(subject().getId()).isEqualTo(SEAT_RESERVATION_ID);
-                assertThat(subject().getSeatNumber()).isEqualTo(SEAT_NUMBER);
-                assertThat(subject().getUserName()).isEqualTo(USER_NAME);
-                assertThat(subject().getDate()).isEqualTo(DATE);
-                assertThat(subject().getCheckIn()).isEqualTo(CHECK_IN);
-                assertThat(subject().getCheckOut()).isEqualTo(CHECK_OUT);
+                SeatReservation seatReservation = subject();
+                assertThat(seatReservation.getId()).isEqualTo(SEAT_RESERVATION_ID);
+                assertThat(seatReservation.getSeatNumber()).isEqualTo(SEAT_NUMBER);
+                assertThat(seatReservation.getUserName()).isEqualTo(USER_NAME);
+                assertThat(seatReservation.getDate()).isEqualTo(DATE);
+                assertThat(seatReservation.getCheckIn()).isEqualTo(CHECK_IN);
+                assertThat(seatReservation.getCheckOut()).isEqualTo(CHECK_OUT);
             }
         }
     }
