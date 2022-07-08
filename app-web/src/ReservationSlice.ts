@@ -3,15 +3,16 @@ import { createSlice } from '@reduxjs/toolkit'
 interface ReservationState {
   seatNumber: number;
   name: string,
-  checkIn: Date,
-  checkOut: Date,
+  checkIn: string,
+  checkOut: string,
+
 }
 
 const initialState: ReservationState = {
   seatNumber: 0,
   name: '',
-  checkIn: 0,
-  checkOut: 0,
+  checkIn: '',
+  checkOut: '',
 }
 
 export const reservationSlice = createSlice({
