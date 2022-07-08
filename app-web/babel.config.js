@@ -3,5 +3,13 @@ module.exports = {
     ['@babel/preset-env', {targets: {node: 'current'}}],
     '@babel/preset-typescript',
   ],
-  plugins: ["@emotion"]
+  plugins: [
+    ["@emotion"],
+    [
+      '@babel/plugin-transform-react-jsx',
+      {
+        runtime: 'automatic',
+      },
+    ],
+  ]
 };
