@@ -5,47 +5,37 @@ interface ReservationState {
   name: string,
   checkIn: string,
   checkOut: string,
-
 }
 
-const initialState: ReservationState = {
-  seatNumber: 0,
-  name: '',
-  checkIn: '',
-  checkOut: '',
+interface ReservationFields {
+  reservationFields: ReservationState;
+}
+
+const initialState: ReservationFields = {
+  reservationFields: {
+    seatNumber: 0,
+    name: '',
+    checkIn: '',
+    checkOut: '',
+  }
 }
 
 export const reservationSlice = createSlice({
   name: 'reservation',
   initialState,
   reducers: {
-    setSeatNumber(state, { payload: seatNumber }) {
+    changeReservationFields(state, { payload: { name, value }}) {
       return {
         ...state,
-        seatNumber,
-      };
-    },
-    setName(state, { payload: name }) {
-      return {
-        ...state,
-        name,
-      };
-    },
-    setCheckIn(state, { payload: checkIn }) {
-      return {
-        ...state,
-        checkIn,
-      };
-    },
-    setCheckOut(state, { payload: checkOut }) {
-      return {
-        ...state,
-        checkOut,
+        reservationFields: {
+          ...state.reservationFields,
+          [name]: value,
+        },
       };
     },
   },
 })
 
-export const { setSeatNumber, setName, setCheckIn, setCheckOut } = reservationSlice.actions
+export const { changeReservationFields } = reservationSlice.actions
 
 export default reservationSlice.reducer

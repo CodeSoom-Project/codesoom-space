@@ -1,12 +1,12 @@
 import './App.css';
 import Header from './Header'
-import Reservation from "./ReservationForm";
+import ReservationFormContainer from "./ReservationFormContainer";
 
 function App() {
   return (
       <div>
         <Header></Header>
-        <Reservation></Reservation>
+        <ReservationFormContainer />
       </div>
   );
 }
