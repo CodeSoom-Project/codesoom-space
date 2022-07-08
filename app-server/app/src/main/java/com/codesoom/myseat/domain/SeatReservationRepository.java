@@ -2,6 +2,8 @@ package com.codesoom.myseat.domain;
 
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
  * 좌석 예약 레포지토리
  */
@@ -14,4 +16,11 @@ public interface SeatReservationRepository
      * @return 좌석 예약 정보
      */
     SeatReservation save(SeatReservation seatReservation);
+
+    /**
+     * 오늘의 좌석 예약 목록을 반환한다.
+     *
+     * @return 좌석 예약 목록
+     */
+    List<SeatReservation> findAllByDate(String today);
 }
