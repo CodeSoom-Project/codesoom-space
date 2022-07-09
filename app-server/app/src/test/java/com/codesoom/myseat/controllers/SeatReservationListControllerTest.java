@@ -2,9 +2,7 @@ package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.services.SeatReservationListService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,36 +34,27 @@ class SeatReservationListControllerTest {
 
     private SeatReservation reservation;
 
-    @Nested
-    @DisplayName("좌석 예약 목록 조회 요청 시")
-    class Describe_seat_reservation_list_request {
-        @BeforeEach
-        void setUp() {
-            reservation = SeatReservation.builder()
-                    .id(SEAT_RESERVATION_ID)
-                    .seatNumber(SEAT_NUMBER)
-                    .userName(USER_NAME)
-                    .date(DATE)
-                    .checkIn(CHECK_IN)
-                    .checkOut(CHECK_OUT)
-                    .build();
+    @Test
+    @DisplayName("좌석 예약 목록 조회 요청 테스트")
+    void test() throws Exception {
+        // given
+        reservation = SeatReservation.builder()
+                .id(SEAT_RESERVATION_ID)
+                .seatNumber(SEAT_NUMBER)
+                .userName(USER_NAME)
+                .date(DATE)
+                .checkIn(CHECK_IN)
+                .checkOut(CHECK_OUT)
+                .build();
 
-            given(service.seatReservations()).willReturn(List.of(reservation));
-        }
+        given(service.seatReservations()).willReturn(List.of(reservation));
 
-        @Nested
-        @DisplayName("상태 코드 200과 좌석 예약 목록 정보를 응답한다")
-        class It_responses_status_code_201_and_seat_reservation_list_data {
-            ResultActions subject() throws Exception {
-                return mockMvc.perform(get("/seat-reservations"));
-            }
+        // when
+        ResultActions subject = mockMvc.perform(get("/seat-reservations"));
 
-            @Test
-            void test() throws Exception {
-                subject().andExpect(status().isOk())
-                        .andExpect(jsonPath("$[0].seatNumber").value(SEAT_NUMBER))
-                        .andExpect(jsonPath("$[0].userName").value(USER_NAME));
-            }
-        }
+        // then
+        subject.andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].seatNumber").value(SEAT_NUMBER))
+                .andExpect(jsonPath("$[0].userName").value(USER_NAME));
     }
 }

@@ -5,9 +5,7 @@ import com.codesoom.myseat.dto.SeatReservationRequest;
 import com.codesoom.myseat.services.SeatReservationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -41,49 +39,40 @@ class SeatReservationControllerTest {
     private SeatReservationRequest request;
     private SeatReservation reservation;
 
-    @Nested
-    @DisplayName("좌석 예약 요청 시")
-    class Describe_seat_reservation_request {
-        @BeforeEach
-        void setUp() {
-            request = SeatReservationRequest.builder()
-                    .userName(USER_NAME)
-                    .checkIn(CHECK_IN)
-                    .checkOut(CHECK_OUT)
-                    .build();
+    @Test
+    @DisplayName("좌석 예약 요청 테스트")
+    void test() throws Exception {
+        // given
+        request = SeatReservationRequest.builder()
+                .userName(USER_NAME)
+                .checkIn(CHECK_IN)
+                .checkOut(CHECK_OUT)
+                .build();
 
-            reservation = SeatReservation.builder()
-                    .id(SEAT_RESERVATION_ID)
-                    .seatNumber(SEAT_NUMBER)
-                    .userName(USER_NAME)
-                    .date(DATE)
-                    .checkIn(CHECK_IN)
-                    .checkOut(CHECK_OUT)
-                    .build();
+        reservation = SeatReservation.builder()
+                .id(SEAT_RESERVATION_ID)
+                .seatNumber(SEAT_NUMBER)
+                .userName(USER_NAME)
+                .date(DATE)
+                .checkIn(CHECK_IN)
+                .checkOut(CHECK_OUT)
+                .build();
 
-            given(service.addReservation(eq(SEAT_NUMBER), any(SeatReservationRequest.class)))
-                    .willReturn(reservation);
-        }
+        given(service.addReservation(eq(SEAT_NUMBER), any(SeatReservationRequest.class)))
+                .willReturn(reservation);
 
-        @Nested
-        @DisplayName("상태 코드 201과 좌석 예약 정보를 응답한다")
-        class It_responses_status_code_201_and_seat_reservation_data {
-            ResultActions subject() throws Exception {
-                return mockMvc.perform(post("/seat/{number}", SEAT_NUMBER)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(request)));
-            }
+        // when
+        ResultActions subject = mockMvc.perform(post("/seat/{number}", SEAT_NUMBER)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(request)));
 
-            @Test
-            void test() throws Exception {
-                subject().andExpect(status().isCreated())
-                        .andExpect(jsonPath("$.userName").value(USER_NAME))
-                        .andExpect(jsonPath("$.seatNumber").value(SEAT_NUMBER))
-                        .andExpect(jsonPath("$.date").value(DATE))
-                        .andExpect(jsonPath("$.checkIn").value(CHECK_IN))
-                        .andExpect(jsonPath("$.checkOut").value(CHECK_OUT));
-            }
-        }
+        // then
+        subject.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.userName").value(USER_NAME))
+                .andExpect(jsonPath("$.seatNumber").value(SEAT_NUMBER))
+                .andExpect(jsonPath("$.date").value(DATE))
+                .andExpect(jsonPath("$.checkIn").value(CHECK_IN))
+                .andExpect(jsonPath("$.checkOut").value(CHECK_OUT));
     }
 
     private String toJson(Object object) throws JsonProcessingException {
