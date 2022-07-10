@@ -10,7 +10,7 @@ interface FieldsProps {
   }
 }
 
-function ReservationForm({ fields , onChange}: any) {
+function ReservationForm({ fields , onChange, onSubmit}: any) {
     const {
       register,
       handleSubmit,
@@ -34,9 +34,9 @@ function ReservationForm({ fields , onChange}: any) {
     return (
         <section>
           <form
-            // onSubmit={handleSubmit((data) => {
-            //     console.log(data);
-            //   })}
+            onSubmit={handleSubmit((data) => {
+                console.log(data);
+              })}
             >
 
             <label htmlFor="register-seatNumber">
@@ -85,7 +85,7 @@ function ReservationForm({ fields , onChange}: any) {
 
             <button
               type="button"
-              // onClick={onSubmit}
+              onClick={onSubmit}
             >
               예약하기
             </button>
