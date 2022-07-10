@@ -34,14 +34,10 @@ function ReservationFormContainer() {
   const handleSubmit = async(e:any) => {
       e.preventDefault();
 
-      const body = {
-          name: name,
-          checkIn: checkIn,
-          checkOut: checkOut
-      };
-
       await axios.post('http://localhost:8080/seat/' + seatNumber,  {
-          body,
+          name,
+          checkIn,
+          checkOut
       })
           .then((response) => {
               if(response.status === 201) {
