@@ -3,7 +3,21 @@ import {useAppDispatch, useAppSelector} from "./hooks";
 import ReservationForm from "./ReservationForm";
 import {changeReservationFields} from "./ReservationSlice";
 
+interface ReservationFields {
+  seatNumber: number;
+  name: string,
+  checkIn: string,
+  checkOut: string,
+}
+
+interface Form {
+  name: string;
+  value: string | number;
+}
+
 function ReservationFormContainer() {
+
+  const dispatch = useAppDispatch()
 
   const reservationFields = useAppSelector((state) => state.reservation.reservationFields)
   const {
@@ -11,22 +25,17 @@ function ReservationFormContainer() {
     name,
     checkIn,
     checkOut
-  } = reservationFields;
+  }:ReservationFields = reservationFields
 
-  const dispatch = useAppDispatch()
-
-  const handleChange = ({ name, value }) => {
+  const handleChange = ({ name, value }:any) => {
     dispatch(changeReservationFields({ name, value }));
   }
 
-  const handleSubmit = () => {
-    // Todo: axios + react-query
-  }
   // const handleSubmit = async(e:any) => {
   //     e.preventDefault();
   //
   //     const body = {
-  //         name: userName,
+  //         name: name,
   //         checkIn: checkIn,
   //         checkOut: checkOut
   //     };

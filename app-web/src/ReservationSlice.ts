@@ -13,7 +13,7 @@ interface ReservationFields {
 
 const initialState: ReservationFields = {
   reservationFields: {
-    seatNumber: 0,
+    seatNumber: 1,
     name: '',
     checkIn: '',
     checkOut: '',

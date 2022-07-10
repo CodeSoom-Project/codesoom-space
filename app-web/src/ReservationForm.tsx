@@ -1,6 +1,16 @@
 import { useForm } from 'react-hook-form';
+import React from "react";
 
-function ReservationForm({ fields, onChange, onSubmit}) {
+interface FieldsProps {
+  fields: {
+    seatNumber : number;
+    name : string;
+    checkIn: string;
+    checkOut: string;
+  }
+}
+
+function ReservationForm({ fields , onChange}: any) {
     const {
       register,
       handleSubmit,
@@ -16,7 +26,7 @@ function ReservationForm({ fields, onChange, onSubmit}) {
       checkOut
     } = fields;
 
-    function handleChange(event) {
+    function handleChange(event: any) {
       const { target: { name, value } } = event;
       onChange({ name, value });
     }
@@ -24,10 +34,11 @@ function ReservationForm({ fields, onChange, onSubmit}) {
     return (
         <section>
           <form
-            onSubmit={handleSubmit((data) => {
-                console.log(data);
-              })}
+            // onSubmit={handleSubmit((data) => {
+            //     console.log(data);
+            //   })}
             >
+
             <label htmlFor="register-seatNumber">
               좌석 번호
             </label>
@@ -38,6 +49,7 @@ function ReservationForm({ fields, onChange, onSubmit}) {
               value={seatNumber}
               onChange={handleChange}
             />
+
             <label htmlFor="register-name">
               이름
             </label>
@@ -48,6 +60,7 @@ function ReservationForm({ fields, onChange, onSubmit}) {
               value={name}
               onChange={handleChange}
             />
+
             <label htmlFor="register-checkIn">
               시작 시간
             </label>
@@ -58,6 +71,7 @@ function ReservationForm({ fields, onChange, onSubmit}) {
               value={checkIn}
               onChange={handleChange}
             />
+
             <label htmlFor="register-checkOut">
               종료 시간
             </label>
@@ -68,9 +82,10 @@ function ReservationForm({ fields, onChange, onSubmit}) {
               value={checkOut}
               onChange={handleChange}
             />
+
             <button
               type="button"
-              onClick={onSubmit}
+              // onClick={onSubmit}
             >
               예약하기
             </button>
