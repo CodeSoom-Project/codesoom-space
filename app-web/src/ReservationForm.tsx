@@ -1,95 +1,95 @@
-import axios from "axios";
-import {useState} from "react";
+import { useForm } from 'react-hook-form';
+import React from "react";
 
-function ReservationForm() {
-    const [seatNumber, setSeatNumber] = useState("");
-    const [userName, setUserName] = useState("");
-    const [checkIn, setCheckIn] = useState("");
-    const [checkOut, setCheckOut] = useState("");
+interface FieldsProps {
+  fields: {
+    seatNumber : number;
+    name : string;
+    checkIn: string;
+    checkOut: string;
+  }
+}
 
-    const onChangeSeatNumber = (e:any) => {
-        e.preventDefault();
-        setSeatNumber(e.target.value);
-    };
-    const onChangeUserName = (e:any) => {
-        e.preventDefault();
-        setUserName(e.target.value);
-    };
-    const onChangeCheckIn = (e:any) => {
-        e.preventDefault();
-        setCheckIn(e.target.value);
-    };
-    const onChangeCheckOut = (e:any) => {
-        e.preventDefault();
-        setCheckOut(e.target.value);
-    };
+function ReservationForm({ fields , onChange, onSubmit}: any) {
+    const {
+      register,
+      handleSubmit,
+      formState: { errors }
+    } = useForm();
 
-    const handleSubmit = async(e:any) => {
-        e.preventDefault();
+    console.log(errors);
 
-        const body = {
-            name: userName,
-            checkIn: checkIn,
-            checkOut: checkOut
-        };
+    const {
+      seatNumber,
+      name,
+      checkIn,
+      checkOut
+    } = fields;
 
-        await axios.post('http://localhost:8080/seat/' + seatNumber,  {
-            body,
-        })
-            .then((response) => {
-                if(response.status === 201) {
-                    alert('예약 완료');
-                }
-            })
-            .catch((error) => {
-                console.log(error.response);
-
-                if(error.response.status === 400) {
-                    alert('이미 예약된 좌석입니다');
-                } else if(error.response.status === 404) {
-                    alert('존재하지 않는 좌석입니다');
-                }
-            });
-
+    function handleChange(event: any) {
+      const { target: { name, value } } = event;
+      onChange({ name, value });
     }
 
     return (
         <section>
-            <form onSubmit={handleSubmit}>
-                <input
-                    name="seatNumber"
-                    value={seatNumber}
-                    onChange={onChangeSeatNumber}
-                    type="text"
-                    placeholder="좌석 번호"
-                />
+          <form
+            onSubmit={handleSubmit((data) => {
+                console.log(data);
+              })}
+            >
 
-                <input
-                    name="userName"
-                    value={userName}
-                    onChange={onChangeUserName}
-                    type="text"
-                    placeholder="이름"
-                />
+            <label htmlFor="register-seatNumber">
+              좌석 번호
+            </label>
+            <input
+              {...register("seatNumber", { required: '좌석 번호를 입력해 주세요'})}
+              placeholder="좌석 번호"
+              name="seatNumber"
+              value={seatNumber}
+              onChange={handleChange}
+            />
 
-                <input
-                    name="checkIn"
-                    value={checkIn}
-                    onChange={onChangeCheckIn}
-                    type="text"
-                    placeholder="입실 시간(HH:MM)"
-                />
+            <label htmlFor="register-name">
+              이름
+            </label>
+            <input
+              {...register("name",{ required: '이름을 입력해 주세요'})}
+              placeholder="이름"
+              name="name"
+              value={name}
+              onChange={handleChange}
+            />
 
-                <input
-                    name="checkOut"
-                    value={checkOut}
-                    onChange={onChangeCheckOut}
-                    type="text"
-                    placeholder="퇴실 시간(HH:MM)"
-                />
+            <label htmlFor="register-checkIn">
+              시작 시간
+            </label>
+            <input
+              {...register("checkIn",{ required: '예약 시작 시간을 입력해 주세요'})}
+              placeholder="예약 시작 시간(hh:mm)"
+              name="checkIn"
+              value={checkIn}
+              onChange={handleChange}
+            />
 
-                <button type="submit">예약하기</button>
-            </form>
+            <label htmlFor="register-checkOut">
+              종료 시간
+            </label>
+            <input
+              {...register("name",{ required: '이용 종료 시간을 입력해 주세요'})}
+              placeholder="이용 종료 시간(hh:mm)"
+              name="checkOut"
+              value={checkOut}
+              onChange={handleChange}
+            />
+
+            <button
+              type="button"
+              onClick={onSubmit}
+            >
+              예약하기
+            </button>
+          </form>
         </section>
     );
 }
