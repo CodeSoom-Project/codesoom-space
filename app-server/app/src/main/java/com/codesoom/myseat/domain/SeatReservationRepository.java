@@ -23,4 +23,20 @@ public interface SeatReservationRepository
      * @return 좌석 예약 목록
      */
     List<SeatReservation> findAllByDate(String today);
+
+    /**
+     * 날짜와 회원 이름으로 좌석 예약 정보를 찾는다.
+     * 
+     * @param today 오늘 날짜
+     * @param userName 회원 이름
+     * @return 좌석 예약 정보
+     */
+    SeatReservation findByDateAndUserName(String today, String userName);
+
+    /**
+     * 좌석 예약 정보를 삭제한다.
+     * 
+     * @param s must not be {@literal null}. 삭제할 좌석 예약 정보
+     */
+    void delete(SeatReservation s);
 }
