@@ -18,12 +18,18 @@ public class SeatReservationCancelController {
         this.service = service;
     }
 
+    /**
+     * 좌석 예약을 취소한 후 상태코드 204를 응답한다.
+     * 
+     * @param seatNumber 예약 취소할 좌석 번호
+     * @param request 좌석 예약 취소 요청 정보
+     */
     @DeleteMapping("{seatNumber}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelReservation(
             @PathVariable int seatNumber,
             @RequestBody SeatReservationCancelRequest request
     ) {
-        // TODO: 예약 취소 서비스 호출
+        service.cancelReservation(seatNumber, request);
     }
 }
