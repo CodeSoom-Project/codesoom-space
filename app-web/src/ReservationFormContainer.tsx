@@ -1,6 +1,9 @@
 import axios from "axios";
+
 import {useAppDispatch, useAppSelector} from "./hooks";
+
 import ReservationForm from "./ReservationForm";
+
 import {changeReservationFields} from "./ReservationSlice";
 
 interface ReservationFields {
@@ -34,14 +37,10 @@ function ReservationFormContainer() {
   const handleSubmit = async(e:any) => {
       e.preventDefault();
 
-      const body = {
-          name: name,
-          checkIn: checkIn,
-          checkOut: checkOut
-      };
-
       await axios.post('http://localhost:8080/seat/' + seatNumber,  {
-          body,
+          name,
+          checkIn,
+          checkOut
       })
           .then((response) => {
               if(response.status === 201) {
@@ -57,7 +56,6 @@ function ReservationFormContainer() {
                   alert('존재하지 않는 좌석입니다');
               }
           });
-  console.log('함수동작완료')
   }
 
   return (
