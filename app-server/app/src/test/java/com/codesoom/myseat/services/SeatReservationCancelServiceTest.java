@@ -1,5 +1,6 @@
 package com.codesoom.myseat.services;
 
+import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.SeatRepository;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.domain.SeatReservationRepository;
@@ -11,9 +12,11 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -35,6 +38,7 @@ class SeatReservationCancelServiceTest {
             = mock(SeatReservationRepository.class);
 
     private SeatReservationCancelRequest request;
+    private Seat seat;
     private SeatReservation reservation;
 
     @BeforeEach
@@ -51,6 +55,12 @@ class SeatReservationCancelServiceTest {
                     .userName(USER_NAME)
                     .build();
 
+            seat = Seat.builder()
+                    .id(SEAT_ID)
+                    .number(SEAT_NUMBER)
+                    .isReserved(true)
+                    .build();
+
             reservation = SeatReservation.builder()
                     .id(SEAT_RESERVATION_ID)
                     .seatNumber(SEAT_NUMBER)
@@ -59,6 +69,9 @@ class SeatReservationCancelServiceTest {
                     .checkIn(CHECK_IN)
                     .checkOut(CHECK_OUT)
                     .build();
+
+            given(seatRepository.findByNumber(eq(SEAT_NUMBER)))
+                    .willReturn(Optional.of(seat));
 
             given(reservationRepository.findByDateAndUserName(DATE, USER_NAME))
                     .willReturn(reservation);
