@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-import {useAppDispatch, useAppSelector} from "./hooks";
+import { useAppDispatch, useAppSelector } from './hooks';
 
-import ReservationForm from "./ReservationForm";
+import ReservationForm from './ReservationForm';
 
-import {changeReservationFields} from "./ReservationSlice";
+import { changeReservationFields } from './ReservationSlice';
 
 interface ReservationFields {
   seatNumber: number;
@@ -19,44 +19,43 @@ interface Form {
 }
 
 function ReservationFormContainer() {
+  const dispatch = useAppDispatch();
 
-  const dispatch = useAppDispatch()
-
-  const reservationFields = useAppSelector((state) => state.reservation.reservationFields)
+  const reservationFields = useAppSelector((state) => state.reservation.reservationFields);
   const {
     seatNumber,
     userName,
     checkIn,
-    checkOut
-  }:ReservationFields = reservationFields
+    checkOut,
+  }:ReservationFields = reservationFields;
 
   const handleChange = ({ name, value }:any) => {
     dispatch(changeReservationFields({ name, value }));
-  }
+  };
 
-  const handleSubmit = async(e:any) => {
-      e.preventDefault();
+  const handleSubmit = async (e:any) => {
+    e.preventDefault();
 
-      await axios.post('http://localhost:8080/seat/' + seatNumber,  {
-          userName,
-          checkIn,
-          checkOut
+    await axios.post(`http://localhost:8080/seat/${seatNumber}`, {
+      userName,
+      checkIn,
+      checkOut,
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          alert('예약 완료');
+        }
       })
-          .then((response) => {
-              if(response.status === 201) {
-                  alert('예약 완료');
-              }
-          })
-          .catch((error) => {
-              console.log(error.response);
+      .catch((error) => {
+        console.log(error.response);
 
-              if(error.response.status === 400) {
-                  alert('이미 예약된 좌석입니다');
-              } else if(error.response.status === 404) {
-                  alert('존재하지 않는 좌석입니다');
-              }
-          });
-  }
+        if (error.response.status === 400) {
+          alert('이미 예약된 좌석입니다');
+        } else if (error.response.status === 404) {
+          alert('존재하지 않는 좌석입니다');
+        }
+      });
+  };
 
   return (
     <ReservationForm

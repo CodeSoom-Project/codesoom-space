@@ -1,11 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit'
-import reservationReducer from './ReservationSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import reservationReducer from './ReservationSlice';
 
 export const store = configureStore({
-    reducer: {
-        reservation: reservationReducer,
-    },
-})
+  reducer: {
+    reservation: reservationReducer,
+  },
+});
 
 export type RootState = ReturnType<typeof store.getState>
 
