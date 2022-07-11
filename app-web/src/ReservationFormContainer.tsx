@@ -1,6 +1,9 @@
 import axios from "axios";
+
 import {useAppDispatch, useAppSelector} from "./hooks";
+
 import ReservationForm from "./ReservationForm";
+
 import {changeReservationFields} from "./ReservationSlice";
 
 interface ReservationFields {
@@ -53,7 +56,6 @@ function ReservationFormContainer() {
                   alert('존재하지 않는 좌석입니다');
               }
           });
-  console.log('함수동작완료')
   }
 
   return (

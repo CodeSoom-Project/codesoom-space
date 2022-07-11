@@ -76,7 +76,7 @@ function ReservationForm({ fields , onChange, onSubmit}: any) {
               종료 시간
             </label>
             <input
-              {...register("name",{ required: '이용 종료 시간을 입력해 주세요'})}
+              {...register("checkOut",{ required: '이용 종료 시간을 입력해 주세요'})}
               placeholder="이용 종료 시간(hh:mm)"
               name="checkOut"
               value={checkOut}
