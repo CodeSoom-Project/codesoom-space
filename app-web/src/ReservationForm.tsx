@@ -4,7 +4,7 @@ import React from "react";
 interface FieldsProps {
   fields: {
     seatNumber : number;
-    name : string;
+    userName : string;
     checkIn: string;
     checkOut: string;
   }
@@ -21,7 +21,7 @@ function ReservationForm({ fields , onChange, onSubmit}: any) {
 
     const {
       seatNumber,
-      name,
+      userName,
       checkIn,
       checkOut
     } = fields;
@@ -54,10 +54,10 @@ function ReservationForm({ fields , onChange, onSubmit}: any) {
               이름
             </label>
             <input
-              {...register("name",{ required: '이름을 입력해 주세요'})}
+              {...register("userName",{ required: '이름을 입력해 주세요'})}
               placeholder="이름"
-              name="name"
-              value={name}
+              name="userName"
+              value={userName}
               onChange={handleChange}
             />
 

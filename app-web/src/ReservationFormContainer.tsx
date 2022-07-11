@@ -8,7 +8,7 @@ import {changeReservationFields} from "./ReservationSlice";
 
 interface ReservationFields {
   seatNumber: number;
-  name: string,
+  userName: string,
   checkIn: string,
   checkOut: string,
 }
@@ -25,7 +25,7 @@ function ReservationFormContainer() {
   const reservationFields = useAppSelector((state) => state.reservation.reservationFields)
   const {
     seatNumber,
-    name,
+    userName,
     checkIn,
     checkOut
   }:ReservationFields = reservationFields
@@ -38,7 +38,7 @@ function ReservationFormContainer() {
       e.preventDefault();
 
       await axios.post('http://localhost:8080/seat/' + seatNumber,  {
-          name,
+          userName,
           checkIn,
           checkOut
       })
