@@ -3,6 +3,7 @@ package com.codesoom.myseat.domain;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 좌석 예약 레포지토리
@@ -31,7 +32,7 @@ public interface SeatReservationRepository
      * @param userName 회원 이름
      * @return 좌석 예약 정보
      */
-    SeatReservation findByDateAndUserName(String today, String userName);
+    Optional<SeatReservation> findByDateAndUserName(String today, String userName);
 
     /**
      * 좌석 예약 정보를 삭제한다.

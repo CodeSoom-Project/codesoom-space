@@ -74,7 +74,7 @@ class SeatReservationCancelServiceTest {
                     .willReturn(Optional.of(seat));
 
             given(reservationRepository.findByDateAndUserName(DATE, USER_NAME))
-                    .willReturn(reservation);
+                    .willReturn(Optional.of(reservation));
         }
 
         @Nested
