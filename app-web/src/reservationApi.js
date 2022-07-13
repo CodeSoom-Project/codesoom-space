@@ -1,9 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseUrl: 'http://localhost:8080/seat/',
+  baseUrl: 'http://localhost:8080',
 });
 
-export const getReservation = () => {
-  api.get('/reservation').then((res) => res.data);
+const getReservation = () => {
+  api.get('/seat-reservations').then((res) => res.data);
 };
+
+export { getReservation };

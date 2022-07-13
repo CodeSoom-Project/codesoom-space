@@ -1,19 +1,29 @@
-function ReservationList({ data }: any) {
+import Item from './ReservationItem';
+
+function ReservationList({ reservations }: any) {
   return (
-    <div>
-      <ul>
-        {data?.map((reservation: any) => (
-          <li
-            key={reservation.seatNumber}
-          >
-            {reservation.userName}
-            {reservation.seatNumber}
-            {reservation.checkIn}
-            {reservation.checkOut}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ol>
+      {reservations?.map((reservation: any) => (
+        <Item
+          key={reservation.userName}
+        >
+          userName=
+          {reservation.userName}
+
+          seatNumber=
+          {reservation.seatNumber}
+
+          date=
+          {reservation.date}
+
+          checkIn=
+          {reservation.checkIn}
+
+          checkOut=
+          {reservation.checkOut}
+        </Item>
+      ))}
+    </ol>
   );
 }
 
