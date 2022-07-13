@@ -1,10 +1,11 @@
 import { useForm } from 'react-hook-form';
 import React from 'react';
+import Button from './components/Button';
 
 interface FieldsProps {
   fields: {
-    seatNumber : number;
-    userName : string;
+    seatNumber: number;
+    userName: string;
     checkIn: string;
     checkOut: string;
   }
@@ -83,12 +84,11 @@ function ReservationForm({ fields, onChange, onSubmit }: any) {
           onChange={handleChange}
         />
 
-        <button
-          type="button"
+        <Button
           onClick={onSubmit}
         >
           예약하기
-        </button>
+        </Button>
       </form>
     </section>
   );
