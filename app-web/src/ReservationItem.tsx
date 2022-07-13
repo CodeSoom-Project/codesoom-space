@@ -1,7 +1,7 @@
 import Button from './components/Button';
 
 function Item({
-  userName, seatNumber, date, checkIn, checkOut,
+  userName, seatNumber, date, checkIn, checkOut, onClickDelete,
 }: any) {
   return (
     <li>
@@ -14,7 +14,7 @@ function Item({
       {checkIn}
       -
       {checkOut}
-      <Button onClick={onClick}>
+      <Button onClick={() => onClickDelete(seatNumber, userName)}>
         예약 취소하기
       </Button>
     </li>

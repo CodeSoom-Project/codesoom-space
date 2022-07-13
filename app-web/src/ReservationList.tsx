@@ -1,6 +1,6 @@
 import Item from './ReservationItem';
 
-function ReservationList({ reservations }: any) {
+function ReservationList({ reservations, onClickDelete }: any) {
   return (
     <ol>
       {reservations?.map((reservation: any) => (
@@ -21,6 +21,9 @@ function ReservationList({ reservations }: any) {
 
           checkOut=
           {reservation.checkOut}
+
+          onClickDelete=
+          {onClickDelete}
         </Item>
       ))}
     </ol>
