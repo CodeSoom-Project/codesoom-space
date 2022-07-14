@@ -18,6 +18,6 @@ public class SeatListService {
     }
 
     public List<Seat> seats() {
-        return null;
+        return repository.findAll();
     }
 }
