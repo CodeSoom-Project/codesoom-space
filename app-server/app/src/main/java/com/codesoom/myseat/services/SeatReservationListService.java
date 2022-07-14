@@ -2,6 +2,7 @@ package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.domain.SeatReservationRepository;
+import com.codesoom.myseat.exceptions.SeatReservationNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,8 +20,14 @@ public class SeatReservationListService {
         this.repository = repository;
     }
 
+    /**
+     * 당일 좌석 예약 목록을 반환한다.
+     *
+     * @return 당일 좌석 예약 목록
+     * @throws SeatReservationNotFoundException 당일 예약 내역을 찾을 수 없는 경우 예외를 던진다.
+     */
     public List<SeatReservation> seatReservations() {
-        return repository.findAllByDate(today());
+        return seatReservations(today());
     }
 
     /**
@@ -31,5 +38,18 @@ public class SeatReservationListService {
     private String today() {
         LocalDateTime now = LocalDateTime.now();
         return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    /**
+     * 당일 좌석 예약 목록을 반환한다.
+     *
+     * @param today 오늘 날짜
+     * @return 당일 좌석 예약 목록
+     * @throws SeatReservationNotFoundException 당일 예약 내역을 찾을 수 없는 경우 예외를 던진다.
+     */
+    private List<SeatReservation> seatReservations(String today) {
+        return repository.findAllByDate(today)
+                .orElseThrow(() -> new SeatReservationNotFoundException(
+                        "당일 예약 내역을 찾을 수 없어서 조회에 실패했습니다."));
     }
 }
