@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SeatReservationListController.class)
+@WebMvcTest(SeatListController.class)
 @AutoConfigureRestDocs
 class SeatListControllerTest {
     private static final Long SEAT_ID = 1L;
@@ -34,7 +34,7 @@ class SeatListControllerTest {
     private Seat seat;
 
     @Test
-    @DisplayName("좌석 예약 목록 조회 요청 테스트")
+    @DisplayName("좌석 목록 조회 요청 테스트")
     void test() throws Exception {
         // given
         seat = Seat.builder()
