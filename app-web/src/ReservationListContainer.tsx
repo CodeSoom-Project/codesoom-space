@@ -22,15 +22,8 @@ function ReservationListContainer() {
     return '무언가 잘 못 돼었습니다.';
   }
 
-  function handleClickDeleteReservation(seatNumber, userName) {
-
-    // TODO: delete
-    //  api 만들어서 엑시오스로 delete ㅆ고
-    //  fetch한다 react-query로 mutation
-    // 그리고 fetch 한 데이터 보여주기 .
-    //
-    //
-
+  const deleteReservationMutation {
+    // TODO : 예약 삭제 후 fetching
   }
 
   return (
@@ -38,7 +31,7 @@ function ReservationListContainer() {
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
         reservations={data}
-        onClickDelete={handleClickDeleteReservation}
+        onClickDelete={deleteReservationMutation}
       />
     </div>
   );

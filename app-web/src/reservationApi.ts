@@ -9,8 +9,8 @@ const getReservation = async () => {
   return response.data;
 };
 
-const deleteReservation = async ({ seatNumber }: any) => {
-  await api.delete(`/seat-reservations/${seatNumber}`, seatNumber);
+const deleteReservation = async ({ seatNumber, userName }: any) => {
+  await api.delete(`/seat-reservations/${seatNumber}`, { data: { userName } });
 };
 
 export { getReservation, deleteReservation };
