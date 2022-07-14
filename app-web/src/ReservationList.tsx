@@ -1,9 +1,9 @@
 import Item from './ReservationItem';
 
-function ReservationList({ reservations, onClickDelete }: any) {
+function ReservationList({ data, onClickDelete }: any) {
   return (
     <ol>
-      {reservations?.map((reservation: any) => (
+      {data?.map((reservation: any) => (
         <Item
           key={reservation.userName}
         >
