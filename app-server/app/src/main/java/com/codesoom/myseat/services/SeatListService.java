@@ -1,6 +1,7 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
+import com.codesoom.myseat.domain.SeatRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,12 @@ import java.util.List;
  */
 @Service
 public class SeatListService {
+    private final SeatRepository repository;
+
+    public SeatListService(SeatRepository repository) {
+        this.repository = repository;
+    }
+
     public List<Seat> seats() {
         return null;
     }
