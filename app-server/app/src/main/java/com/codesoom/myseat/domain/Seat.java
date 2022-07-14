@@ -30,4 +30,8 @@ public class Seat {
     public void reserve() {
         isReserved = true;
     }
+
+    public void cancelReservation() {
+        isReserved = false;
+    }
 }
