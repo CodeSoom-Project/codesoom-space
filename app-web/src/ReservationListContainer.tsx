@@ -3,8 +3,9 @@ import { getReservation } from './reservationApi';
 import ReservationList from './ReservationList';
 
 function ReservationListContainer() {
+  const { data }: any = getReservation();
   const {
-    data, isLoading, isError, isFetching,
+    isLoading, isError, isFetching,
   } = useQuery(
     'reservation',
     getReservation,
@@ -30,7 +31,7 @@ function ReservationListContainer() {
     <div>
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
-        reservations={data}
+        data={data}
         // onClickDelete={deleteReservationMutation}
       />
     </div>
