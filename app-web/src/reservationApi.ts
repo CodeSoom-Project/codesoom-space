@@ -5,8 +5,8 @@ const api = axios.create({
 });
 
 const getReservation = async () => {
-  const response = await api.get('/seat-reservations');
-  return response.data;
+  const { data } = await api.get('/seat-reservations');
+  return data;
 };
 
 const deleteReservation = async ({ seatNumber, userName }: any) => {
