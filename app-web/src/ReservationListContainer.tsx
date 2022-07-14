@@ -10,7 +10,7 @@ function ReservationListContainer() {
     getReservation,
     {
       refetchOnMount: true,
-      refetchOnWindowFocus: 'always',
+      refetchOnWindowFocus: true,
     },
   );
 
@@ -22,16 +22,16 @@ function ReservationListContainer() {
     return '무언가 잘 못 돼었습니다.';
   }
 
-  const deleteReservationMutation {
-    // TODO : 예약 삭제 후 fetching
-  }
+  // const deleteReservationMutation: any {
+  //   // TODO : 예약 삭제 후 fetching
+  // }
 
   return (
     <div>
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
         reservations={data}
-        onClickDelete={deleteReservationMutation}
+        // onClickDelete={deleteReservationMutation}
       />
     </div>
   );
