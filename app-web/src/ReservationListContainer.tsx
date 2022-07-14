@@ -3,9 +3,8 @@ import { getReservation } from './reservationApi';
 import ReservationList from './ReservationList';
 
 function ReservationListContainer() {
-  const { data }: any = getReservation();
   const {
-    isLoading, isError, isFetching,
+    data, isLoading, isError, isFetching,
   } = useQuery(
     'reservation',
     getReservation,
@@ -23,9 +22,11 @@ function ReservationListContainer() {
     return '무언가 잘 못 돼었습니다.';
   }
 
-  // const deleteReservationMutation: any {
-  //   // TODO : 예약 삭제 후 fetching
-  // }
+  // const {mutate} = useMutation(deleteReservation, {
+  //   onSuccess: (data) => {
+  //     queryClient.invalidateQueries('reservation');
+  //   },
+  // });
 
   return (
     <div>
