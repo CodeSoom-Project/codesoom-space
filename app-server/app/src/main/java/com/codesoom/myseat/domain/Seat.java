@@ -25,13 +25,13 @@ public class Seat {
     private int number;
 
     @Builder.Default
-    private boolean isReserved = false;
+    private String userName = "";
 
-    public void reserve() {
-        isReserved = true;
+    public void reserve(String userName) {
+        this.userName = userName;
     }
 
     public void cancelReservation() {
-        isReserved = false;
+        this.userName = "";
     }
 }
