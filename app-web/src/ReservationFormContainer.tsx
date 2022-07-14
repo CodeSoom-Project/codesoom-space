@@ -27,16 +27,16 @@ function ReservationFormContainer() {
     userName,
     checkIn,
     checkOut,
-  }:ReservationFields = reservationFields;
+  }: ReservationFields = reservationFields;
 
-  const handleChange = ({ name, value }:any) => {
+  const handleChange = ({ name, value }: any) => {
     dispatch(changeReservationFields({ name, value }));
   };
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    await axios.post(`http://localhost:8080/seat/${seatNumber}`, {
+    await axios.post(`http://localhost:8080/seat-reservation/${seatNumber}`, {
       userName,
       checkIn,
       checkOut,
