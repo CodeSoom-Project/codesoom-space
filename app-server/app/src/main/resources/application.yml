@@ -1,12 +1,14 @@
 spring:
   datasource:
-    url: jdbc:h2:~/data/my-seat-db
+    url: jdbc:h2:mem:myseat
+    username: root
+    password: password
   h2:
     console:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 
 ---
 
