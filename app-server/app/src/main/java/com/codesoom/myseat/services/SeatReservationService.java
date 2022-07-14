@@ -42,7 +42,7 @@ public class SeatReservationService {
             SeatReservationRequest request
     ) {
         Seat seat = checkReservationStatus(seatNumber);
-        seat.reserve();
+        seat.reserve(request.getUserName());
 
         return reservationRepository.save(
                 SeatReservation.builder()
@@ -78,7 +78,7 @@ public class SeatReservationService {
     private Seat checkReservationStatus(int seatNumber) {
         Seat seat = seat(seatNumber);
 
-        if(seat.isReserved()) {
+        if(!seat.getUserName().isBlank()) {
             throw new SeatAlreadyReservedException(
                     "[" + seatNumber + "]번 좌석은 이미 예약된 좌석이므로 예약에 실패했습니다.");
         }
