@@ -59,7 +59,7 @@ class SeatReservationServiceTest {
                     .willReturn(Optional.of(Seat.builder()
                             .id(SEAT_ID)
                             .number(SEAT_NUMBER)
-                            .isReserved(false)
+                            .userName("")
                             .build()));
 
             given(seatReservationRepository.save(any(SeatReservation.class)))

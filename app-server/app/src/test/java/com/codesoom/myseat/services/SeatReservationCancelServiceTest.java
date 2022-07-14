@@ -58,7 +58,7 @@ class SeatReservationCancelServiceTest {
             seat = Seat.builder()
                     .id(SEAT_ID)
                     .number(SEAT_NUMBER)
-                    .isReserved(true)
+                    .userName(USER_NAME)
                     .build();
 
             reservation = SeatReservation.builder()
