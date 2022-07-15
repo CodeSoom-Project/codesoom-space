@@ -19,7 +19,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(SeatReservationCancelController.class)
@@ -67,8 +66,7 @@ class SeatReservationCancelControllerTest {
                 .content(toJson(request)));;
 
         // then
-        subject.andExpect(status().isNoContent())
-                .andExpect(jsonPath("$.seatNumber").value(SEAT_NUMBER));
+        subject.andExpect(status().isNoContent());
     }
 
     private String toJson(Object object) throws JsonProcessingException {
