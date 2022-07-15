@@ -30,7 +30,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(SeatReservationCancelController.class)
-@AutoConfigureRestDocs
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "15.164.164.136", uriPort = 8080)
 class SeatReservationCancelControllerTest {
     private static final int SEAT_NUMBER = 3;
     private static final String USER_NAME = "코드숨";
