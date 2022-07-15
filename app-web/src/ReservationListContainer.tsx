@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getReservation } from './reservationApi';
+import { apis } from './reservationApi';
 import ReservationList from './ReservationList';
 
 function ReservationListContainer() {
@@ -7,7 +7,8 @@ function ReservationListContainer() {
     data, isLoading, isError, isFetching,
   } = useQuery(
     'reservation',
-    getReservation,
+    // eslint-disable-next-line no-undef
+    apis.getReservation,
     {
       refetchOnMount: true,
       refetchOnWindowFocus: true,
