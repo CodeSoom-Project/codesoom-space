@@ -2,6 +2,7 @@ package com.codesoom.myseat.domain;
 
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SeatRepository
@@ -21,4 +22,11 @@ public interface SeatRepository
      * @return 좌석
      */
     Seat save(Seat seat);
+
+    /**
+     * 좌석 목록을 반환한다.
+     * 
+     * @return 좌석 목록
+     */
+    List<Seat> findAll();
 }

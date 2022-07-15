@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -51,7 +52,7 @@ class SeatReservationListServiceTest {
         @BeforeEach
         void setUp() {
             given(repository.findAllByDate(any(String.class)))
-                    .willReturn(List.of(seatReservation));
+                    .willReturn(Optional.of(List.of(seatReservation)));
         }
 
         @Nested

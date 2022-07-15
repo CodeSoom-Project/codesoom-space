@@ -23,6 +23,10 @@ configurations {
     asciidoctorExtensions
 }
 
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
 dependencies {
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
@@ -69,11 +73,21 @@ application {
     mainClass = 'com.codesoom.myseat.App'
 }
 
-tasks.named('test') {
-    // Use junit platform for unit tests.
+test {
+    outputs.dir snippetsDir
     useJUnitPlatform()
 }
 
 asciidoctor {
+    configurations 'asciidoctorExtensions'
+    inputs.dir snippetsDir
     dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    copy {
+        from "${asciidoctor.outputDir}"
+        into 'src/main/resources/static/docs'
+    }
 }
