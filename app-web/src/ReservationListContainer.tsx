@@ -33,7 +33,7 @@ function ReservationListContainer() {
     <div>
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
-        data={data}
+        reservations={data}
         // onClickDelete={deleteReservationMutation}
       />
     </div>
