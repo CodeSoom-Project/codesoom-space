@@ -8,6 +8,9 @@ function ReservationList({ data, onClickDelete }: any) {
           key={reservation.seatNumber}
           userName={reservation.userName}
           seatNumber={reservation.seatNumber}
+          date={reservation.date}
+          checkIn={reservation.checkIn}
+          checkOut={reservation.checkOut}
           onClickDelete={onClickDelete}
         />
       ))}
