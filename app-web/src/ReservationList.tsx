@@ -3,7 +3,7 @@ import Item from './ReservationItem';
 function ReservationList({ data, onClickDelete }: any) {
   return (
     <ol>
-      {data?.map((reservation: any) => (
+      {data?.data.map((reservation: any) => (
         <Item
           key={reservation.userName}
         >

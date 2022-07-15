@@ -36,7 +36,7 @@ function ReservationFormContainer() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    await axios.post(`http://localhost:8080/seat-reservation/${seatNumber}`, {
+    await axios.post(`http://15.164.164.136:8080/seat-reservation/${seatNumber}`, {
       userName,
       checkIn,
       checkOut,

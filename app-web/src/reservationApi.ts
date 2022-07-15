@@ -6,7 +6,7 @@ interface SeatType {
 }
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'http://15.164.164.136:8080/',
 });
 
 export const apis = {
