@@ -1,16 +1,15 @@
 import axios from 'axios';
 
+interface SeatType {
+  seatNumber: number;
+  userName: string;
+}
+
 const api = axios.create({
   baseURL: 'http://localhost:8080',
 });
 
-const getReservation = async () => {
-  const response = await api.get('/seat-reservations');
-  return response;
+export const apis = {
+  getReservation: () => api.get('/seat-reservations'),
+  deleteReservation: (seatNumber: any, data: any) => api.delete(`/seat-reservations${seatNumber}`, data),
 };
-
-const deleteReservation = async ({ seatNumber, userName }: any) => {
-  await api.delete(`/seat-reservations/${seatNumber}`, { data: { userName } });
-};
-
-export { getReservation, deleteReservation };
