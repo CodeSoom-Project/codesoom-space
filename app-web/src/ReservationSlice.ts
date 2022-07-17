@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 interface ReservationState {
-  seatNumber: number;
+  seatNumber: number | string,
   userName: string,
   checkIn: string,
   checkOut: string,
@@ -24,7 +24,7 @@ export const reservationSlice = createSlice({
   name: 'reservation',
   initialState,
   reducers: {
-    changeReservationFields(state, { payload: { name, value } }) {
+    changeReservationFields(state, {payload: {name, value}}) {
       return {
         ...state,
         reservationFields: {
@@ -36,6 +36,6 @@ export const reservationSlice = createSlice({
   },
 });
 
-export const { changeReservationFields } = reservationSlice.actions;
+export const {changeReservationFields} = reservationSlice.actions;
 
 export default reservationSlice.reducer;

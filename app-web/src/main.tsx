@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { Provider } from 'react-redux';
+import {store} from './store';
+import {Provider} from 'react-redux';
 
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import {ReactQueryDevtools} from 'react-query/devtools';
 
-import { store } from './store';
+
 import App from './App';
 import './index.css';
 
@@ -16,8 +17,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <App />
-        <ReactQueryDevtools initialIsOpen />
+        <App/>
+        <ReactQueryDevtools initialIsOpen/>
       </Provider>
     </QueryClientProvider>
   </React.StrictMode>,

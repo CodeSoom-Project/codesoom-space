@@ -6,9 +6,9 @@ import ReservationListContainer from './ReservationListContainer';
 function App() {
   return (
     <div>
-      <Header />
-      <ReservationFormContainer />
-      <ReservationListContainer />
+      <Header/>
+      <ReservationFormContainer/>
+      <ReservationListContainer/>
     </div>
   );
 }
