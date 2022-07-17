@@ -1,5 +1,5 @@
-import { useQuery } from 'react-query';
-import { apis } from './reservationApi';
+import {useQuery} from 'react-query';
+import {apis} from './reservationApi';
 import ReservationList from './ReservationList';
 
 function ReservationListContainer() {
@@ -15,13 +15,13 @@ function ReservationListContainer() {
     },
   );
 
-  if (isLoading) {
-    return '예약 정보를 불러오는중입니다.';
-  }
-
-  if (isError) {
-    return '무언가 잘 못 돼었습니다.';
-  }
+  // if (isLoading) {
+  //   return '예약 정보를 불러오는중입니다.';
+  // }
+  //
+  // if (isError) {
+  //   return '무언가 잘 못 돼었습니다.';
+  // }
 
   // const {mutate} = useMutation(deleteReservation, {
   //   onSuccess: (data) => {
@@ -33,7 +33,7 @@ function ReservationListContainer() {
     <div>
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
-        data={data}
+        reservations={data}
         // onClickDelete={deleteReservationMutation}
       />
     </div>
