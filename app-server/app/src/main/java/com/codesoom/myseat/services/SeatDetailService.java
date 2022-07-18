@@ -16,6 +16,7 @@ public class SeatDetailService {
     }
 
     public SeatReservation seatDetail(int seatNumber) {
+        // TODO: 해당 좌석의 당일 예약 정보를 반환해야 한다.
         return null;
     }
 }
