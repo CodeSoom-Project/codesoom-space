@@ -35,3 +35,8 @@ jobs:
     - name: Docker build
       if: github.ref == 'refs/heads/main'
       run: docker build . -t jiy0ung/myseat-backend-image:${GITHUB_SHA::7}
+    
+    - name: Docker push
+      if: github.ref == 'refs/heads/main'
+      run: |
+        docker push jiy0ung/myseat-backend-image:${GITHUB_SHA::7}
