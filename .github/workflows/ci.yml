@@ -30,6 +30,7 @@ jobs:
       uses: gradle/gradle-build-action@v2.2.2
       with:
         arguments: build
+        build-root-directory: app-server
         cache-disabled: true
     
     - name: Assemble
