@@ -9,11 +9,13 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    working-directory: ./app-server
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./app-server
 
     steps:
     - uses: actions/checkout@v3
