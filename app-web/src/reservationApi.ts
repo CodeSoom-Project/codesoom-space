@@ -5,11 +5,20 @@ interface SeatType {
   userName: string;
 }
 
+interface deleteReservationVariables {
+  seatNumber: number | string,
+  userName: string,
+}
+
 const api = axios.create({
-  baseURL: 'http://15.164.164.136:8080/',
+  baseURL: 'https://api.codesoom-myseat.site',
 });
 
 export const apis = {
   getReservation: () => api.get('/seat-reservations'),
-  deleteReservation: (seatNumber: any, data: any) => api.delete(`/seat-reservations${seatNumber}`, data),
 };
+
+export const deleteReservationFn = async (seatNumber: any, userName: string) => {
+  const response = await api.delete(`/seat-reservations/${seatNumber}`, {data: {userName}})
+  return response
+}
