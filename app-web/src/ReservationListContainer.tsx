@@ -31,17 +31,13 @@ function ReservationListContainer() {
     },
   });
 
-  // const onDeleteHandler = (seatNumber: string | number, userName: any) => {
-  //   deleteReservation()
-  // }
-
 
   return (
     <div>
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
         reservations={reservationData}
-        // onClickDelete={onDeleteHandler}
+        onClickDelete={deleteReservation}
       />
     </div>
   );
