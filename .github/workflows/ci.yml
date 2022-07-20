@@ -47,6 +47,7 @@ jobs:
         key: ${{ secrets.EC2_SECRET }}
         envs: GITHUB_SHA
         script: |
+          docker login -u jiy0ung -p ${{ secrets.DOCKER_TOKEN }}
           docker pull jiy0ung/myseat-backend:${GITHUB_SHA::7}
           docker stop server
           docker run -d --rm --name server -p 8080:8080 jiy0ung/myseat-backend:${GITHUB_SHA::7}
