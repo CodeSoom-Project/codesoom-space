@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-import { useAppDispatch, useAppSelector } from './hooks';
+import {useAppDispatch, useAppSelector} from './hooks';
 
 import ReservationForm from './ReservationForm';
 
-import { changeReservationFields } from './ReservationSlice';
+import {changeReservationFields} from './ReservationSlice';
 
 interface ReservationFields {
-  seatNumber: number;
+  seatNumber: number | string;
   userName: string,
   checkIn: string,
   checkOut: string,
@@ -29,14 +29,14 @@ function ReservationFormContainer() {
     checkOut,
   }: ReservationFields = reservationFields;
 
-  const handleChange = ({ name, value }: any) => {
-    dispatch(changeReservationFields({ name, value }));
+  const handleChange = ({name, value}: any) => {
+    dispatch(changeReservationFields({name, value}));
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    await axios.post(`http://15.164.164.136:8080/seat-reservation/${seatNumber}`, {
+    await axios.post(`https://api.codesoom-myseat.site/${seatNumber}`, {
       userName,
       checkIn,
       checkOut,

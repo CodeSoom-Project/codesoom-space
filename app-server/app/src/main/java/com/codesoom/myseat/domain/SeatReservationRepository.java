@@ -40,4 +40,13 @@ public interface SeatReservationRepository
      * @param s must not be {@literal null}. 삭제할 좌석 예약 정보
      */
     void delete(SeatReservation s);
+
+    /**
+     * 특정 좌석의 당일 예약 정보를 반환한다.
+     *
+     * @param today 오늘 날짜
+     * @param seatNumber 좌석 번호
+     * @return 좌석 예약 정보
+     */
+    Optional<SeatReservation> findByDateAndSeatNumber(String today, int seatNumber);
 }

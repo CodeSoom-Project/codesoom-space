@@ -1,13 +1,15 @@
-import { useQuery } from 'react-query';
-import { apis } from './reservationApi';
+import {useMutation, useQuery, useQueryClient} from 'react-query';
+import {apis, deleteReservationFn} from './reservationApi';
 import ReservationList from './ReservationList';
 
 function ReservationListContainer() {
+  const queryClient = useQueryClient();
+
   const {
-    data, isLoading, isError, isFetching,
+    data: reservationData,
+    isFetching,
   } = useQuery(
     'reservation',
-    // eslint-disable-next-line no-undef
     apis.getReservation,
     {
       refetchOnMount: true,
@@ -15,26 +17,27 @@ function ReservationListContainer() {
     },
   );
 
-  if (isLoading) {
-    return '예약 정보를 불러오는중입니다.';
+  const deleteSeat = async ({seatNumber, userName}: { seatNumber: string | number, userName: string }) => {
+    const deleteSeatResult = await deleteReservationFn(seatNumber, userName)
+    return deleteSeatResult
   }
 
-  if (isError) {
-    return '무언가 잘 못 돼었습니다.';
-  }
+  const {mutate: deleteReservation} = useMutation('deleteMutation', deleteSeat, {
+    onSuccess(data) {
+      queryClient.invalidateQueries('reservation');
+    },
+    onError(error: any) {
+      console.error(error);
+    },
+  });
 
-  // const {mutate} = useMutation(deleteReservation, {
-  //   onSuccess: (data) => {
-  //     queryClient.invalidateQueries('reservation');
-  //   },
-  // });
 
   return (
     <div>
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
-        data={data}
-        // onClickDelete={deleteReservationMutation}
+        reservations={reservationData}
+        onClickDelete={deleteReservation}
       />
     </div>
   );
