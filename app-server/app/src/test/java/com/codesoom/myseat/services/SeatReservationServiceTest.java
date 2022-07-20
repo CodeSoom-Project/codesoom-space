@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
@@ -29,7 +30,7 @@ class SeatReservationServiceTest {
     private static final String CHECK_IN = "09:30";
     private static final String CHECK_OUT = "17:30";
 
-    private SeatReservationService seatReservationService;
+    private SeatReservationService service;
 
     private final SeatRepository seatRepository
             = mock(SeatRepository.class);
@@ -40,8 +41,7 @@ class SeatReservationServiceTest {
 
     @BeforeEach
     void setUp() {
-        seatReservationService
-                = new SeatReservationService(seatRepository, seatReservationRepository);
+        service = new SeatReservationService(seatRepository, seatReservationRepository);
     }
 
     @Nested
@@ -81,7 +81,7 @@ class SeatReservationServiceTest {
         @DisplayName("예약 정보를 반환한다")
         class It_returns_seat_reservation_data {
             SeatReservation subject() {
-                return seatReservationService.addReservation(SEAT_NUMBER, seatReservationRequest);
+                return service.addReservation(SEAT_NUMBER, seatReservationRequest);
             }
 
             @Test
@@ -93,6 +93,30 @@ class SeatReservationServiceTest {
                 assertThat(seatReservation.getDate()).isEqualTo(DATE);
                 assertThat(seatReservation.getCheckIn()).isEqualTo(CHECK_IN);
                 assertThat(seatReservation.getCheckOut()).isEqualTo(CHECK_OUT);
+            }
+        }
+
+        @Nested
+        @DisplayName("만약 오늘 다른 좌석을 이미 예약했다면")
+        class Context_if_already_reserved_another_seat_today {
+            @BeforeEach
+            void setUp() {
+                given(service.checkAlreadyReservedToday(USER_NAME))
+                        .willThrow(new AlreadyReservedToday(USER_NAME));
+            }
+
+            SeatReservation subject() {
+                return service.addReservation(SEAT_NUMBER, seatReservationRequest);
+            }
+
+            @Nested
+            @DisplayName("AlreadyReservedToday 예외를 던진다")
+            class It_throws_already_reserved_today_exception {
+                @Test
+                void test() {
+                    assertThatThrownBy(() -> subject())
+                            .isInstanceOf(AlreadyReservedToday.class);
+                }
             }
         }
     }
