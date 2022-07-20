@@ -49,5 +49,6 @@ jobs:
         script: |
           docker login -u jiy0ung -p ${{ secrets.DOCKER_TOKEN }}
           docker pull jiy0ung/myseat-backend:${GITHUB_SHA::7}
-          docker stop server
-          docker run -d --rm --name server -p 8080:8080 jiy0ung/myseat-backend:${GITHUB_SHA::7}
+          docker stop myseat-backend-container
+          docker run -d --rm --name myseat-backend-container -p 8080:8080 jiy0ung/myseat-backend:${GITHUB_SHA::7}
+          docker network connect myseat-backend-network myseat-backend-container 
