@@ -40,3 +40,16 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run: |
         docker push jiy0ung/myseat-backend-image:${GITHUB_SHA::7}
+
+    - name: Deploy
+      if: github.ref == 'refs/heads/main'
+      uses: appleboy/ssh-action@master
+      with:
+        host: ec2-15-164-164-136.ap-northeast-2.compute.amazonaws.com
+        username: ec2-user
+        key: ${{ secrets.EC2_SECRET }}
+        envs: GITHUB_SHA
+        script: |
+          docker pull jiy0ung/myseat-backend-image:${GITHUB_SHA::7}
+          docker stop server
+          docker run -d --rm --name server -p 8080:8080 jiy0ung/myseat-backend-image:${GITHUB_SHA::7}
