@@ -49,4 +49,4 @@ jobs:
         script: |
           docker pull jiy0ung/myseat-backend:${GITHUB_SHA::7}
           docker stop server
-          docker run -d --rm --name server -p 8080:8080 jiy0ung/myseat-backend-image:${GITHUB_SHA::7}
+          docker run -d --rm --name server -p 8080:8080 jiy0ung/myseat-backend:${GITHUB_SHA::7}
