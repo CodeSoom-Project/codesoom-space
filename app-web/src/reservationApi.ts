@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 interface SeatType {
-  seatNumber: number;
+  seatNumber: string | number;
   userName: string;
 }
 
@@ -18,7 +18,6 @@ export const apis = {
   getReservation: () => api.get('/seat-reservations'),
 };
 
-export const deleteReservationFn = async (seatNumber: any, userName: string) => {
-  const response = await api.delete(`/seat-reservations/${seatNumber}`, {data: {userName}})
-  return response
+export const deleteReservationFn = (seatNumber: string | number, userName: string) => {
+  return api.delete(`/seat-reservations/${seatNumber}`, {data: {userName}})
 }
