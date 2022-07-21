@@ -22,9 +22,19 @@ export const deleteReservationFn = (seatNumber: string | number, userName: strin
   return api.delete(`/seat-reservations/${seatNumber}`, {data: {userName}})
 }
 
-const loginUser = async ({email, password}: { email: any, password: any }) => {
+export const loginUser = async ({email, password}: { email: any, password: any }) => {
   try {
     const {data} = await api.post("/user/signin", {email, password})
+    return data;
+  } catch (error: any) {
+    throw Error(error.response.data.message)
+  }
+}
+
+export const signupUser = async ({email, password, name}: { email: any, password: any, name: string }) => {
+  try {
+    const {data} = await api.post("/user/signup", {email, password, name})
+    return data;
   } catch (error: any) {
     throw Error(error.response.data.message)
   }

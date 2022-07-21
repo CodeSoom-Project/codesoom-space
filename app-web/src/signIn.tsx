@@ -1,9 +1,14 @@
 import Header from './components/Header';
 import {useForm} from "react-hook-form";
+import {useMutation} from "react-query";
+import {loginUser} from "./reservationApi";
 
 export default function SignIn() {
   const {register, formState: {errors}, handleSubmit} = useForm();
 
+  const {isLoading, error, isError, mutateAsync, data} = useMutation('login', loginUser);
+  console.log("data", data);
+  console.log(error);
 
   return (
     <>
@@ -11,7 +16,12 @@ export default function SignIn() {
       <main style={{padding: "1rem 0"}}>
         <h2>로그인</h2>
         <form
-          onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))
+          onSubmit={handleSubmit(async (data) => {
+            await mutateAsync({
+              email: data.email,
+              password: data.password,
+            })
+          })
           }>
 
           <label htmlFor="email">Email</label>
@@ -24,7 +34,7 @@ export default function SignIn() {
           <input {...register("password", {
             required: true,
           })} type="password" id="password"/>
-          
+
           {errors.name?.type === 'required' && '이름을 입력 해 주세요'}
           {errors.password?.type === 'required' && '비밀번호를 입력 해 주세요'}
 
