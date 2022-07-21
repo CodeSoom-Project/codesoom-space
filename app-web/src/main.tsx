@@ -22,9 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <BrowserRouter>
           <Routes>
-            <Route path="/" element={<App/>}/>
+            <Route path="/my-seat" element={<App/>}/>
             <Route path="signup" element={<SignUp/>}/>
             <Route path="signin" element={<SignIn/>}/>
           </Routes>
