@@ -1,8 +1,16 @@
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {apis, deleteReservationFn} from './reservationApi';
 import ReservationList from './ReservationList';
+import {useAppSelector} from "./hooks";
+
 
 function ReservationListContainer() {
+  const reservationFields = useAppSelector((state) => state.reservation.reservationFields);
+  const {
+    seatNumber,
+    userName,
+  }: { seatNumber: string | number; userName: string } = reservationFields;
+
   const queryClient = useQueryClient();
 
   const {
@@ -11,10 +19,6 @@ function ReservationListContainer() {
   } = useQuery(
     'reservation',
     apis.getReservation,
-    {
-      refetchOnMount: true,
-      refetchOnWindowFocus: true,
-    },
   );
 
   const deleteSeat = async ({seatNumber, userName}: { seatNumber: string | number, userName: string }) => {
@@ -31,13 +35,18 @@ function ReservationListContainer() {
     },
   });
 
+  const handleDeleteReservation = () => {
+    console.log('삭제중')
+    const deleteData = {seatNumber, userName}
+    deleteReservation(deleteData)
+  }
 
   return (
     <div>
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
         reservations={reservationData}
-        onClickDelete={deleteReservation}
+        onClickDelete={handleDeleteReservation}
       />
     </div>
   );
