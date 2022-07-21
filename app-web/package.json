@@ -1,4 +1,5 @@
 {
+  "homepage": "https://codesoom-project.github.io/my-seat/",
   "name": "my-seat-front",
   "private": true,
   "version": "0.0.0",
@@ -22,6 +23,7 @@
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
+    "@types/node": "^18.0.6",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
