@@ -21,3 +21,11 @@ export const apis = {
 export const deleteReservationFn = (seatNumber: string | number, userName: string) => {
   return api.delete(`/seat-reservations/${seatNumber}`, {data: {userName}})
 }
+
+const loginUser = async ({email, password}: { email: any, password: any }) => {
+  try {
+    const {data} = await api.post("/user/signin", {email, password})
+  } catch (error: any) {
+    throw Error(error.response.data.message)
+  }
+}
