@@ -36,7 +36,7 @@ function ReservationFormContainer() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    await axios.post(`https://api.codesoom-myseat.site/${seatNumber}`, {
+    await axios.post(`https://api.codesoom-myseat.site/seat-reservation/${seatNumber}`, {
       userName,
       checkIn,
       checkOut,
