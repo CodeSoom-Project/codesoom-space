@@ -3,7 +3,7 @@ name: Bug report
 about: 버그 발생 시 개선할 수 있도록 이슈를 작성합니다.
 title: ''
 labels: bug
-assignees: JIY0UNG
+assignees: ''
 
 ---
 
