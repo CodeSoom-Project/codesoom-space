@@ -14,7 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seats")
-@CrossOrigin(origins = "https://codesoom-project.github.io/my-seat")
+@CrossOrigin(origins = "https://codesoom-project.github.io/my-seat/")
 public class SeatListController {
     private final SeatListService service;
 
@@ -24,7 +24,7 @@ public class SeatListController {
 
     /**
      * 상태코드 200과 좌석 목록을 응답한다.
-     * 
+     *
      * @return 좌석 목록
      */
     @GetMapping

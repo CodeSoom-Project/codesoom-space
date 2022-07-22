@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/seat-reservation")
-@CrossOrigin(origins = "https://codesoom-project.github.io/my-seat")
+@CrossOrigin(origins = "https://codesoom-project.github.io/my-seat/")
 public class SeatReservationController {
     private final SeatReservationService service;
 
