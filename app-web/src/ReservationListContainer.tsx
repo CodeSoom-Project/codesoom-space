@@ -1,5 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from 'react-query';
-import {apis, deleteReservationFn} from './reservationApi';
+import {apis, deleteReservationFn} from './api';
 import ReservationList from './ReservationList';
 import {useAppSelector} from "./hooks";
 
