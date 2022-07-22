@@ -1,7 +1,7 @@
 import Header from './components/Header';
 import {useForm} from "react-hook-form";
 import {useMutation} from "react-query";
-import {signupUser} from "./reservationApi";
+import {signupUser} from "./api";
 
 export default function SignUp() {
   const {register, formState: {errors}, handleSubmit} = useForm();
@@ -21,6 +21,7 @@ export default function SignUp() {
             await mutateAsync({
               email: data.email,
               password: data.password,
+              passwordCheck: data.passwordCheck,
               name: data.name,
             })
           })

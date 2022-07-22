@@ -1,7 +1,7 @@
 import Header from './components/Header';
 import {useForm} from "react-hook-form";
 import {useMutation} from "react-query";
-import {loginUser} from "./reservationApi";
+import {loginUser} from "./api";
 
 export default function SignIn() {
   const {register, formState: {errors}, handleSubmit} = useForm();
