@@ -22,7 +22,7 @@ function ReservationListContainer() {
   );
 
   const deleteSeat = async ({seatNumber, userName}: { seatNumber: string | number, userName: string }) => {
-    const deleteSeatResult = await deleteReservationFn(seatNumber, userName)
+    const deleteSeatResult = await deleteReservationFn({seatNumber, userName})
     return deleteSeatResult
   }
 
@@ -35,18 +35,16 @@ function ReservationListContainer() {
     },
   });
 
-  const handleDeleteReservation = () => {
-    console.log('삭제중')
-    const deleteData = {seatNumber, userName}
-    deleteReservation(deleteData)
-  }
+  // const handleDeleteReservation = () => {
+  //   console.log('삭제중')
+  // }
 
   return (
     <div>
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
         reservations={reservationData}
-        onClickDelete={handleDeleteReservation}
+        onClickDelete={deleteReservation}
       />
     </div>
   );
