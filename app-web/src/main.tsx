@@ -7,9 +7,15 @@ import {Provider} from 'react-redux';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {ReactQueryDevtools} from 'react-query/devtools';
 
+import {BrowserRouter, Route, Routes,} from 'react-router-dom'
+
 
 import App from './App';
 import './index.css';
+
+import SignUp from "./signUp";
+import NotFound from "./NotFound";
+import SignInContainer from "./signInContainer";
 
 const queryClient = new QueryClient();
 
@@ -17,7 +23,15 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <App/>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App/>}/>
+            <Route path="signup" element={<SignUp/>}/>
+            <Route path="signin" element={<SignInContainer/>}/>
+            <Route path="*" element={<NotFound/>}/>
+          </Routes>
+        </BrowserRouter>
+
         <ReactQueryDevtools initialIsOpen/>
       </Provider>
     </QueryClientProvider>

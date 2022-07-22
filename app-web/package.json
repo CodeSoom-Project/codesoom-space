@@ -1,4 +1,5 @@
 {
+  "homepage": "https://codesoom-project.github.io/my-seat/",
   "name": "my-seat-front",
   "private": true,
   "version": "0.0.0",
@@ -18,9 +19,11 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.33.1",
     "react-query": "^3.39.2",
-    "react-redux": "^8.0.2"
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
+    "@types/node": "^18.0.6",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
@@ -29,7 +32,6 @@
     "buffer": "^6.0.3",
     "eslint": "^8.20.0",
     "gh-pages": "^4.0.0",
-    "process": "^0.11.10",
     "typescript": "^4.7.4"
   }
 }
