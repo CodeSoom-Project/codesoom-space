@@ -101,8 +101,14 @@ class SeatReservationServiceTest {
         class Context_if_already_reserved_another_seat_today {
             @BeforeEach
             void setUp() {
-                given(service.checkAlreadyReservedToday(USER_NAME))
-                        .willThrow(new AlreadyReservedToday(USER_NAME));
+                given(seatReservationRepository.findByDateAndUserName(DATE, USER_NAME))
+                        .willReturn(Optional.of(SeatReservation.builder()
+                                .id(2L)
+                                .seatNumber(SEAT_NUMBER - 1)
+                                .userName(USER_NAME)
+                                .date(DATE)
+                                .checkIn(CHECK_IN)
+                                .checkOut(CHECK_OUT).build()));
             }
 
             SeatReservation subject() {
