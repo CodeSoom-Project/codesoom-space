@@ -1,22 +1,12 @@
-import Header from './components/Header';
-import {useForm} from "react-hook-form";
-import {useMutation} from "react-query";
-import {loginUser} from "./api";
-
-export default function SignIn() {
-  const {register, formState: {errors}, handleSubmit} = useForm();
-
-  const {isLoading, error, isError, mutateAsync, data} = useMutation('login', loginUser);
-  console.log("data", data);
-  console.log(error);
+export default function SignIn({register, errors, handleSubmit, error, mutateAsync}:
+                                 { register: any, errors: any, handleSubmit: any, error: any, mutateAsync: any }) {
 
   return (
     <>
-      <Header/>
       <main style={{padding: "1rem 0"}}>
         <h2>로그인</h2>
         <form
-          onSubmit={handleSubmit(async (data) => {
+          onSubmit={handleSubmit(async (data: any) => {
             await mutateAsync({
               email: data.email,
               password: data.password,
