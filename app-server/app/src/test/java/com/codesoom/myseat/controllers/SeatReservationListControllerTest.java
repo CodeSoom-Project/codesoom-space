@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(SeatReservationListController.class)
-@AutoConfigureRestDocs(uriScheme = "http", uriHost = "15.164.164.136", uriPort = 8080)
+@AutoConfigureRestDocs(uriScheme = "https", uriHost = "api.codesoom-myseat.site")
 class SeatReservationListControllerTest {
     private static final int SEAT_NUMBER = 3;
     private static final String USER_NAME = "코드숨";
