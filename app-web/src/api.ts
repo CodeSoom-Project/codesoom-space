@@ -18,7 +18,7 @@ export const apis = {
   getReservation: () => api.get('/seat-reservations'),
 };
 
-export const deleteReservationFn = (seatNumber: string | number, userName: string) => {
+export const deleteReservationFn = async ({seatNumber, userName}: { seatNumber: any, userName: string }) => {
   return api.delete(`/seat-reservation/${seatNumber}`, {data: {userName}})
 }
 
