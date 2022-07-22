@@ -15,7 +15,6 @@ import './index.css';
 
 import SignUp from "./signUp";
 import NotFound from "./NotFound";
-import seatReservationInfo from "./seatReservationInfo";
 import SignInContainer from "./signInContainer";
 
 const queryClient = new QueryClient();
@@ -27,7 +26,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App/>}/>
-            <Route path=":seatId" element={<seatReservationInfo/>}/>
             <Route path="signup" element={<SignUp/>}/>
             <Route path="signin" element={<SignInContainer/>}/>
             <Route path="*" element={<NotFound/>}/>
