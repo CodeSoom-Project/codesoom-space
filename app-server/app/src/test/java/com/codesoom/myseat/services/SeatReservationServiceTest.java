@@ -5,6 +5,7 @@ import com.codesoom.myseat.domain.SeatRepository;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.domain.SeatReservationRepository;
 import com.codesoom.myseat.dto.SeatReservationRequest;
+import com.codesoom.myseat.exceptions.UserAlreadyReservedSeatTodayException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -116,12 +117,12 @@ class SeatReservationServiceTest {
             }
 
             @Nested
-            @DisplayName("AlreadyReservedToday 예외를 던진다")
-            class It_throws_already_reserved_today_exception {
+            @DisplayName("UserAlreadyReservedSeatTodayException 예외를 던진다")
+            class It_throws_user_already_reserved_seat_today_exception {
                 @Test
                 void test() {
                     assertThatThrownBy(() -> subject())
-                            .isInstanceOf(AlreadyReservedToday.class);
+                            .isInstanceOf(UserAlreadyReservedSeatTodayException.class);
                 }
             }
         }
