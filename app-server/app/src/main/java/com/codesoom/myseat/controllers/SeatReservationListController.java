@@ -14,7 +14,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seat-reservations")
-@CrossOrigin(origins = "https://codesoom-project.github.io/my-seat")
+@CrossOrigin(
+        origins = "https://codesoom-project.github.io",
+        allowedHeaders = "*",
+        allowCredentials = "true")
 public class SeatReservationListController {
     private final SeatReservationListService service;
 
