@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/seat")
+@CrossOrigin(origins = "https://codesoom-project.github.io/my-seat")
 public class SeatAddController {
     private final SeatAddService service;
 
@@ -21,7 +22,7 @@ public class SeatAddController {
 
     /**
      * 좌석을 추가한 후 상태코드 201과 좌석 정보를 응답한다.
-     * 
+     *
      * @param request 추가할 좌석 정보
      * @return 좌석 정보
      */

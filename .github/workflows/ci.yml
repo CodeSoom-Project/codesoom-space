@@ -1,0 +1,55 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: ./app-server
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+    - run: chmod +x gradlew
+    - name: Assemble
+      run: ./gradlew assemble
+
+    - name: Docker build
+      if: github.ref == 'refs/heads/main'
+      run: docker build . -t jiy0ung/myseat-backend:${GITHUB_SHA::7}
+    
+    - name: Docker push
+      if: github.ref == 'refs/heads/main'
+      run: |
+        docker login -u jiy0ung -p ${{ secrets.DOCKER_TOKEN }}
+        docker push jiy0ung/myseat-backend:${GITHUB_SHA::7}
+
+    - name: Deploy
+      if: github.ref == 'refs/heads/main'
+      uses: appleboy/ssh-action@master
+      with:
+        host: ec2-15-164-164-136.ap-northeast-2.compute.amazonaws.com
+        username: ec2-user
+        key: ${{ secrets.EC2_SECRET }}
+        envs: GITHUB_SHA
+        script: |
+          docker login -u jiy0ung -p ${{ secrets.DOCKER_TOKEN }}
+          docker pull jiy0ung/myseat-backend:${GITHUB_SHA::7}
+          docker stop myseat-backend-container
+          docker rm myseat-backend-container
+          docker run -d --name myseat-backend-container -p 8080:8080 jiy0ung/myseat-backend:${GITHUB_SHA::7}
+          docker network connect myseat-backend-network myseat-backend-container 

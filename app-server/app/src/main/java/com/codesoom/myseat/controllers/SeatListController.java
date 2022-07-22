@@ -14,7 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seats")
-@CrossOrigin
+@CrossOrigin(origins = "https://codesoom-project.github.io/my-seat")
 public class SeatListController {
     private final SeatListService service;
 
