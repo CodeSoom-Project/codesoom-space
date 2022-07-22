@@ -19,7 +19,7 @@ export const apis = {
 };
 
 export const deleteReservationFn = (seatNumber: string | number, userName: string) => {
-  return api.delete(`/seat-reservations/${seatNumber}`, {data: {userName}})
+  return api.delete(`/seat-reservation/${seatNumber}`, {data: {userName}})
 }
 
 export const loginUser = async ({email, password}: { email: any, password: any }) => {
