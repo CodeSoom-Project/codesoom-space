@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/seat-reservation")
 @CrossOrigin(
-        origins = "https://codesoom-project.github.io",
+        origins = "https://codesoom-project.github.io/",
         allowedHeaders = "*",
         allowCredentials = "true")
 public class SeatReservationController {
