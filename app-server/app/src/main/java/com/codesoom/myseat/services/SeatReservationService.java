@@ -7,6 +7,8 @@ import com.codesoom.myseat.domain.SeatReservationRepository;
 import com.codesoom.myseat.dto.SeatReservationRequest;
 import com.codesoom.myseat.exceptions.SeatAlreadyReservedException;
 import com.codesoom.myseat.exceptions.SeatNotFoundException;
+import com.codesoom.myseat.exceptions.SeatReservationNotFoundException;
+import com.codesoom.myseat.exceptions.UserAlreadyReservedSeatTodayException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,22 +38,30 @@ public class SeatReservationService {
      * @return 좌석 예약 정보
      * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
      * @throws SeatAlreadyReservedException 좌석이 이미 예약된 상태일 경우 예외를 던진다.
+     * @throws UserAlreadyReservedSeatTodayException 회원의 당일 예약 내역이 이미 있는 경우 예외를 던진다.
      */
     public SeatReservation addReservation(
             int seatNumber,
             SeatReservationRequest request
     ) {
         Seat seat = checkReservationStatus(seatNumber);
-        seat.reserve(request.getUserName());
+        SeatReservation reservation;
+        try {
+            reservation = checkAlreadyReservedToday(request.getUserName());
+        } catch (SeatReservationNotFoundException e) {
+            seat.reserve(request.getUserName());
 
-        return reservationRepository.save(
-                SeatReservation.builder()
-                        .seatNumber(seatNumber)
-                        .userName(request.getUserName())
-                        .date(today())
-                        .checkIn(request.getCheckIn())
-                        .checkOut(request.getCheckOut())
-                        .build());
+            return reservationRepository.save(
+                    SeatReservation.builder()
+                            .seatNumber(seatNumber)
+                            .userName(request.getUserName())
+                            .date(today())
+                            .checkIn(request.getCheckIn())
+                            .checkOut(request.getCheckOut())
+                            .build());
+        }
+        throw new UserAlreadyReservedSeatTodayException(
+                "[" + request.getUserName() + "]회원은 이미 당일 예약이 있으므로 예약에 실패했습니다.");
     }
 
     /**
@@ -94,5 +104,18 @@ public class SeatReservationService {
     private String today() {
         LocalDateTime now = LocalDateTime.now();
         return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    /**
+     * 회원의 당일 예약 내역을 반환한다.
+     *
+     * @param userName 회원 이름
+     * @return 회원의 당일 예약 내역
+     * @throws SeatReservationNotFoundException 좌석 예약 내역을 찾을 수 없는 경우 예외를 던진다.
+     */
+    public SeatReservation checkAlreadyReservedToday(String userName) {
+        return reservationRepository.findByDateAndUserName(today(), userName)
+                .orElseThrow(() -> new SeatReservationNotFoundException(
+                        "[" + userName + "]회원의 당일 예약 내역을 찾을 수 없어서 조회에 실패했습니다."));
     }
 }

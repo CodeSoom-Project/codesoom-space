@@ -4,6 +4,7 @@ import com.codesoom.myseat.dto.ErrorResponse;
 import com.codesoom.myseat.exceptions.SeatAlreadyReservedException;
 import com.codesoom.myseat.exceptions.SeatNotFoundException;
 import com.codesoom.myseat.exceptions.SeatReservationNotFoundException;
+import com.codesoom.myseat.exceptions.UserAlreadyReservedSeatTodayException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,5 +48,16 @@ public class ControllerErrorAdvice {
     @ExceptionHandler(SeatReservationNotFoundException.class)
     public ErrorResponse handleSeatReservationNotFound() {
         return new ErrorResponse("좌석 예약 목록을 찾을 수 없습니다.");
+    }
+
+    /**
+     * 회원의 당일 예약 내역이 존재할 때 에러메시지를 반환한다.
+     *
+     * @return 에러메시지
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserAlreadyReservedSeatTodayException.class)
+    public ErrorResponse handleUserAlreadyReservedSeatToday() {
+        return new ErrorResponse("당일 예약 내역이 존재하여 예약이 불가합니다");
     }
 }
