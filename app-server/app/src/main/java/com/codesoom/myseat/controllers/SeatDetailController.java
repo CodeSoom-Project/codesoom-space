@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/seat")
-@CrossOrigin(origins = "https://codesoom-project.github.io/my-seat/")
+@CrossOrigin(
+        origins = "https://codesoom-project.github.io/my-seat/",
+        allowedHeaders = "*",
+        allowCredentials = "true")
 public class SeatDetailController {
     private final SeatDetailService service;
 
