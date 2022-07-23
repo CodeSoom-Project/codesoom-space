@@ -19,28 +19,18 @@ export const apis = {
 };
 
 export const deleteReservationFn = async ({seatNumber, userName}: { seatNumber: any, userName: string }) => {
-  return api.delete(`/seat-reservation/${seatNumber}`, {data: {userName}})
+  return await api.delete(`/seat-reservation/${seatNumber}`, {data: {userName}})
 }
 
-export const loginUser = async ({email, password}: { email: any, password: any }) => {
-  try {
-    const {data} = await api.post("/user/signin", {email, password})
-    return data;
-  } catch (error: any) {
-    throw Error(error.response.data.message)
-  }
+export const loginUserFn = async ({email, password}: { email: any, password: any }) => {
+  return await api.post("/user/signin", {email, password})
 }
 
-export const signupUser = async ({
-                                   email,
-                                   password,
-                                   passwordCheck,
-                                   name
-                                 }: { email: any, password: any, passwordCheck: any, name: string }) => {
-  try {
-    const {data} = await api.post("/user/signup", {email, password, name, passwordCheck})
-    return data;
-  } catch (error: any) {
-    throw Error(error.response.data.message)
-  }
+export const signUpUserFn = async ({
+                                     email,
+                                     password,
+                                     passwordCheck,
+                                     name
+                                   }: { email: any, password: any, passwordCheck: any, name: string }) => {
+  return await api.post("/user/signup", {email, password, name, passwordCheck})
 }

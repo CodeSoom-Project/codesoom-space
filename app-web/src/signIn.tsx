@@ -1,5 +1,5 @@
-export default function SignIn({register, errors, handleSubmit, error, mutateAsync}:
-                                 { register: any, errors: any, handleSubmit: any, error: any, mutateAsync: any }) {
+export default function SignIn({register, errors, handleSubmit, error, mutate}:
+                                 { register: any, errors: any, handleSubmit: any, error: any, mutate: any }) {
 
   return (
     <>
@@ -7,7 +7,7 @@ export default function SignIn({register, errors, handleSubmit, error, mutateAsy
         <h2>로그인</h2>
         <form
           onSubmit={handleSubmit(async (data: any) => {
-            await mutateAsync({
+            await mutate({
               email: data.email,
               password: data.password,
             })

@@ -1,13 +1,23 @@
 import Header from './components/Header';
 import {useForm} from "react-hook-form";
 import {useMutation} from "react-query";
-import {signupUser} from "./api";
 import SignUp from "./signUp";
+import {signUpUserFn} from "./api";
 
 export default function SignUpContainer() {
   const {register, formState: {errors}, handleSubmit} = useForm();
 
-  const {isLoading, error, isError, mutateAsync, data} = useMutation('signup', signupUser);
+  const signUpMutate = async ({
+                                email,
+                                password,
+                                passwordCheck,
+                                name
+                              }: { email: any, password: string, passwordCheck: any, name: any }) => {
+    const signUpResult = await signUpUserFn({email, password, passwordCheck, name})
+    return signUpResult
+  }
+
+  const {isLoading, error, isError, mutate, data} = useMutation('signup', signUpMutate);
   console.log("data", data);
   console.log(error);
 
@@ -20,7 +30,7 @@ export default function SignUpContainer() {
         errors={errors}
         handleSubmit={handleSubmit}
         error={error}
-        mutateAsync={mutateAsync}
+        mutate={mutate}
       />
     </>
   )
