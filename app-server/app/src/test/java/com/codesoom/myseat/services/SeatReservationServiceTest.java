@@ -5,6 +5,7 @@ import com.codesoom.myseat.domain.SeatRepository;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.domain.SeatReservationRepository;
 import com.codesoom.myseat.dto.SeatReservationRequest;
+import com.codesoom.myseat.exceptions.UserAlreadyReservedSeatTodayException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
@@ -29,7 +31,7 @@ class SeatReservationServiceTest {
     private static final String CHECK_IN = "09:30";
     private static final String CHECK_OUT = "17:30";
 
-    private SeatReservationService seatReservationService;
+    private SeatReservationService service;
 
     private final SeatRepository seatRepository
             = mock(SeatRepository.class);
@@ -40,8 +42,7 @@ class SeatReservationServiceTest {
 
     @BeforeEach
     void setUp() {
-        seatReservationService
-                = new SeatReservationService(seatRepository, seatReservationRepository);
+        service = new SeatReservationService(seatRepository, seatReservationRepository);
     }
 
     @Nested
@@ -81,7 +82,7 @@ class SeatReservationServiceTest {
         @DisplayName("예약 정보를 반환한다")
         class It_returns_seat_reservation_data {
             SeatReservation subject() {
-                return seatReservationService.addReservation(SEAT_NUMBER, seatReservationRequest);
+                return service.addReservation(SEAT_NUMBER, seatReservationRequest);
             }
 
             @Test
@@ -93,6 +94,36 @@ class SeatReservationServiceTest {
                 assertThat(seatReservation.getDate()).isEqualTo(DATE);
                 assertThat(seatReservation.getCheckIn()).isEqualTo(CHECK_IN);
                 assertThat(seatReservation.getCheckOut()).isEqualTo(CHECK_OUT);
+            }
+        }
+
+        @Nested
+        @DisplayName("만약 오늘 다른 좌석을 이미 예약했다면")
+        class Context_if_already_reserved_another_seat_today {
+            @BeforeEach
+            void setUp() {
+                given(seatReservationRepository.findByDateAndUserName(DATE, USER_NAME))
+                        .willReturn(Optional.of(SeatReservation.builder()
+                                .id(2L)
+                                .seatNumber(SEAT_NUMBER - 1)
+                                .userName(USER_NAME)
+                                .date(DATE)
+                                .checkIn(CHECK_IN)
+                                .checkOut(CHECK_OUT).build()));
+            }
+
+            SeatReservation subject() {
+                return service.addReservation(SEAT_NUMBER, seatReservationRequest);
+            }
+
+            @Nested
+            @DisplayName("UserAlreadyReservedSeatTodayException 예외를 던진다")
+            class It_throws_user_already_reserved_seat_today_exception {
+                @Test
+                void test() {
+                    assertThatThrownBy(() -> subject())
+                            .isInstanceOf(UserAlreadyReservedSeatTodayException.class);
+                }
             }
         }
     }
