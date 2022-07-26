@@ -23,7 +23,18 @@ export const deleteReservationFn = async ({seatNumber, userName}: { seatNumber: 
 }
 
 export const loginUserFn = async ({email, password}: { email: any, password: any }) => {
-  return await api.post("/user/signin", {email, password})
+  return await api
+    .post("/user/signin", {
+      email,
+      password,
+    })
+    .then((response) => {
+      if (response.data.accessToken) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+
+      return response.data;
+    })
 }
 
 export const signUpUserFn = async ({
@@ -32,5 +43,22 @@ export const signUpUserFn = async ({
                                      passwordCheck,
                                      name
                                    }: { email: any, password: any, passwordCheck: any, name: string }) => {
-  return await api.post("/user/signup", {email, password, name, passwordCheck})
+  return await api
+    .post("/user/signup", {
+      email,
+      password,
+      name,
+      passwordCheck
+    })
+    .then((response) => {
+      if (response.data.accessToken) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+
+      return response.data;
+    })
+}
+
+export const logoutUser = () => {
+  localStorage.removeItem("user");
 }

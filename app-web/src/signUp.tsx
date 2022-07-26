@@ -1,5 +1,8 @@
+import {useNavigate} from "react-router-dom";
+
 export default function SignUp({register, errors, handleSubmit, error, mutate}:
                                  { register: any, errors: any, handleSubmit: any, error: any, mutate: any }) {
+  const navigate = useNavigate();
 
   return (
     <>
