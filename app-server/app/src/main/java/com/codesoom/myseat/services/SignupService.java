@@ -1,6 +1,8 @@
 package com.codesoom.myseat.services;
 
+import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.domain.UserRepository;
+import com.codesoom.myseat.dto.SignupRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +14,9 @@ public class SignupService {
 
     public SignupService(UserRepository repository) {
         this.repository = repository;
+    }
+
+    public User signUp(SignupRequest request) {
+        return null;
     }
 }
