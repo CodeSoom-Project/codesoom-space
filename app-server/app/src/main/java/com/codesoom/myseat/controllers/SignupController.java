@@ -21,8 +21,14 @@ public class SignupController {
         this.service = service;
     }
 
+    /**
+     * 회원 가입 후 상태 코드 201을 응답한다.
+     * 
+     * @param request 회원 가입 정보
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void signUp(@RequestBody SignupRequest request) {
+        service.signUp(request);
     }
 }
