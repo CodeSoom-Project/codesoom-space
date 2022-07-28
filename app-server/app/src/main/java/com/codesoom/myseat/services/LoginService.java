@@ -16,6 +16,10 @@ public class LoginService {
     }
 
     public String login(LoginRequest request) {
+        // TODO: 인증
+        //  - 로그인 dto의 비밀번호가 회원 정보와 일치하는지 확인
+        //  - 일치하면 유효한 토큰 반환
+        //  - 일치하지 않으면 예외 던짐
         return null;
     }
 }
