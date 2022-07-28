@@ -22,9 +22,27 @@ public class LoginController {
         this.service = service;
     }
 
+    /**
+     * 로그인 후 상태코드 200과 토큰을 응답한다.
+     * 
+     * @param request
+     * @return
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public LoginResponse login(@RequestBody LoginRequest request) {
-        return null;
+        return toResponse(service.login(request));
+    }
+
+    /**
+     * 응답 정보를 반환한다.
+     *
+     * @param token 토큰
+     * @return 응답 정보
+     */
+    private LoginResponse toResponse(String token) {
+        return LoginResponse.builder()
+                .token(token)
+                .build();
     }
 }
