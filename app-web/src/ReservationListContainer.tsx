@@ -35,10 +35,6 @@ function ReservationListContainer() {
     },
   });
 
-  // const handleDeleteReservation = () => {
-  //   console.log('삭제중')
-  // }
-
   return (
     <div>
       {isFetching && '예약 정보를 받아오고 있습니다...'}

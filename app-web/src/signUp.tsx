@@ -1,24 +1,16 @@
-import Header from './components/Header';
-import {useForm} from "react-hook-form";
-import {useMutation} from "react-query";
-import {signupUser} from "./api";
+import {useNavigate} from "react-router-dom";
 
-export default function SignUp() {
-  const {register, formState: {errors}, handleSubmit} = useForm();
-
-  const {isLoading, error, isError, mutateAsync, data} = useMutation('signup', signupUser);
-  console.log("data", data);
-  console.log(error);
-
+export default function SignUp({register, errors, handleSubmit, error, mutate}:
+                                 { register: any, errors: any, handleSubmit: any, error: any, mutate: any }) {
+  const navigate = useNavigate();
 
   return (
     <>
-      <Header/>
       <main style={{padding: "1rem 0"}}>
         <h2>회원 가입</h2>
         <form
-          onSubmit={handleSubmit(async (data) => {
-            await mutateAsync({
+          onSubmit={handleSubmit(async (data: any) => {
+            await mutate({
               email: data.email,
               password: data.password,
               passwordCheck: data.passwordCheck,
