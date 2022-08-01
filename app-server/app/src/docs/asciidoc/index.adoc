@@ -69,3 +69,13 @@ include::{snippets}/signup/request-fields.adoc[]
 
 ==== RESPONSE
 include::{snippets}/signup/http-response.adoc[]
+
+=== 로그인
+
+==== REQUEST
+include::{snippets}/login/http-request.adoc[]
+include::{snippets}/login/request-fields.adoc[]
+
+==== RESPONSE
+include::{snippets}/login/http-response.adoc[]
+include::{snippets}/login/response-fields.adoc[]
