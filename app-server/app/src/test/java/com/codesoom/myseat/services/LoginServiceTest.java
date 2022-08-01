@@ -3,6 +3,7 @@ package com.codesoom.myseat.services;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.domain.UserRepository;
 import com.codesoom.myseat.dto.LoginRequest;
+import com.codesoom.myseat.utils.TokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,11 +17,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class LoginServiceTest {
+    private static final String SECRET = "12345678901234567890123456789012";
+    
     private static final String EMAIL = "test@example.com";
     private static final String PASSWORD = "test";
     private static final String TOKEN = "eyJhbGciOiJIUzI1NiJ9" +
-            ".eyJ1c2VySWQiOjF9" +
-            ".ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
+            ".eyJhdXRoIjoidGVzdEBleGFtcGxlLmNvbSJ9" +
+            ".Yoy-ZsU4g7tSfvQXEZynoHtGaSKJtrt09zNVlrR0GOE";
     private static final Long USER_ID = 1L;
     private static final String NAME = "코드숨";
 
@@ -32,7 +35,9 @@ class LoginServiceTest {
 
     @BeforeEach
     void setUp() {
-        service = new LoginService(repository);
+        TokenProvider tokenProvider = new TokenProvider(SECRET);
+
+        service = new LoginService(repository, tokenProvider);
     }
 
     @Nested
