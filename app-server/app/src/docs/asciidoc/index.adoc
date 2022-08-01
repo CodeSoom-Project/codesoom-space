@@ -58,3 +58,14 @@ include::{snippets}/seat-reservation-cancel/http-request.adoc[]
 
 ==== RESPONSE
 include::{snippets}/seat-reservation-cancel/http-response.adoc[]
+
+== 회원 API
+
+=== 회원 가입
+
+==== REQUEST
+include::{snippets}/signup/http-request.adoc[]
+include::{snippets}/signup/request-fields.adoc[]
+
+==== RESPONSE
+include::{snippets}/signup/http-response.adoc[]
