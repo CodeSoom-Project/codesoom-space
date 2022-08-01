@@ -1,17 +1,9 @@
 import axios from 'axios';
 
-interface SeatType {
-  seatNumber: string | number;
-  userName: string;
-}
-
-interface deleteReservationVariables {
-  seatNumber: number | string,
-  userName: string,
-}
+const BASE_URL = 'https://api.codesoom-myseat.site'
 
 const api = axios.create({
-  baseURL: 'https://api.codesoom-myseat.site',
+  baseURL: BASE_URL,
 });
 
 export const apis = {
@@ -23,14 +15,22 @@ export const deleteReservationFn = async ({seatNumber, userName}: { seatNumber: 
 }
 
 export const loginUserFn = async ({email, password}: { email: any, password: any }) => {
-  return await api.post("/user/signin", {email, password})
+  return await api
+    .post("/login", {
+      email,
+      password,
+    })
 }
 
 export const signUpUserFn = async ({
                                      email,
                                      password,
-                                     passwordCheck,
                                      name
-                                   }: { email: any, password: any, passwordCheck: any, name: string }) => {
-  return await api.post("/user/signup", {email, password, name, passwordCheck})
+                                   }: { email: any, password: any, name: string }) => {
+  return await api
+    .post("/signup", {
+      email,
+      password,
+      name,
+    })
 }

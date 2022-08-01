@@ -10,14 +10,17 @@ export default function SignUpContainer() {
   const signUpMutate = async ({
                                 email,
                                 password,
-                                passwordCheck,
                                 name
                               }: { email: any, password: string, passwordCheck: any, name: any }) => {
-    const signUpResult = await signUpUserFn({email, password, passwordCheck, name})
+    const signUpResult = await signUpUserFn({email, password, name})
     return signUpResult
   }
 
-  const {isLoading, error, isError, mutate, data} = useMutation('signup', signUpMutate);
+  const {isLoading, error, isError, mutate, data} = useMutation('signup', signUpMutate, {
+    onSuccess: async () => {
+      console.log("회원가입 성공")
+    }
+  });
   console.log("data", data);
   console.log(error);
 
