@@ -14,7 +14,6 @@ export default function SignInContainer() {
   const loginMutate = async ({email, password}: { email: any, password: string }) => {
     const accessToken = await loginUserFn({email, password})
     return accessToken
-    // accessToken말고 지금 data를 넘기고 있을 수 있음 accessToken을 꺼내오자.아마도?
   }
 
   const {isLoading, error, isError, mutate, data} = useMutation('login', loginMutate, {
