@@ -11,7 +11,7 @@ export default function SignUpContainer() {
                                 email,
                                 password,
                                 name
-                              }: { email: any, password: string, passwordCheck: any, name: any }) => {
+                              }: { email: any, password: string, name: any }) => {
     const signUpResult = await signUpUserFn({email, password, name})
     return signUpResult
   }

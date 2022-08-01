@@ -10,7 +10,6 @@ export default function SignUp({register, errors, handleSubmit, error, mutate}:
             await mutate({
               email: data.email,
               password: data.password,
-              passwordCheck: data.passwordCheck,
               name: data.name,
             })
           })
