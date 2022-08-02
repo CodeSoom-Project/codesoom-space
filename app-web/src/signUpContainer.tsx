@@ -41,10 +41,7 @@ export default function SignUpContainer() {
       console.error(e);
     }
   });
-  console.log("data", data);
-  console.log(error);
-
-
+  
   return (
     <>
       <Header/>
