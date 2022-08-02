@@ -33,4 +33,4 @@ export const signUpUserFn = async ({
       password,
       name,
     })
-}
+}    
