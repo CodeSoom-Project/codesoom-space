@@ -3,18 +3,29 @@ import {useMutation} from "react-query";
 import {loginUserFn} from "./api";
 import SignIn from "./signIn";
 import Header from "./components/Header";
+import {setAccessToken} from "./authSlice";
+import {useAppDispatch} from "./hooks";
+import {useNavigate} from "react-router-dom";
 
 export default function SignInContainer() {
+  const dispatch = useAppDispatch();
+
   const {register, formState: {errors}, handleSubmit} = useForm();
 
+  const navigate = useNavigate();
+
   const loginMutate = async ({email, password}: { email: any, password: string }) => {
-    const loginResult = await loginUserFn({email, password})
-    return loginResult
+    const accessToken = await loginUserFn({email, password})
+    return accessToken
   }
 
-  const {isLoading, error, isError, mutate, data} = useMutation('login', loginMutate);
-  console.log("data", data);
-  console.log(error);
+  const {isLoading, error, isError, mutate, data} = useMutation('login', loginMutate, {
+    onSuccess: async () => {
+      dispatch(setAccessToken(loginMutate))
+      console.log("login 성공")
+      navigate("/", {replace: true})
+    }
+  });
 
   return (
     <>

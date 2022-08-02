@@ -1,8 +1,5 @@
-import {useNavigate} from "react-router-dom";
-
-export default function SignUp({register, errors, handleSubmit, error, mutate}:
-                                 { register: any, errors: any, handleSubmit: any, error: any, mutate: any }) {
-  const navigate = useNavigate();
+export default function SignUp({register, errors, handleSubmit, error, mutate, watch, setError}:
+                                 { register: any, errors: any, handleSubmit: any, error: any, mutate: any, watch: any, setError: any }) {
 
   return (
     <>
@@ -13,7 +10,6 @@ export default function SignUp({register, errors, handleSubmit, error, mutate}:
             await mutate({
               email: data.email,
               password: data.password,
-              passwordCheck: data.passwordCheck,
               name: data.name,
             })
           })
@@ -35,10 +31,12 @@ export default function SignUp({register, errors, handleSubmit, error, mutate}:
             required: true,
           })} type="password" id="password"/>
 
-          <label htmlFor="password">비밀번호 확인</label>
+          <label htmlFor="passwordCheck">비밀번호 확인</label>
           <input {...register("passwordCheck", {
             required: true,
           })} type="password" id="passwordCheck"/>
+          <p>{errors.passwordCheck?.message}</p>
+
 
           {errors.name?.type === 'required' && '이름을 입력 해 주세요'}
           {errors.email?.type === 'required' && '이메일을 입력 해 주세요'}
