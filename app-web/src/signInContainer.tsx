@@ -5,11 +5,14 @@ import SignIn from "./signIn";
 import Header from "./components/Header";
 import {setAccessToken} from "./authSlice";
 import {useAppDispatch} from "./hooks";
+import {useNavigate} from "react-router-dom";
 
 export default function SignInContainer() {
   const dispatch = useAppDispatch();
 
   const {register, formState: {errors}, handleSubmit} = useForm();
+
+  const navigate = useNavigate();
 
   const loginMutate = async ({email, password}: { email: any, password: string }) => {
     const accessToken = await loginUserFn({email, password})
@@ -20,6 +23,7 @@ export default function SignInContainer() {
     onSuccess: async () => {
       dispatch(setAccessToken(loginMutate))
       console.log("login 성공")
+      navigate("/signin", {replace: true})
     }
   });
 

@@ -1,5 +1,6 @@
-export default function SignUp({register, errors, handleSubmit, error, mutate}:
-                                 { register: any, errors: any, handleSubmit: any, error: any, mutate: any }) {
+export default function SignUp({register, errors, handleSubmit, error, mutate, watch, setError}:
+                                 { register: any, errors: any, handleSubmit: any, error: any, mutate: any, watch: any, setError: any }) {
+
 
   return (
     <>
@@ -12,6 +13,7 @@ export default function SignUp({register, errors, handleSubmit, error, mutate}:
               password: data.password,
               name: data.name,
             })
+
           })
           }>
 
@@ -31,7 +33,7 @@ export default function SignUp({register, errors, handleSubmit, error, mutate}:
             required: true,
           })} type="password" id="password"/>
 
-          <label htmlFor="password">비밀번호 확인</label>
+          <label htmlFor="passwordCheck">비밀번호 확인</label>
           <input {...register("passwordCheck", {
             required: true,
           })} type="password" id="passwordCheck"/>
