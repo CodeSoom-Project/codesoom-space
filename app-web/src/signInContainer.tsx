@@ -23,7 +23,7 @@ export default function SignInContainer() {
     onSuccess: async () => {
       dispatch(setAccessToken(loginMutate))
       console.log("login 성공")
-      navigate("/signin", {replace: true})
+      navigate("/", {replace: true})
     }
   });
 

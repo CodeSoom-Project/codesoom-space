@@ -35,7 +35,7 @@ export default function SignUpContainer() {
     onSuccess: async () => {
       console.log("회원가입 성공")
       alert('회원가입 되었습니다')
-      navigate("/", {replace: true})
+      navigate("/signin", {replace: true})
     }
   });
   console.log("data", data);
