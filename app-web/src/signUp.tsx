@@ -1,7 +1,6 @@
 export default function SignUp({register, errors, handleSubmit, error, mutate, watch, setError}:
                                  { register: any, errors: any, handleSubmit: any, error: any, mutate: any, watch: any, setError: any }) {
 
-
   return (
     <>
       <main style={{padding: "1rem 0"}}>
@@ -13,7 +12,6 @@ export default function SignUp({register, errors, handleSubmit, error, mutate, w
               password: data.password,
               name: data.name,
             })
-
           })
           }>
 
@@ -37,6 +35,8 @@ export default function SignUp({register, errors, handleSubmit, error, mutate, w
           <input {...register("passwordCheck", {
             required: true,
           })} type="password" id="passwordCheck"/>
+          <p>{errors.passwordCheck?.message}</p>
+
 
           {errors.name?.type === 'required' && '이름을 입력 해 주세요'}
           {errors.email?.type === 'required' && '이메일을 입력 해 주세요'}
