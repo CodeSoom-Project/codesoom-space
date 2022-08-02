@@ -6,9 +6,11 @@ import Header from "./components/Header";
 import {setAccessToken} from "./authSlice";
 import {useAppDispatch} from "./hooks";
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 export default function SignInContainer() {
   const dispatch = useAppDispatch();
+  const accessToken = useSelector((state: any) => state.accessToken)
 
   const {register, formState: {errors}, handleSubmit} = useForm();
 
@@ -21,9 +23,14 @@ export default function SignInContainer() {
 
   const {isLoading, error, isError, mutate, data} = useMutation('login', loginMutate, {
     onSuccess: async () => {
+      //TODO: LocalStorage 에 토큰 저장 ..
       dispatch(setAccessToken(loginMutate))
+      localStorage.setItem('accessToken', accessToken)
       console.log("login 성공")
       navigate("/", {replace: true})
+    },
+    onError: async (e) => {
+      console.error(e);
     }
   });
 

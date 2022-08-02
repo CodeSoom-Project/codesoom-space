@@ -24,10 +24,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<App/>}/>
+            <Route path="/my-seat" element={<App/>}/>
             <Route path="signup" element={<SignUpContainer/>}/>
             <Route path="signin" element={<SignInContainer/>}/>
             <Route path="*" element={<NotFound/>}/>
+
           </Routes>
         </BrowserRouter>
 
