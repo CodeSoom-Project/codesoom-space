@@ -1,8 +1,8 @@
 package com.codesoom.myseat.controllers;
 
-import com.codesoom.myseat.domain.Seat;
-import com.codesoom.myseat.dto.SeatAddRequest;
-import com.codesoom.myseat.services.SeatAddService;
+import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.dto.SignupRequest;
+import com.codesoom.myseat.services.SignupService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -24,57 +24,60 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SeatAddController.class)
+@WebMvcTest(SignupController.class)
 @AutoConfigureRestDocs(uriScheme = "https", uriHost = "api.codesoom-myseat.site")
-class SeatAddControllerTest {
-    private static final Long SEAT_ID = 1L;
-    private static final int SEAT_NUMBER = 3;
+class SignupControllerTest {
+    private static final Long USER_ID = 1L;
+    private static final String NAME = "코드숨";
+    private static final String EMAIL = "test@example.com";
+    private static final String PASSWORD = "test";
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private SeatAddService service;
+    private SignupService service;
 
-    private SeatAddRequest request;
-    private Seat seat;
-
+    private SignupRequest request;
+    private User user;
+    
     @Test
-    @DisplayName("좌석 추가 요청 테스트")
+    @DisplayName("회원 가입 요청 테스트")
     void test() throws Exception {
         // given
-        request = SeatAddRequest.builder()
-                .number(SEAT_NUMBER)
+        request = SignupRequest.builder()
+                .name(NAME)
+                .email(EMAIL)
+                .password(PASSWORD)
                 .build();
 
-        seat = Seat.builder()
-                .id(SEAT_ID)
-                .number(SEAT_NUMBER)
+        user = User.builder()
+                .id(USER_ID)
+                .name(NAME)
+                .email(EMAIL)
+                .password(PASSWORD)
                 .build();
 
-        given(service.addSeat(any(SeatAddRequest.class))).willReturn(seat);
-
+        given(service.signUp(any(SignupRequest.class))).willReturn(user);
+        
         // when
-        ResultActions subject = mockMvc.perform(post("/seat")
+        ResultActions subject = mockMvc.perform(post("/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(request)));
-
+        
         // then
-        subject.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.number").value(SEAT_NUMBER));
+        subject.andExpect(status().isCreated());
 
         // docs
-        subject.andDo(document("seat-add",
+        subject.andDo(document("signup",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 requestFields(
-                        fieldWithPath("number").type(JsonFieldType.NUMBER).description("좌석 번호")
-                ),
-                responseFields(
-                        fieldWithPath("number").type(JsonFieldType.NUMBER).description("좌석 번호")
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
+                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
                 )
         ));
     }

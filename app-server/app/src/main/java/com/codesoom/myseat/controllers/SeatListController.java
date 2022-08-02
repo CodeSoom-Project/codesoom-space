@@ -14,7 +14,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seats")
-@CrossOrigin
+@CrossOrigin(
+        origins = "https://codesoom-project.github.io",
+        allowedHeaders = "*",
+        allowCredentials = "true")
 public class SeatListController {
     private final SeatListService service;
 
@@ -24,7 +27,7 @@ public class SeatListController {
 
     /**
      * 상태코드 200과 좌석 목록을 응답한다.
-     * 
+     *
      * @return 좌석 목록
      */
     @GetMapping
