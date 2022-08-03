@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {setAccessToken} from "../authSlice";
+import {logout, setAccessToken} from "../authSlice";
 import LogoutForm from "../LogOutForm";
 import LoginForm from "../LoginForm";
 
@@ -13,7 +13,7 @@ function Header() {
   }
 
   function handleClickLogout() {
-    dispatch(setAccessToken(''))
+    dispatch(logout)
   }
 
 
