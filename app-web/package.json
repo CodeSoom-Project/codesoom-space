@@ -9,7 +9,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -o upstream -d build"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.7",
