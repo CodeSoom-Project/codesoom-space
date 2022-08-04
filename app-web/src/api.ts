@@ -10,8 +10,8 @@ export const apis = {
   getReservation: () => api.get('/seat-reservations'),
 };
 
-export const getSeatList = async () => {
-  return await api.get('/seats')
+export const getSeatList = () => {
+  return api.get('/seats')
 }
 
 export const deleteReservationFn = async ({seatNumber, userName}: { seatNumber: any, userName: string }) => {
