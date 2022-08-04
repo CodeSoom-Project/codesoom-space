@@ -4,4 +4,6 @@ ARG JAR_FILE=/app/build/libs/*.jar
 
 COPY ${JAR_FILE} app.jar
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENV USE_PROFILE mariadb
+
+ENTRYPOINT ["java", "-Dspring.profiles.active=${USE_PROFILE}", "-jar","/app.jar"]
