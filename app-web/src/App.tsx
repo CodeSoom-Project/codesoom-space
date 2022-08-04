@@ -4,6 +4,7 @@ import ReservationFormContainer from './ReservationFormContainer';
 import ReservationListContainer from './ReservationListContainer';
 import {useDispatch} from "react-redux";
 import {setAccessToken} from "./authSlice";
+import SeatList from "./seatList";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function App() {
   return (
     <div>
       <Header/>
+      <SeatList/>
       <ReservationFormContainer/>
       <ReservationListContainer/>
     </div>
