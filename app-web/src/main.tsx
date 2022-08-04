@@ -28,10 +28,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path="signup" element={<SignUpContainer/>}/>
             <Route path="signin" element={<SignInContainer/>}/>
             <Route path="*" element={<NotFound/>}/>
-
           </Routes>
         </BrowserRouter>
-
         <ReactQueryDevtools initialIsOpen/>
       </Provider>
     </QueryClientProvider>
