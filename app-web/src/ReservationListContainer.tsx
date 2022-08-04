@@ -17,7 +17,7 @@ function ReservationListContainer() {
     data: reservationData,
     isFetching,
   } = useQuery(
-    'reservation',
+    ['reservation'],
     apis.getReservation,
   );
 
@@ -28,7 +28,8 @@ function ReservationListContainer() {
 
   const {mutate: deleteReservation} = useMutation('deleteMutation', deleteSeat, {
     onSuccess(data) {
-      queryClient.invalidateQueries('reservation');
+      queryClient.invalidateQueries(['reservation'])
+      queryClient.invalidateQueries(['getSeatList'])
     },
     onError(error: any) {
       console.error(error);
