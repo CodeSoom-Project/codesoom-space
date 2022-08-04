@@ -29,6 +29,15 @@ include::{snippets}/seat-list/http-request.adoc[]
 include::{snippets}/seat-list/http-response.adoc[]
 include::{snippets}/seat-list/response-fields.adoc[]
 
+=== 좌석 상세 조회
+
+==== REQUEST
+include::{snippets}/seat-detail/http-request.adoc[]
+include::{snippets}/seat-detail/path-parameters.adoc[]
+
+==== RESPONSE
+include::{snippets}/seat-detail/http-response.adoc[]
+
 == 좌석 예약 API
 
 === 좌석 예약
