@@ -14,6 +14,10 @@ export const getSeatList = () => {
   return api.get('/seats')
 }
 
+export const getSeatDetails = ({seatNumber}:{seatNumber:string}) => {
+  return api.get (`/seats/${seatNumber}`)
+}
+
 export const deleteReservationFn = async ({seatNumber, userName}: { seatNumber: any, userName: string }) => {
   return await api.delete(`/seat-reservation/${seatNumber}`, {data: {userName}})
 }
