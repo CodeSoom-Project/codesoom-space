@@ -1,0 +1,6 @@
+POST https://api.codesoom-myseat.site/seat
+Content-Type: application/json
+
+{
+  "number": 1
+}
