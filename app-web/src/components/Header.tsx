@@ -5,7 +5,7 @@ import LogoutForm from '../LogOutForm';
 import LoginForm from '../LoginForm';
 import { useAppSelector } from '../hooks';
 
-function Header() {
+export default function Header() {
   const accessToken = useAppSelector((state) => state.auth.accessToken);
 
   const dispatch = useDispatch();
@@ -36,5 +36,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

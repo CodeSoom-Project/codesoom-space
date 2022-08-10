@@ -1,6 +1,6 @@
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-const Admin = () => {
+export default function Admin() {
   return (
     <section>
       <div>
@@ -11,6 +11,5 @@ const Admin = () => {
 
     </section>
   );
-};
+}
 
-export default Admin;

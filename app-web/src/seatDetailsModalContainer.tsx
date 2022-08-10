@@ -1,17 +1,17 @@
-import SeatDetailModal from "./seatDetailModal";
-import {useAppSelector} from "./hooks";
-import {useQuery} from "react-query";
-import {getSeatDetails} from "./api";
+import SeatDetailModal from './seatDetailModal';
+import { useAppSelector } from './hooks';
+import { useQuery } from 'react-query';
+import { getSeatDetails } from './api';
 
-function SeatDetailsModalContainer({open, onClose}:any) {
-  const seatNumber = useAppSelector((state) =>state.reservation.seatNumber)
-  const accessToken = useAppSelector((state) => state.auth.accessToken)
+export default function SeatDetailsModalContainer({ open, onClose }:any) {
+  const seatNumber = useAppSelector((state) =>state.reservation.seatNumber);
+  const accessToken = useAppSelector((state) => state.auth.accessToken);
 
   const {
     data: seatDetails,
   } = useQuery(
-    ['seatDetails',seatNumber],
-    ()=>getSeatDetails({seatNumber}),
+    ['seatDetails', seatNumber],
+    ()=>getSeatDetails({ seatNumber }),
   );
 
   return (
@@ -19,4 +19,3 @@ function SeatDetailsModalContainer({open, onClose}:any) {
   );
 }
 
-export default SeatDetailsModalContainer;

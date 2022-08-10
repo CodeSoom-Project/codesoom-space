@@ -1,4 +1,4 @@
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Button from './components/Button';
 
 interface FieldsProps {
@@ -10,11 +10,11 @@ interface FieldsProps {
   }
 }
 
-function ReservationForm({fields, onChange, onSubmit}: any) {
+export default function ReservationForm({ fields, onChange, onSubmit }: any) {
   const {
     register,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm();
 
   console.log(errors);
@@ -27,8 +27,8 @@ function ReservationForm({fields, onChange, onSubmit}: any) {
   } = fields;
 
   function handleChange(event: any) {
-    const {target: {name, value}} = event;
-    onChange({name, value});
+    const { target: { name, value } } = event;
+    onChange({ name, value });
   }
 
   return (
@@ -43,7 +43,7 @@ function ReservationForm({fields, onChange, onSubmit}: any) {
           좌석 번호
         </label>
         <input
-          {...register('seatNumber', {required: '좌석 번호를 입력해 주세요'})}
+          {...register('seatNumber', { required: '좌석 번호를 입력해 주세요' })}
           placeholder="좌석 번호"
           name="seatNumber"
           value={seatNumber}
@@ -54,7 +54,7 @@ function ReservationForm({fields, onChange, onSubmit}: any) {
           이름
         </label>
         <input
-          {...register('userName', {required: '이름을 입력해 주세요'})}
+          {...register('userName', { required: '이름을 입력해 주세요' })}
           placeholder="이름"
           name="userName"
           value={userName}
@@ -65,7 +65,7 @@ function ReservationForm({fields, onChange, onSubmit}: any) {
           시작 시간
         </label>
         <input
-          {...register('checkIn', {required: '예약 시작 시간을 입력해 주세요'})}
+          {...register('checkIn', { required: '예약 시작 시간을 입력해 주세요' })}
           placeholder="예약 시작 시간(hh:mm)"
           name="checkIn"
           value={checkIn}
@@ -76,7 +76,7 @@ function ReservationForm({fields, onChange, onSubmit}: any) {
           종료 시간
         </label>
         <input
-          {...register('checkOut', {required: '이용 종료 시간을 입력해 주세요'})}
+          {...register('checkOut', { required: '이용 종료 시간을 입력해 주세요' })}
           placeholder="이용 종료 시간(hh:mm)"
           name="checkOut"
           value={checkOut}
@@ -92,5 +92,3 @@ function ReservationForm({fields, onChange, onSubmit}: any) {
     </section>
   );
 }
-
-export default ReservationForm;

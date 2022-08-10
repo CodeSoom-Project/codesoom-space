@@ -1,44 +1,44 @@
-import {useQuery} from "react-query";
-import {getSeatList} from "./api";
-import {useState} from "react";
-import {useAppDispatch} from "./hooks";
-import {changeReservationDetailsSeatNumber} from "./ReservationSlice";
+import { useQuery } from 'react-query';
+import { getSeatList } from './api';
+import { useState } from 'react';
+import { useAppDispatch } from './hooks';
+import { changeReservationDetailsSeatNumber } from './ReservationSlice';
 
 const BUTTON_WRAPPER_STYLES = {
   position:'relative',
-  zIndex: 1
-}
+  zIndex: 1,
+};
 
 const OTHER_CONTENT_STYLES = {
   position:'relative',
   zIndex: 2,
   backgroundColor: 'red',
-  padding: '10px'
-}
+  padding: '10px',
+};
 
-function SeatList() {
+export default function SeatList() {
   const dispatch = useAppDispatch();
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
-  const {data : seatList} = useQuery(['getSeatList'], getSeatList)
+  const { data : seatList } = useQuery(['getSeatList'], getSeatList);
 
-  const handleChange =() => {
-    dispatch(changeReservationDetailsSeatNumber)
-  }
+  const handleChange = () => {
+    dispatch(changeReservationDetailsSeatNumber);
+  };
 
   const handleOpen = () => {
-    setIsOpen(true)
-  }
+    setIsOpen(true);
+  };
 
   const handleClose = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
   const handleClick = () => {
-    handleChange()
-    handleOpen()
-  }
+    handleChange();
+    handleOpen();
+  };
 
   return (
     <div>
@@ -61,5 +61,3 @@ function SeatList() {
     </div>
   );
 }
-
-export default SeatList;

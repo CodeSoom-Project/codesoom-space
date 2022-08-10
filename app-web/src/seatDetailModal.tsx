@@ -1,11 +1,11 @@
-import Modal from "./components/Modal";
-import Details from "./components/details";
+import Modal from './components/Modal';
+import Details from './components/details';
 
-function SeatDetailsModal({ open, onClose, seatDetails, accessToken }:any) {
-  const [ userName, seatNumber, date, checkIn, checkOut ] = seatDetails
+export default function SeatDetailsModal({ open, onClose, seatDetails, accessToken }:any) {
+  const [ userName, seatNumber, date, checkIn, checkOut ] = seatDetails;
 
-  if(!accessToken && !userName) {
-    return <div>로그인 후 이용해주세요.</div>
+  if (!accessToken && !userName) {
+    return <div>로그인 후 이용해주세요.</div>;
   }
 
   return (
@@ -44,5 +44,3 @@ function SeatDetailsModal({ open, onClose, seatDetails, accessToken }:any) {
     </>
   );
 }
-
-export default SeatDetailsModal;

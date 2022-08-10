@@ -9,11 +9,13 @@ module.exports = {
     'plugin:import/recommended'
   ],
   parserOptions: {
-    project: './tsconfig.json'
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
+    sourceType: 'module',
   },
   ignorePatterns: ['.eslintrc.cjs'],
   "rules": {
     "react/jsx-filename-extension": [0],
-    "import/extensions": "off"
+    "import/extensions": "off",
   }
 };

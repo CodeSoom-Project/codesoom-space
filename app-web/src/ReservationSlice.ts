@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   reservationFields: {
@@ -14,7 +14,7 @@ export const reservationSlice = createSlice({
   name: 'reservation',
   initialState,
   reducers: {
-    changeReservationFields(state, {payload: {name, value}}) {
+    changeReservationFields(state, { payload: { name, value } }) {
       return {
         ...state,
         reservationFields: {
@@ -23,18 +23,18 @@ export const reservationSlice = createSlice({
         },
       };
     },
-    changeReservationDetailsSeatNumber(state, {payload: {seatNumber}}) {
+    changeReservationDetailsSeatNumber(state, { payload: { seatNumber } }) {
       return {
         ...state,
-        seatNumber
-      }
-    }
+        seatNumber,
+      };
+    },
   },
 });
 
 export const {
   changeReservationFields,
-  changeReservationDetailsSeatNumber
+  changeReservationDetailsSeatNumber,
 } = reservationSlice.actions;
 
 export default reservationSlice.reducer;

@@ -5,7 +5,7 @@ interface DetailsType {
   checkOut: string | number ;
 }
 
-function Details({seatNumber, userName, checkIn, checkOut }:DetailsType) {
+export default function Details({ seatNumber, userName, checkIn, checkOut }:DetailsType) {
 
   return (
     <>
@@ -14,7 +14,6 @@ function Details({seatNumber, userName, checkIn, checkOut }:DetailsType) {
       <div>{checkIn} - {checkOut}</div>
     </>
 
-    )
+  );
 
 }
-export default Details

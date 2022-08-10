@@ -1,4 +1,4 @@
-export default function Button({onClick, children}: any) {
+export default function Button({ onClick, children }: any) {
   return (
     <button
       type="button"
