@@ -44,7 +44,7 @@ public class ControllerErrorAdvice {
      *
      * @return 에러메시지
      */
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(SeatReservationNotFoundException.class)
     public ErrorResponse handleSeatReservationNotFound() {
         return new ErrorResponse("좌석 예약 목록을 찾을 수 없습니다.");
