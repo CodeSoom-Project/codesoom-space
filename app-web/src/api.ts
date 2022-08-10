@@ -27,6 +27,9 @@ export const loginUserFn = async ({email, password}: { email: any, password: any
     .post("/login", {
       email,
       password,
+    }).then((res)=> {
+      const accessToken = res.data.token;
+      localStorage.setItem('accessToken',accessToken);
     })
 }
 
