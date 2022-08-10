@@ -4,20 +4,18 @@ import {useQuery} from "react-query";
 import {getSeatDetails} from "./api";
 
 function SeatDetailsModalContainer({open, onClose}:any) {
-
   const seatNumber = useAppSelector((state) =>state.reservation.seatNumber)
-  //상세조회 요청시 사용할 좌석 번호.
+  const accessToken = useAppSelector((state) => state.auth.accessToken)
 
   const {
     data: seatDetails,
   } = useQuery(
-    ['seatDetails'],
-    getSeatDetails({seatNumber}),
+    ['seatDetails',seatNumber],
+    ()=>getSeatDetails({seatNumber}),
   );
-  // 상세조회 요청 get 할 useQuery 쓰면 될듯 .
 
   return (
-      <SeatDetailModal open={open} onClose={onClose} seatDetails={seatDetails}/>
+      <SeatDetailModal open={open} onClose={onClose} seatDetails={seatDetails} accessToken={accessToken} />
   );
 }
 

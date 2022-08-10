@@ -1,7 +1,6 @@
 import {useQuery} from "react-query";
 import {getSeatList} from "./api";
 import {useState} from "react";
-import SeatDetailsModalContainer from "./seatDetailsModalContainer";
 import {useAppDispatch} from "./hooks";
 import {changeReservationDetailsSeatNumber} from "./ReservationSlice";
 
@@ -41,8 +40,6 @@ function SeatList() {
     handleOpen()
   }
 
-
-
   return (
     <div>
       {seatList?.data?.map(seat => (
@@ -56,13 +53,13 @@ function SeatList() {
         </div>
       ))}
 
-      <SeatDetailsModalContainer
-        open={isOpen}
-        onClose={handleClose}
-      />
+      {/*<SeatDetailsModalContainer*/}
+      {/*  open={isOpen}*/}
+      {/*  onClose={handleClose}*/}
+      {/*/>*/}
 
     </div>
   );
-};
+}
 
 export default SeatList;
