@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -23,10 +25,11 @@ class SignupServiceTest {
     private final UserRepository repository = mock(UserRepository.class);
 
     private SignupRequest request;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @BeforeEach
     void setUp() {
-        service = new SignupService(repository);
+        service = new SignupService(repository, passwordEncoder);
     }
 
     @Nested
@@ -63,7 +66,6 @@ class SignupServiceTest {
                 assertThat(subject().getId()).isEqualTo(USER_ID);
                 assertThat(subject().getName()).isEqualTo(NAME);
                 assertThat(subject().getEmail()).isEqualTo(EMAIL);
-                assertThat(subject().getPassword()).isEqualTo(PASSWORD);
             }
         }
     }
