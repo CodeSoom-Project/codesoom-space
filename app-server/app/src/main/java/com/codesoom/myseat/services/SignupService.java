@@ -3,6 +3,7 @@ package com.codesoom.myseat.services;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.domain.UserRepository;
 import com.codesoom.myseat.dto.SignupRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,9 +12,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class SignupService {
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    public SignupService(UserRepository repository) {
+    public SignupService(
+            UserRepository repository, 
+            PasswordEncoder passwordEncoder
+    ) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -23,10 +29,22 @@ public class SignupService {
      * @return 회원 정보
      */
     public User signUp(SignupRequest request) {
-        return repository.save(User.builder()
+        User user = repository.save(User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(encodePassword(request.getPassword()))
                 .build());
+        
+        return user;
+    }
+
+    /**
+     * 비밀번호를 암호화한다.
+     * 
+     * @param password 암호화 할 비밀번호
+     * @return 암호화 된 비밀번호
+     */
+    public String encodePassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }
