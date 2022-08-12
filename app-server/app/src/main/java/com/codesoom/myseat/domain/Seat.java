@@ -23,11 +23,15 @@ public class Seat {
     private Long id;
 
     private int number;
+    
+    @Builder.Default
+    private boolean isReserved = false;
 
     @Builder.Default
     private String userName = "";
 
     public void reserve(String userName) {
+        this.isReserved = true; 
         this.userName = userName;
     }
 
