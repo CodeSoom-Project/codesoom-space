@@ -1,20 +1,16 @@
 import { useQuery } from 'react-query';
-import { getSeatList } from './api';
+import { getSeatList } from './services/api';
 import { useState } from 'react';
 import { useAppDispatch } from './hooks';
 import { changeReservationDetailsSeatNumber } from './ReservationSlice';
+import Button from './components/Button';
+import styled from '@emotion/styled';
 
-const BUTTON_WRAPPER_STYLES = {
-  position:'relative',
-  zIndex: 1,
-};
-
-const OTHER_CONTENT_STYLES = {
-  position:'relative',
-  zIndex: 2,
-  backgroundColor: 'red',
-  padding: '10px',
-};
+const Div = styled.div `  
+  display: grid;
+  gap: 1em;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+`;
 
 export default function SeatList() {
   const dispatch = useAppDispatch();
@@ -42,16 +38,16 @@ export default function SeatList() {
 
   return (
     <div>
-      {seatList?.data?.map(seat => (
-        <div style={BUTTON_WRAPPER_STYLES}>
-          <button onClick={handleClick}>
-            <div key={seat.seatNumber}>
-            {seat.seatNumber}
-            {seat.userName}
-            </div>
-          </button>
-        </div>
-      ))}
+      <Div>
+        {seatList?.data?.map(seat => (
+            <Button onClick={handleClick}>
+              <div key={seat.seatNumber}>
+                <p>{seat.seatNumber}</p>
+                <p>{seat.userName}</p>
+              </div>
+            </Button>
+        ))}
+      </Div>
 
       {/*<SeatDetailsModalContainer*/}
       {/*  open={isOpen}*/}

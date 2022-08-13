@@ -5,11 +5,12 @@ import ReservationListContainer from './ReservationListContainer';
 import { useDispatch } from 'react-redux';
 import { setAccessToken } from './authSlice';
 import SeatList from './seatList';
+import { loadItem } from './services/stoage';
 
 export default function App() {
   const dispatch = useDispatch();
 
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = loadItem('accessToken');
   if (accessToken) {
     dispatch(setAccessToken(accessToken));
   }
