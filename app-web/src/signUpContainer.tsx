@@ -2,7 +2,7 @@ import Header from './components/Header';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import SignUp from './signUp';
-import { signUpUserFn } from './api';
+import { signUpUserFn } from './services/api';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -41,7 +41,7 @@ export default function SignUpContainer() {
       console.error(e);
     },
   });
-  
+
   return (
     <>
       <Header/>

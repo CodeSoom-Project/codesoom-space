@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { saveItem } from './stoage';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
@@ -29,7 +30,7 @@ export const loginUserFn = async ({ email, password }: { email: any, password: a
       password,
     }).then((res)=> {
       const accessToken = res.data.token;
-      localStorage.setItem('accessToken', accessToken);
+      saveItem('accessToken', accessToken);
     });
 };
 
