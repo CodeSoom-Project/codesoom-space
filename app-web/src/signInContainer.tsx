@@ -21,7 +21,6 @@ export default function SignInContainer() {
 
   const { isLoading, error, isError, mutate, data } = useMutation('login', loginMutate, {
     onSuccess: async () => {
-      dispatch(setAccessToken(loginMutate));
       console.log('login 성공');
       navigate('/my-seat', { replace: true });
     },
