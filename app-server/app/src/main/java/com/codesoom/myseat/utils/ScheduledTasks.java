@@ -1,6 +1,6 @@
 package com.codesoom.myseat.utils;
 
-import com.codesoom.myseat.domain.SeatRepository;
+import com.codesoom.myseat.repositories.SeatRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,9 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
-import com.codesoom.myseat.domain.SeatRepository;
+import com.codesoom.myseat.repositories.SeatRepository;
 import com.codesoom.myseat.domain.SeatReservation;
-import com.codesoom.myseat.domain.SeatReservationRepository;
+import com.codesoom.myseat.repositories.SeatReservationRepository;
 import com.codesoom.myseat.dto.SeatReservationCancelRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

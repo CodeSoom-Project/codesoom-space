@@ -1,7 +1,7 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.domain.UserRepository;
+import com.codesoom.myseat.repositories.UserRepository;
 import com.codesoom.myseat.dto.LoginRequest;
 import com.codesoom.myseat.utils.TokenProvider;
 import org.junit.jupiter.api.BeforeEach;

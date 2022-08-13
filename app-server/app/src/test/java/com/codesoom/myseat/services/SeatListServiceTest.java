@@ -1,7 +1,7 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
-import com.codesoom.myseat.domain.SeatRepository;
+import com.codesoom.myseat.repositories.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
