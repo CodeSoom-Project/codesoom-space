@@ -7,13 +7,13 @@ export default function Item({
     <li>
       {userName}
       -
-      {seatNumber}
+      {seatNumber}번 좌석
       -
       {date}
-      -
-      {checkIn}
-      -
-      {checkOut}
+      {/*-*/}
+      {/*{checkIn}*/}
+      {/*-*/}
+      {/*{checkOut}*/}
       <Button onClick={() => onClickDelete({ seatNumber, userName })}>
         예약 취소하기
       </Button>

@@ -38,10 +38,11 @@ export default function ReservationForm({ fields, onChange, onSubmit }: any) {
           console.log(data);
         })}
       >
-
-        <label htmlFor="register-seatNumber">
-          좌석 번호
-        </label>
+        <div>
+          <label htmlFor="register-seatNumber">
+            좌석 번호
+          </label>
+        </div>
         <input
           {...register('seatNumber', { required: '좌석 번호를 입력해 주세요' })}
           placeholder="좌석 번호"
@@ -50,9 +51,11 @@ export default function ReservationForm({ fields, onChange, onSubmit }: any) {
           onChange={handleChange}
         />
 
-        <label htmlFor="register-name">
-          이름
-        </label>
+        <div>
+          <label htmlFor="register-name">
+            이름
+          </label>
+        </div>
         <input
           {...register('userName', { required: '이름을 입력해 주세요' })}
           placeholder="이름"
@@ -61,27 +64,31 @@ export default function ReservationForm({ fields, onChange, onSubmit }: any) {
           onChange={handleChange}
         />
 
-        <label htmlFor="register-checkIn">
-          시작 시간
-        </label>
-        <input
-          {...register('checkIn', { required: '예약 시작 시간을 입력해 주세요' })}
-          placeholder="예약 시작 시간(hh:mm)"
-          name="checkIn"
-          value={checkIn}
-          onChange={handleChange}
-        />
+        {/*<div>*/}
+        {/*  <label htmlFor="register-checkIn">*/}
+        {/*    시작 시간*/}
+        {/*  </label>*/}
+        {/*</div>*/}
+        {/*<input*/}
+        {/*  {...register('checkIn', { required: '예약 시작 시간을 입력해 주세요' })}*/}
+        {/*  placeholder="예약 시작 시간(hh:mm)"*/}
+        {/*  name="checkIn"*/}
+        {/*  value={checkIn}*/}
+        {/*  onChange={handleChange}*/}
+        {/*/>*/}
 
-        <label htmlFor="register-checkOut">
-          종료 시간
-        </label>
-        <input
-          {...register('checkOut', { required: '이용 종료 시간을 입력해 주세요' })}
-          placeholder="이용 종료 시간(hh:mm)"
-          name="checkOut"
-          value={checkOut}
-          onChange={handleChange}
-        />
+        {/*<div>*/}
+        {/*  <label htmlFor="register-checkOut">*/}
+        {/*    종료 시간*/}
+        {/*  </label>*/}
+        {/*</div>*/}
+        {/*<input*/}
+        {/*  {...register('checkOut', { required: '이용 종료 시간을 입력해 주세요' })}*/}
+        {/*  placeholder="이용 종료 시간(hh:mm)"*/}
+        {/*  name="checkOut"*/}
+        {/*  value={checkOut}*/}
+        {/*  onChange={handleChange}*/}
+        {/*/>*/}
 
         <Button
           onClick={onSubmit}

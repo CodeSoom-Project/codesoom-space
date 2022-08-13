@@ -33,8 +33,8 @@ export default function ReservationFormContainer() {
 
     await axios.post(`https://api.codesoom-myseat.site/seat-reservation/${seatNumber}`, {
       userName,
-      checkIn,
-      checkOut,
+      // checkIn,
+      // checkOut,
     })
       .then((response) => {
         if (response.status === 201) {
