@@ -1,27 +1,27 @@
-export default function SignIn({register, errors, handleSubmit, error, mutate}:
-                                 { register: any, errors: any, handleSubmit: any, error: any, mutate: any }) {
+export default function SignIn({ register, errors, handleSubmit, error, mutate }:
+{ register: any, errors: any, handleSubmit: any, error: any, mutate: any }) {
 
   return (
     <>
-      <main style={{padding: "1rem 0"}}>
+      <main style={{ padding: '1rem 0' }}>
         <h2>로그인</h2>
         <form
           onSubmit={handleSubmit(async (data: any) => {
             await mutate({
               email: data.email,
               password: data.password,
-            })
+            });
           })
           }>
 
           <label htmlFor="email">Email</label>
-          <input {...register("email", {
-              required: true,
-            }
+          <input {...register('email', {
+            required: true,
+          },
           )} type="email" id="email"/>
 
           <label htmlFor="password">비밀번호</label>
-          <input {...register("password", {
+          <input {...register('password', {
             required: true,
           })} type="password" id="password"/>
 
@@ -32,5 +32,5 @@ export default function SignIn({register, errors, handleSubmit, error, mutate}:
         </form>
       </main>
     </>
-  )
+  );
 }

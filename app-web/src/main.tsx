@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import {store} from './store';
-import {Provider} from 'react-redux';
+import { store } from './store';
+import { Provider } from 'react-redux';
 
-import {QueryClient, QueryClientProvider} from 'react-query';
-import {ReactQueryDevtools} from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-import {BrowserRouter, Route, Routes,} from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 
 import App from './App';
 import './index.css';
-import NotFound from "./NotFound";
-import SignInContainer from "./signInContainer";
-import SignUpContainer from "./signUpContainer";
+import NotFound from './NotFound';
+import SignInContainer from './signInContainer';
+import SignUpContainer from './signUpContainer';
 
 const queryClient = new QueryClient();
 

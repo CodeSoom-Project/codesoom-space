@@ -1,4 +1,4 @@
-const LogoutForm = ({onClick}: any) => {
+export default function LogoutForm({ onClick }: any) {
   return (
     <button
       type="button"
@@ -7,6 +7,6 @@ const LogoutForm = ({onClick}: any) => {
       로그아웃
     </button>
   );
-};
+}
 
-export default LogoutForm;
+

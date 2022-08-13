@@ -2,14 +2,15 @@ import './App.css';
 import Header from './components/Header';
 import ReservationFormContainer from './ReservationFormContainer';
 import ReservationListContainer from './ReservationListContainer';
-import {useDispatch} from "react-redux";
-import {setAccessToken} from "./authSlice";
-import SeatList from "./seatList";
+import { useDispatch } from 'react-redux';
+import { setAccessToken } from './authSlice';
+import SeatList from './seatList';
+import { loadItem } from './services/stoage';
 
-function App() {
+export default function App() {
   const dispatch = useDispatch();
 
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = loadItem('accessToken');
   if (accessToken) {
     dispatch(setAccessToken(accessToken));
   }
@@ -24,5 +25,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

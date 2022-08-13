@@ -1,6 +1,6 @@
 import Item from './ReservationItem';
 
-function ReservationList({reservations, onClickDelete}: any) {
+export default function ReservationList({ reservations, onClickDelete }: any) {
   return (
     <ol>
       {reservations?.data.map((reservation: any) => (
@@ -17,5 +17,3 @@ function ReservationList({reservations, onClickDelete}: any) {
     </ol>
   );
 }
-
-export default ReservationList;

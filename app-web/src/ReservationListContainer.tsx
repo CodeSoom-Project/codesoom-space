@@ -1,10 +1,10 @@
-import {useMutation, useQuery, useQueryClient} from 'react-query';
-import {apis, deleteReservationFn} from './api';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { apis, deleteReservationFn } from './services/api';
 import ReservationList from './ReservationList';
-import {useAppSelector} from "./hooks";
+import { useAppSelector } from './hooks';
 
 
-function ReservationListContainer() {
+export default function ReservationListContainer() {
   const reservationFields = useAppSelector((state) => state.reservation.reservationFields);
   const {
     seatNumber,
@@ -17,18 +17,19 @@ function ReservationListContainer() {
     data: reservationData,
     isFetching,
   } = useQuery(
-    'reservation',
+    ['reservation'],
     apis.getReservation,
   );
 
-  const deleteSeat = async ({seatNumber, userName}: { seatNumber: string | number, userName: string }) => {
-    const deleteSeatResult = await deleteReservationFn({seatNumber, userName})
-    return deleteSeatResult
-  }
+  const deleteSeat = async ({ seatNumber, userName }: { seatNumber: string | number, userName: string }) => {
+    const deleteSeatResult = await deleteReservationFn({ seatNumber, userName });
+    return deleteSeatResult;
+  };
 
-  const {mutate: deleteReservation} = useMutation('deleteMutation', deleteSeat, {
+  const { mutate: deleteReservation } = useMutation('deleteMutation', deleteSeat, {
     onSuccess(data) {
-      queryClient.invalidateQueries('reservation');
+      queryClient.invalidateQueries(['reservation']);
+      queryClient.invalidateQueries(['getSeatList']);
     },
     onError(error: any) {
       console.error(error);
@@ -45,5 +46,3 @@ function ReservationListContainer() {
     </div>
   );
 }
-
-export default ReservationListContainer;

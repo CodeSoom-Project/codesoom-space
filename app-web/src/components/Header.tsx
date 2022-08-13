@@ -1,21 +1,27 @@
-import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {logout, setAccessToken} from "../authSlice";
-import LogoutForm from "../LogOutForm";
-import LoginForm from "../LoginForm";
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../authSlice';
+import LogoutForm from '../LogOutForm';
+import LoginForm from '../LoginForm';
+import { useAppSelector } from '../hooks';
 
-function Header() {
+export default function Header() {
+  const accessToken = useAppSelector((state) => state.auth.accessToken);
+
   const dispatch = useDispatch();
 
-  const accessToken = localStorage.getItem('accessToken');
-  if (accessToken) {
-    dispatch(setAccessToken(accessToken));
+  function handleLogout() {
+    dispatch(logout);
+  }
+
+  function handleRemoveAccessToken() {
+    localStorage.removeItem('accessToken');
   }
 
   function handleClickLogout() {
-    dispatch(logout)
+    handleLogout();
+    handleRemoveAccessToken();
   }
-
 
   return (
     <header>
@@ -30,5 +36,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;
