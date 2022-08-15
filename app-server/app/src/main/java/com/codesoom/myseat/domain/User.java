@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * 회원 엔티티
@@ -20,6 +18,7 @@ import javax.persistence.Id;
 public class User {
     @Id
     @GeneratedValue
+    @Column(name="user_id")
     private Long id;
 
     private String name;
@@ -27,6 +26,10 @@ public class User {
     private String email;
     
     private String password;
+
+    @OneToOne
+    @JoinColumn(name = "token_id")
+    private Token token;
 
     /**
      * 비밀번호를 인증한다.

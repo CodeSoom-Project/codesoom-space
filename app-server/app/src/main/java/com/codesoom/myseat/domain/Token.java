@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * 토큰 엔티티
@@ -25,4 +22,7 @@ public class Token {
     private Long id;
 
     private String token;
+
+    @OneToOne(mappedBy = "token")
+    private User user;
 }
