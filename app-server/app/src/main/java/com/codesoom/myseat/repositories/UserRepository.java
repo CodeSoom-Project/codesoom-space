@@ -1,6 +1,7 @@
-package com.codesoom.myseat.domain;
+package com.codesoom.myseat.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import com.codesoom.myseat.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
@@ -8,7 +9,7 @@ import java.util.Optional;
  * 회원 레포지토리
  */
 public interface UserRepository 
-        extends CrudRepository<User, Long> {
+        extends JpaRepository<User, Long> {
 
     /**
      * 회원 정보를 저장한다.

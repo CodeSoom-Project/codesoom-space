@@ -1,5 +1,6 @@
-package com.codesoom.myseat.domain;
+package com.codesoom.myseat.repositories;
 
+import com.codesoom.myseat.domain.SeatReservation;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
