@@ -5,6 +5,7 @@ import { useAppDispatch } from './hooks';
 import { changeReservationDetailsSeatNumber } from './ReservationSlice';
 import Button from './components/Button';
 import styled from '@emotion/styled';
+import SeatDetailsModalContainer from './seatDetailsModalContainer';
 
 const Div = styled.div `  
   display: grid;
@@ -49,10 +50,10 @@ export default function SeatList() {
         ))}
       </Div>
 
-      {/*<SeatDetailsModalContainer*/}
-      {/*  open={isOpen}*/}
-      {/*  onClose={handleClose}*/}
-      {/*/>*/}
+      <SeatDetailsModalContainer
+        open={isOpen}
+        onClose={handleClose}
+      />
 
     </div>
   );
