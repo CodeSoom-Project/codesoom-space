@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 회원 엔티티
@@ -31,6 +33,9 @@ public class User {
     @OneToOne
     @JoinColumn(name = "token_id")
     private Token token;
+
+    @OneToMany(mappedBy = "user")
+    private List<SeatReservation> seatReservations = new ArrayList<>();
 
     /**
      * 비밀번호를 인증한다.

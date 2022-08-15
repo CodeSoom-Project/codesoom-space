@@ -5,9 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 좌석 예약 엔티티
@@ -20,15 +20,18 @@ import javax.persistence.Id;
 public class SeatReservation {
     @Id
     @GeneratedValue
+    @Column(name="seatReservation_id")
     private Long id;
 
     private int seatNumber;
-
-    private String userName;
 
     private String date;
 
     private String checkIn;
 
     private String checkOut;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
