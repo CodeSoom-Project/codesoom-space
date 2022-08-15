@@ -23,8 +23,6 @@ public class SeatReservation {
     @Column(name="seatReservation_id")
     private Long id;
 
-    private int seatNumber;
-
     private String date;
 
     private String checkIn;
@@ -34,4 +32,8 @@ public class SeatReservation {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 }
