@@ -1,5 +1,6 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.domain.Token;
 import com.codesoom.myseat.dto.LoginRequest;
 import com.codesoom.myseat.dto.LoginResponse;
 import com.codesoom.myseat.services.LoginService;
@@ -40,9 +41,9 @@ public class LoginController {
      * @param token 토큰
      * @return 응답 정보
      */
-    private LoginResponse toResponse(String token) {
+    private LoginResponse toResponse(Token token) {
         return LoginResponse.builder()
-                .token(token)
+                .token(token.getToken())
                 .build();
     }
 }

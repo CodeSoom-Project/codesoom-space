@@ -45,4 +45,13 @@ public class User {
     ) {
         return encoder.matches(password, this.password);
     }
+
+    /**
+     * 토큰을 갱신 한다.
+     * 
+     * @param token 토큰
+     */
+    public void updateToken(Token token) {
+        this.token = token;
+    }
 }
