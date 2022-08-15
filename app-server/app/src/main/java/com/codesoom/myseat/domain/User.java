@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
@@ -35,9 +36,13 @@ public class User {
      * 비밀번호를 인증한다.
      * 
      * @param password 인증할 비밀번호
+     * @param encoder 비밀번호 인코더
      * @return 엔티티의 비밀번호와 일치하면 true, 일치하지 않으면 false
      */
-    public boolean authenticate(String password) {
-        return this.password.equals(password); 
+    public boolean authenticate(
+            String password,
+            PasswordEncoder encoder
+    ) {
+        return encoder.matches(password, this.password);
     }
 }
