@@ -1,9 +1,12 @@
 import SeatDetailModal from './seatDetailModal';
-import { useAppSelector } from './hooks';
+import { useAppDispatch, useAppSelector } from './hooks';
 import { useQuery } from 'react-query';
 import { getSeatDetails } from './services/api';
+import { changeReservationCheckIn, changeReservationCheckOut } from './ReservationSlice';
 
 export default function SeatDetailsModalContainer({ open, onClose }:any) {
+  const dispatch = useAppDispatch();
+
   const seatNumber = useAppSelector((state) =>state.reservation.seatNumber);
 
   const {
@@ -12,6 +15,14 @@ export default function SeatDetailsModalContainer({ open, onClose }:any) {
     ['seatDetails', seatNumber],
     ()=>getSeatDetails({ seatNumber }),
   );
+
+  const handleChangeCheckIn = ({ checkIn }:any) => {
+    dispatch(changeReservationCheckIn({ checkIn }));
+  };
+
+  const handleChangeCheckOut = ({ checkOut }:any) => {
+    dispatch(changeReservationCheckOut({ checkOut }));
+  };
 
   const handleClickReservationButton = () => {
     return;
@@ -28,6 +39,8 @@ export default function SeatDetailsModalContainer({ open, onClose }:any) {
         seatDetails={seatDetails}
         onClick={handleClickReservationButton}
         onDelete={handleDeleteReservation}
+        onChangeCheckIn={handleChangeCheckIn}
+        onChangeCheckOut={handleChangeCheckOut}
       />
   );
 }
