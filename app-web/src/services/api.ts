@@ -7,6 +7,17 @@ const api = axios.create({
   baseURL: BASE_URL,
 });
 
+export const request = ({ ...options }) => {
+  const token = localStorage.loadItem('accessToken');
+  api.defaults.headers.common.Authorization = token ? `Bearer ${token}` : '';
+  const onSuccess = (response:any) => response;
+  const onError = (error:any) => {
+    return error;
+  };
+
+  return api(options).then(onSuccess).catch(onError);
+};
+
 export const apis = {
   getReservation: () => api.get('/seat-reservations'),
 };
@@ -16,7 +27,8 @@ export const getSeatList = () => {
 };
 
 export const getSeatDetails = ({ seatNumber }:{ seatNumber:string }) => {
-  return api.get(`/seats/${seatNumber}`);
+  // return api.get(`/seats/${seatNumber}`);
+  return request({ url: `/seats/${seatNumber}`, method: 'get' });
 };
 
 export const deleteReservationFn = async ({ seatNumber, userName }: { seatNumber: any, userName: string }) => {
