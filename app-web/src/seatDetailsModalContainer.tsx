@@ -5,7 +5,6 @@ import { getSeatDetails } from './services/api';
 
 export default function SeatDetailsModalContainer({ open, onClose }:any) {
   const seatNumber = useAppSelector((state) =>state.reservation.seatNumber);
-  const accessToken = useAppSelector((state) => state.auth.accessToken);
 
   const {
     data: seatDetails,
@@ -14,8 +13,22 @@ export default function SeatDetailsModalContainer({ open, onClose }:any) {
     ()=>getSeatDetails({ seatNumber }),
   );
 
+  const handleClickReservationButton = () => {
+    return;
+  };
+
+  const handleDeleteReservation = () => {
+    return;
+  };
+
   return (
-      <SeatDetailModal open={open} onClose={onClose} seatDetails={seatDetails} accessToken={accessToken} />
+      <SeatDetailModal
+        open={open}
+        onClose={onClose}
+        seatDetails={seatDetails}
+        onClick={handleClickReservationButton}
+        onDelete={handleDeleteReservation}
+      />
   );
 }
 
