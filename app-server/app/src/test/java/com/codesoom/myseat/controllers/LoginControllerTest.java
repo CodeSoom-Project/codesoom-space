@@ -1,5 +1,7 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.domain.Token;
+import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.LoginRequest;
 import com.codesoom.myseat.services.LoginService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,8 +33,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(LoginController.class)
 @AutoConfigureRestDocs(uriScheme = "https", uriHost = "api.codesoom-myseat.site")
 class LoginControllerTest {
-    private static final String EMAIL = "test@example.com";
-    private static final String PASSWORD = "test";
+    private static final Long USER_ID = 1L;
+    private static final String USER_NAME = "코드숨";
+    private static final String USER_EMAIL = "test@example.com";
+    private static final String USER_PASSWORD = "1234";
+    private static final Long TOKEN_ID = 2L;
     private static final String TOKEN = "eyJhbGciOiJIUzI1NiJ9" +
             ".eyJ1c2VySWQiOjF9" +
             ".ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
@@ -44,18 +49,33 @@ class LoginControllerTest {
     private LoginService service;
 
     private LoginRequest request;
+    private User user;
+    private Token token;
 
     @Test
     @DisplayName("로그인 테스트")
     void test() throws Exception {
         // given
         request = LoginRequest.builder()
-                .email(EMAIL)
-                .password(PASSWORD)
+                .email(USER_EMAIL)
+                .password(USER_PASSWORD)
+                .build();
+        
+        user = User.builder()
+                .id(USER_ID)
+                .email(USER_EMAIL)
+                .password(USER_PASSWORD)
+                .name(USER_NAME)
+                .build();
+        
+        token = Token.builder()
+                .id(TOKEN_ID)
+                .user(user)
+                .token(TOKEN)
                 .build();
 
         given(service.login(any(LoginRequest.class)))
-                .willReturn(TOKEN);
+                .willReturn(token);
 
         // when
         ResultActions subject = mockMvc.perform(post("/login")
