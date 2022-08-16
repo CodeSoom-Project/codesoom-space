@@ -1,8 +1,12 @@
 package com.codesoom.myseat.services;
 
+import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.exceptions.UserNotFoundException;
 import com.codesoom.myseat.repositories.UserRepository;
 import com.codesoom.myseat.dto.SignupRequest;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +14,7 @@ import org.springframework.stereotype.Service;
  * 회원 가입 서비스
  */
 @Service
-public class SignupService {
+public class SignupService implements UserDetailsService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
 
@@ -29,10 +33,13 @@ public class SignupService {
      * @return 회원 정보
      */
     public User signUp(SignupRequest request) {
+        Role role = Role.ROLE_USER;
+        
         User user = repository.save(User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(encodePassword(request.getPassword()))
+                .role(role)
                 .build());
         
         return user;
@@ -46,5 +53,12 @@ public class SignupService {
      */
     public String encodePassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    @Override
+    public User loadUserByUsername(String email) throws UsernameNotFoundException {
+        return repository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(
+                        "[" + email + "]이 일치하는 회원을 찾을 수 없어서 조회에 실패했습니다."));
     }
 }
