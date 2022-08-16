@@ -26,13 +26,17 @@ export const getSeatList = () => {
   return api.get('/seats');
 };
 
-export const getSeatDetails = ({ seatNumber }:{ seatNumber:string }) => {
+export const getSeatDetail = ({ seatNumber }:{ seatNumber:string }) => {
   // return api.get(`/seats/${seatNumber}`);
   return request({ url: `/seats/${seatNumber}`, method: 'get' });
 };
 
-export const deleteReservationFn = async ({ seatNumber, userName }: { seatNumber: any, userName: string }) => {
-  return api.delete(`/seat-reservation/${seatNumber}`, { data: { userName } });
+export const makeReservationFn = async ({ seatNumber }: { seatNumber: any }) => {
+  return api.post(`/seat-reservation/${seatNumber}`);
+};
+
+export const deleteReservationFn = async ({ seatNumber }: { seatNumber: any }) => {
+  return api.delete(`/seat-reservation/${seatNumber}`);
 };
 
 export const loginUserFn = async ({ email, password }: { email: any, password: any }) => {
