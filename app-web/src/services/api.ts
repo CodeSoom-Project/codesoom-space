@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { saveItem } from './stoage';
+import { loadItem, saveItem } from './stoage';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
@@ -8,7 +8,7 @@ const api = axios.create({
 });
 
 export const request = ({ ...options }) => {
-  const token = localStorage.loadItem('accessToken');
+  const token = loadItem('accessToken');
   api.defaults.headers.common.Authorization = token ? `Bearer ${token}` : '';
   const onSuccess = (response:any) => response;
   const onError = (error:any) => {
