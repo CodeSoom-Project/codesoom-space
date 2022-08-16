@@ -1,5 +1,6 @@
 package com.codesoom.myseat.services;
 
+import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.repositories.UserRepository;
 import com.codesoom.myseat.dto.SignupRequest;
@@ -20,6 +21,7 @@ class SignupServiceTest {
     private static final String NAME = "코드숨";
     private static final String EMAIL = "test@example.com";
     private static final String PASSWORD = "testpwd";
+    private static final Role ROLE = Role.ROLE_USER;
 
     private SignupService service;
     private final UserRepository repository = mock(UserRepository.class);
@@ -50,6 +52,7 @@ class SignupServiceTest {
                                 .name(NAME)
                                 .email(EMAIL)
                                 .password(PASSWORD)
+                                .role(ROLE)
                                 .build();
                     });
         }
@@ -66,6 +69,7 @@ class SignupServiceTest {
                 assertThat(subject().getId()).isEqualTo(USER_ID);
                 assertThat(subject().getName()).isEqualTo(NAME);
                 assertThat(subject().getEmail()).isEqualTo(EMAIL);
+                assertThat(subject().getRole()).isEqualTo(ROLE);
             }
         }
     }
