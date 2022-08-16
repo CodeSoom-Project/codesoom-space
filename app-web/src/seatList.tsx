@@ -20,8 +20,8 @@ export default function SeatList() {
 
   const { data : seatList } = useQuery(['getSeatList'], getSeatList);
 
-  const handleChange = () => {
-    dispatch(changeReservationDetailsSeatNumber);
+  const handleChange = ({ seatNumber }:any) => {
+    dispatch(changeReservationDetailsSeatNumber({ seatNumber }));
   };
 
   const handleOpen = () => {
@@ -32,8 +32,8 @@ export default function SeatList() {
     setIsOpen(false);
   };
 
-  const handleClick = () => {
-    handleChange();
+  const handleClick = (seatNumber:any) => {
+    handleChange(seatNumber);
     handleOpen();
   };
 
@@ -41,7 +41,7 @@ export default function SeatList() {
     <div>
       <Div>
         {seatList?.data?.map(seat => (
-            <Button onClick={handleClick}>
+            <Button onClick={handleClick(seat.seatNumber)}>
               <div key={seat.seatNumber}>
                 <p>{seat.seatNumber}</p>
                 <p>{seat.userName}</p>
