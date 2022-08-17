@@ -31,12 +31,12 @@ export const getSeatDetail = ({ seatNumber }:{ seatNumber:string }) => {
   return request({ url: `/seats/${seatNumber}`, method: 'get' });
 };
 
-export const makeReservationFn = async ({ seatNumber }: { seatNumber: any }) => {
-  return api.post(`/seat-reservation/${seatNumber}`);
+export const bookingSeatFn = async ({ seatNumber }: { seatNumber: any }) => {
+  return request({ url: `/seat-reservation/${seatNumber}`, method: 'post' });
 };
 
 export const deleteReservationFn = async ({ seatNumber }: { seatNumber: any }) => {
-  return api.delete(`/seat-reservation/${seatNumber}`);
+  return request({ url: `/seat-reservation/${seatNumber}`, method: 'delete' });
 };
 
 export const loginUserFn = async ({ email, password }: { email: any, password: any }) => {

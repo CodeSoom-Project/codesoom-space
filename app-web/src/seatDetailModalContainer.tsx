@@ -1,7 +1,7 @@
 import SeatDetailModal from './seatDetailModal';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteReservationFn, getSeatDetail } from './services/api';
+import { bookingSeatFn, deleteReservationFn, getSeatDetail } from './services/api';
 import { changeReservationCheckIn, changeReservationCheckOut } from './ReservationSlice';
 
 export default function SeatDetailModalContainer({ open, onClose }:any) {
@@ -34,7 +34,22 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
   const { mutate: deleteReservation } = useMutation('deleteMutation', deleteSeat, {
     onSuccess(data) {
       queryClient.invalidateQueries(['reservation']);
-      queryClient.invalidateQueries(['getSeatList']);
+      queryClient.invalidateQueries(['seatDetail']);
+    },
+    onError(error: any) {
+      console.error(error);
+    },
+  });
+
+  const bookingSeat = async ({ seatNumber }: { seatNumber: string | number }) => {
+    const deleteSeatResult = await bookingSeatFn({ seatNumber });
+    return deleteSeatResult;
+  };
+
+  const { mutate: bookingMutation } = useMutation('bookingMutation', bookingSeat, {
+    onSuccess(data) {
+      queryClient.invalidateQueries(['reservation']);
+      queryClient.invalidateQueries(['seatDetail']);
     },
     onError(error: any) {
       console.error(error);
@@ -43,16 +58,16 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
 
 
   return (
-      <SeatDetailModal
-        open={open}
-        onClose={onClose}
-        seatNumber={seatNumber}
-        seatDetail={seatDetail}
-        // onClick={}
-        onDelete={deleteReservation}
-        onChangeCheckIn={handleChangeCheckIn}
-        onChangeCheckOut={handleChangeCheckOut}
-      />
+    <SeatDetailModal
+      open={open}
+      onClose={onClose}
+      seatNumber={seatNumber}
+      seatDetail={seatDetail}
+      onClick={bookingMutation}
+      onDelete={deleteReservation}
+      onChangeCheckIn={handleChangeCheckIn}
+      onChangeCheckOut={handleChangeCheckOut}
+    />
   );
 }
 
