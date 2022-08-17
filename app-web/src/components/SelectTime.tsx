@@ -27,7 +27,7 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const SelectTime = (children:any, check:any, { onChange }:any) => {
+const SelectTime = (children:any, check:any, onChange :any) => {
   return (
     <>
       {children}
