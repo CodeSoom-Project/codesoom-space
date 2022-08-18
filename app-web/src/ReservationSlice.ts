@@ -8,8 +8,6 @@ const initialState = {
     checkOut: '',
   },
   seatNumber: '',
-  checkIn: '',
-  checkOut: '',
 };
 
 export const reservationSlice = createSlice({
@@ -31,27 +29,12 @@ export const reservationSlice = createSlice({
         seatNumber,
       };
     },
-    changeReservationCheckIn(state, { payload: { checkIn } }) {
-      return {
-        ...state,
-        checkIn,
-      };
-    },
-
-    changeReservationCheckOut(state, { payload: { checkOut } }) {
-      return {
-        ...state,
-        checkOut,
-      };
-    },
   },
 });
 
 export const {
   changeReservationFields,
   changeReservationDetailsSeatNumber,
-  changeReservationCheckIn,
-  changeReservationCheckOut,
 } = reservationSlice.actions;
 
 export default reservationSlice.reducer;
