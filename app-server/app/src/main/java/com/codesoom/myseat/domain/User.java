@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
@@ -20,6 +20,7 @@ import java.util.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Slf4j
 public class User implements UserDetails {
     @Id
     @GeneratedValue
@@ -35,35 +36,20 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne
-    @JoinColumn(name = "token_id")
-    private Token token;
+    @Builder.Default
+    private boolean accountNonExpired = true;
+    
+    @Builder.Default
+    private boolean accountNonLocked = true;
+    
+    @Builder.Default
+    private boolean credentialsNonExpired = true;
+    
+    @Builder.Default
+    private boolean enabled = true;
 
     @OneToMany(mappedBy = "user")
     private List<SeatReservation> seatReservations = new ArrayList<>();
-
-    /**
-     * 비밀번호를 인증한다.
-     * 
-     * @param password 인증할 비밀번호
-     * @param encoder 비밀번호 인코더
-     * @return 엔티티의 비밀번호와 일치하면 true, 일치하지 않으면 false
-     */
-    public boolean authenticate(
-            String password,
-            PasswordEncoder encoder
-    ) {
-        return encoder.matches(password, this.password);
-    }
-
-    /**
-     * 토큰을 갱신 한다.
-     * 
-     * @param token 토큰
-     */
-    public void updateToken(Token token) {
-        this.token = token;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -78,26 +64,26 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return this.email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return this.accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return this.accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return this.credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.enabled;
     }
 }
