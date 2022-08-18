@@ -26,7 +26,7 @@ export const getSeatList = () => {
   return api.get('/seats');
 };
 
-export const getSeatDetail = ({ seatNumber }:{ seatNumber:string }) => {
+export const getSeatDetail = (seatNumber:number) => {
   return request({ url: `/seat/${seatNumber}`, method: 'get' });
 };
 
