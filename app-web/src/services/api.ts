@@ -27,19 +27,18 @@ export const getSeatList = () => {
 };
 
 export const getSeatDetail = ({ seatNumber }:{ seatNumber:string }) => {
-  // return api.get(`/seats/${seatNumber}`);
-  return request({ url: `/seats/${seatNumber}`, method: 'get' });
+  return request({ url: `/seat/${seatNumber}`, method: 'get' });
 };
 
-export const bookingSeatFn = async ({ seatNumber }: { seatNumber: any }) => {
-  return request({ url: `/seat-reservation/${seatNumber}`, method: 'post' });
+export const bookingSeatFn = async ({ seatNumber, checkIn, checkOut }:{ seatNumber:number, checkIn: string, checkOut:string }) => {
+  return request({ url: `/seat-reservation/${seatNumber}`, method: 'post', data: { checkIn, checkOut } });
 };
 
-export const deleteReservationFn = async ({ seatNumber }: { seatNumber: any }) => {
+export const deleteReservationFn = async ({ seatNumber }: { seatNumber: number }) => {
   return request({ url: `/seat-reservation/${seatNumber}`, method: 'delete' });
 };
 
-export const loginUserFn = async ({ email, password }: { email: any, password: any }) => {
+export const loginUserFn = async ({ email, password }: { email: string, password: string }) => {
   return api
     .post('/login', {
       email,
@@ -54,7 +53,7 @@ export const signUpUserFn = async ({
   email,
   password,
   name,
-}: { email: any, password: any, name: string }) => {
+}: { email: string, password: string, name: string }) => {
   return api
     .post('/signup', {
       email,
