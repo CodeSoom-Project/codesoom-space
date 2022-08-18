@@ -1,30 +1,20 @@
 import SeatDetailModal from './seatDetailModal';
-import { useAppDispatch, useAppSelector } from './hooks';
+import { useAppSelector } from './hooks';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { bookingSeatFn, deleteReservationFn, getSeatDetail } from './services/api';
-import { changeReservationCheckIn, changeReservationCheckOut } from './ReservationSlice';
 
 export default function SeatDetailModalContainer({ open, onClose }:any) {
-  const dispatch = useAppDispatch();
-
   const seatNumber = useAppSelector((state) =>state.reservation.seatNumber);
 
   const queryClient = useQueryClient();
 
-  const {
-    data: seatDetail,
-  } = useQuery(
+  const { data: seatDetail } = useQuery(
     ['seatDetail', seatNumber],
-    ()=>getSeatDetail({ seatNumber }),
+    ()=>getSeatDetail(seatNumber),
+    {
+      enabled: !!seatNumber,
+    },
   );
-
-  const handleChangeCheckIn = ({ checkIn }:any) => {
-    dispatch(changeReservationCheckIn({ checkIn }));
-  };
-
-  const handleChangeCheckOut = ({ checkOut }:any) => {
-    dispatch(changeReservationCheckOut({ checkOut }));
-  };
 
   const deleteSeat = async ({ seatNumber }: { seatNumber:number }) => {
     const deleteSeatResult = await deleteReservationFn({ seatNumber });
@@ -56,7 +46,6 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
     },
   });
 
-
   return (
     <SeatDetailModal
       open={open}
@@ -65,8 +54,6 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
       seatDetail={seatDetail}
       onClick={bookingMutation}
       onDelete={deleteReservation}
-      onChangeCheckIn={handleChangeCheckIn}
-      onChangeCheckOut={handleChangeCheckOut}
     />
   );
 }
