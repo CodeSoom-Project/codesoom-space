@@ -54,7 +54,6 @@ export default function SeatList() {
         open={isOpen}
         onClose={handleClose}
       />
-
     </div>
   );
 }
