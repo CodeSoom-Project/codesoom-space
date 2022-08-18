@@ -26,7 +26,7 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
     dispatch(changeReservationCheckOut({ checkOut }));
   };
 
-  const deleteSeat = async ({ seatNumber }: { seatNumber: string | number }) => {
+  const deleteSeat = async ({ seatNumber }: { seatNumber:number }) => {
     const deleteSeatResult = await deleteReservationFn({ seatNumber });
     return deleteSeatResult;
   };
@@ -41,9 +41,9 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
     },
   });
 
-  const bookingSeat = async ({ seatNumber }: { seatNumber: string | number }) => {
-    const deleteSeatResult = await bookingSeatFn({ seatNumber });
-    return deleteSeatResult;
+  const bookingSeat = async ({ seatNumber, checkIn, checkOut }: { seatNumber:number, checkIn:string, checkOut:string }) => {
+    const bookingSeatResult = await bookingSeatFn({ seatNumber, checkIn, checkOut });
+    return bookingSeatResult;
   };
 
   const { mutate: bookingMutation } = useMutation('bookingMutation', bookingSeat, {
