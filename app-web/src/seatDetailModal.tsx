@@ -3,7 +3,7 @@ import Detail from './components/details';
 import SelectTimeContainer from './SelectTimeContainer';
 
 
-export default function SeatDetailModal({ open, onClose, seatNumber, seatDetail, onClick, onDelete, isMySeat }:any) {
+export default function SeatDetailModal({ open, onClose, seatNumber, seatDetail, onClick, onDelete }:any) {
   if (!seatDetail) return (
     <>
       <Modal open={open} onClose={onClose}>
@@ -17,12 +17,11 @@ export default function SeatDetailModal({ open, onClose, seatNumber, seatDetail,
           seatNumber={seatNumber}
           onClick={onClick}
           onDelete={onDelete}
-          isMySeat={isMySeat}
         />
       </Modal>
     </>
   );
-  const { userName, seatDetailNumber, date, checkIn, checkOut } = seatDetail;
+  const { userName, seatDetailNumber, date, checkIn, checkOut, isMySeat } = seatDetail;
 
   return (
     <>
