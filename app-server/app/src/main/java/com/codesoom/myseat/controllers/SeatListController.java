@@ -49,7 +49,7 @@ public class SeatListController {
         for(Seat s : data) {
             response = SeatListResponse.builder()
                     .seatNumber(s.getNumber())
-                    .userName(s.getUserName())
+                    .isReserved(s.isReserved())
                     .build();
 
             list.add(response);

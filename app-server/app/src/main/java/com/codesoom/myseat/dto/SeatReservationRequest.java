@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SeatReservationRequest {
-    private String userName;
     private String checkIn;
     private String checkOut;
 }

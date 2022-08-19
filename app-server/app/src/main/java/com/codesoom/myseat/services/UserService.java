@@ -1,7 +1,6 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.dto.LoginRequest;
 import com.codesoom.myseat.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

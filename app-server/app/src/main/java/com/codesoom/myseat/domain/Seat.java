@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Slf4j
 public class Seat {
     @Id
     @GeneratedValue
@@ -26,18 +28,18 @@ public class Seat {
     @Builder.Default
     private boolean isReserved = false;
 
-    @Builder.Default
-    private String userName = "";
-
     @OneToOne(mappedBy = "seat")
     private SeatReservation seatReservation;
 
-    public void reserve(String userName) {
-        this.isReserved = true; 
-        this.userName = userName;
+    public void reserve(SeatReservation seatReservation) {
+        this.isReserved = true;
+        this.seatReservation = seatReservation;
     }
 
     public void cancelReservation() {
-        this.userName = "";
+        log.info("예약 취소");
+                
+        isReserved = false;
+        this.seatReservation = null;
     }
 }
