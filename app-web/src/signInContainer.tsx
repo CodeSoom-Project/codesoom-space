@@ -2,8 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { loginUserFn } from './services/api';
 import SignIn from './signIn';
-import Header from './components/Header';
-import { setAccessToken } from './authSlice';
+import Header from './Header';
 import { useAppDispatch } from './hooks';
 import { useNavigate } from 'react-router-dom';
 

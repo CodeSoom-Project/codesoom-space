@@ -1,4 +1,4 @@
-import Header from './components/Header';
+import Header from './Header';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import SignUp from './signUp';

@@ -1,9 +1,9 @@
 import './App.css';
-import Header from './components/Header';
 import { useDispatch } from 'react-redux';
 import { setAccessToken } from './authSlice';
 import SeatList from './seatList';
 import { loadItem } from './services/stoage';
+import HeaderContainer from './HeaderContainer';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <div>
-      <Header/>
+      <HeaderContainer/>
       <SeatList/>
       {/*<ReservationFormContainer/>*/}
       {/*<ReservationListContainer/>*/}
