@@ -1,7 +1,5 @@
 import './App.css';
 import Header from './components/Header';
-import ReservationFormContainer from './ReservationFormContainer';
-import ReservationListContainer from './ReservationListContainer';
 import { useDispatch } from 'react-redux';
 import { setAccessToken } from './authSlice';
 import SeatList from './seatList';
@@ -20,8 +18,8 @@ export default function App() {
     <div>
       <Header/>
       <SeatList/>
-      <ReservationFormContainer/>
-      <ReservationListContainer/>
+      {/*<ReservationFormContainer/>*/}
+      {/*<ReservationListContainer/>*/}
     </div>
   );
 }

@@ -7,7 +7,7 @@ const initialState = {
     checkIn: '',
     checkOut: '',
   },
-  seatNumber: '',
+  seatNumber: 0,
 };
 
 export const reservationSlice = createSlice({

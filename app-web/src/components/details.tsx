@@ -1,11 +1,11 @@
-interface DetailsType {
+interface DetailType {
   seatNumber: string;
   userName: string;
   checkIn: string | number ;
   checkOut: string | number ;
 }
 
-export default function Details({ seatNumber, userName, checkIn, checkOut }:DetailsType) {
+export default function Detail({ seatNumber, userName, checkIn, checkOut }:DetailType) {
 
   return (
     <>

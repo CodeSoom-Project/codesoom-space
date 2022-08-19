@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { saveItem } from './stoage';
+import { loadItem, saveItem } from './stoage';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
@@ -8,7 +8,7 @@ const api = axios.create({
 });
 
 export const request = ({ ...options }) => {
-  const token = localStorage.loadItem('accessToken');
+  const token = loadItem('accessToken');
   api.defaults.headers.common.Authorization = token ? `Bearer ${token}` : '';
   const onSuccess = (response:any) => response;
   const onError = (error:any) => {
@@ -26,16 +26,19 @@ export const getSeatList = () => {
   return api.get('/seats');
 };
 
-export const getSeatDetails = ({ seatNumber }:{ seatNumber:string }) => {
-  // return api.get(`/seats/${seatNumber}`);
-  return request({ url: `/seats/${seatNumber}`, method: 'get' });
+export const getSeatDetail = (seatNumber:number) => {
+  return request({ url: `/seat/${seatNumber}`, method: 'get' });
 };
 
-export const deleteReservationFn = async ({ seatNumber, userName }: { seatNumber: any, userName: string }) => {
-  return api.delete(`/seat-reservation/${seatNumber}`, { data: { userName } });
+export const bookingSeatFn = async ({ seatNumber, checkIn, checkOut }:{ seatNumber:number, checkIn: string, checkOut:string }) => {
+  return request({ url: `/seat-reservation/${seatNumber}`, method: 'post', data: { checkIn, checkOut } });
 };
 
-export const loginUserFn = async ({ email, password }: { email: any, password: any }) => {
+export const deleteReservationFn = async ({ seatNumber }: { seatNumber: number }) => {
+  return request({ url: `/seat-reservation/${seatNumber}`, method: 'delete' });
+};
+
+export const loginUserFn = async ({ email, password }: { email: string, password: string }) => {
   return api
     .post('/login', {
       email,
@@ -50,7 +53,7 @@ export const signUpUserFn = async ({
   email,
   password,
   name,
-}: { email: any, password: any, name: string }) => {
+}: { email: string, password: string, name: string }) => {
   return api
     .post('/signup', {
       email,

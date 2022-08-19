@@ -1,15 +1,44 @@
 import Modal from './components/Modal';
-import Details from './components/details';
-import ReservationButton from './ReservationButton';
+import Detail from './components/details';
+import SelectTimeContainer from './SelectTimeContainer';
 
-export default function SeatDetailsModal({ open, onClose, seatDetails, onClick, onDelete }:any) {
-  const [ userName, seatNumber, date, checkIn, checkOut ] = seatDetails;
+
+export default function SeatDetailModal({ open, onClose, seatNumber, seatDetail, onClick, onDelete, isMySeat }:any) {
+  if (!seatDetail) return (
+    <>
+      <Modal open={open} onClose={onClose}>
+        <Detail
+          userName=''
+          seatNumber={seatNumber}
+          checkIn=''
+          checkOut=''
+        />
+        <SelectTimeContainer
+          seatNumber={seatNumber}
+          onClick={onClick}
+          onDelete={onDelete}
+          isMySeat={isMySeat}
+        />
+      </Modal>
+    </>
+  );
+  const { userName, seatDetailNumber, date, checkIn, checkOut } = seatDetail;
 
   return (
     <>
-      <Modal open{...open} onclose={onClose}>
-        <Details {...userName} {...seatNumber} {...checkIn} {...checkOut} />
-        <ReservationButton onClick={onClick} onDelete={onDelete} isMySeat={isMySeat} />
+      <Modal open={open} onClose={onClose}>
+        <Detail
+          userName={userName}
+          seatNumber={seatNumber}
+          checkIn={checkIn}
+          checkOut={checkOut}
+        />
+        <SelectTimeContainer
+          seatNumber={seatNumber}
+          onClick={onClick}
+          onDelete={onDelete}
+          isMySeat={isMySeat}
+        />
       </Modal>
     </>
   );

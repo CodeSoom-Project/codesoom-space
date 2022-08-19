@@ -1,16 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { apis, deleteReservationFn } from './services/api';
 import ReservationList from './ReservationList';
-import { useAppSelector } from './hooks';
-
 
 export default function ReservationListContainer() {
-  const reservationFields = useAppSelector((state) => state.reservation.reservationFields);
-  const {
-    seatNumber,
-    userName,
-  }: { seatNumber: string | number; userName: string } = reservationFields;
-
   const queryClient = useQueryClient();
 
   const {
@@ -21,8 +13,8 @@ export default function ReservationListContainer() {
     apis.getReservation,
   );
 
-  const deleteSeat = async ({ seatNumber, userName }: { seatNumber: string | number, userName: string }) => {
-    const deleteSeatResult = await deleteReservationFn({ seatNumber, userName });
+  const deleteSeat = async ({ seatNumber }: { seatNumber: string | number }) => {
+    const deleteSeatResult = await deleteReservationFn({ seatNumber });
     return deleteSeatResult;
   };
 
