@@ -18,7 +18,10 @@ export default function SeatList() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data : seatList } = useQuery(['getSeatList'], getSeatList);
+  const { data : seatList } = useQuery(['getSeatList'], getSeatList, {
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
 
   const handleChange = (seatNumber:any) => {
     dispatch(changeReservationDetailsSeatNumber({ seatNumber }));
