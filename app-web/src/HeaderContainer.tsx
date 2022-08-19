@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { logout } from './authSlice';
-import { useAppSelector } from './hooks';
 import Header from './Header';
+import { useAppSelector } from './hooks';
 
 export default function HeaderContainer() {
-  const { accessToken } = useAppSelector((state) => state.auth.accessToken);
-
+  const accessToken = useAppSelector((state) => state.auth.accessToken);
+  
   const dispatch = useDispatch();
 
   function handleLogout() {
