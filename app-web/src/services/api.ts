@@ -31,11 +31,19 @@ export const getSeatDetail = (seatNumber:number) => {
 };
 
 export const bookingSeatFn = async ({ seatNumber, checkIn, checkOut }:{ seatNumber:number, checkIn: string, checkOut:string }) => {
-  return request({ url: `/seat-reservation/${seatNumber}`, method: 'post', data: { checkIn, checkOut } });
+  try {
+    return await request({ url: `/seat-reservation/${seatNumber}`, method: 'post', data: { checkIn, checkOut } });
+  } catch (err) {
+    throw window.alert(err.message);
+  }
 };
 
 export const deleteReservationFn = async ({ seatNumber }: { seatNumber: number }) => {
-  return request({ url: `/seat-reservation/${seatNumber}`, method: 'delete' });
+  try {
+    return await request({ url: `/seat-reservation/${seatNumber}`, method: 'delete' });
+  }  catch (err) {
+    throw window.alert(err.message);
+  }
 };
 
 export const loginUserFn = async ({ email, password }: { email: string, password: string }) => {
@@ -46,6 +54,8 @@ export const loginUserFn = async ({ email, password }: { email: string, password
     }).then((res)=> {
       const accessToken = res.data.token;
       saveItem('accessToken', accessToken);
+    }).catch((error)=> {
+      window.alert(error.message);
     });
 };
 
@@ -59,5 +69,7 @@ export const signUpUserFn = async ({
       email,
       password,
       name,
+    }).catch((error)=> {
+      window.alert(error.message);
     });
 };
