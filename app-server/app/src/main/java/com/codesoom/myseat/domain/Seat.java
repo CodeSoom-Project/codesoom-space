@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * 좌석 엔티티
@@ -20,6 +18,7 @@ import javax.persistence.Id;
 public class Seat {
     @Id
     @GeneratedValue
+    @Column(name="seat_id")
     private Long id;
 
     private int number;
@@ -29,6 +28,9 @@ public class Seat {
 
     @Builder.Default
     private String userName = "";
+
+    @OneToOne(mappedBy = "seat")
+    private SeatReservation seatReservation;
 
     public void reserve(String userName) {
         this.isReserved = true; 

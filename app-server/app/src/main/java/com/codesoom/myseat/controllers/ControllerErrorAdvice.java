@@ -1,10 +1,7 @@
 package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.dto.ErrorResponse;
-import com.codesoom.myseat.exceptions.SeatAlreadyReservedException;
-import com.codesoom.myseat.exceptions.SeatNotFoundException;
-import com.codesoom.myseat.exceptions.SeatReservationNotFoundException;
-import com.codesoom.myseat.exceptions.UserAlreadyReservedSeatTodayException;
+import com.codesoom.myseat.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -61,5 +58,16 @@ public class ControllerErrorAdvice {
     @ExceptionHandler(UserAlreadyReservedSeatTodayException.class)
     public ErrorResponse handleUserAlreadyReservedSeatToday() {
         return new ErrorResponse("당일 예약 내역이 존재하여 예약이 불가합니다");
+    }
+
+    /**
+     * 로그인에 실패했을 때 에러메시지를 반환한다.
+     * 
+     * @return 에러메시지
+     */
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(LoginFailureException.class)
+    public ErrorResponse handleLoginFailure() {
+        return new ErrorResponse("로그인에 실패했습니다.");
     }
 }
