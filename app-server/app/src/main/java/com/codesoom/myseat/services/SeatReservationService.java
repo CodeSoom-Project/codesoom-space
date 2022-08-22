@@ -54,8 +54,8 @@ public class SeatReservationService {
                         .user(user)
                         .seat(seat)
                         .build());
-        
         seat.reserve(seatReservation);
+        seatRepository.save(seat);
         
         return seatReservation;
     }
