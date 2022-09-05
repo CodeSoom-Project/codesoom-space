@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signup", "/login").permitAll()
+                .antMatchers("/signup", "/login", "/seats").permitAll()
                 .anyRequest().authenticated();
         
         // Stateless (세션사용X)
