@@ -5,12 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 
 /**
- * 좌석 목록 조회 응답 정보
+ * 좌석 상세 조회 응답 정보
  */
 @Getter
 @Builder
 @AllArgsConstructor
-public class SeatListResponse {
+public class SeatDetailResponse {
     private int seatNumber;
+    private String date;
+    private String checkIn;
+    private String checkOut;
+    private String userName;
     private boolean isReserved;
+    private boolean isMySeat;
 }

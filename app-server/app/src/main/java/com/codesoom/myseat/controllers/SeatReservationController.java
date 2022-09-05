@@ -1,10 +1,12 @@
 package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.domain.SeatReservation;
+import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.SeatReservationRequest;
 import com.codesoom.myseat.dto.SeatReservationResponse;
 import com.codesoom.myseat.services.SeatReservationService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,9 +37,10 @@ public class SeatReservationController {
     @ResponseStatus(HttpStatus.CREATED)
     public SeatReservationResponse addReservation(
             @PathVariable int seatNumber,
-            @RequestBody SeatReservationRequest request
+            @RequestBody SeatReservationRequest request,
+            @AuthenticationPrincipal User user
     ) {
-        return toResponse(service.addReservation(seatNumber, request));
+        return toResponse(service.addReservation(seatNumber, request, user));
     }
 
     /**
@@ -48,8 +51,8 @@ public class SeatReservationController {
      */
     private SeatReservationResponse toResponse(SeatReservation data) {
         return SeatReservationResponse.builder()
-                .userName(data.getUserName())
-                .seatNumber(data.getSeatNumber())
+                .userName(data.getUser().getUsername())
+                .seatNumber(data.getSeat().getNumber())
                 .date(data.getDate())
                 .checkIn(data.getCheckIn())
                 .checkOut(data.getCheckOut())

@@ -49,11 +49,11 @@ public class SeatReservationListController {
 
         for(SeatReservation s : data) {
             response = SeatReservationResponse.builder()
-                    .userName(s.getUserName())
-                    .seatNumber(s.getSeatNumber())
                     .date(s.getDate())
                     .checkIn(s.getCheckIn())
                     .checkOut(s.getCheckOut())
+                    .userName(s.getUser().getUsername())
+                    .seatNumber(s.getSeat().getNumber())
                     .build();
 
             list.add(response);

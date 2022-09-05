@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 좌석 예약 엔티티
@@ -36,4 +34,8 @@ public class SeatReservation {
     @OneToOne
     @JoinColumn(name = "seat_id")
     private Seat seat;
+    
+    public void cancelReservation() {
+        this.user = null;
+    }
 }
