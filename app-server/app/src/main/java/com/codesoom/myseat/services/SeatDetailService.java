@@ -5,6 +5,7 @@ import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.SeatDetailResponse;
 import com.codesoom.myseat.repositories.SeatReservationRepository;
 import com.codesoom.myseat.exceptions.SeatReservationNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.format.DateTimeFormatter;
  * 좌석 상세 조회 서비스
  */
 @Service
+@Slf4j
 public class SeatDetailService {
     private final SeatReservationRepository repository;
 
@@ -30,6 +32,7 @@ public class SeatDetailService {
      */
     public SeatDetailResponse seatDetail(int seatNumber, User user) {
         SeatReservation s = seatReservation(seatNumber);
+        log.info("seatNumber: " + seatNumber);
         
         // 내 자리인지 확인
         String name = s.getUser().getName();
@@ -37,6 +40,7 @@ public class SeatDetailService {
         if(name.equals(user.getName())) {
             mySeat = true;
         }
+        log.info("isMySeat: " + mySeat);
         
         return SeatDetailResponse.builder()
                 .seatNumber(seatNumber)
