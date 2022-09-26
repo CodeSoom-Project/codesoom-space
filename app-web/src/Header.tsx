@@ -1,18 +1,19 @@
 import { Link } from 'react-router-dom';
-import LogoutForm from './LogOutForm';
-import LoginForm from './LoginForm';
+import './index.css';
 
-export default function Header({ accessToken, onClick }:any) {
+export default function Header({ accessToken }:any) {
   return (
     <header>
       <h1>
-        <Link to="/my-seat">코드숨 공부방 좌석 예약 앱</Link>
+        <Link to="/my-seat">코드숨 공부방</Link>
       </h1>
+      <Link to="/signup">회원 가입</Link> | {' '}
+      
       {accessToken ? (
-        <LogoutForm onClick={()=>onClick}/>
-      ) : (
-        <LoginForm/>
-      )}
+        <button>로그아웃</button>
+        ) : (
+        <Link to="/signin">로그인</Link>
+        )}
     </header>
   );
 }
