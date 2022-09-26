@@ -5,11 +5,11 @@ import { useAppSelector } from './hooks';
 
 export default function HeaderContainer() {
   const accessToken = useAppSelector((state) => state.auth.accessToken);
-  
+
   const dispatch = useDispatch();
 
   function handleLogout() {
-    dispatch(logout);
+    dispatch(logout());
   }
 
   function handleRemoveAccessToken() {
