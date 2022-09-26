@@ -2,11 +2,13 @@ package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.exceptions.UserNotFoundException;
+import com.codesoom.myseat.repositories.RoleRepository;
 import com.codesoom.myseat.repositories.UserRepository;
 import com.codesoom.myseat.dto.SignupRequest;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +16,18 @@ import org.springframework.stereotype.Service;
  * 회원 가입 서비스
  */
 @Service
-public class SignupService implements UserDetailsService {
-    private final UserRepository repository;
+@Slf4j
+public class SignupService {
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepo;
+    private final RoleRepository roleRepo;
 
     public SignupService(
-            UserRepository repository, 
-            PasswordEncoder passwordEncoder
-    ) {
-        this.repository = repository;
+            UserRepository userRepo, 
+            RoleRepository roleRepo,
+            PasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -33,14 +38,21 @@ public class SignupService implements UserDetailsService {
      * @return 회원 정보
      */
     public User signUp(SignupRequest request) {
-        Role role = Role.ROLE_USER;
+        log.info("name: " + request.getName());
+        log.info("email: " + request.getEmail());
+        log.info("password: " + request.getEmail());
         
-        User user = repository.save(User.builder()
+        User user = userRepo.save(User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(encodePassword(request.getPassword()))
-                .role(role)
                 .build());
+        log.info("user name: " + user.getName());
+        log.info("user email: " + user.getEmail());
+        
+        Role role = new Role(request.getEmail(), "USER");
+        roleRepo.save(role);
+        log.info("role: " + role.getRoleName());
         
         return user;
     }
@@ -53,12 +65,5 @@ public class SignupService implements UserDetailsService {
      */
     public String encodePassword(String password) {
         return passwordEncoder.encode(password);
-    }
-
-    @Override
-    public User loadUserByUsername(String email) throws UsernameNotFoundException {
-        return repository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(
-                        "[" + email + "]이 일치하는 회원을 찾을 수 없어서 조회에 실패했습니다."));
     }
 }

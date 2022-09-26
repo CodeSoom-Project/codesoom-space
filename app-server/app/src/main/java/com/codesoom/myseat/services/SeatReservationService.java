@@ -9,6 +9,7 @@ import com.codesoom.myseat.dto.SeatReservationRequest;
 import com.codesoom.myseat.exceptions.SeatAlreadyReservedException;
 import com.codesoom.myseat.exceptions.SeatNotFoundException;
 import com.codesoom.myseat.exceptions.UserAlreadyReservedSeatTodayException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.time.format.DateTimeFormatter;
  * 좌석 예약 서비스
  */
 @Service
+@Slf4j
 public class SeatReservationService {
     private final SeatRepository seatRepository;
     private final SeatReservationRepository reservationRepository;
@@ -46,6 +48,8 @@ public class SeatReservationService {
             User user
     ) {
         Seat seat = seat(seatNumber);
+        log.info("seat: " + seat.getNumber());
+        
         SeatReservation seatReservation = reservationRepository.save(
                 SeatReservation.builder()
                         .date(today())
@@ -56,7 +60,7 @@ public class SeatReservationService {
                         .build());
         seat.reserve(seatReservation);
         seatRepository.save(seat);
-        
+
         return seatReservation;
     }
 

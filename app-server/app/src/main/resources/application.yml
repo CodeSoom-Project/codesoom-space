@@ -7,19 +7,10 @@ spring:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
         format_sql: true
 jwt:
   secret: "12345678901234567890123456789012"
-
----
-
-spring:
-  profiles: mariadb
-  datasource:
-    url: jdbc:mariadb://mariadb:3306/my-seat-mariadb
-    username: root
-    password: password

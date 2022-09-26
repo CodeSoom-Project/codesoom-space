@@ -1,29 +1,34 @@
 package com.codesoom.myseat.filters;
 
-import com.codesoom.myseat.services.UserService;
-import com.codesoom.myseat.utils.JwtUtil;
-import lombok.RequiredArgsConstructor;
+import com.codesoom.myseat.domain.Role;
+import com.codesoom.myseat.security.UserAuthentication;
+import com.codesoom.myseat.services.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
-@Component
-public class AuthenticationFilter extends OncePerRequestFilter {
+public class AuthenticationFilter extends BasicAuthenticationFilter {
+    private final AuthenticationService authService;
 
-    private final UserService userDetailsService;
-    private final JwtUtil jwtUtil;
+    public AuthenticationFilter(
+            AuthenticationManager authManager,
+            AuthenticationService authService
+    ) {
+        super(authManager);
+        this.authService = authService;
+    }
 
     @Override
     protected void doFilterInternal(
@@ -31,33 +36,26 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response, 
             FilterChain filterChain
     ) throws ServletException, IOException {
-        log.info("doFilterInternal");
-        String authorization = request.getHeader("Authorization"); // 헤더 파싱
-        String username = "", token = "";
-
-        if (authorization != null && authorization.startsWith("Bearer ")) { // Bearer 토큰 파싱
-            token = authorization.substring(7); // jwt token 파싱
-            username = jwtUtil.getUsernameFromToken(token); // username 얻어오기
-        } else {
-            filterChain.doFilter(request, response);
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        log.info("header: " + authHeader);
+        
+        if(authHeader != null) {
+            String token = authHeader.substring("Bearer ".length());
+            log.info("token: " + token);
+            
+            String email = authService.parseToken(token);
+            log.info("email: " + email);
+            List<Role> roles = authService.roles(email);
+            log.info("roles: " + roles);
+            
+            Authentication authentication = new UserAuthentication(email, roles);
+            log.info("authentication: " + authentication.getAuthorities());
+            
+            SecurityContext context = SecurityContextHolder.getContext();
+            context.setAuthentication(authentication);
+            log.info("context: " + context.getAuthentication().getAuthorities().toString());
         }
         
-        // 현재 SecurityContextHolder 에 인증객체가 있는지 확인
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            // 토큰 유효여부 확인
-            log.info("JWT Filter token = {}", token);
-            log.info("JWT Filter userDetails = {}", userDetails.getUsername());
-            
-            if (jwtUtil.isValidToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken
-                        = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
-        }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 }

@@ -2,14 +2,9 @@ package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.dto.LoginRequest;
 import com.codesoom.myseat.dto.LoginResponse;
-import com.codesoom.myseat.services.UserService;
-import com.codesoom.myseat.utils.JwtUtil;
+import com.codesoom.myseat.services.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -17,25 +12,13 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/login")
-@CrossOrigin(
-//        origins = "https://codesoom-project.github.io",
-        origins = "*",
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin
 @Slf4j
 public class LoginController {
-    private final UserService userService;
-    private final JwtUtil jwtUtil;
-    private final AuthenticationManager authManager;
+    private final AuthenticationService authService;
 
-    public LoginController(
-            UserService userService, 
-            JwtUtil jwtUtil,
-            AuthenticationManager authManager
-    ) {
-        this.userService = userService;
-        this.jwtUtil = jwtUtil;
-        this.authManager = authManager;
+    public LoginController(AuthenticationService authService) {
+        this.authService = authService;
     }
 
     /**
@@ -47,15 +30,11 @@ public class LoginController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public LoginResponse login(@RequestBody LoginRequest req) {
-        try {
-            authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("로그인 실패");
-        }
+        String email = req.getEmail();
+        String password = req.getPassword();
         
-        UserDetails userDetails = userService.loadUserByUsername(req.getEmail());
-        String token = jwtUtil.generateToken(userDetails);
+        String token = authService.login(email, password);
+        log.info("token: " + token);
 
         return toResponse(token);
     }

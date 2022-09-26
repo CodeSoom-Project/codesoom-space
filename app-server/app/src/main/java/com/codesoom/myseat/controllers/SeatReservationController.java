@@ -4,9 +4,12 @@ import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.SeatReservationRequest;
 import com.codesoom.myseat.dto.SeatReservationResponse;
+import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.SeatReservationService;
+import com.codesoom.myseat.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,16 +17,15 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/seat-reservation")
-@CrossOrigin(
-//        origins = "https://codesoom-project.github.io",
-        origins = "*",
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin
+@Slf4j
 public class SeatReservationController {
     private final SeatReservationService service;
+    private final UserService userService;
 
-    public SeatReservationController(SeatReservationService service) {
+    public SeatReservationController(SeatReservationService service, UserService userService) {
         this.service = service;
+        this.userService = userService;
     }
 
     /**
@@ -35,11 +37,18 @@ public class SeatReservationController {
      */
     @PostMapping("{seatNumber}")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("isAuthenticated()")
     public SeatReservationResponse addReservation(
             @PathVariable int seatNumber,
             @RequestBody SeatReservationRequest request,
-            @AuthenticationPrincipal User user
+            UserAuthentication auth
     ) {
+        String email = auth.getEmail();
+        User user = userService.findUser(email);
+        log.info("seatNumber: " + seatNumber);
+        log.info("checkin: " + request.getCheckIn());
+        log.info("checkout: " + request.getCheckOut());
+        
         return toResponse(service.addReservation(seatNumber, request, user));
     }
 
@@ -51,7 +60,7 @@ public class SeatReservationController {
      */
     private SeatReservationResponse toResponse(SeatReservation data) {
         return SeatReservationResponse.builder()
-                .userName(data.getUser().getUsername())
+//                .userName(data.getUser().getUsername())
                 .seatNumber(data.getSeat().getNumber())
                 .date(data.getDate())
                 .checkIn(data.getCheckIn())
