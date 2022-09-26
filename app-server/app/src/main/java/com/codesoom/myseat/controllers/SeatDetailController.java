@@ -1,9 +1,10 @@
 package com.codesoom.myseat.controllers;
 
-import com.codesoom.myseat.domain.SeatReservation;
-import com.codesoom.myseat.dto.SeatReservationResponse;
+import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.dto.SeatDetailResponse;
 import com.codesoom.myseat.services.SeatDetailService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/seat")
 @CrossOrigin(
-        origins = "https://codesoom-project.github.io",
+//        origins = "https://codesoom-project.github.io",
+        origins = "*",
         allowedHeaders = "*",
         allowCredentials = "true")
 public class SeatDetailController {
@@ -30,23 +32,26 @@ public class SeatDetailController {
      */
     @GetMapping("{seatNumber}")
     @ResponseStatus(HttpStatus.OK)
-    public SeatReservationResponse seatDetail(@PathVariable int seatNumber) {
-        return toResponse(service.seatDetail(seatNumber));
+    public SeatDetailResponse seatDetail(
+            @PathVariable int seatNumber,
+            @AuthenticationPrincipal User user
+    ) {
+        return service.seatDetail(seatNumber, user);
     }
 
-    /**
-     * 응답 정보를 반환한다.
-     *
-     * @param data 좌석 예약 정보
-     * @return 응답 정보
-     */
-    private SeatReservationResponse toResponse(SeatReservation data) {
-        return SeatReservationResponse.builder()
-                .userName(data.getUserName())
-                .seatNumber(data.getSeatNumber())
-                .date(data.getDate())
-                .checkIn(data.getCheckIn())
-                .checkOut(data.getCheckOut())
-                .build();
-    }
+//    /**
+//     * 응답 정보를 반환한다.
+//     *
+//     * @param data 좌석 예약 정보
+//     * @return 응답 정보
+//     */
+//    private SeatDetailResponse toResponse(Seat data) {
+//        return SeatReservationResponse.builder()
+//                .userName(data.getUserName())
+//                .seatNumber(data.getSeatNumber())
+//                .date(data.getDate())
+//                .checkIn(data.getCheckIn())
+//                .checkOut(data.getCheckOut())
+//                .build();
+//    }
 }

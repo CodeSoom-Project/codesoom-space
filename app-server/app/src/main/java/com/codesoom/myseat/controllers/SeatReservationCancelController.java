@@ -1,8 +1,9 @@
 package com.codesoom.myseat.controllers;
 
-import com.codesoom.myseat.dto.SeatReservationCancelRequest;
+import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.services.SeatReservationCancelService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/seat-reservation")
 @CrossOrigin(
-        origins = "https://codesoom-project.github.io",
+//        origins = "https://codesoom-project.github.io",
+        origins = "*",
         allowedHeaders = "*",
         allowCredentials = "true")
 public class SeatReservationCancelController {
@@ -25,14 +27,13 @@ public class SeatReservationCancelController {
      * 좌석 예약을 취소한 후 상태코드 204를 응답한다.
      *
      * @param seatNumber 예약 취소할 좌석 번호
-     * @param request 좌석 예약 취소 요청 정보
      */
     @DeleteMapping("{seatNumber}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelReservation(
             @PathVariable int seatNumber,
-            @RequestBody SeatReservationCancelRequest request
+            @AuthenticationPrincipal User user
     ) {
-        service.cancelReservation(seatNumber, request);
+        service.cancelReservation(seatNumber, user);
     }
 }

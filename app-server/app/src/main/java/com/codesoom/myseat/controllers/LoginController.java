@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/login")
 @CrossOrigin(
-        origins = "https://codesoom-project.github.io",
+//        origins = "https://codesoom-project.github.io",
+        origins = "*",
         allowedHeaders = "*",
         allowCredentials = "true")
 @Slf4j

@@ -30,10 +30,10 @@ public interface SeatReservationRepository
      * 날짜와 회원 이름으로 좌석 예약 정보를 찾는다.
      *
      * @param today 오늘 날짜
-     * @param userName 회원 이름
+     * @param userId 사용자 id
      * @return 좌석 예약 정보
      */
-    Optional<SeatReservation> findByDateAndUserName(String today, String userName);
+    Optional<SeatReservation> findByDateAndUserId(String today, Long userId);
 
     /**
      * 좌석 예약 정보를 삭제한다.

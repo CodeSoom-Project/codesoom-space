@@ -1,10 +1,10 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
+import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.repositories.SeatRepository;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.repositories.SeatReservationRepository;
-import com.codesoom.myseat.dto.SeatReservationCancelRequest;
 import com.codesoom.myseat.exceptions.SeatNotFoundException;
 import com.codesoom.myseat.exceptions.SeatReservationNotFoundException;
 import org.springframework.stereotype.Service;
@@ -27,21 +27,22 @@ public class SeatReservationCancelService {
 
     /**
      * 취소된 좌석 예약 정보를 반환한다.
-     *
+     * 
      * @param seatNumber 예약 취소할 좌석 번호
-     * @param request 좌석 예약 취소 요청 정보
+     * @param user 취소 요청한 사용자 정보
      * @return 좌석 예약 정보
      * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
      * @throws SeatReservationNotFoundException 좌석 예약 내역을 찾을 수 없는 경우 예외를 던진다.
      */
     public SeatReservation cancelReservation(
             int seatNumber,
-            SeatReservationCancelRequest request
+            User user
     ) {
         Seat seat = seat(seatNumber);
         seat.cancelReservation();
-
-        SeatReservation reservation = seatReservation(request.getUserName());
+        
+        SeatReservation reservation = seatReservation(user.getId());
+        reservation.cancelReservation();
         reservationRepository.delete(reservation);
 
         return reservation;
@@ -50,14 +51,14 @@ public class SeatReservationCancelService {
     /**
      * 좌석 예약 내역을 반환한다.
      *
-     * @param userName 회원 이름
+     * @param userId 사용자 id
      * @return 좌석 예약 내역
      * @throws SeatReservationNotFoundException 좌석 예약 내역을 찾을 수 없는 경우 예외를 던진다.
      */
-    private SeatReservation seatReservation(String userName) {
-        return reservationRepository.findByDateAndUserName(today(), userName)
+    private SeatReservation seatReservation(Long userId) {
+        return reservationRepository.findByDateAndUserId(today(), userId)
                 .orElseThrow(() -> new SeatReservationNotFoundException(
-                        "[" + userName + "] 회원의 당일 예약 내역을 찾을 수 없어서 조회에 실패했습니다."));
+                        "[" + userId + "] 회원의 당일 예약 내역을 찾을 수 없어서 조회에 실패했습니다."));
     }
 
     /**
