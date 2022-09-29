@@ -1,8 +1,10 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.LoginRequest;
 import com.codesoom.myseat.dto.LoginResponse;
 import com.codesoom.myseat.services.AuthenticationService;
+import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class LoginController {
     private final AuthenticationService authService;
+    private final UserService userService;
 
     public LoginController(
-            AuthenticationService authService
+            AuthenticationService authService,
+            UserService userService
     ) {
         this.authService = authService;
+        this.userService = userService;
     }
 
     /**
@@ -39,8 +44,11 @@ public class LoginController {
         
         String token = authService.login(email, password);
         log.info("token: " + token);
+        
+        User user = userService.findUser(email);
+        String userName = user.getName();
 
-        return toResponse(token);
+        return toResponse(token, userName);
     }
 
     /**
@@ -50,10 +58,12 @@ public class LoginController {
      * @return 응답 정보
      */
     private LoginResponse toResponse(
-            String token
+            String token,
+            String userName
     ) {
         return LoginResponse.builder()
                 .token(token)
+                .userName(userName)
                 .build();
     }
 }
