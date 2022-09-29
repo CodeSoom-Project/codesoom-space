@@ -6,14 +6,16 @@ import com.codesoom.myseat.dto.SeatAddRequest;
 import org.springframework.stereotype.Service;
 
 /**
- * 좌석 관리 서비스
+ * 좌석 추가 서비스
  */
 @Service
 public class SeatAddService {
-    private final SeatRepository repository;
+    private final SeatRepository seatRepo;
 
-    public SeatAddService(SeatRepository repository) {
-        this.repository = repository;
+    public SeatAddService(
+            SeatRepository seatRepo
+    ) {
+        this.seatRepo = seatRepo;
     }
 
     /**
@@ -23,9 +25,10 @@ public class SeatAddService {
      * @return 좌석 정보
      */
     public Seat addSeat(SeatAddRequest request) {
-        return repository.save(
+        return seatRepo.save(
                 Seat.builder()
                         .number(request.getNumber())
-                        .build());
+                        .build()
+        );
     }
 }

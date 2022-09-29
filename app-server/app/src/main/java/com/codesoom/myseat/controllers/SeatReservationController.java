@@ -10,6 +10,7 @@ import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,7 +24,10 @@ public class SeatReservationController {
     private final SeatReservationService service;
     private final UserService userService;
 
-    public SeatReservationController(SeatReservationService service, UserService userService) {
+    public SeatReservationController(
+            SeatReservationService service, 
+            UserService userService
+    ) {
         this.service = service;
         this.userService = userService;
     }
@@ -40,10 +44,9 @@ public class SeatReservationController {
     @PreAuthorize("isAuthenticated()")
     public SeatReservationResponse addReservation(
             @PathVariable int seatNumber,
-            @RequestBody SeatReservationRequest request,
-            UserAuthentication auth
+            @RequestBody SeatReservationRequest request
     ) {
-        String email = auth.getEmail();
+        String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
         User user = userService.findUser(email);
         log.info("seatNumber: " + seatNumber);
         log.info("checkin: " + request.getCheckIn());
@@ -58,9 +61,11 @@ public class SeatReservationController {
      * @param data 예약한 좌석 정보
      * @return 응답 정보
      */
-    private SeatReservationResponse toResponse(SeatReservation data) {
+    private SeatReservationResponse toResponse(
+            SeatReservation data
+    ) {
         return SeatReservationResponse.builder()
-//                .userName(data.getUser().getUsername())
+                .userName(data.getUser().getName())
                 .seatNumber(data.getSeat().getNumber())
                 .date(data.getDate())
                 .checkIn(data.getCheckIn())

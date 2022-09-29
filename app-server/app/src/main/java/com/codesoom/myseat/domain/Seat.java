@@ -24,14 +24,16 @@ public class Seat {
     private Long id;
 
     private int number;
-    
+
     @Builder.Default
     private boolean isReserved = false;
 
     @OneToOne(mappedBy = "seat")
     private SeatReservation seatReservation;
 
-    public void reserve(SeatReservation seatReservation) {
+    public void reserve(
+            SeatReservation seatReservation
+    ) {
         this.isReserved = true;
         this.seatReservation = seatReservation;
     }

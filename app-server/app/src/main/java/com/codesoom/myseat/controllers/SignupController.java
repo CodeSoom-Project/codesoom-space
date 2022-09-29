@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 public class SignupController {
     private final SignupService service;
 
-    public SignupController(SignupService service) {
+    public SignupController(
+            SignupService service
+    ) {
         this.service = service;
     }
 
@@ -27,7 +29,9 @@ public class SignupController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void signUp(@RequestBody SignupRequest request) {
+    public void signUp(
+            @RequestBody SignupRequest request
+    ) {
         log.info("name: " + request.getName());
         log.info("email: " + request.getEmail());
         log.info("password: " + request.getEmail());

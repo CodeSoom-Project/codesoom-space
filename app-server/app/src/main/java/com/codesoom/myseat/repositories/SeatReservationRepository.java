@@ -1,7 +1,7 @@
 package com.codesoom.myseat.repositories;
 
 import com.codesoom.myseat.domain.SeatReservation;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.Optional;
  * 좌석 예약 레포지토리
  */
 public interface SeatReservationRepository
-        extends CrudRepository<SeatReservation, Long> {
+        extends JpaRepository<SeatReservation, Long> {
     /**
      * 좌석 예약 정보를 저장한다.
      *
@@ -27,13 +27,13 @@ public interface SeatReservationRepository
     Optional<List<SeatReservation>> findAllByDate(String today);
 
     /**
-     * 날짜와 회원 이름으로 좌석 예약 정보를 찾는다.
+     * 날짜와 회원 이메일로 좌석 예약 정보를 찾는다.
      *
      * @param today 오늘 날짜
-     * @param userId 사용자 id
+     * @param email 회원 이메일
      * @return 좌석 예약 정보
      */
-    Optional<SeatReservation> findByDateAndUserId(String today, Long userId);
+    Optional<SeatReservation> findByDateAndUser_Email(String today, String email);
 
     /**
      * 좌석 예약 정보를 삭제한다.

@@ -8,6 +8,7 @@ import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -18,14 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @Slf4j
 public class SeatDetailController {
-    private final SeatDetailService service;
+    private final SeatDetailService seatDetailservice;
     private final UserService userService;
 
     public SeatDetailController(
-            SeatDetailService service, 
+            SeatDetailService seatDetailservice, 
             UserService userService
     ) {
-        this.service = service;
+        this.seatDetailservice = seatDetailservice;
         this.userService = userService;
     }
 
@@ -39,14 +40,15 @@ public class SeatDetailController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("isAuthenticated()")
     public SeatDetailResponse seatDetail(
-            @PathVariable int seatNumber,
-            UserAuthentication auth
+            @PathVariable int seatNumber
     ) {
         log.info("seatNumber: " + seatNumber);
-        log.info("email: " + auth.getEmail());
-        String email = auth.getEmail();
+        
+        String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
+        log.info("email: " + email);
+        
         User user = userService.findUser(email);
 
-        return service.seatDetail(seatNumber, user);
+        return seatDetailservice.seatDetail(seatNumber, user);
     }
 }

@@ -8,10 +8,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserAuthentication extends AbstractAuthenticationToken {
+public class UserAuthentication 
+        extends AbstractAuthenticationToken {
     private final String email;
 
-    public UserAuthentication(String email, List<Role> roles) {
+    public UserAuthentication(
+            String email,
+            List<Role> roles
+    ) {
         super(authorities(roles));
         this.email = email;
     }
@@ -19,7 +23,7 @@ public class UserAuthentication extends AbstractAuthenticationToken {
     public String getEmail() {
         return email;
     }
-    
+
     @Override
     public Object getCredentials() {
         return null;
@@ -29,7 +33,7 @@ public class UserAuthentication extends AbstractAuthenticationToken {
     public Object getPrincipal() {
         return email;
     }
-    
+
     @Override
     public boolean isAuthenticated() {
         return true;
@@ -39,8 +43,10 @@ public class UserAuthentication extends AbstractAuthenticationToken {
     public String toString() {
         return "Authentication: " + email;
     }
-    
-    private static List<GrantedAuthority> authorities(List<Role> roles) {
+
+    private static List<GrantedAuthority> authorities(
+            List<Role> roles
+    ) {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
                 .collect(Collectors.toList());

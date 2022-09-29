@@ -14,11 +14,15 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepo;
 
-    public UserService(UserRepository userRepo) {
+    public UserService(
+            UserRepository userRepo
+    ) {
         this.userRepo = userRepo;
     }
     
-    public User findUser(String email) {
+    public User findUser(
+            String email
+    ) {
         return userRepo.findByEmail(email)
                 .orElseThrow(() -> new SeatNotFoundException(
                         "[" + email + "] 조회 실패"));

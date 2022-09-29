@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
     private final AuthenticationService authService;
 
-    public LoginController(AuthenticationService authService) {
+    public LoginController(
+            AuthenticationService authService
+    ) {
         this.authService = authService;
     }
 
@@ -29,7 +31,9 @@ public class LoginController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public LoginResponse login(@RequestBody LoginRequest req) {
+    public LoginResponse login(
+            @RequestBody LoginRequest req
+    ) {
         String email = req.getEmail();
         String password = req.getPassword();
         
@@ -45,7 +49,9 @@ public class LoginController {
      * @param token 토큰
      * @return 응답 정보
      */
-    private LoginResponse toResponse(String token) {
+    private LoginResponse toResponse(
+            String token
+    ) {
         return LoginResponse.builder()
                 .token(token)
                 .build();

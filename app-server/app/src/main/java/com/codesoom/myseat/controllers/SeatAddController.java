@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 public class SeatAddController {
     private final SeatAddService service;
 
-    public SeatAddController(SeatAddService service) {
+    public SeatAddController(
+            SeatAddService service
+    ) {
         this.service = service;
     }
 
@@ -32,7 +34,9 @@ public class SeatAddController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("isAuthenticated()")
-    public SeatAddResponse addSeat(@RequestBody SeatAddRequest request) {
+    public SeatAddResponse addSeat(
+            @RequestBody SeatAddRequest request
+    ) {
         log.info("좌석 추가");
         return toResponse(service.addSeat(request));
     }

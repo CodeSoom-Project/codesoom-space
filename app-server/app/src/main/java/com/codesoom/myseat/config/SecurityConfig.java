@@ -20,16 +20,22 @@ import java.util.Arrays;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationService authService;
 
-    public SecurityConfig(AuthenticationService authService) {
+    public SecurityConfig(
+            AuthenticationService authService
+    ) {
         this.authService = authService;
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        Filter authFilter = new AuthenticationFilter(authenticationManager(), authService);
-        
+    protected void configure(
+            HttpSecurity http
+    ) throws Exception {
+        Filter authFilter 
+                = new AuthenticationFilter(authenticationManager(), authService);
+
         http
-                .cors().and()
+                .cors()
+                .and()
                 .csrf()
                 .ignoringAntMatchers("/h2-console/**")
                 .disable()

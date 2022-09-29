@@ -18,14 +18,22 @@ public class AuthenticationService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthenticationService(UserRepository userRepo, RoleRepository roleRepo, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
+    public AuthenticationService(
+            UserRepository userRepo, 
+            RoleRepository roleRepo, 
+            JwtUtil jwtUtil, 
+            PasswordEncoder passwordEncoder
+    ) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
     }
-    
-    public String login(String email, String password) {
+
+    public String login(
+            String email, 
+            String password
+    ) {
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new LoginFailureException(email));
 
@@ -36,11 +44,15 @@ public class AuthenticationService {
         return jwtUtil.makeJwtToken(user.getEmail());
     }
 
-    public String parseToken(String token) {
+    public String parseToken(
+            String token
+    ) {
         return jwtUtil.parseJwtToken(token);
     }
 
-    public List<Role> roles(String email) {
+    public List<Role> roles(
+            String email
+    ) {
         return roleRepo.findAllByEmail(email);
     }
 }
