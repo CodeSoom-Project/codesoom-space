@@ -14,10 +14,12 @@ import java.util.List;
  */
 @Service
 public class SeatReservationListService {
-    private final SeatReservationRepository repository;
+    private final SeatReservationRepository reservationRepo;
 
-    public SeatReservationListService(SeatReservationRepository repository) {
-        this.repository = repository;
+    public SeatReservationListService(
+            SeatReservationRepository reservationRepo
+    ) {
+        this.reservationRepo = reservationRepo;
     }
 
     /**
@@ -47,8 +49,10 @@ public class SeatReservationListService {
      * @return 당일 좌석 예약 목록
      * @throws SeatReservationNotFoundException 당일 예약 내역을 찾을 수 없는 경우 예외를 던진다.
      */
-    private List<SeatReservation> seatReservations(String today) {
-        return repository.findAllByDate(today)
+    private List<SeatReservation> seatReservations(
+            String today
+    ) {
+        return reservationRepo.findAllByDate(today)
                 .orElseThrow(() -> new SeatReservationNotFoundException(
                         "당일 예약 내역을 찾을 수 없어서 조회에 실패했습니다."));
     }

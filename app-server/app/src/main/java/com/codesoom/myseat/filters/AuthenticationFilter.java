@@ -38,24 +38,25 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
     ) throws ServletException, IOException {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         log.info("header: " + authHeader);
-        
+
         if(authHeader != null) {
             String token = authHeader.substring("Bearer ".length());
             log.info("token: " + token);
-            
+
             String email = authService.parseToken(token);
             log.info("email: " + email);
+
             List<Role> roles = authService.roles(email);
             log.info("roles: " + roles);
-            
+
             Authentication authentication = new UserAuthentication(email, roles);
             log.info("authentication: " + authentication.getAuthorities());
-            
+
             SecurityContext context = SecurityContextHolder.getContext();
             context.setAuthentication(authentication);
             log.info("context: " + context.getAuthentication().getAuthorities().toString());
         }
-        
+
         filterChain.doFilter(request, response);
     }
 }

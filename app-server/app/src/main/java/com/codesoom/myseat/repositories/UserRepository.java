@@ -2,7 +2,10 @@ package com.codesoom.myseat.repositories;
 
 import com.codesoom.myseat.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 /**
@@ -26,4 +29,9 @@ public interface UserRepository
      * @return 회원 정보
      */
     Optional<User> findByEmail(String email);
+
+    @Query("UPDATE User SET haveSeat=false WHERE haveSeat is true")
+    @Modifying
+    @Transactional
+    void seatReset();
 }

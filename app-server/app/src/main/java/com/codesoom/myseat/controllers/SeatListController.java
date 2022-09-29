@@ -3,6 +3,7 @@ package com.codesoom.myseat.controllers;
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.dto.SeatListResponse;
 import com.codesoom.myseat.services.SeatListService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,15 +15,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seats")
-@CrossOrigin(
-//        origins = "https://codesoom-project.github.io",
-        origins = "*",
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin
+@Slf4j
 public class SeatListController {
     private final SeatListService service;
 
-    public SeatListController(SeatListService service) {
+    public SeatListController(
+            SeatListService service
+    ) {
         this.service = service;
     }
 
@@ -43,14 +43,16 @@ public class SeatListController {
      * @param data 좌석 목록
      * @return 좌석 목록 DTO
      */
-    private List<SeatListResponse> toResponse(List<Seat> data) {
+    private List<SeatListResponse> toResponse(
+            List<Seat> data
+    ) {
         List<SeatListResponse> list = new ArrayList<>();
         SeatListResponse response;
 
         for(Seat s : data) {
             response = SeatListResponse.builder()
                     .seatNumber(s.getNumber())
-                    .isReserved(s.isReserved())
+                    .isReserved(String.valueOf(s.isReserved()))
                     .build();
 
             list.add(response);

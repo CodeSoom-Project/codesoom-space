@@ -6,9 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.*;
@@ -29,10 +26,13 @@ public class User {
     private Long id;
 
     private String name;
-    
+
     private String email;
-    
+
     private String password;
+
+    @Builder.Default
+    private boolean haveSeat = false;
 
     @OneToMany(mappedBy = "user")
     private List<SeatReservation> seatReservations = new ArrayList<>();
@@ -44,5 +44,13 @@ public class User {
         log.info("password: " + password);
         log.info("this.password: " + this.password);
         return passwordEncoder.matches(password, this.password);
+    }
+    
+    public void reserve() {
+        this.haveSeat = true;
+    }
+    
+    public void cancelReserve() {
+        this.haveSeat = false;
     }
 }

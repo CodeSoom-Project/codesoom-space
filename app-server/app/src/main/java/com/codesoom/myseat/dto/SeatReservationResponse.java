@@ -12,8 +12,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SeatReservationResponse {
     private String userName;
+
     private int seatNumber;
+
     private String date;
+
     private String checkIn;
+
     private String checkOut;
 }

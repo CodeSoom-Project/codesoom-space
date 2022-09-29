@@ -14,5 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SeatReservationRequest {
     private String checkIn;
+    
     private String checkOut;
 }

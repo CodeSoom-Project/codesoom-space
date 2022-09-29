@@ -17,10 +17,12 @@ import java.time.format.DateTimeFormatter;
 @Service
 @Slf4j
 public class SeatDetailService {
-    private final SeatReservationRepository repository;
+    private final SeatReservationRepository reservationRepo;
 
-    public SeatDetailService(SeatReservationRepository repository) {
-        this.repository = repository;
+    public SeatDetailService(
+            SeatReservationRepository reservationRepo
+    ) {
+        this.reservationRepo = reservationRepo;
     }
 
     /**
@@ -30,26 +32,20 @@ public class SeatDetailService {
      * @return 당일 예약 정보
      * @throws SeatReservationNotFoundException 예약 내역을 찾을 수 없는 경우 예외를 던진다.
      */
-    public SeatDetailResponse seatDetail(int seatNumber, User user) {
-        SeatReservation s = seatReservation(seatNumber);
+    public SeatDetailResponse seatDetail(
+            int seatNumber, 
+            User user
+    ) {
         log.info("seatNumber: " + seatNumber);
-        
-        // 내 자리인지 확인
-        String name = s.getUser().getName();
-        boolean mySeat = false;
-        if(name.equals(user.getName())) {
-            mySeat = true;
-        }
-        log.info("isMySeat: " + mySeat);
-        
+
+        SeatReservation s = seatReservation(seatNumber);
+
         return SeatDetailResponse.builder()
                 .seatNumber(seatNumber)
                 .date(s.getDate())
                 .checkIn(s.getCheckIn())
                 .checkOut(s.getCheckOut())
                 .userName(s.getUser().getName())
-                .isReserved(s.getSeat().isReserved())
-                .isMySeat(mySeat)
                 .build();
     }
 
@@ -59,8 +55,10 @@ public class SeatDetailService {
      * @param seatNumber 좌석 번호
      * @return 예약 내역
      */
-    private SeatReservation seatReservation(int seatNumber) {
-        return repository.findByDateAndSeatNumber(today(), seatNumber)
+    private SeatReservation seatReservation(
+            int seatNumber
+    ) {
+        return reservationRepo.findByDateAndSeatNumber(today(), seatNumber)
                 .orElseThrow(() -> new SeatReservationNotFoundException(
                         "당일 예약 내역을 찾을 수 없어서 조회에 실패했습니다."));
     }

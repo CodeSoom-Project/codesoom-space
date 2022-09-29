@@ -11,13 +11,15 @@ import java.util.List;
  */
 @Service
 public class SeatListService {
-    private final SeatRepository repository;
+    private final SeatRepository seatRepo;
 
-    public SeatListService(SeatRepository repository) {
-        this.repository = repository;
+    public SeatListService(
+            SeatRepository seatRepo
+    ) {
+        this.seatRepo = seatRepo;
     }
 
     public List<Seat> seats() {
-        return repository.findAll();
+        return seatRepo.findAll();
     }
 }
