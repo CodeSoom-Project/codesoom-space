@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/h2-console/**", "/", "/signup", "/login", "/seats").permitAll()
+                .antMatchers("/h2-console/**", "/", "/docs/**", "/signup", "/login", "/seats").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(authFilter)
