@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class SeatReservation {
     @Id
     @GeneratedValue
@@ -27,6 +29,9 @@ public class SeatReservation {
 
     private String checkOut;
 
+    @Builder.Default
+    private Boolean canceled = false;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -34,8 +39,8 @@ public class SeatReservation {
     @OneToOne
     @JoinColumn(name = "seat_id")
     private Seat seat;
-    
+
     public void cancelReservation() {
-        this.user = null;
+        this.canceled = true;
     }
 }

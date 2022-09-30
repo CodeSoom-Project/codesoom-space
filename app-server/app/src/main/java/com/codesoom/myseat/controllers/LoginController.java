@@ -1,15 +1,12 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.LoginRequest;
 import com.codesoom.myseat.dto.LoginResponse;
+import com.codesoom.myseat.services.AuthenticationService;
 import com.codesoom.myseat.services.UserService;
-import com.codesoom.myseat.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -17,25 +14,18 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/login")
-@CrossOrigin(
-//        origins = "https://codesoom-project.github.io",
-        origins = "*",
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin
 @Slf4j
 public class LoginController {
+    private final AuthenticationService authService;
     private final UserService userService;
-    private final JwtUtil jwtUtil;
-    private final AuthenticationManager authManager;
 
     public LoginController(
-            UserService userService, 
-            JwtUtil jwtUtil,
-            AuthenticationManager authManager
+            AuthenticationService authService,
+            UserService userService
     ) {
+        this.authService = authService;
         this.userService = userService;
-        this.jwtUtil = jwtUtil;
-        this.authManager = authManager;
     }
 
     /**
@@ -46,29 +36,34 @@ public class LoginController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public LoginResponse login(@RequestBody LoginRequest req) {
-        try {
-            authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("로그인 실패");
-        }
+    public LoginResponse login(
+            @RequestBody LoginRequest request
+    ) {
+        String email = request.getEmail();
+        String password = request.getPassword();
         
-        UserDetails userDetails = userService.loadUserByUsername(req.getEmail());
-        String token = jwtUtil.generateToken(userDetails);
+        String accessToken = authService.login(email, password);
+        log.info("accessToken: " + accessToken);
+        
+        User user = userService.findUser(email);
+        String name = user.getName();
 
-        return toResponse(token);
+        return toResponse(accessToken, name);
     }
 
     /**
      * 응답 정보를 반환한다.
      *
-     * @param token 토큰
+     * @param accessToken 토큰
      * @return 응답 정보
      */
-    private LoginResponse toResponse(String token) {
+    private LoginResponse toResponse(
+            String accessToken,
+            String name
+    ) {
         return LoginResponse.builder()
-                .token(token)
+                .accessToken(accessToken)
+                .name(name)
                 .build();
     }
 }

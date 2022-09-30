@@ -3,6 +3,7 @@ package com.codesoom.myseat.controllers;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.dto.SeatReservationResponse;
 import com.codesoom.myseat.services.SeatReservationListService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,16 +15,15 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/seat-reservations")
-@CrossOrigin(
-//        origins = "https://codesoom-project.github.io",
-        origins = "*",
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin
+@Slf4j
 public class SeatReservationListController {
-    private final SeatReservationListService service;
+    private final SeatReservationListService listService;
 
-    public SeatReservationListController(SeatReservationListService service) {
-        this.service = service;
+    public SeatReservationListController(
+            SeatReservationListService listService
+    ) {
+        this.listService = listService;
     }
 
     /**
@@ -34,7 +34,7 @@ public class SeatReservationListController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<SeatReservationResponse> seatReservations() {
-        return toResponse(service.seatReservations());
+        return toResponse(listService.seatReservations());
     }
 
     /**
@@ -43,17 +43,19 @@ public class SeatReservationListController {
      * @param data 좌석 예약 목록
      * @return 좌석 예약 목록 DTO
      */
-    private List<SeatReservationResponse> toResponse(List<SeatReservation> data) {
+    private List<SeatReservationResponse> toResponse(
+            List<SeatReservation> data
+    ) {
         List<SeatReservationResponse> list = new ArrayList<>();
         SeatReservationResponse response;
 
         for(SeatReservation s : data) {
             response = SeatReservationResponse.builder()
+                    .name(s.getUser().getName())
+                    .number(s.getSeat().getNumber())
                     .date(s.getDate())
                     .checkIn(s.getCheckIn())
                     .checkOut(s.getCheckOut())
-                    .userName(s.getUser().getUsername())
-                    .seatNumber(s.getSeat().getNumber())
                     .build();
 
             list.add(response);

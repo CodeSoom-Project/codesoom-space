@@ -8,40 +8,48 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
-== 좌석 API
+== 회원 API
 
-=== 좌석 추가
-
+=== 회원 가입
 ==== REQUEST
-include::{snippets}/seat-add/http-request.adoc[]
-include::{snippets}/seat-add/request-fields.adoc[]
+include::{snippets}/signup/http-request.adoc[]
+include::{snippets}/signup/request-fields.adoc[]
 
 ==== RESPONSE
-include::{snippets}/seat-add/http-response.adoc[]
-include::{snippets}/seat-add/response-fields.adoc[]
+include::{snippets}/signup/http-response.adoc[]
+include::{snippets}/signup/response-fields.adoc[]
 
+=== 로그인
+==== REQUEST
+include::{snippets}/login/http-request.adoc[]
+include::{snippets}/login/request-fields.adoc[]
+
+==== RESPONSE
+include::{snippets}/login/http-response.adoc[]
+include::{snippets}/login/response-fields.adoc[]
+
+== 좌석 예약 API
 === 좌석 목록 조회
-
 ==== REQUEST
-include::{snippets}/seat-list/http-request.adoc[]
+include::{snippets}/seats/http-request.adoc[]
+include::{snippets}/seats/path-parameters.adoc[]
+include::{snippets}/seats/request-fields.adoc[]
 
 ==== RESPONSE
-include::{snippets}/seat-list/http-response.adoc[]
-include::{snippets}/seat-list/response-fields.adoc[]
+include::{snippets}/seats/http-response.adoc[]
+include::{snippets}/seats/response-fields.adoc[]
 
 === 좌석 상세 조회
-
 ==== REQUEST
 include::{snippets}/seat-detail/http-request.adoc[]
 include::{snippets}/seat-detail/path-parameters.adoc[]
+include::{snippets}/seat-detail/request-fields.adoc[]
 
 ==== RESPONSE
 include::{snippets}/seat-detail/http-response.adoc[]
-
-== 좌석 예약 API
+include::{snippets}/seat-detail/response-fields.adoc[]
 
 === 좌석 예약
-
 ==== REQUEST
 include::{snippets}/seat-reservation/http-request.adoc[]
 include::{snippets}/seat-reservation/path-parameters.adoc[]
@@ -51,40 +59,31 @@ include::{snippets}/seat-reservation/request-fields.adoc[]
 include::{snippets}/seat-reservation/http-response.adoc[]
 include::{snippets}/seat-reservation/response-fields.adoc[]
 
-=== 좌석 예약 목록 조회
+=== 예약 취소
+==== REQUEST
+include::{snippets}/seat-reservation-cancel/http-request.adoc[]
+include::{snippets}/seat-reservation-cancel/path-parameters.adoc[]
+include::{snippets}/seat-reservation-cancel/request-fields.adoc[]
 
+==== RESPONSE
+include::{snippets}/seat-reservation-cancel/http-response.adoc[]
+include::{snippets}/seat-reservation-cancel/response-fields.adoc[]
+
+== 관리자 API
+=== 좌석 추가
+==== REQUEST
+include::{snippets}/seat-add/http-request.adoc[]
+include::{snippets}/seat-add/request-fields.adoc[]
+
+==== RESPONSE
+include::{snippets}/seat-add/http-response.adoc[]
+include::{snippets}/seat-add/response-fields.adoc[]
+
+=== 전체 예약 내역 조회
 ==== REQUEST
 include::{snippets}/seat-reservations/http-request.adoc[]
+include::{snippets}/seat-reservations/request-fields.adoc[]
 
 ==== RESPONSE
 include::{snippets}/seat-reservations/http-response.adoc[]
 include::{snippets}/seat-reservations/response-fields.adoc[]
-
-=== 좌석 예약 취소
-
-==== REQUEST
-include::{snippets}/seat-reservation-cancel/http-request.adoc[]
-
-==== RESPONSE
-include::{snippets}/seat-reservation-cancel/http-response.adoc[]
-
-== 회원 API
-
-=== 회원 가입
-
-==== REQUEST
-include::{snippets}/signup/http-request.adoc[]
-include::{snippets}/signup/request-fields.adoc[]
-
-==== RESPONSE
-include::{snippets}/signup/http-response.adoc[]
-
-=== 로그인
-
-==== REQUEST
-include::{snippets}/login/http-request.adoc[]
-include::{snippets}/login/request-fields.adoc[]
-
-==== RESPONSE
-include::{snippets}/login/http-response.adoc[]
-include::{snippets}/login/response-fields.adoc[]

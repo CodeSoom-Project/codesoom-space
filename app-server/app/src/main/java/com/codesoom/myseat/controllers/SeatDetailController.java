@@ -2,9 +2,13 @@ package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.SeatDetailResponse;
+import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.SeatDetailService;
+import com.codesoom.myseat.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,46 +16,39 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/seat")
-@CrossOrigin(
-//        origins = "https://codesoom-project.github.io",
-        origins = "*",
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin
+@Slf4j
 public class SeatDetailController {
-    private final SeatDetailService service;
+    private final SeatDetailService seatDetailservice;
+    private final UserService userService;
 
-    public SeatDetailController(SeatDetailService service) {
-        this.service = service;
+    public SeatDetailController(
+            SeatDetailService seatDetailservice, 
+            UserService userService
+    ) {
+        this.seatDetailservice = seatDetailservice;
+        this.userService = userService;
     }
 
     /**
      * 좌석 상세 조회 후 상태코드 200을 응답한다.
      *
-     * @param seatNumber 조회할 좌석 번호
+     * @param number 조회할 좌석 번호
      * @return 좌석 예약 정보
      */
-    @GetMapping("{seatNumber}")
+    @GetMapping("{number}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("isAuthenticated()")
     public SeatDetailResponse seatDetail(
-            @PathVariable int seatNumber,
-            @AuthenticationPrincipal User user
+            @PathVariable int number
     ) {
-        return service.seatDetail(seatNumber, user);
-    }
+        log.info("number: " + number);
+        
+        String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
+        log.info("email: " + email);
+        
+        User user = userService.findUser(email);
 
-//    /**
-//     * 응답 정보를 반환한다.
-//     *
-//     * @param data 좌석 예약 정보
-//     * @return 응답 정보
-//     */
-//    private SeatDetailResponse toResponse(Seat data) {
-//        return SeatReservationResponse.builder()
-//                .userName(data.getUserName())
-//                .seatNumber(data.getSeatNumber())
-//                .date(data.getDate())
-//                .checkIn(data.getCheckIn())
-//                .checkOut(data.getCheckOut())
-//                .build();
-//    }
+        return seatDetailservice.seatDetail(number, user);
+    }
 }

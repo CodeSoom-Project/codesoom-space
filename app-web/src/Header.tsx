@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './index.css';
 
-export default function Header({ accessToken }:any) {
+export default function Header({ accessToken, onClick }:any) {
   return (
     <header>
       <h1>

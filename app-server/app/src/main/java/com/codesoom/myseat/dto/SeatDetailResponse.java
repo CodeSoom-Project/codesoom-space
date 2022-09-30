@@ -11,11 +11,13 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class SeatDetailResponse {
-    private int seatNumber;
+    private int number;
+
     private String date;
+
     private String checkIn;
+
     private String checkOut;
-    private String userName;
-    private boolean isReserved;
-    private boolean isMySeat;
+
+    private String name;
 }

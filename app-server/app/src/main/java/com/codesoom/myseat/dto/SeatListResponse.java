@@ -11,6 +11,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class SeatListResponse {
-    private int seatNumber;
-    private boolean isReserved;
+    private int number;
+
+    private String status;
 }

@@ -4,7 +4,9 @@ import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.dto.SeatAddRequest;
 import com.codesoom.myseat.dto.SeatAddResponse;
 import com.codesoom.myseat.services.SeatAddService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,15 +14,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/seat")
-@CrossOrigin(
-//        origins = "https://codesoom-project.github.io",
-        origins = "*",
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin
+@Slf4j
 public class SeatAddController {
     private final SeatAddService service;
 
-    public SeatAddController(SeatAddService service) {
+    public SeatAddController(
+            SeatAddService service
+    ) {
         this.service = service;
     }
 
@@ -32,7 +33,11 @@ public class SeatAddController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SeatAddResponse addSeat(@RequestBody SeatAddRequest request) {
+    @PreAuthorize("isAuthenticated()")
+    public SeatAddResponse addSeat(
+            @RequestBody SeatAddRequest request
+    ) {
+        log.info("좌석 추가");
         return toResponse(service.addSeat(request));
     }
 

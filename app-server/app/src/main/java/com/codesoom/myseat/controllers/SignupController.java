@@ -2,6 +2,7 @@ package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.dto.SignupRequest;
 import com.codesoom.myseat.services.SignupService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,15 +11,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/signup")
-@CrossOrigin(
-//        origins = "https://codesoom-project.github.io",
-        origins = "*",
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin
+@Slf4j
 public class SignupController {
     private final SignupService service;
 
-    public SignupController(SignupService service) {
+    public SignupController(
+            SignupService service
+    ) {
         this.service = service;
     }
 
@@ -29,7 +29,12 @@ public class SignupController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void signUp(@RequestBody SignupRequest request) {
+    public void signUp(
+            @RequestBody SignupRequest request
+    ) {
+        log.info("name: " + request.getName());
+        log.info("email: " + request.getEmail());
+        log.info("password: " + request.getEmail());
         service.signUp(request);
     }
 }
