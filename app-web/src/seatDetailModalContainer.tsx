@@ -1,7 +1,7 @@
 import SeatDetailModal from './seatDetailModal';
 import { useAppSelector } from './hooks';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { bookingSeatFn, deleteReservationFn, getSeatDetail } from './services/api';
+import { cancelReservation, getSeatDetail, seatReservation } from './services/api';
 
 export default function SeatDetailModalContainer({ open, onClose }:any) {
   const seatNumber = useAppSelector((state) =>state.reservation.seatNumber);
@@ -16,12 +16,12 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
     },
   );
 
-  const deleteSeat = async ({ seatNumber }: { seatNumber:number }) => {
-    const deleteSeatResult = await deleteReservationFn({ seatNumber });
+  const cancel = async ({ seatNumber }: { seatNumber:number }) => {
+    const deleteSeatResult = await cancelReservation({ seatNumber });
     return deleteSeatResult;
   };
 
-  const { mutate: deleteReservation } = useMutation('deleteMutation', deleteSeat, {
+  const { mutate: cancelMutation } = useMutation('deleteMutation', cancel, {
     onSuccess(data) {
       queryClient.invalidateQueries(['reservation']);
       queryClient.invalidateQueries(['seatDetail']);
@@ -31,12 +31,12 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
     },
   });
 
-  const bookingSeat = async ({ seatNumber, checkIn, checkOut }: { seatNumber:number, checkIn:string, checkOut:string }) => {
-    const bookingSeatResult = await bookingSeatFn({ seatNumber, checkIn, checkOut });
+  const reservation = async ({ seatNumber, checkIn, checkOut }: { seatNumber:number, checkIn:string, checkOut:string }) => {
+    const bookingSeatResult = await seatReservation({ seatNumber, checkIn, checkOut });
     return bookingSeatResult;
   };
 
-  const { mutate: bookingMutation } = useMutation('bookingMutation', bookingSeat, {
+  const { mutate: reservationMutation } = useMutation('bookingMutation', reservation, {
     onSuccess(data) {
       queryClient.invalidateQueries(['reservation']);
       queryClient.invalidateQueries(['seatDetail']);
@@ -52,8 +52,8 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
       onClose={onClose}
       seatNumber={seatNumber}
       seatDetail={seatDetail}
-      onClick={bookingMutation}
-      onDelete={deleteReservation}
+      onClick={reservationMutation}
+      onDelete={cancelMutation}
     />
   );
 }

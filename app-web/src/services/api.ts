@@ -22,7 +22,7 @@ export const apis = {
   getReservation: () => api.get('/seat-reservations'),
 };
 
-export const getSeatList = () => {
+export const getSeats = () => {
   return api.get('/seats');
 };
 
@@ -30,7 +30,7 @@ export const getSeatDetail = (seatNumber:number) => {
   return request({ url: `/seat/${seatNumber}`, method: 'get' });
 };
 
-export const bookingSeatFn = async ({ seatNumber, checkIn, checkOut }:{ seatNumber:number, checkIn: string, checkOut:string }) => {
+export const seatReservation = async ({ seatNumber, checkIn, checkOut }:{ seatNumber:number, checkIn: string, checkOut:string }) => {
   try {
     return await request({ url: `/seat-reservation/${seatNumber}`, method: 'post', data: { checkIn, checkOut } });
   } catch (err) {
@@ -38,7 +38,7 @@ export const bookingSeatFn = async ({ seatNumber, checkIn, checkOut }:{ seatNumb
   }
 };
 
-export const deleteReservationFn = async ({ seatNumber }: { seatNumber: number }) => {
+export const cancelReservation = async ({ seatNumber }: { seatNumber: number }) => {
   try {
     return await request({ url: `/seat-reservation/${seatNumber}`, method: 'delete' });
   }  catch (err) {
@@ -46,7 +46,7 @@ export const deleteReservationFn = async ({ seatNumber }: { seatNumber: number }
   }
 };
 
-export const loginUserFn = async ({ email, password }: { email: string, password: string }) => {
+export const login = async ({ email, password }: { email: string, password: string }) => {
   return api
     .post('/login', {
       email,
@@ -59,7 +59,7 @@ export const loginUserFn = async ({ email, password }: { email: string, password
     });
 };
 
-export const signUpUserFn = async ({
+export const signUp = async ({
   email,
   password,
   name,

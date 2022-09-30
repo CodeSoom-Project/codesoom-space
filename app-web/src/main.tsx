@@ -13,7 +13,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import NotFound from './NotFound';
-import SignInContainer from './signInContainer';
+import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
 
 const queryClient = new QueryClient();
@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route path="/my-seat" element={<App/>}/>
             <Route path="signup" element={<SignUpContainer/>}/>
-            <Route path="signin" element={<SignInContainer/>}/>
+            <Route path="login" element={<LogInContainer/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Routes>
         </BrowserRouter>

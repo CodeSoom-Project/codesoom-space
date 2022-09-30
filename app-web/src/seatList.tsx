@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getSeatList } from './services/api';
+import { getSeats } from './services/api';
 import { useState } from 'react';
 import { useAppDispatch } from './hooks';
 import { changeReservationDetailsSeatNumber } from './ReservationSlice';
@@ -18,7 +18,7 @@ export default function SeatList() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data : seatList } = useQuery(['getSeatList'], getSeatList, {
+  const { data : seats } = useQuery(['getSeatList'], getSeats, {
     refetchOnWindowFocus: false,
     retry: 1,
   });
@@ -43,7 +43,7 @@ export default function SeatList() {
   return (
     <div>
       <Div>
-        {seatList?.data?.map(seat => (
+        {seats?.data?.map(seat => (
             <Button onClick={() =>handleClick(seat.seatNumber) }>
               <div key={seat.seatNumber}>
                 <p>{seat.seatNumber}</p>

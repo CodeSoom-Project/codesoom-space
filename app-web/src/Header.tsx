@@ -8,12 +8,13 @@ export default function Header({ accessToken }:any) {
         <Link to="/my-seat">코드숨 공부방</Link>
       </h1>
       <Link to="/signup">회원 가입</Link> | {' '}
-      
+
       {accessToken ? (
         <button>로그아웃</button>
-        ) : (
-        <Link to="/signin">로그인</Link>
-        )}
+      ) : (
+        <Link to="/login">로그인</Link>
+      )}
     </header>
   );
 }
+
