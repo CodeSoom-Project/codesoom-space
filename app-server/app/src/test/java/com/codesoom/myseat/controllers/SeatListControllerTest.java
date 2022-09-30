@@ -54,7 +54,7 @@ class SeatListControllerTest {
         seat = Seat.builder()
                 .id(SEAT_ID)
                 .number(SEAT_NUMBER)
-                .isReserved(false)
+                .status(false)
                 .build();
 
         given(service.seats())
@@ -72,16 +72,16 @@ class SeatListControllerTest {
 
         // then
         subject.andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].seatNumber").value(1))
-                .andExpect(jsonPath("$[0].isReserved").value("false"));
+                .andExpect(jsonPath("$[0].number").value(1))
+                .andExpect(jsonPath("$[0].status").value("false"));
 
         // docs
         subject.andDo(document("seats",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 responseFields(
-                        fieldWithPath("[].seatNumber").type(JsonFieldType.NUMBER).description("좌석 번호"),
-                        fieldWithPath("[].isReserved").type(JsonFieldType.STRING).description("예약 여부")
+                        fieldWithPath("[].number").type(JsonFieldType.NUMBER).description("좌석 번호"),
+                        fieldWithPath("[].status").type(JsonFieldType.STRING).description("예약 여부")
                 )
         ));
     }

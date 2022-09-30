@@ -30,7 +30,7 @@ public interface UserRepository
      */
     Optional<User> findByEmail(String email);
 
-    @Query("UPDATE User SET haveSeat=false WHERE haveSeat is true")
+    @Query("UPDATE User SET status=false WHERE haveSeat is true")
     @Modifying
     @Transactional
     void seatReset();

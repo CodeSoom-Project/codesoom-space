@@ -29,7 +29,7 @@ public class JwtUtil {
      * @param email
      * @return 토큰
      */
-    public String makeJwtToken(String email) {
+    public String makeAccessToken(String email) {
         Date now = new Date();
 
         return Jwts.builder()
@@ -42,12 +42,12 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String parseJwtToken(String token) {
-        log.info("token: " + token);
+    public String parseAccessToken(String accessToken) {
+        log.info("accessToken: " + accessToken);
 
         Claims claims = Jwts.parser()
                 .setSigningKey(key)
-                .parseClaimsJws(token)
+                .parseClaimsJws(accessToken)
                 .getBody();
         
         String email = claims.get("email", String.class);

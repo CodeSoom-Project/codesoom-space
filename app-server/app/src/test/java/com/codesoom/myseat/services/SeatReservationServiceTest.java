@@ -68,7 +68,7 @@ class SeatReservationServiceTest {
         seat = Seat.builder()
                 .id(SEAT_ID)
                 .number(SEAT_NUMBER)
-                .isReserved(false)
+                .status(false)
                 .build();
 
         seatReservation = SeatReservation.builder()
@@ -144,7 +144,6 @@ class SeatReservationServiceTest {
                         .name(NAME)
                         .email(EMAIL)
                         .password(PASSWORD)
-                        .haveSeat(true)
                         .build();
             }
 

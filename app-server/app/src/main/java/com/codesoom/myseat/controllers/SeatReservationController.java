@@ -35,24 +35,24 @@ public class SeatReservationController {
     /**
      * 좌석을 예약한 후 상태코드 201과 예약 정보를 응답한다.
      *
-     * @param seatNumber 예약할 좌석 번호
+     * @param number 예약할 좌석 번호
      * @param request 좌석 예약 요청 정보
      * @return 좌석 예약 정보
      */
-    @PostMapping("{seatNumber}")
+    @PostMapping("{number}")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("isAuthenticated()")
     public SeatReservationResponse addReservation(
-            @PathVariable int seatNumber,
+            @PathVariable int number,
             @RequestBody SeatReservationRequest request
     ) {
         String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
         User user = userService.findUser(email);
-        log.info("seatNumber: " + seatNumber);
+        log.info("number: " + number);
         log.info("checkin: " + request.getCheckIn());
         log.info("checkout: " + request.getCheckOut());
         
-        return toResponse(service.addReservation(seatNumber, request, user));
+        return toResponse(service.addReservation(number, request, user));
     }
 
     /**
@@ -65,8 +65,8 @@ public class SeatReservationController {
             SeatReservation data
     ) {
         return SeatReservationResponse.builder()
-                .userName(data.getUser().getName())
-                .seatNumber(data.getSeat().getNumber())
+                .name(data.getUser().getName())
+                .number(data.getSeat().getNumber())
                 .date(data.getDate())
                 .checkIn(data.getCheckIn())
                 .checkOut(data.getCheckOut())

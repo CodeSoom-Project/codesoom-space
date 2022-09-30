@@ -51,8 +51,8 @@ public class SeatReservationListController {
 
         for(SeatReservation s : data) {
             response = SeatReservationResponse.builder()
-                    .userName(s.getUser().getName())
-                    .seatNumber(s.getSeat().getNumber())
+                    .name(s.getUser().getName())
+                    .number(s.getSeat().getNumber())
                     .date(s.getDate())
                     .checkIn(s.getCheckIn())
                     .checkOut(s.getCheckOut())

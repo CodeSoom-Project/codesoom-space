@@ -2,7 +2,10 @@ package com.codesoom.myseat.repositories;
 
 import com.codesoom.myseat.domain.SeatReservation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,8 +49,10 @@ public interface SeatReservationRepository
      * 특정 좌석의 당일 예약 정보를 반환한다.
      *
      * @param today 오늘 날짜
-     * @param seatNumber 좌석 번호
+     * @param number 좌석 번호
      * @return 좌석 예약 정보
      */
-    Optional<SeatReservation> findByDateAndSeatNumber(String today, int seatNumber);
+    Optional<SeatReservation> findByDateAndSeatNumber(String today, int number);
+
+    Optional<SeatReservation> findByDateAndUser_EmailAndCanceledIsFalse(String today, String email);
 }

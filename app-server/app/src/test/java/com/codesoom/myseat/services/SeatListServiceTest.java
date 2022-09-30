@@ -55,7 +55,7 @@ class SeatListServiceTest {
         seat = Seat.builder()
                 .id(SEAT_ID)
                 .number(SEAT_NUMBER)
-                .isReserved(false)
+                .status(false)
                 .build();
 
         seatReservation = SeatReservation.builder()
@@ -91,7 +91,7 @@ class SeatListServiceTest {
 
                 assertThat(seats.get(0).getId()).isEqualTo(SEAT_ID);
                 assertThat(seats.get(0).getNumber()).isEqualTo(SEAT_NUMBER);
-                assertThat(seats.get(0).isReserved()).isEqualTo(false);
+                assertThat(seats.get(0).isStatus()).isEqualTo(false);
             }
         }
     }
