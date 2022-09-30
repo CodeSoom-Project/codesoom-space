@@ -92,11 +92,11 @@ class SeatDetailControllerTest {
                 .build();
 
         response = SeatDetailResponse.builder()
-                .seatNumber(SEAT_NUMBER)
+                .number(SEAT_NUMBER)
                 .date(DATE)
                 .checkIn(CHECK_IN)
                 .checkOut(CHECK_OUT)
-                .userName(NAME)
+                .name(NAME)
                 .build();
 
         given(userService.findUser(EMAIL))
@@ -115,27 +115,27 @@ class SeatDetailControllerTest {
         // when
         ResultActions subject 
                 = mockMvc.perform(
-                        get("/seat/{seatNumber}", SEAT_NUMBER)
+                        get("/seat/{number}", SEAT_NUMBER)
                                 .header("Authorization", "Bearer " + VALID_TOKEN));
 
         // then
         subject.andExpect(status().isOk())
-                .andExpect(jsonPath("$.seatNumber").value(SEAT_NUMBER))
+                .andExpect(jsonPath("$.number").value(SEAT_NUMBER))
                 .andExpect(jsonPath("$.date").value(DATE))
                 .andExpect(jsonPath("$.checkIn").value(CHECK_IN))
                 .andExpect(jsonPath("$.checkOut").value(CHECK_OUT))
-                .andExpect(jsonPath("$.userName").value(NAME));
+                .andExpect(jsonPath("$.name").value(NAME));
 
         // docs
         subject.andDo(document("seat-detail",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 pathParameters(
-                        parameterWithName("seatNumber").description("좌석 번호")
+                        parameterWithName("number").description("좌석 번호")
                 ),
                 responseFields(
-                        fieldWithPath("userName").type(JsonFieldType.STRING).description("예약자명"),
-                        fieldWithPath("seatNumber").type(JsonFieldType.NUMBER).description("좌석 번호"),
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("예약자명"),
+                        fieldWithPath("number").type(JsonFieldType.NUMBER).description("좌석 번호"),
                         fieldWithPath("date").type(JsonFieldType.STRING).description("예약 날짜"),
                         fieldWithPath("checkIn").type(JsonFieldType.STRING).description("체크인"),
                         fieldWithPath("checkOut").type(JsonFieldType.STRING).description("체크아웃")

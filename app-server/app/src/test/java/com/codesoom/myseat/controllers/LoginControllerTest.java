@@ -85,8 +85,8 @@ class LoginControllerTest {
 
         // then
         subject.andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value(TOKEN))
-                .andExpect(jsonPath("$.userName").value(NAME));
+                .andExpect(jsonPath("$.accessToken").value(TOKEN))
+                .andExpect(jsonPath("$.name").value(NAME));
 
         // docs
         subject.andDo(document("login",
@@ -97,8 +97,8 @@ class LoginControllerTest {
                         fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
                 ),
                 responseFields(
-                        fieldWithPath("token").type(JsonFieldType.STRING).description("토큰"),
-                        fieldWithPath("userName").type(JsonFieldType.STRING).description("회원 이름")
+                        fieldWithPath("accessToken").type(JsonFieldType.STRING).description("토큰"),
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("회원 이름")
                 )
         ));
     }

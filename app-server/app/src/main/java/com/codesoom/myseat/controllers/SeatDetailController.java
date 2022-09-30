@@ -33,22 +33,22 @@ public class SeatDetailController {
     /**
      * 좌석 상세 조회 후 상태코드 200을 응답한다.
      *
-     * @param seatNumber 조회할 좌석 번호
+     * @param number 조회할 좌석 번호
      * @return 좌석 예약 정보
      */
-    @GetMapping("{seatNumber}")
+    @GetMapping("{number}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("isAuthenticated()")
     public SeatDetailResponse seatDetail(
-            @PathVariable int seatNumber
+            @PathVariable int number
     ) {
-        log.info("seatNumber: " + seatNumber);
+        log.info("number: " + number);
         
         String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
         log.info("email: " + email);
         
         User user = userService.findUser(email);
 
-        return seatDetailservice.seatDetail(seatNumber, user);
+        return seatDetailservice.seatDetail(number, user);
     }
 }

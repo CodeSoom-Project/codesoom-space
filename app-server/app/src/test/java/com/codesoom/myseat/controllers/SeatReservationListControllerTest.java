@@ -71,7 +71,7 @@ class SeatReservationListControllerTest {
         seat = Seat.builder()
                 .id(SEAT_ID)
                 .number(SEAT_NUMBER)
-                .isReserved(true)
+                .status(true)
                 .build();
 
         user = User.builder()
@@ -109,8 +109,8 @@ class SeatReservationListControllerTest {
 
         // then
         subject.andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].userName").value(NAME))
-                .andExpect(jsonPath("$[0].seatNumber").value(SEAT_NUMBER))
+                .andExpect(jsonPath("$[0].name").value(NAME))
+                .andExpect(jsonPath("$[0].number").value(SEAT_NUMBER))
                 .andExpect(jsonPath("$[0].date").value(DATE))
                 .andExpect(jsonPath("$[0].checkIn").value(CHECK_IN))
                 .andExpect(jsonPath("$[0].checkOut").value(CHECK_OUT));
@@ -120,8 +120,8 @@ class SeatReservationListControllerTest {
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 responseFields(
-                        fieldWithPath("[].userName").type(JsonFieldType.STRING).description("회원 이름"),
-                        fieldWithPath("[].seatNumber").type(JsonFieldType.NUMBER).description("좌석 번호"),
+                        fieldWithPath("[].name").type(JsonFieldType.STRING).description("회원 이름"),
+                        fieldWithPath("[].number").type(JsonFieldType.NUMBER).description("좌석 번호"),
                         fieldWithPath("[].date").type(JsonFieldType.STRING).description("예약 날짜"),
                         fieldWithPath("[].checkIn").type(JsonFieldType.STRING).description("체크인"),
                         fieldWithPath("[].checkOut").type(JsonFieldType.STRING).description("체크아웃")

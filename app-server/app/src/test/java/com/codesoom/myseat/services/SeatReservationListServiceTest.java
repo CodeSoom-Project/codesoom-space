@@ -57,7 +57,7 @@ class SeatReservationListServiceTest {
         seat = Seat.builder()
                 .id(SEAT_ID)
                 .number(SEAT_NUMBER)
-                .isReserved(false)
+                .status(false)
                 .build();
 
         seatReservation = SeatReservation.builder()

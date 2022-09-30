@@ -40,10 +40,10 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
         log.info("header: " + authHeader);
 
         if(authHeader != null) {
-            String token = authHeader.substring("Bearer ".length());
-            log.info("token: " + token);
+            String accessToken = authHeader.substring("Bearer ".length());
+            log.info("accessToken: " + accessToken);
 
-            String email = authService.parseToken(token);
+            String email = authService.parseToken(accessToken);
             log.info("email: " + email);
 
             List<Role> roles = authService.roles(email);

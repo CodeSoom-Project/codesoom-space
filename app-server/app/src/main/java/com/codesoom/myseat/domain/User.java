@@ -31,9 +31,6 @@ public class User {
 
     private String password;
 
-    @Builder.Default
-    private boolean haveSeat = false;
-
     @OneToMany(mappedBy = "user")
     private List<SeatReservation> seatReservations = new ArrayList<>();
 
@@ -44,13 +41,5 @@ public class User {
         log.info("password: " + password);
         log.info("this.password: " + this.password);
         return passwordEncoder.matches(password, this.password);
-    }
-    
-    public void reserve() {
-        this.haveSeat = true;
-    }
-    
-    public void cancelReserve() {
-        this.haveSeat = false;
     }
 }

@@ -26,7 +26,7 @@ public class Seat {
     private int number;
 
     @Builder.Default
-    private boolean isReserved = false;
+    private boolean status = false;
 
     @OneToOne(mappedBy = "seat")
     private SeatReservation seatReservation;
@@ -34,14 +34,14 @@ public class Seat {
     public void reserve(
             SeatReservation seatReservation
     ) {
-        this.isReserved = true;
+        this.status = true;
         this.seatReservation = seatReservation;
     }
 
     public void cancelReservation() {
         log.info("예약 취소");
                 
-        isReserved = false;
+        status = false;
         this.seatReservation = null;
     }
 }

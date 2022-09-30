@@ -31,22 +31,21 @@ public class SeatReservationCancelService {
     /**
      * 예약을 취소한다.
      * 
-     * @param seatNumber 예약 취소할 좌석 번호
+     * @param number 예약 취소할 좌석 번호
      * @param user 취소 요청한 사용자 정보
      * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
      * @throws SeatReservationNotFoundException 좌석 예약 내역을 찾을 수 없는 경우 예외를 던진다.
      */
     public void cancelReservation(
-            int seatNumber,
+            int number,
             User user
     ) {
-        Seat seat = seat(seatNumber);
+        Seat seat = seat(number);
 
         SeatReservation reservation = seatReservation(user.getEmail());
 
         seat.cancelReservation();
         reservation.cancelReservation();
-        user.cancelReserve();
     }
 
     /**
@@ -67,14 +66,14 @@ public class SeatReservationCancelService {
     /**
      * 조회된 좌석을 반환한다.
      *
-     * @param seatNumber 좌석 번호
+     * @param number 좌석 번호
      * @return 좌석
      * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
      */
-    private Seat seat(int seatNumber) {
-        return seatRepo.findByNumber(seatNumber)
+    private Seat seat(int number) {
+        return seatRepo.findByNumber(number)
                 .orElseThrow(() -> new SeatNotFoundException(
-                        "[" + seatNumber + "]번 좌석을 찾을 수 없어서 조회에 실패했습니다."));
+                        "[" + number + "]번 좌석을 찾을 수 없어서 조회에 실패했습니다."));
     }
 
     /**

@@ -28,37 +28,37 @@ public class SeatDetailService {
     /**
      * 좌석의 당일 예약 정보를 반환한다.
      *
-     * @param seatNumber 좌석 번호
+     * @param number 좌석 번호
      * @return 당일 예약 정보
      * @throws SeatReservationNotFoundException 예약 내역을 찾을 수 없는 경우 예외를 던진다.
      */
     public SeatDetailResponse seatDetail(
-            int seatNumber, 
+            int number, 
             User user
     ) {
-        log.info("seatNumber: " + seatNumber);
+        log.info("number: " + number);
 
-        SeatReservation s = seatReservation(seatNumber);
+        SeatReservation s = seatReservation(number);
 
         return SeatDetailResponse.builder()
-                .seatNumber(seatNumber)
+                .number(number)
                 .date(s.getDate())
                 .checkIn(s.getCheckIn())
                 .checkOut(s.getCheckOut())
-                .userName(s.getUser().getName())
+                .name(s.getUser().getName())
                 .build();
     }
 
     /**
      * 좌석의 당일 예약 내역을 반환한다.
      * 
-     * @param seatNumber 좌석 번호
+     * @param number 좌석 번호
      * @return 예약 내역
      */
     private SeatReservation seatReservation(
-            int seatNumber
+            int number
     ) {
-        return reservationRepo.findByDateAndSeatNumber(today(), seatNumber)
+        return reservationRepo.findByDateAndSeatNumber(today(), number)
                 .orElseThrow(() -> new SeatReservationNotFoundException(
                         "당일 예약 내역을 찾을 수 없어서 조회에 실패했습니다."));
     }

@@ -41,13 +41,13 @@ public class AuthenticationService {
             throw new LoginFailureException(email);
         }
 
-        return jwtUtil.makeJwtToken(user.getEmail());
+        return jwtUtil.makeAccessToken(user.getEmail());
     }
 
     public String parseToken(
-            String token
+            String accessToken
     ) {
-        return jwtUtil.parseJwtToken(token);
+        return jwtUtil.parseAccessToken(accessToken);
     }
 
     public List<Role> roles(

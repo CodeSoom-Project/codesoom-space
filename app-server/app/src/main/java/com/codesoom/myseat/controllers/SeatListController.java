@@ -51,8 +51,8 @@ public class SeatListController {
 
         for(Seat s : data) {
             response = SeatListResponse.builder()
-                    .seatNumber(s.getNumber())
-                    .isReserved(String.valueOf(s.isReserved()))
+                    .number(s.getNumber())
+                    .status(String.valueOf(s.isStatus()))
                     .build();
 
             list.add(response);

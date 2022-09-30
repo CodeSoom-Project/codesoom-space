@@ -37,33 +37,33 @@ public class LoginController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public LoginResponse login(
-            @RequestBody LoginRequest req
+            @RequestBody LoginRequest request
     ) {
-        String email = req.getEmail();
-        String password = req.getPassword();
+        String email = request.getEmail();
+        String password = request.getPassword();
         
-        String token = authService.login(email, password);
-        log.info("token: " + token);
+        String accessToken = authService.login(email, password);
+        log.info("accessToken: " + accessToken);
         
         User user = userService.findUser(email);
-        String userName = user.getName();
+        String name = user.getName();
 
-        return toResponse(token, userName);
+        return toResponse(accessToken, name);
     }
 
     /**
      * 응답 정보를 반환한다.
      *
-     * @param token 토큰
+     * @param accessToken 토큰
      * @return 응답 정보
      */
     private LoginResponse toResponse(
-            String token,
-            String userName
+            String accessToken,
+            String name
     ) {
         return LoginResponse.builder()
-                .token(token)
-                .userName(userName)
+                .accessToken(accessToken)
+                .name(name)
                 .build();
     }
 }

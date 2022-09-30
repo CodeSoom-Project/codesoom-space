@@ -95,7 +95,7 @@ class SeatReservationControllerTest {
         seat = Seat.builder()
                 .id(SEAT_ID)
                 .number(SEAT_NUMBER)
-                .isReserved(false)
+                .status(false)
                 .build();
 
         seatReservation = SeatReservation.builder()
@@ -126,15 +126,15 @@ class SeatReservationControllerTest {
         // when
         ResultActions subject 
                 = mockMvc.perform(
-                        post("/seat-reservation/{seatNumber}", SEAT_NUMBER)
+                        post("/seat-reservation/{number}", SEAT_NUMBER)
                                 .header("Authorization", "Bearer " + VALID_TOKEN)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(toJson(request)));
 
         // then
         subject.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.userName").value(NAME))
-                .andExpect(jsonPath("$.seatNumber").value(SEAT_NUMBER))
+                .andExpect(jsonPath("$.name").value(NAME))
+                .andExpect(jsonPath("$.number").value(SEAT_NUMBER))
                 .andExpect(jsonPath("$.date").value(DATE))
                 .andExpect(jsonPath("$.checkIn").value(CHECK_IN))
                 .andExpect(jsonPath("$.checkOut").value(CHECK_OUT));
@@ -144,15 +144,15 @@ class SeatReservationControllerTest {
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 pathParameters(
-                        parameterWithName("seatNumber").description("좌석 번호")
+                        parameterWithName("number").description("좌석 번호")
                 ),
                 requestFields(
                         fieldWithPath("checkIn").type(JsonFieldType.STRING).description("체크인"),
                         fieldWithPath("checkOut").type(JsonFieldType.STRING).description("체크아웃")
                 ),
                 responseFields(
-                        fieldWithPath("userName").type(JsonFieldType.STRING).description("회원 이름"),
-                        fieldWithPath("seatNumber").type(JsonFieldType.NUMBER).description("좌석 번호"),
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("회원 이름"),
+                        fieldWithPath("number").type(JsonFieldType.NUMBER).description("좌석 번호"),
                         fieldWithPath("date").type(JsonFieldType.STRING).description("예약 날짜"),
                         fieldWithPath("checkIn").type(JsonFieldType.STRING).description("체크인"),
                         fieldWithPath("checkOut").type(JsonFieldType.STRING).description("체크아웃")

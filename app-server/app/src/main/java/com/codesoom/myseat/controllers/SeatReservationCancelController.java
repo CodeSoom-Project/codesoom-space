@@ -31,17 +31,17 @@ public class SeatReservationCancelController {
     /**
      * 좌석 예약을 취소한 후 상태코드 200을 응답한다.
      *
-     * @param seatNumber 예약 취소할 좌석 번호
+     * @param number 예약 취소할 좌석 번호
      */
-    @DeleteMapping("{seatNumber}")
+    @DeleteMapping("{number}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("isAuthenticated()")
     public void cancelReservation(
-            @PathVariable int seatNumber
+            @PathVariable int number
     ) {
         String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
         User user = userService.findUser(email);
         
-        cancelService.cancelReservation(seatNumber, user);
+        cancelService.cancelReservation(number, user);
     }
 }

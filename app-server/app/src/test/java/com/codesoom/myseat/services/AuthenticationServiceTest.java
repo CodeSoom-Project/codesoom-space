@@ -72,7 +72,7 @@ class AuthenticationServiceTest {
             given(userRepo.findByEmail(eq(EMAIL)))
                     .willReturn(Optional.of(user));
 
-            given(jwtUtil.makeJwtToken(any(String.class)))
+            given(jwtUtil.makeAccessToken(any(String.class)))
                     .willReturn(VALID_TOKEN);
         }
 

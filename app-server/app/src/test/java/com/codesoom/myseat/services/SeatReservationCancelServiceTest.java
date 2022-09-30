@@ -70,7 +70,7 @@ class SeatReservationCancelServiceTest {
             seat = Seat.builder()
                     .id(SEAT_ID)
                     .number(SEAT_NUMBER)
-                    .isReserved(false)
+                    .status(false)
                     .build();
 
             seatReservation = SeatReservation.builder()
@@ -105,7 +105,7 @@ class SeatReservationCancelServiceTest {
             void test() {
                 Seat seat = subject();
 
-                assertThat(seat.isReserved()).isEqualTo(false);
+                assertThat(seat.isStatus()).isEqualTo(false);
             }
         }
     }

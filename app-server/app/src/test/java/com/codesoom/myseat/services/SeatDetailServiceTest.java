@@ -58,7 +58,7 @@ class SeatDetailServiceTest {
         seat = Seat.builder()
                 .id(SEAT_ID)
                 .number(SEAT_NUMBER)
-                .isReserved(false)
+                .status(false)
                 .build();
 
         seatReservation = SeatReservation.builder()
@@ -94,11 +94,11 @@ class SeatDetailServiceTest {
             void test() {
                 SeatDetailResponse seatDetail = subject();
 
-                assertThat(seatDetail.getSeatNumber()).isEqualTo(SEAT_NUMBER);
+                assertThat(seatDetail.getNumber()).isEqualTo(SEAT_NUMBER);
                 assertThat(seatDetail.getDate()).isEqualTo(DATE);
                 assertThat(seatDetail.getCheckIn()).isEqualTo(CHECK_IN);
                 assertThat(seatDetail.getCheckOut()).isEqualTo(CHECK_OUT);
-                assertThat(seatDetail.getUserName()).isEqualTo(NAME);
+                assertThat(seatDetail.getName()).isEqualTo(NAME);
             }
         }
     }
