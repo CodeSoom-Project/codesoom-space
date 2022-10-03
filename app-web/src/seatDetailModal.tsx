@@ -10,8 +10,6 @@ export default function SeatDetailModal({ open, onClose, seatNumber, seatDetail,
         <Detail
           userName=''
           seatNumber={seatNumber}
-          checkIn=''
-          checkOut=''
         />
         <SelectTimeContainer
           seatNumber={seatNumber}
@@ -21,7 +19,7 @@ export default function SeatDetailModal({ open, onClose, seatNumber, seatDetail,
       </Modal>
     </>
   );
-  const { userName, seatDetailNumber, date, checkIn, checkOut, isMySeat } = seatDetail;
+  const { userName } = seatDetail;
 
   return (
     <>
@@ -29,14 +27,11 @@ export default function SeatDetailModal({ open, onClose, seatNumber, seatDetail,
         <Detail
           userName={userName}
           seatNumber={seatNumber}
-          checkIn={checkIn}
-          checkOut={checkOut}
         />
         <SelectTimeContainer
           seatNumber={seatNumber}
           onClick={onClick}
           onDelete={onDelete}
-          isMySeat={isMySeat}
         />
       </Modal>
     </>
