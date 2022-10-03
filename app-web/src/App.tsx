@@ -1,25 +1,31 @@
 import './App.css';
-import { useDispatch } from 'react-redux';
-import { setAccessToken } from './authSlice';
-import SeatList from './seatList';
+
+import { useEffect } from 'react';
+
 import { loadItem } from './services/stoage';
+
+import { useAppDispatch } from './hooks';
+
+import { setAccessToken } from './authSlice';
+
 import HeaderContainer from './HeaderContainer';
+import SeatList from './seatList';
 
 export default function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const accessToken = loadItem('accessToken');
-  if (accessToken) {
-    dispatch(setAccessToken(accessToken));
-  }
 
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(setAccessToken(accessToken));
+    }
+  }, [accessToken]);
 
   return (
     <div>
       <HeaderContainer/>
       <SeatList/>
-      {/*<ReservationFormContainer/>*/}
-      {/*<ReservationListContainer/>*/}
     </div>
   );
 }
