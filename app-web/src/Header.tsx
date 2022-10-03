@@ -12,7 +12,7 @@ export default function Header({ accessToken, onClick }:any) {
       {accessToken ? (
         <button onClick={onClick}>로그아웃</button>
       ) : (
-        <Link to="/signin">로그인</Link>
+        <Link to="/login">로그인</Link>
       )}
     </header>
   );

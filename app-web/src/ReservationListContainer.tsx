@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { apis, deleteReservationFn } from './services/api';
+import { apis, cancelReservation } from './services/api';
 import ReservationList from './ReservationList';
 
 export default function ReservationListContainer() {
   const queryClient = useQueryClient();
-  
+
   const {
     data: reservationData,
     isFetching,
@@ -13,12 +13,12 @@ export default function ReservationListContainer() {
     apis.getReservation,
   );
 
-  const deleteSeat = async ({ seatNumber }: { seatNumber: string | number }) => {
-    const deleteSeatResult = await deleteReservationFn({ seatNumber });
+  const cancel = async ({ seatNumber }: { seatNumber: string | number }) => {
+    const deleteSeatResult = await cancelReservation({ seatNumber });
     return deleteSeatResult;
   };
 
-  const { mutate: deleteReservation } = useMutation('deleteMutation', deleteSeat, {
+  const { mutate: cancelMutation } = useMutation('deleteMutation', cancel, {
     onSuccess(data) {
       queryClient.invalidateQueries(['reservation']);
       queryClient.invalidateQueries(['getSeatList']);
@@ -33,7 +33,7 @@ export default function ReservationListContainer() {
       {isFetching && '예약 정보를 받아오고 있습니다...'}
       <ReservationList
         reservations={reservationData}
-        onClickDelete={deleteReservation}
+        onClickDelete={cancelMutation}
       />
     </div>
   );

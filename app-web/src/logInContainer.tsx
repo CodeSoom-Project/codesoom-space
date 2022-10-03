@@ -1,24 +1,26 @@
-import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
-import { loginUserFn } from './services/api';
-import SignIn from './signIn';
-import Header from './Header';
-import { useAppDispatch } from './hooks';
 import { useNavigate } from 'react-router-dom';
 
-export default function SignInContainer() {
-  const dispatch = useAppDispatch();
+import { useForm } from 'react-hook-form';
 
+import { useMutation } from 'react-query';
+
+import { login } from './services/api';
+
+import LogIn from './logIn';
+import HeaderContainer from './HeaderContainer';
+
+
+export default function LogInContainer() {
   const { register, formState: { errors }, handleSubmit } = useForm();
 
   const navigate = useNavigate();
 
   const loginMutate = async ({ email, password }: { email: any, password: string }) => {
-    const accessToken = await loginUserFn({ email, password });
+    const accessToken = await login({ email, password });
     return accessToken;
   };
 
-  const { isLoading, error, isError, mutate, data } = useMutation('login', loginMutate, {
+  const { mutate } = useMutation('login', loginMutate, {
     onSuccess: async () => {
       console.log('login 성공');
       navigate('/my-seat', { replace: true });
@@ -30,13 +32,12 @@ export default function SignInContainer() {
 
   return (
     <>
-      <Header/>
-      <SignIn
+      <HeaderContainer/>
+      <LogIn
         register={register}
         errors={errors}
         handleSubmit={handleSubmit}
-        error={error}
-        mutate={mutate}
+        login={mutate}
       />
     </>
   );

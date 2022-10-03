@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
+    "module": "ESNext",
+    "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": [
       "DOM",
@@ -18,16 +18,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "types": [
-      "jest"
-    ]
+    "jsx": "react-jsx"
   },
-  "include": ["src",
-    "jest.setup.js"
-  ],
-  "exclude": [
-    "node_modules"
+  "include": [
+    "src"
   ],
   "references": [
     {

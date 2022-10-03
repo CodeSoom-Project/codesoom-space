@@ -1,12 +1,12 @@
-export default function SignIn({ register, errors, handleSubmit, error, mutate }:
-{ register: any, errors: any, handleSubmit: any, error: any, mutate: any }) {
+export default function LogIn({ register, errors, handleSubmit, login }:
+{ register: any, errors: any, handleSubmit: any, login: any }) {
 
   return (
     <>
       <main style={{ padding: '1rem 0' }}>
         <form
           onSubmit={handleSubmit(async (data: any) => {
-            await mutate({
+            await login({
               email: data.email,
               password: data.password,
             });
@@ -14,6 +14,7 @@ export default function SignIn({ register, errors, handleSubmit, error, mutate }
           }>
 
           <table>
+            <tbody>
             <tr>
               <td><label htmlFor="email">Email</label></td>
               <td>
@@ -42,6 +43,7 @@ export default function SignIn({ register, errors, handleSubmit, error, mutate }
                 <button type="submit">로그인 하기</button>
               </td>
             </tr>
+            </tbody>
           </table>
         </form>
       </main>
