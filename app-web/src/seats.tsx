@@ -1,11 +1,17 @@
-import { useQuery } from 'react-query';
-import { getSeats } from './services/api';
-import { useState } from 'react';
-import { useAppDispatch } from './hooks';
-import { changeReservationDetailsSeatNumber } from './ReservationSlice';
-import Button from './components/Button';
 import styled from '@emotion/styled';
+
+import { useState } from 'react';
+
+import { changeReservationDetailsSeatNumber } from './ReservationSlice';
+
+import { useAppDispatch } from './hooks';
+
+import { useQuery } from 'react-query';
+
+import { getSeats } from './services/api';
+
 import SeatDetailModalContainer from './seatDetailModalContainer';
+import Button from './components/Button';
 
 const Div = styled.div `  
   display: grid;
@@ -13,12 +19,12 @@ const Div = styled.div `
   grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
 
-export default function SeatList() {
+export default function Seats() {
   const dispatch = useAppDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data : seats } = useQuery(['getSeatList'], getSeats, {
+  const { data : seats } = useQuery(['getSeat'], getSeats, {
     refetchOnWindowFocus: false,
     retry: 1,
   });
@@ -44,12 +50,12 @@ export default function SeatList() {
     <div>
       <Div>
         {seats?.data?.map(seat => (
+          <div key={seat.seatNumber}>
             <Button onClick={() =>handleClick(seat.seatNumber) }>
-              <div key={seat.seatNumber}>
-                <p>{seat.seatNumber}</p>
-                <p>{seat.userName}</p>
-              </div>
+              <p>{seat.seatNumber}</p>
+              <p>{seat.isReserved}</p>
             </Button>
+          </div>
         ))}
       </Div>
 
