@@ -10,7 +10,7 @@ export default function Header({ accessToken, onClick }:any) {
       <Link to="/signup">회원 가입</Link> | {' '}
 
       {accessToken ? (
-        <button>로그아웃</button>
+        <button onClick={onClick}>로그아웃</button>
       ) : (
         <Link to="/login">로그인</Link>
       )}
