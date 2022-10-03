@@ -31,12 +31,12 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
     },
   });
 
-  const reservation = async ({ seatNumber, checkIn, checkOut }: { seatNumber:number, checkIn:string, checkOut:string }) => {
-    const bookingSeatResult = await seatReservation({ seatNumber, checkIn, checkOut });
+  const reservation = async ({ seatNumber }: { seatNumber:number }) => {
+    const bookingSeatResult = await seatReservation({ seatNumber });
     return bookingSeatResult;
   };
 
-  const { mutate: reservationMutation } = useMutation('bookingMutation', reservation, {
+  const { mutate: reservationMutation } = useMutation('reservationMutation', reservation, {
     onSuccess(data) {
       queryClient.invalidateQueries(['reservation']);
       queryClient.invalidateQueries(['seatDetail']);

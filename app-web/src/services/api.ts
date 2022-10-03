@@ -30,9 +30,9 @@ export const getSeatDetail = (seatNumber:number) => {
   return request({ url: `/seat/${seatNumber}`, method: 'get' });
 };
 
-export const seatReservation = async ({ seatNumber, checkIn, checkOut }:{ seatNumber:number, checkIn: string, checkOut:string }) => {
+export const seatReservation = async ({ seatNumber }:{ seatNumber:number }) => {
   try {
-    return await request({ url: `/seat-reservation/${seatNumber}`, method: 'post', data: { checkIn, checkOut } });
+    return await request({ url: `/seat-reservation/${seatNumber}`, method: 'post' });
   } catch (err) {
     throw window.alert(err.message);
   }
