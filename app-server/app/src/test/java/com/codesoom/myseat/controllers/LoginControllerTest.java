@@ -6,7 +6,6 @@ import com.codesoom.myseat.services.AuthenticationService;
 import com.codesoom.myseat.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +33,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         uriHost = "api.codesoom-myseat.site"
 )
 class LoginControllerTest {
-    private static final Long USER_ID = 1L;
+    private static final Long ID = 1L;
     private static final String NAME = "테스터";
     private static final String EMAIL = "test@example.com";
-    private static final String PASSWORD = "1234";
-    
-    private static final String TOKEN 
+    private static final String PASSWORD = "1111";
+    private static final String ENCODED_PASSWORD
+            = "$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW";
+
+    private static final String ACCESS_TOKEN 
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
     @Autowired
@@ -47,37 +48,32 @@ class LoginControllerTest {
 
     @MockBean
     private AuthenticationService authService;
-    
+
     @MockBean
     private UserService userService;
 
-    private LoginRequest request;
-    private User user;
-
-    @BeforeEach
-    void setUp() {
-        user = User.builder()
-                .id(USER_ID)
-                .name(NAME)
+    @Test
+    @DisplayName("로그인 성공")
+    void login_success() throws Exception {
+        //given
+        LoginRequest request = LoginRequest.builder()
                 .email(EMAIL)
                 .password(PASSWORD)
                 .build();
-        
-        request = LoginRequest.builder()
+
+        User user = User.builder()
+                .id(ID)
+                .name(NAME)
                 .email(EMAIL)
-                .password(PASSWORD)
+                .password(ENCODED_PASSWORD)
                 .build();
 
         given(userService.findUser(EMAIL))
                 .willReturn(user);
-        
-        given(authService.login(EMAIL, PASSWORD))
-                .willReturn(TOKEN);
-    }
-    
-    @Test
-    @DisplayName("로그인 테스트")
-    void test() throws Exception {
+
+        given(authService.login(user, PASSWORD))
+                .willReturn(ACCESS_TOKEN);
+
         // when
         ResultActions subject = mockMvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +81,7 @@ class LoginControllerTest {
 
         // then
         subject.andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken").value(TOKEN))
+                .andExpect(jsonPath("$.accessToken").value(ACCESS_TOKEN))
                 .andExpect(jsonPath("$.name").value(NAME));
 
         // docs

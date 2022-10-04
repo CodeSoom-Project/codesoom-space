@@ -1,16 +1,18 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.services.AuthenticationService;
 import com.codesoom.myseat.services.SeatReservationCancelService;
+import com.codesoom.myseat.services.SeatService;
 import com.codesoom.myseat.services.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -29,15 +31,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         uriHost = "api.codesoom-myseat.site"
 )
 class SeatReservationCancelControllerTest {
-    private static final String VALID_TOKEN 
+    private static final String ACCESS_TOKEN 
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
     private static final Long USER_ID = 1L;
     private static final String NAME = "테스터";
     private static final String EMAIL = "test@example.com";
-    private static final String PASSWORD = "1111";
+    private static final String ENCODED_PASSWORD
+            = "$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW";
 
-    private static final int SEAT_NUMBER = 3;
+    private static final Long SEAT_ID = 1L;
+    private static final int NUMBER = 1;
 
     @Autowired
     private MockMvc mockMvc;
@@ -50,33 +54,43 @@ class SeatReservationCancelControllerTest {
 
     @MockBean
     private UserService userService;
+    
+    @MockBean
+    private SeatService seatService;
 
-    private User user;
-
-    @BeforeEach
-    void setUp() {
-        user = User.builder()
+    @Test
+    @WithMockUser
+    @DisplayName("좌석 예약 취소 테스트")
+    void test() throws Exception {
+        // given
+        User user = User.builder()
                 .id(USER_ID)
                 .name(NAME)
                 .email(EMAIL)
-                .password(PASSWORD)
+                .password(ENCODED_PASSWORD)
                 .build();
+
+        Seat seat = Seat.builder()
+                .id(SEAT_ID)
+                .number(NUMBER)
+                .status(true)
+                .user(user)
+                .build();
+
+        given(authService.parseToken(ACCESS_TOKEN))
+                .willReturn(EMAIL);
 
         given(userService.findUser(EMAIL))
                 .willReturn(user);
 
-        given(authService.parseToken(VALID_TOKEN))
-                .willReturn(EMAIL);
-    }
+        given(seatService.findSeat(NUMBER))
+                .willReturn(seat);
 
-    @Test
-    @DisplayName("좌석 예약 취소 테스트")
-    void test() throws Exception {
         // when
         ResultActions subject 
                 = mockMvc.perform(
-                        delete("/seat-reservation/{seatNumber}", SEAT_NUMBER)
-                                .header("Authorization", "Bearer " + VALID_TOKEN));
+                        delete("/seat-reservation/{number}", NUMBER)
+                                .header("Authorization", "Bearer " + ACCESS_TOKEN));
 
         // then
         subject.andExpect(status().isOk());
@@ -86,7 +100,7 @@ class SeatReservationCancelControllerTest {
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 pathParameters(
-                        parameterWithName("seatNumber").description("좌석 번호")
+                        parameterWithName("number").description("좌석 번호")
                 )
         ));
     }

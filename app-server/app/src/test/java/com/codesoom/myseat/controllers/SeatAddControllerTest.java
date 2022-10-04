@@ -2,11 +2,11 @@ package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.dto.SeatAddRequest;
+import com.codesoom.myseat.exceptions.UserNotFoundException;
 import com.codesoom.myseat.services.AuthenticationService;
 import com.codesoom.myseat.services.SeatAddService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -36,9 +35,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         uriHost = "api.codesoom-myseat.site"
 )
 class SeatAddControllerTest {
-    private static final Long SEAT_ID = 1L;
-    private static final int SEAT_NUMBER = 3;
+    private static final String ACCESS_TOKEN
+            = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
+    private static final String INVALID_TOKEN
+            = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk2";
+    
+    private static final Long ID = 1L;
+    private static final int NUMBER = 3;
+
+    private static final String EMAIL = "test@example.com";
+    
     @Autowired
     private MockMvc mockMvc;
 
@@ -48,46 +55,38 @@ class SeatAddControllerTest {
     @MockBean
     private SeatAddService seatAddService;
 
-    private SeatAddRequest request;
-
-    private Seat seat;
-
-    @BeforeEach
-    void setUp() {
-        request = SeatAddRequest.builder()
-                .number(SEAT_NUMBER)
-                .build();
-
-        seat = Seat.builder()
-                .id(SEAT_ID)
-                .number(SEAT_NUMBER)
-                .build();
-
-        given(seatAddService.addSeat(any(SeatAddRequest.class)))
-                .willReturn(seat);
-    }
-
     @Test
     @WithMockUser
-    @DisplayName("좌석 추가 요청 테스트")
-    void test() throws Exception {
+    @DisplayName("POST /seat responses")
+    void seat_add_success() throws Exception {
+        // given
+        SeatAddRequest request = SeatAddRequest.builder()
+                .number(NUMBER)
+                .build();
+
+        given(authService.parseToken(ACCESS_TOKEN))
+                .willReturn(EMAIL);
+        
+        given(seatAddService.createSeat(NUMBER))
+                .will(invocation -> Seat.builder()
+                        .id(ID)
+                        .number(NUMBER)
+                        .build());
+
         // when
         ResultActions subject = mockMvc.perform(post("/seat")
+                .header("Authorization", "Bearer " + ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(request)));
 
         // then
-        subject.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.number").value(SEAT_NUMBER));
+        subject.andExpect(status().isNoContent());
 
         // docs
         subject.andDo(document("seat-add",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 requestFields(
-                        fieldWithPath("number").type(JsonFieldType.NUMBER).description("좌석 번호")
-                ),
-                responseFields(
                         fieldWithPath("number").type(JsonFieldType.NUMBER).description("좌석 번호")
                 )
         ));

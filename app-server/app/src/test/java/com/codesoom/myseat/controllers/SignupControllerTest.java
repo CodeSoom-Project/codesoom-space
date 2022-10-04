@@ -6,7 +6,6 @@ import com.codesoom.myseat.services.AuthenticationService;
 import com.codesoom.myseat.services.SignupService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -38,6 +36,8 @@ class SignupControllerTest {
     private static final String NAME = "테스터";
     private static final String EMAIL = "test@example.com";
     private static final String PASSWORD = "1111";
+    private static final String ENCODED_PASSWORD
+            = "$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW";
 
     @Autowired
     private MockMvc mockMvc;
@@ -48,38 +48,31 @@ class SignupControllerTest {
     @MockBean
     private AuthenticationService authService;
 
-    private SignupRequest request;
-    private User user;
-
-    @BeforeEach
-    void setUp() {
-        request = SignupRequest.builder()
+    @Test
+    @DisplayName("회원 가입 요청 테스트")
+    void test() throws Exception {
+        //given
+        SignupRequest request = SignupRequest.builder()
                 .name(NAME)
                 .email(EMAIL)
                 .password(PASSWORD)
                 .build();
 
-        user = User.builder()
-                .id(ID)
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(signupService.encodePassword(request.getPassword()))
-                .build();
+        given(signupService.createUser(NAME, EMAIL, PASSWORD))
+                .will(invocation -> User.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .email(EMAIL)
+                        .password(ENCODED_PASSWORD)
+                        .build());
 
-        given(signupService.signUp(any(SignupRequest.class)))
-                .willReturn(user);
-    }
-
-    @Test
-    @DisplayName("회원 가입 요청 테스트")
-    void test() throws Exception {
         // when
         ResultActions subject = mockMvc.perform(post("/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(request)));
 
         // then
-        subject.andExpect(status().isCreated());
+        subject.andExpect(status().isNoContent());
 
         // docs
         subject.andDo(document("signup",

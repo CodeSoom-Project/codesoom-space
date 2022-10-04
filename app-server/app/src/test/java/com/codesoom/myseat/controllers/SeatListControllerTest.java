@@ -3,7 +3,6 @@ package com.codesoom.myseat.controllers;
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.services.AuthenticationService;
 import com.codesoom.myseat.services.SeatListService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +31,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         uriHost = "api.codesoom-myseat.site"
 )
 class SeatListControllerTest {
-    private static final String VALID_TOKEN 
+    private static final String ACCESS_TOKEN 
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
-    private static final Long SEAT_ID = 1L;
-    private static final int SEAT_NUMBER = 1;
+    private static final Long ID = 1L;
+    private static final int NUMBER = 1;
 
     @Autowired
     private MockMvc mockMvc;
@@ -49,31 +48,29 @@ class SeatListControllerTest {
 
     private Seat seat;
 
-    @BeforeEach
-    void setUp() {
+    @Test
+    @DisplayName("좌석 목록 조회 요청 테스트")
+    void test() throws Exception {
+        // given
         seat = Seat.builder()
-                .id(SEAT_ID)
-                .number(SEAT_NUMBER)
+                .id(ID)
+                .number(NUMBER)
                 .status(false)
                 .build();
 
         given(service.seats())
                 .willReturn(List.of(seat));
-    }
-
-    @Test
-    @DisplayName("좌석 목록 조회 요청 테스트")
-    void test() throws Exception {
+        
         // when
         ResultActions subject 
                 = mockMvc.perform(
                         get("/seats")
-                                .header("Authorization", "Bearer " + VALID_TOKEN));
+                                .header("Authorization", "Bearer " + ACCESS_TOKEN));
 
         // then
         subject.andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].number").value(1))
-                .andExpect(jsonPath("$[0].status").value("false"));
+                .andExpect(jsonPath("$[0].status").value(false));
 
         // docs
         subject.andDo(document("seats",
@@ -81,7 +78,7 @@ class SeatListControllerTest {
                 preprocessResponse(prettyPrint()),
                 responseFields(
                         fieldWithPath("[].number").type(JsonFieldType.NUMBER).description("좌석 번호"),
-                        fieldWithPath("[].status").type(JsonFieldType.STRING).description("예약 여부")
+                        fieldWithPath("[].status").type(JsonFieldType.BOOLEAN).description("예약 여부")
                 )
         ));
     }
