@@ -29,10 +29,10 @@ public class LoginController {
     }
 
     /**
-     * 사용자 인증 후 상태코드 200과 토큰을 응답한다.
+     * 로그인 후 로그인 응답 정보를 반환한다.
      * 
-     * @param req 로그인 정보
-     * @return 토큰
+     * @param request 로그인 폼에 입력된 데이터
+     * @return LoginResponse 로그인 응답 정보
      */
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
@@ -41,26 +41,14 @@ public class LoginController {
     ) {
         String email = request.getEmail();
         String password = request.getPassword();
-        
-        String accessToken = authService.login(email, password);
-        log.info("accessToken: " + accessToken);
-        
+
         User user = userService.findUser(email);
+
+        String accessToken = authService.login(user, password);
+        log.info("accessToken: " + accessToken);
+
         String name = user.getName();
 
-        return toResponse(accessToken, name);
-    }
-
-    /**
-     * 응답 정보를 반환한다.
-     *
-     * @param accessToken 토큰
-     * @return 응답 정보
-     */
-    private LoginResponse toResponse(
-            String accessToken,
-            String name
-    ) {
         return LoginResponse.builder()
                 .accessToken(accessToken)
                 .name(name)

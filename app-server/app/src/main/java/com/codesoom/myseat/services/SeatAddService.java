@@ -2,7 +2,6 @@ package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.repositories.SeatRepository;
-import com.codesoom.myseat.dto.SeatAddRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,15 +18,16 @@ public class SeatAddService {
     }
 
     /**
-     * 추가된 좌석 정보를 반환한다.
+     * 생성된 좌석을 반환한다.
      * 
-     * @param request 추가할 좌석 정보
-     * @return 좌석 정보
+     * @param number 생성할 좌석의 번호
+     * @return 좌석
      */
-    public Seat addSeat(SeatAddRequest request) {
-        return seatRepo.save(
-                Seat.builder()
-                        .number(request.getNumber())
+    public Seat createSeat(
+            int number
+    ) {
+        return seatRepo.save(Seat.builder()
+                        .number(number)
                         .build()
         );
     }

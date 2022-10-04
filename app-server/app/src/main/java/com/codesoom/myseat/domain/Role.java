@@ -1,5 +1,7 @@
 package com.codesoom.myseat.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,8 @@ import javax.persistence.Id;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Role {
     @Id
     @GeneratedValue
@@ -18,12 +22,4 @@ public class Role {
 
     @Getter
     private String roleName;
-
-    public Role(
-            String email, 
-            String roleName
-    ) {
-        this.email = email;
-        this.roleName = roleName;
-    }
 }

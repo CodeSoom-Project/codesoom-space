@@ -2,7 +2,7 @@ package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.exceptions.LoginFailureException;
+import com.codesoom.myseat.exceptions.AuthenticationFailureException;
 import com.codesoom.myseat.repositories.RoleRepository;
 import com.codesoom.myseat.repositories.UserRepository;
 import com.codesoom.myseat.utils.JwtUtil;
@@ -30,26 +30,43 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * 주어진 회원 엔티티와 비밀번호로 인증에 성공하면, 생성된 토큰을 반환한다.
+     * 
+     * @param user 회원 엔티티
+     * @param password 비밀번호
+     * @return 생성된 토큰
+     * @throws AuthenticationFailureException 인증에 실패하면 던진다.
+     */
     public String login(
-            String email, 
+            User user,
             String password
     ) {
-        User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new LoginFailureException(email));
-
         if (!user.authenticate(password, passwordEncoder)) {
-            throw new LoginFailureException(email);
+            throw new AuthenticationFailureException();
         }
 
         return jwtUtil.makeAccessToken(user.getEmail());
     }
 
+    /**
+     * 토큰을 파싱한다.
+     * 
+     * @param accessToken 토큰
+     * @return 이메일
+     */
     public String parseToken(
             String accessToken
     ) {
         return jwtUtil.parseAccessToken(accessToken);
     }
 
+    /**
+     * 권한 목록을 반환한다.
+     * 
+     * @param email 이메일
+     * @return 권한 목록
+     */
     public List<Role> roles(
             String email
     ) {

@@ -13,5 +13,5 @@ import lombok.Getter;
 public class SeatListResponse {
     private int number;
 
-    private String status;
+    private boolean status;
 }

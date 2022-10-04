@@ -2,10 +2,7 @@ package com.codesoom.myseat.repositories;
 
 import com.codesoom.myseat.domain.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +30,4 @@ public interface SeatRepository
      * @return 좌석 목록
      */
     List<Seat> findAll();
-
-    @Query("UPDATE Seat SET isReserved=false WHERE isReserved is true")
-    @Modifying
-    @Transactional
-    void seatReservationReset();
 }

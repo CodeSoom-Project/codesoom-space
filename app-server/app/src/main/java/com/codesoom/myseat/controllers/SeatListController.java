@@ -52,7 +52,7 @@ public class SeatListController {
         for(Seat s : data) {
             response = SeatListResponse.builder()
                     .number(s.getNumber())
-                    .status(String.valueOf(s.isStatus()))
+                    .status(s.getStatus())
                     .build();
 
             list.add(response);
