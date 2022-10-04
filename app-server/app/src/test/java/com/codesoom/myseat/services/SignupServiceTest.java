@@ -4,10 +4,8 @@ import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.repositories.RoleRepository;
 import com.codesoom.myseat.repositories.UserRepository;
-import com.codesoom.myseat.dto.SignupRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,10 +16,12 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class SignupServiceTest {
-    private static final Long USER_ID = 1L;
+    private static final Long ID = 1L;
     private static final String NAME = "테스터";
     private static final String EMAIL = "test@example.com";
     private static final String PASSWORD = "1111";
+    private static final String ENCODED_PASSWORD 
+            = "$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW";
 
     private SignupService service;
 
@@ -33,9 +33,6 @@ class SignupServiceTest {
 
     private PasswordEncoder passwordEncoder 
             = new BCryptPasswordEncoder();
-    
-    private SignupRequest request;
-    private Role role;
 
     @BeforeEach
     void setUp() {
@@ -46,48 +43,31 @@ class SignupServiceTest {
         );
     }
 
-    @Nested
-    @DisplayName("signUp 메서드는")
-    class Describe_signUp_method {
-        @BeforeEach
-        void setUp() {
-            request = SignupRequest.builder()
-                    .name(NAME)
-                    .email(EMAIL)
-                    .password(PASSWORD)
-                    .build();
+    @Test
+    @DisplayName("회원 생성 성공")
+    void test() {
+        // given
+        given(roleRepo.save(any(Role.class)))
+                .will(invocation -> Role.builder()
+                        .email(EMAIL)
+                        .roleName("USER")
+                        .build());
 
-            role = new Role(request.getEmail(), "USER");
+        given(userRepo.save(any(User.class)))
+                .will(invocation -> User.builder()
+                        .id(ID)
+                        .name(NAME)
+                        .email(EMAIL)
+                        .password(ENCODED_PASSWORD)
+                        .build());
 
-            given(userRepo.save(any(User.class)))
-                    .will(invocation -> {
-                        return User.builder()
-                                .id(USER_ID)
-                                .name(NAME)
-                                .email(EMAIL)
-                                .password(PASSWORD)
-                                .build();
-                    });
-            
-            given(roleRepo.save(any(Role.class)))
-                    .will(invocation -> {
-                        return role;
-                    });
-        }
+        // when
+        User user = service.createUser(NAME, EMAIL, PASSWORD);
 
-        @Nested
-        @DisplayName("회원 정보를 반환한다")
-        class It_returns_user_data {
-            User subject() {
-                return service.signUp(request);
-            }
-
-            @Test
-            void test() {
-                assertThat(subject().getId()).isEqualTo(USER_ID);
-                assertThat(subject().getName()).isEqualTo(NAME);
-                assertThat(subject().getEmail()).isEqualTo(EMAIL);
-            }
-        }
+        // then
+        assertThat(user.getId()).isEqualTo(ID);
+        assertThat(user.getName()).isEqualTo(NAME);
+        assertThat(user.getEmail()).isEqualTo(EMAIL);
+        assertThat(user.getPassword()).isEqualTo(ENCODED_PASSWORD);
     }
 }

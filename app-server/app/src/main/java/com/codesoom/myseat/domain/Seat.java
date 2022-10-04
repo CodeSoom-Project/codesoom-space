@@ -29,19 +29,23 @@ public class Seat {
     private boolean status = false;
 
     @OneToOne(mappedBy = "seat")
-    private SeatReservation seatReservation;
+    private User user;
 
     public void reserve(
-            SeatReservation seatReservation
+            User user
     ) {
         this.status = true;
-        this.seatReservation = seatReservation;
+        this.user = user;
     }
 
     public void cancelReservation() {
         log.info("예약 취소");
-                
+        
         status = false;
-        this.seatReservation = null;
+        this.user = null;
+    }
+
+    public boolean getStatus() {
+        return this.status;
     }
 }

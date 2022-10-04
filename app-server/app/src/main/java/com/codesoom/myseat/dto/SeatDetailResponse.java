@@ -13,11 +13,7 @@ import lombok.Getter;
 public class SeatDetailResponse {
     private int number;
 
-    private String date;
-
-    private String checkIn;
-
-    private String checkOut;
-
     private String name;
+
+    private boolean mySeat;
 }

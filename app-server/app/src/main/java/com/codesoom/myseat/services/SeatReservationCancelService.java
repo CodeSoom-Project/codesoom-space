@@ -2,87 +2,63 @@ package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.repositories.SeatRepository;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.repositories.SeatReservationRepository;
-import com.codesoom.myseat.exceptions.SeatNotFoundException;
-import com.codesoom.myseat.exceptions.SeatReservationNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 좌석 예약 취소 서비스
  */
 @Service
+@Slf4j
 public class SeatReservationCancelService {
-    private final SeatRepository seatRepo;
+    private static final SimpleDateFormat dateFormat
+            = new SimpleDateFormat("HH:mm:ss");
+
     private final SeatReservationRepository reservationRepo;
 
     public SeatReservationCancelService(
-            SeatRepository seatRepo, 
             SeatReservationRepository reservationRepo
     ) {
-        this.seatRepo = seatRepo;
         this.reservationRepo = reservationRepo;
     }
 
     /**
      * 예약을 취소한다.
      * 
-     * @param number 예약 취소할 좌석 번호
-     * @param user 취소 요청한 사용자 정보
-     * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
-     * @throws SeatReservationNotFoundException 좌석 예약 내역을 찾을 수 없는 경우 예외를 던진다.
+     * @param user
+     * @param seat
      */
     public void cancelReservation(
-            int number,
-            User user
+            User user,
+            Seat seat
     ) {
-        Seat seat = seat(number);
-
-        SeatReservation reservation = seatReservation(user.getEmail());
-
+        SeatReservation reservation = user.getSeatReservation();
+        user.cancelReservation();
+        reservationRepo.delete(reservation);
         seat.cancelReservation();
-        reservation.cancelReservation();
     }
 
     /**
-     * 당일 좌석 예약 내역을 반환한다.
-     *
-     * @param email 회원 email
-     * @return 좌석 예약 내역
-     * @throws SeatReservationNotFoundException 좌석 예약 내역을 찾을 수 없는 경우 예외를 던진다.
+     * 매일 23시에 모든 예약을 초기화한다.
      */
-    private SeatReservation seatReservation(
-            String email
-    ) {
-        return reservationRepo.findByDateAndUser_Email(today(), email)
-                .orElseThrow(() -> new SeatReservationNotFoundException(
-                        "[" + email + "] 회원의 당일 예약 내역을 찾을 수 없어서 조회에 실패했습니다."));
-    }
-
-    /**
-     * 조회된 좌석을 반환한다.
-     *
-     * @param number 좌석 번호
-     * @return 좌석
-     * @throws SeatNotFoundException 좌석을 찾을 수 없는 경우 예외를 던진다.
-     */
-    private Seat seat(int number) {
-        return seatRepo.findByNumber(number)
-                .orElseThrow(() -> new SeatNotFoundException(
-                        "[" + number + "]번 좌석을 찾을 수 없어서 조회에 실패했습니다."));
-    }
-
-    /**
-     * 오늘 날짜를 반환한다.
-     *
-     * @return 오늘 날짜
-     */
-    private String today() {
-        LocalDateTime now = LocalDateTime.now();
-        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    @Scheduled(cron = "0 0 23 * * *")
+    public void reset() {
+        log.info("현재 시간: {}", dateFormat.format(new Date()));
+        
+        List<SeatReservation> reservations = reservationRepo.findAll();
+        for(SeatReservation s : reservations) {
+            s.getUser().cancelReservation();
+            Seat seat = s.getUser().getSeat();
+            
+            reservationRepo.delete(s);
+            seat.cancelReservation();
+        }
     }
 }

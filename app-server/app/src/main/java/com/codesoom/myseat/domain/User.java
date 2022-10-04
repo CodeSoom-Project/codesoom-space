@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.*;
 
 /**
  * 회원 엔티티
@@ -31,9 +30,20 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<SeatReservation> seatReservations = new ArrayList<>();
+    @OneToOne(mappedBy = "user")
+    private SeatReservation seatReservation;
 
+    @OneToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
+
+    /**
+     * 비밀번호 인증에 성공하면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
+     * 
+     * @param password 인증할 비밀번호
+     * @param passwordEncoder 인코더
+     * @return 비밀번호 인증에 성공하면 true, 그렇지 않으면 false
+     */
     public boolean authenticate(
             String password, 
             PasswordEncoder passwordEncoder
@@ -41,5 +51,24 @@ public class User {
         log.info("password: " + password);
         log.info("this.password: " + this.password);
         return passwordEncoder.matches(password, this.password);
+    }
+
+    /**
+     * 예약 내역이 존재하면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
+     * 
+     * @return 예약 내역이 존재하면 true, 그렇지 않으면 false
+     */
+    public boolean status() {
+        if(this.seatReservation != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void cancelReservation() {
+        log.info("예약 취소");
+
+        seatReservation = null;
     }
 }

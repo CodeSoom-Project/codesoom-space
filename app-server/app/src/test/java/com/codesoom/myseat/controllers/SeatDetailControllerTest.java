@@ -1,13 +1,11 @@
 package com.codesoom.myseat.controllers;
 
-import com.codesoom.myseat.domain.SeatReservation;
+import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.dto.SeatDetailResponse;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.AuthenticationService;
-import com.codesoom.myseat.services.SeatDetailService;
+import com.codesoom.myseat.services.SeatService;
 import com.codesoom.myseat.services.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +13,10 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -40,21 +35,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         uriHost = "api.codesoom-myseat.site"
 )
 class SeatDetailControllerTest {
-    private static final String VALID_TOKEN 
+    private static final String ACCESS_TOKEN 
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
+    
+    private static final String INVALID_TOKEN 
+            = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk2";
 
     private static final Long USER_ID = 1L;
     private static final String NAME = "테스터";
     private static final String EMAIL = "test@example.com";
-    private static final String PASSWORD = "1111";
+    private static final String ENCODED_PASSWORD
+            = "$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW";
 
-    private static final int SEAT_NUMBER = 1;
-
-    private static final Long SEAT_RESERVATION_ID = 1L;
-    private static final String DATE
-            = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    private static final String CHECK_IN = "09:30";
-    private static final String CHECK_OUT = "17:30";
+    private static final Long SEAT_ID = 1L;
+    private static final int NUMBER = 1;
 
     @Autowired
     private MockMvc mockMvc;
@@ -66,65 +60,50 @@ class SeatDetailControllerTest {
     private UserAuthentication userAuth;
 
     @MockBean
-    private SeatDetailService seatDetailService;
+    private SeatService seatService;
 
     @MockBean
     private UserService userService;
 
-    private User user;
-    private SeatReservation reservation;
-    private SeatDetailResponse response;
-
-    @BeforeEach
-    void setUp() {
-        user = User.builder()
+    @Test
+    @WithMockUser
+    @DisplayName("내 좌석 상세 조회 요청 테스트")
+    void test() throws Exception {
+        // given
+        User user = User.builder()
                 .id(USER_ID)
                 .name(NAME)
                 .email(EMAIL)
-                .password(PASSWORD)
+                .password(ENCODED_PASSWORD)
                 .build();
 
-        reservation = SeatReservation.builder()
-                .id(SEAT_RESERVATION_ID)
-                .date(DATE)
-                .checkIn(CHECK_IN)
-                .checkOut(CHECK_OUT)
+        Seat seat = Seat.builder()
+                .id(SEAT_ID)
+                .number(NUMBER)
+                .status(true)
+                .user(user)
                 .build();
 
-        response = SeatDetailResponse.builder()
-                .number(SEAT_NUMBER)
-                .date(DATE)
-                .checkIn(CHECK_IN)
-                .checkOut(CHECK_OUT)
-                .name(NAME)
-                .build();
+        given(authService.parseToken(ACCESS_TOKEN))
+                .willReturn(EMAIL);
 
         given(userService.findUser(EMAIL))
                 .willReturn(user);
 
-        given(seatDetailService.seatDetail(any(int.class), any(User.class)))
-                .willReturn(response);
+        given(seatService.findSeat(NUMBER))
+                .willReturn(seat);
 
-        given(authService.parseToken(VALID_TOKEN))
-                .willReturn(EMAIL);
-    }
-
-    @Test
-    @DisplayName("좌석 상세 조회 요청 테스트")
-    void test() throws Exception {
         // when
         ResultActions subject 
                 = mockMvc.perform(
-                        get("/seat/{number}", SEAT_NUMBER)
-                                .header("Authorization", "Bearer " + VALID_TOKEN));
+                        get("/seat/{number}", NUMBER)
+                                .header("Authorization", "Bearer " + ACCESS_TOKEN));
 
         // then
         subject.andExpect(status().isOk())
-                .andExpect(jsonPath("$.number").value(SEAT_NUMBER))
-                .andExpect(jsonPath("$.date").value(DATE))
-                .andExpect(jsonPath("$.checkIn").value(CHECK_IN))
-                .andExpect(jsonPath("$.checkOut").value(CHECK_OUT))
-                .andExpect(jsonPath("$.name").value(NAME));
+                .andExpect(jsonPath("$.number").value(NUMBER))
+                .andExpect(jsonPath("$.name").value(NAME))
+                .andExpect(jsonPath("$.mySeat").value(true));
 
         // docs
         subject.andDo(document("seat-detail",
@@ -134,11 +113,9 @@ class SeatDetailControllerTest {
                         parameterWithName("number").description("좌석 번호")
                 ),
                 responseFields(
-                        fieldWithPath("name").type(JsonFieldType.STRING).description("예약자명"),
                         fieldWithPath("number").type(JsonFieldType.NUMBER).description("좌석 번호"),
-                        fieldWithPath("date").type(JsonFieldType.STRING).description("예약 날짜"),
-                        fieldWithPath("checkIn").type(JsonFieldType.STRING).description("체크인"),
-                        fieldWithPath("checkOut").type(JsonFieldType.STRING).description("체크아웃")
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("예약자명"),
+                        fieldWithPath("mySeat").type(JsonFieldType.BOOLEAN).description("내 좌석 여부")
                 )
         ));
     }

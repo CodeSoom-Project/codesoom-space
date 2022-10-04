@@ -25,22 +25,7 @@ public class SeatReservation {
 
     private String date;
 
-    private String checkIn;
-
-    private String checkOut;
-
-    @Builder.Default
-    private Boolean canceled = false;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToOne
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
-
-    public void cancelReservation() {
-        this.canceled = true;
-    }
 }

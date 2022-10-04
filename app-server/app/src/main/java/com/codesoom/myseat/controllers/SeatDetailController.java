@@ -1,9 +1,11 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.SeatDetailResponse;
+import com.codesoom.myseat.exceptions.AuthenticationFailureException;
 import com.codesoom.myseat.security.UserAuthentication;
-import com.codesoom.myseat.services.SeatDetailService;
+import com.codesoom.myseat.services.SeatService;
 import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,15 +21,15 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @Slf4j
 public class SeatDetailController {
-    private final SeatDetailService seatDetailservice;
     private final UserService userService;
+    private final SeatService seatService;
 
     public SeatDetailController(
-            SeatDetailService seatDetailservice, 
-            UserService userService
+            UserService userService,
+            SeatService seatService
     ) {
-        this.seatDetailservice = seatDetailservice;
         this.userService = userService;
+        this.seatService = seatService;
     }
 
     /**
@@ -43,12 +45,38 @@ public class SeatDetailController {
             @PathVariable int number
     ) {
         log.info("number: " + number);
-        
+
         String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
+        if(email == null) {
+            throw new AuthenticationFailureException();
+        }
         log.info("email: " + email);
-        
+
         User user = userService.findUser(email);
 
-        return seatDetailservice.seatDetail(number, user);
+        return toResponse(user, seatService.findSeat(number));
+    }
+
+    private SeatDetailResponse toResponse(User user, Seat seat) {
+        String name = "";
+        Boolean mySeat = false;
+
+        User owner = seat.getUser();
+        if(owner != null) {
+            name = owner.getName();
+            
+            if(user.getName().equals(name)) {
+                mySeat = true;
+            }
+        }
+
+        log.info("name: " + name);
+        log.info("mySeat: " + mySeat);
+
+        return SeatDetailResponse.builder()
+                .number(seat.getNumber())
+                .name(name)
+                .mySeat(mySeat)
+                .build();
     }
 }

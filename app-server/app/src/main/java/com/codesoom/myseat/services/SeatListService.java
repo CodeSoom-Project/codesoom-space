@@ -1,6 +1,7 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
+import com.codesoom.myseat.exceptions.SeatListNotFoundException;
 import com.codesoom.myseat.repositories.SeatRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,10 @@ public class SeatListService {
     }
 
     public List<Seat> seats() {
-        return seatRepo.findAll();
+        try {
+            return seatRepo.findAll();
+        } catch (NullPointerException e) {
+            throw new SeatListNotFoundException();
+        }
     }
 }

@@ -4,7 +4,6 @@ import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.repositories.RoleRepository;
 import com.codesoom.myseat.repositories.UserRepository;
-import com.codesoom.myseat.dto.SignupRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,42 +29,30 @@ public class SignupService {
     }
 
     /**
-     * 가입한 회원 정보를 반환한다.
+     * 생성된 회원 엔티티를 반환합니다.
      * 
-     * @param request 가입할 회원 정보
-     * @return 회원 정보
+     * @param name 이름
+     * @param email 이메일
+     * @param password 비밀번호
+     * @return 회원
      */
-    public User signUp(
-            SignupRequest request
-    ) {
-        log.info("name: " + request.getName());
-        log.info("email: " + request.getEmail());
-        log.info("password: " + request.getEmail());
-
-        User user = userRepo.save(User.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(encodePassword(request.getPassword()))
-                .build());
-        log.info("user name: " + user.getName());
-        log.info("user email: " + user.getEmail());
-
-        Role role = new Role(request.getEmail(), "USER");
-        roleRepo.save(role);
-        log.info("role: " + role.getRoleName());
-
-        return user;
-    }
-
-    /**
-     * 비밀번호를 암호화한다.
-     * 
-     * @param password 암호화 할 비밀번호
-     * @return 암호화 된 비밀번호
-     */
-    public String encodePassword(
+    public User createUser(
+            String name,
+            String email,
             String password
     ) {
-        return passwordEncoder.encode(password);
+        Role role = Role.builder()
+                .email(email)
+                .roleName("USER")
+                .build();
+        
+        roleRepo.save(role);
+
+        return userRepo.save(User.builder()
+                .name(name)
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .build()
+        );
     }
 }

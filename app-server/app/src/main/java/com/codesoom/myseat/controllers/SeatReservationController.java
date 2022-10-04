@@ -1,11 +1,12 @@
 package com.codesoom.myseat.controllers;
 
-import com.codesoom.myseat.domain.SeatReservation;
+import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.dto.SeatReservationRequest;
-import com.codesoom.myseat.dto.SeatReservationResponse;
+import com.codesoom.myseat.exceptions.AlreadyHaveSeatException;
+import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.SeatReservationService;
+import com.codesoom.myseat.services.SeatService;
 import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,55 +22,44 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @Slf4j
 public class SeatReservationController {
-    private final SeatReservationService service;
+    private final SeatReservationService reservationService;
     private final UserService userService;
+    private final SeatService seatService;
 
     public SeatReservationController(
-            SeatReservationService service, 
-            UserService userService
+            SeatReservationService reservationService, 
+            UserService userService,
+            SeatService seatService
     ) {
-        this.service = service;
+        this.reservationService = reservationService;
         this.userService = userService;
+        this.seatService = seatService;
     }
 
     /**
-     * 좌석을 예약한 후 상태코드 201과 예약 정보를 응답한다.
-     *
-     * @param number 예약할 좌석 번호
-     * @param request 좌석 예약 요청 정보
-     * @return 좌석 예약 정보
+     * 좌석을 예약한다.
+     * @param number
      */
     @PostMapping("{number}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated()")
-    public SeatReservationResponse addReservation(
-            @PathVariable int number,
-            @RequestBody SeatReservationRequest request
+    public void reserve(
+            @PathVariable int number
     ) {
+        log.info("number: " + number);
         String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
         User user = userService.findUser(email);
-        log.info("number: " + number);
-        log.info("checkin: " + request.getCheckIn());
-        log.info("checkout: " + request.getCheckOut());
-        
-        return toResponse(service.addReservation(number, request, user));
-    }
 
-    /**
-     * 응답 정보를 반환한다.
-     *
-     * @param data 예약한 좌석 정보
-     * @return 응답 정보
-     */
-    private SeatReservationResponse toResponse(
-            SeatReservation data
-    ) {
-        return SeatReservationResponse.builder()
-                .name(data.getUser().getName())
-                .number(data.getSeat().getNumber())
-                .date(data.getDate())
-                .checkIn(data.getCheckIn())
-                .checkOut(data.getCheckOut())
-                .build();
+        if(user.status()) {
+            throw new AlreadyHaveSeatException();
+        }
+
+        Seat seat = seatService.findSeat(number);
+
+        if(seat.getStatus()) {
+            throw new AlreadyReservedException();
+        }
+
+        reservationService.createReservation(user, seat);
     }
 }

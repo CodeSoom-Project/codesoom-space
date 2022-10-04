@@ -23,18 +23,21 @@ public class SignupController {
     }
 
     /**
-     * 회원 가입 후 상태 코드 201을 응답한다.
+     * 회원 가입을 한다.
      * 
-     * @param request 회원 가입 정보
+     * @param request 회원 가입 폼에 입력된 데이터
      */
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void signUp(
             @RequestBody SignupRequest request
     ) {
-        log.info("name: " + request.getName());
-        log.info("email: " + request.getEmail());
-        log.info("password: " + request.getEmail());
-        service.signUp(request);
+        log.info("request: " + request.toString());
+
+        String email = request.getEmail();
+        String name = request.getName();
+        String password = request.getPassword();
+
+        service.createUser(email, name, password);
     }
 }

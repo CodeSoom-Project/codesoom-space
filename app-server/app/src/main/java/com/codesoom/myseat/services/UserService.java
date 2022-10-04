@@ -1,7 +1,7 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.exceptions.SeatNotFoundException;
+import com.codesoom.myseat.exceptions.UserNotFoundException;
 import com.codesoom.myseat.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,12 +19,17 @@ public class UserService {
     ) {
         this.userRepo = userRepo;
     }
-    
+
+    /**
+     * 이메일로 회원을 검색한다.
+     * 
+     * @param email
+     * @return
+     */
     public User findUser(
             String email
     ) {
         return userRepo.findByEmail(email)
-                .orElseThrow(() -> new SeatNotFoundException(
-                        "[" + email + "] 조회 실패"));
+                .orElseThrow(() -> new UserNotFoundException());
     }
 }
