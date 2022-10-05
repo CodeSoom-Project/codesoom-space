@@ -38,6 +38,6 @@ public class SignupController {
         String name = request.getName();
         String password = request.getPassword();
 
-        service.createUser(email, name, password);
+        service.createUser(name, email, password);
     }
 }
