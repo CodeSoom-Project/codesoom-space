@@ -442,24 +442,53 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">API 목록</div>
 <ul class="sectlevel1">
-<li><a href="#_회원_api">회원 API</a>
+<li><a href="#_회원_가입">회원 가입</a>
 <ul class="sectlevel2">
-<li><a href="#_회원_가입">회원 가입</a></li>
-<li><a href="#_로그인">로그인</a></li>
+<li><a href="#_curl">curl</a></li>
+<li><a href="#_request">request</a></li>
+<li><a href="#_response">response</a></li>
 </ul>
 </li>
-<li><a href="#_좌석_예약_api">좌석 예약 API</a>
+<li><a href="#_로그인">로그인</a>
 <ul class="sectlevel2">
-<li><a href="#_좌석_목록_조회">좌석 목록 조회</a></li>
-<li><a href="#_좌석_상세_조회">좌석 상세 조회</a></li>
-<li><a href="#_좌석_예약">좌석 예약</a></li>
-<li><a href="#_예약_취소">예약 취소</a></li>
+<li><a href="#_curl_2">curl</a></li>
+<li><a href="#_request_2">request</a></li>
+<li><a href="#_response_2">response</a></li>
 </ul>
 </li>
-<li><a href="#_관리자_api">관리자 API</a>
+<li><a href="#_좌석_추가">좌석 추가</a>
 <ul class="sectlevel2">
-<li><a href="#_좌석_추가">좌석 추가</a></li>
-<li><a href="#_전체_예약_내역_조회">전체 예약 내역 조회</a></li>
+<li><a href="#_curl_3">curl</a></li>
+<li><a href="#_request_3">request</a></li>
+<li><a href="#_response_3">response</a></li>
+</ul>
+</li>
+<li><a href="#_좌석_목록_조회">좌석 목록 조회</a>
+<ul class="sectlevel2">
+<li><a href="#_curl_4">curl</a></li>
+<li><a href="#_request_4">request</a></li>
+<li><a href="#_response_4">response</a></li>
+</ul>
+</li>
+<li><a href="#_좌석_상세_조회">좌석 상세 조회</a>
+<ul class="sectlevel2">
+<li><a href="#_curl_5">curl</a></li>
+<li><a href="#_request_5">request</a></li>
+<li><a href="#_response_5">response</a></li>
+</ul>
+</li>
+<li><a href="#_좌석_예약">좌석 예약</a>
+<ul class="sectlevel2">
+<li><a href="#_curl_6">curl</a></li>
+<li><a href="#_request_6">request</a></li>
+<li><a href="#_response_6">response</a></li>
+</ul>
+</li>
+<li><a href="#_예약_취소">예약 취소</a>
+<ul class="sectlevel2">
+<li><a href="#_curl_7">curl</a></li>
+<li><a href="#_request_7">request</a></li>
+<li><a href="#_response_7">response</a></li>
 </ul>
 </li>
 </ul>
@@ -467,12 +496,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_회원_api">회원 API</h2>
+<h2 id="_회원_가입">회원 가입</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_회원_가입">회원 가입</h3>
-<div class="sect3">
-<h4 id="_request">REQUEST</h4>
+<h3 id="_curl">curl</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'https://api.codesoom-myseat.site:8080/signup' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "name" : "테스터",
+  "email" : "test@example.com",
+  "password" : "1111"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request">request</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /signup HTTP/1.1
@@ -482,6 +523,58 @@ Host: api.codesoom-myseat.site:8080
 
 {
   "name" : "테스터",
+  "email" : "test@example.com",
+  "password" : "1111"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_response">response</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+X-Frame-Options: SAMEORIGIN</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_로그인">로그인</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_curl_2">curl</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'https://api.codesoom-myseat.site:8080/login' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "email" : "test@example.com",
+  "password" : "1111"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_2">request</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 57
+Host: api.codesoom-myseat.site:8080
+
+{
   "email" : "test@example.com",
   "password" : "1111"
 }</code></pre>
@@ -502,11 +595,6 @@ Host: api.codesoom-myseat.site:8080
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">이름</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
@@ -518,75 +606,9 @@ Host: api.codesoom-myseat.site:8080
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect3">
-<h4 id="_response">RESPONSE</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-Strict-Transport-Security: max-age=31536000 ; includeSubDomains
-X-Frame-Options: SAMEORIGIN</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/jiyoung/workspace/my-seat/app-server/app/build/generated-snippets/signup/response-fields.adoc[]</p>
-</div>
-</div>
 </div>
 <div class="sect2">
-<h3 id="_로그인">로그인</h3>
-<div class="sect3">
-<h4 id="_request_2">REQUEST</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /login HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 57
-Host: api.codesoom-myseat.site:8080
-
-{
-  "email" : "test@example.com",
-  "password" : "1234"
-}</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">비밀번호</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_response_2">RESPONSE</h4>
+<h3 id="_response_2">response</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -601,11 +623,11 @@ Pragma: no-cache
 Expires: 0
 Strict-Transport-Security: max-age=31536000 ; includeSubDomains
 X-Frame-Options: SAMEORIGIN
-Content-Length: 127
+Content-Length: 129
 
 {
-  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk",
-  "userName" : "테스터"
+  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk",
+  "name" : "테스터"
 }</code></pre>
 </div>
 </div>
@@ -624,12 +646,12 @@ Content-Length: 127
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>token</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessToken</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">토큰</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 이름</p></td>
 </tr>
@@ -638,14 +660,93 @@ Content-Length: 127
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="_좌석_예약_api">좌석 예약 API</h2>
+<h2 id="_좌석_추가">좌석 추가</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_좌석_목록_조회">좌석 목록 조회</h3>
-<div class="sect3">
-<h4 id="_request_3">REQUEST</h4>
+<h3 id="_curl_3">curl</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'https://api.codesoom-myseat.site:8080/seat' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk' \
+    -d '{
+  "number" : 3
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_3">request</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /seat HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk
+Content-Length: 18
+Host: api.codesoom-myseat.site:8080
+
+{
+  "number" : 3
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">좌석 번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_response_3">response</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 204 No Content
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+X-Frame-Options: SAMEORIGIN</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_좌석_목록_조회">좌석 목록 조회</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_curl_4">curl</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'https://api.codesoom-myseat.site:8080/seats' -i -X GET \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_4">request</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /seats HTTP/1.1
@@ -653,13 +754,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG
 Host: api.codesoom-myseat.site:8080</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/jiyoung/workspace/my-seat/app-server/app/build/generated-snippets/seats/path-parameters.adoc[]
-Unresolved directive in index.adoc - include::/Users/jiyoung/workspace/my-seat/app-server/app/build/generated-snippets/seats/request-fields.adoc[]</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_response_3">RESPONSE</h4>
+<div class="sect2">
+<h3 id="_response_4">response</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -710,10 +807,21 @@ Content-Length: 52
 </table>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_좌석_상세_조회">좌석 상세 조회</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_좌석_상세_조회">좌석 상세 조회</h3>
-<div class="sect3">
-<h4 id="_request_4">REQUEST</h4>
+<h3 id="_curl_5">curl</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'https://api.codesoom-myseat.site:8080/seat/1' -i -X GET \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_5">request</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /seat/1 HTTP/1.1
@@ -722,7 +830,7 @@ Host: api.codesoom-myseat.site:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /seat/{seatNumber}</caption>
+<caption class="title">Table 1. /seat/{number}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -735,17 +843,14 @@ Host: api.codesoom-myseat.site:8080</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>seatNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">좌석 번호</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/jiyoung/workspace/my-seat/app-server/app/build/generated-snippets/seat-detail/request-fields.adoc[]</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_response_4">RESPONSE</h4>
+<div class="sect2">
+<h3 id="_response_5">response</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -760,14 +865,11 @@ Pragma: no-cache
 Expires: 0
 Strict-Transport-Security: max-age=31536000 ; includeSubDomains
 X-Frame-Options: SAMEORIGIN
-Content-Length: 122
+Content-Length: 129
 
 {
-  "seatNumber" : 1,
-  "date" : "2022-09-29",
-  "checkIn" : "09:30",
-  "checkOut" : "17:30",
-  "userName" : "테스터"
+  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk",
+  "name" : "테스터"
 }</code></pre>
 </div>
 </div>
@@ -786,54 +888,43 @@ Content-Length: 122
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessToken</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">예약자명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">토큰</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>seatNumber</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">좌석 번호</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>date</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">예약 날짜</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>checkIn</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">체크인</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>checkOut</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">체크아웃</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 이름</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_좌석_예약">좌석 예약</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_좌석_예약">좌석 예약</h3>
-<div class="sect3">
-<h4 id="_request_5">REQUEST</h4>
+<h3 id="_curl_6">curl</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'https://api.codesoom-myseat.site:8080/seat-reservation/1' -i -X POST \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_6">request</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /seat-reservation/1 HTTP/1.1
-Content-Type: application/json;charset=UTF-8
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk
-Content-Length: 49
-Host: api.codesoom-myseat.site:8080
-
-{
-  "checkIn" : "09:30",
-  "checkOut" : "17:30"
-}</code></pre>
+Host: api.codesoom-myseat.site:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. /seat-reservation/{seatNumber}</caption>
+<caption class="title">Table 2. /seat-reservation/{number}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -846,7 +937,7 @@ Host: api.codesoom-myseat.site:8080
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>seatNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">좌석 번호</p></td>
 </tr>
 </tbody>
@@ -878,31 +969,21 @@ Host: api.codesoom-myseat.site:8080
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_response_5">RESPONSE</h4>
+<div class="sect2">
+<h3 id="_response_6">response</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 204 No Content
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Content-Type: application/json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 Strict-Transport-Security: max-age=31536000 ; includeSubDomains
-X-Frame-Options: SAMEORIGIN
-Content-Length: 122
-
-{
-  "userName" : "테스터",
-  "seatNumber" : 1,
-  "date" : "2022-09-29",
-  "checkIn" : "09:30",
-  "checkOut" : "17:30"
-}</code></pre>
+X-Frame-Options: SAMEORIGIN</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -920,12 +1001,12 @@ Content-Length: 122
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 이름</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>seatNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">좌석 번호</p></td>
 </tr>
@@ -948,19 +1029,30 @@ Content-Length: 122
 </table>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_예약_취소">예약 취소</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_예약_취소">예약 취소</h3>
-<div class="sect3">
-<h4 id="_request_6">REQUEST</h4>
+<h3 id="_curl_7">curl</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /seat-reservation/3 HTTP/1.1
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'https://api.codesoom-myseat.site:8080/seat-reservation/1' -i -X DELETE \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_7">request</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /seat-reservation/1 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk
 Host: api.codesoom-myseat.site:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. /seat-reservation/{seatNumber}</caption>
+<caption class="title">Table 3. /seat-reservation/{number}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -973,17 +1065,14 @@ Host: api.codesoom-myseat.site:8080</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>seatNumber</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">좌석 번호</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/jiyoung/workspace/my-seat/app-server/app/build/generated-snippets/seat-reservation-cancel/request-fields.adoc[]</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_response_6">RESPONSE</h4>
+<div class="sect2">
+<h3 id="_response_7">response</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -999,191 +1088,13 @@ Strict-Transport-Security: max-age=31536000 ; includeSubDomains
 X-Frame-Options: SAMEORIGIN</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/jiyoung/workspace/my-seat/app-server/app/build/generated-snippets/seat-reservation-cancel/response-fields.adoc[]</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_관리자_api">관리자 API</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_좌석_추가">좌석 추가</h3>
-<div class="sect3">
-<h4 id="_request_7">REQUEST</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /seat HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 18
-Host: api.codesoom-myseat.site:8080
-
-{
-  "number" : 3
-}</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">좌석 번호</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_response_7">RESPONSE</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-Strict-Transport-Security: max-age=31536000 ; includeSubDomains
-X-Frame-Options: SAMEORIGIN
-Content-Length: 18
-
-{
-  "number" : 3
-}</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">좌석 번호</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_전체_예약_내역_조회">전체 예약 내역 조회</h3>
-<div class="sect3">
-<h4 id="_request_8">REQUEST</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /seat-reservations HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk
-Host: api.codesoom-myseat.site:8080</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::/Users/jiyoung/workspace/my-seat/app-server/app/build/generated-snippets/seat-reservations/request-fields.adoc[]</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_response_8">RESPONSE</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-Strict-Transport-Security: max-age=31536000 ; includeSubDomains
-X-Frame-Options: SAMEORIGIN
-Content-Length: 126
-
-[ {
-  "userName" : "테스터",
-  "seatNumber" : 1,
-  "date" : "2022-09-29",
-  "checkIn" : "09:30",
-  "checkOut" : "17:30"
-} ]</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].userName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">회원 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].seatNumber</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">좌석 번호</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].date</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">예약 날짜</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].checkIn</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">체크인</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].checkOut</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">체크아웃</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-09-29 14:03:15 +0900
+Last updated 2022-10-06 14:07:42 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
