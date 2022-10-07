@@ -17,4 +17,15 @@ $ docker run --name mariadb-container -v {볼륨 마운트 경로}:/var/lib/mysq
 *이미 컴퓨터에 MariaDB가 실행 중일 경우에는 `myseattest` 데이터베이스를 생성해 주어야 합니다.
 
 ## 서버 실행
-App 서버 실행
+
+```bash
+chmod +x gradlew # 실행 권한 업데이트
+```
+
+```bash
+docker-compose up -d # 서버 백그라운드 실행
+
+curl localhost:8080 # Hello 응답오는지 확인
+
+docker-compose down # 서버 종료
+```
