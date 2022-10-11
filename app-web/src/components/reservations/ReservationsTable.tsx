@@ -99,11 +99,21 @@ const rows = [
   createData('2022-10-11', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
   createData('2022-10-11', 'db 공부', 'RETROSPECTIVE_WAITING'),
   createData('2022-10-11', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData('2022-10-11', 'git', 'RETROSPECTIVE_COMPLETE' ),
+  createData('2022-10-11', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
+  createData('2022-10-11', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData('2022-10-11', 'db 공부', 'RETROSPECTIVE_WAITING'),
+  createData('2022-10-11', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData('2022-10-11', 'git', 'RETROSPECTIVE_COMPLETE' ),
+  createData('2022-10-11', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
+  createData('2022-10-11', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData('2022-10-11', 'db 공부', 'RETROSPECTIVE_WAITING'),
+  createData('2022-10-11', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
 ];
 
 export default function ReservationsTable() {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
