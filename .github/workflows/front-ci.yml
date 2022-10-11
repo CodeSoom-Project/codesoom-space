@@ -9,6 +9,8 @@ on:
 jobs: 
   test:
     runs-on: ubuntu-22.04
+    env:
+          working-directory: ./app-web
 
     steps:
     - uses: actions/checkout@v3
@@ -17,8 +19,16 @@ jobs:
       with:
         node-version: 16.17.1
         cache: 'npm'
-    - run: npm ci
-    - run: npm run lint
-    - run: npm run test
-    - run: npm run build
-    
+        cache-dependency-path: app-web/package-lock.json
+    - name: ci    
+      working-directory: ${{env.working-directory}}
+      run: npm ci
+    - name: lint
+      working-directory: ${{env.working-directory}}
+      run: npm run lint
+    - name: test
+      working-directory: ${{env.working-directory}}
+      run: npm run test
+    - name: build
+      working-directory: ${{env.working-directory}}
+      run: npm run build
