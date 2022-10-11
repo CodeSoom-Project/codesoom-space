@@ -7,30 +7,29 @@ import { useMutation } from 'react-query';
 import { signUp } from './services/api';
 
 import SignUp from './signUp';
+
 import HeaderContainer from './HeaderContainer';
 
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-
 export default function SignUpContainer() {
-  const schema = yup.object().shape({
-    passwordCheck: yup
-      .string()
-      .oneOf([yup.ref('password'), '비밀번호가 일치하지않습니다'])
-      .required(),
-  });
+  // const schema = yup.object().shape({
+  //   passwordCheck: yup
+  //     .string()
+  //     .oneOf([yup.ref('password'), '비밀번호가 일치하지않습니다'])
+  //     .required(),
+  // });
 
   const { register, formState: { errors }, handleSubmit, watch, setError } = useForm({
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
   });
+
   const navigate = useNavigate();
 
   const signUpMutate = async ({
+    name,
     email,
     password,
-    name,
   }: { email: any, password: string, name: any }) => {
-    const signUpResult = await signUp({ email, password, name });
+    const signUpResult = await signUp({ name, email, password });
     return signUpResult;
   };
 

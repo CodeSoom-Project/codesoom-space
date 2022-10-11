@@ -18,10 +18,6 @@ export const request = ({ ...options }) => {
   return api(options).then(onSuccess).catch(onError);
 };
 
-export const apis = {
-  getReservation: () => api.get('/seat-reservations'),
-};
-
 export const getSeats = () => {
   return api.get('/seats');
 };
