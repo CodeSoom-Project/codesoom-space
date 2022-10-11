@@ -32,7 +32,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
   const LastPage = Math.ceil(count / rowsPerPage) - 1;
 
-  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void =>{
+  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, 0);
   };
   
@@ -119,8 +119,10 @@ export default function ReservationsTable() {
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
-  ) => setPage(newPage);
-  
+  ):void => {
+    setPage(newPage);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table>
