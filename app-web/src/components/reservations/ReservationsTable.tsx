@@ -32,19 +32,19 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
   const LastPage = Math.ceil(count / rowsPerPage) - 1;
 
-  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) =>{
+  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void =>{
     onPageChange(event, 0);
   };
   
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, page - 1);
   }; 
 
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, page + 1);
   }; 
 
-  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, LastPage);
   }; 
 
