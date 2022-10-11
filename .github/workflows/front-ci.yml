@@ -2,9 +2,9 @@ name: FRONT CI
 
 on:
   push:
-    branches: [ "add-ci" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "add-ci" ]
+    branches: [ "main" ]
 
 jobs: 
   test:
@@ -21,3 +21,4 @@ jobs:
     - run: npm run lint
     - run: npm run test
     - run: npm run build
+    
