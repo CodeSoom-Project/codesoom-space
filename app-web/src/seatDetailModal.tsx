@@ -12,6 +12,7 @@ export default function SeatDetailModal({ open, onClose, seatNumber, seatDetail 
       </Modal>
     </>
   );
+  
   const { userName } = seatDetail;
 
   return (

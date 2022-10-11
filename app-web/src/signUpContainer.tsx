@@ -11,16 +11,7 @@ import SignUp from './signUp';
 import HeaderContainer from './HeaderContainer';
 
 export default function SignUpContainer() {
-  // const schema = yup.object().shape({
-  //   passwordCheck: yup
-  //     .string()
-  //     .oneOf([yup.ref('password'), '비밀번호가 일치하지않습니다'])
-  //     .required(),
-  // });
-
-  const { register, formState: { errors }, handleSubmit, watch, setError } = useForm({
-    // resolver: yupResolver(schema),
-  });
+  const { register, formState: { errors }, handleSubmit, watch, setError } = useForm();
 
   const navigate = useNavigate();
 

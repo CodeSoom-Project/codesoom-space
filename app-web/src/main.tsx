@@ -18,6 +18,8 @@ import Reservations from './pages/Reservations';
 
 import './index.css';
 
+import './index.css';
+
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

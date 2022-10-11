@@ -1,9 +1,6 @@
 import ReactDom from 'react-dom';
 
-import CheckOutsideClick from './CheckOutsideClick';
-
 import Button from './Button';
-
 
 const MODAL_STYLES = {
   position: 'fixed',
@@ -33,13 +30,13 @@ export default function Modal({ open, children, onClose }:any) {
 
 
   return ReactDom.createPortal(
-    <CheckOutsideClick onClickOutside={handleClose}>
+    <div onClickOutside={handleClose}>
       <div style={OVERLAY_STYLES} />
       <div style={MODAL_STYLES}>
         <Button onClick={onClose}>창 닫기</Button>
         {children}
       </div>
-    </CheckOutsideClick>,
+    </div>,
     document.getElementById('portal'),
   );
 }
