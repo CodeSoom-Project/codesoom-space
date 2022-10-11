@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
 
-import { Box, Table, TableBody,  TableContainer, TableFooter, TablePagination, TableRow, Paper, IconButton, Button, TableHead } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+import { Box, Table, TableContainer,  TablePagination, TableRow, Paper, IconButton, Button, TableHead, TableBody, TableFooter } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
@@ -18,181 +20,142 @@ interface TablePaginationActionsProps {
   ) => void;
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)({ 
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    backgroundColor: '#1976d2',
+    color: '#ffff',
   },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+});
 
 function TablePaginationActions(props: TablePaginationActionsProps) {
-  const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
-  const handleFirstPageButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    onPageChange(event, 0);
-  };
+  const LastPage = Math.ceil(count / rowsPerPage) - 1;
 
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page - 1);
-  };
+  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => onPageChange(event, 0);
+  
+  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => onPageChange(event, page - 1);
 
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page + 1);
-  };
+  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => onPageChange(event, page + 1);
 
-  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
+  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => onPageChange(event, LastPage);
 
   return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+    <Box sx={{ flexShrink: 0, ml: 5 }}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
-        aria-label="first page"
       >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+        <FirstPageIcon />
       </IconButton>
       <IconButton
         onClick={handleBackButtonClick}
         disabled={page === 0}
-        aria-label="previous page"
       >
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+        <KeyboardArrowLeft />
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
+        disabled={page >= LastPage}
       >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+        <KeyboardArrowRight />
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
+        disabled={page >= LastPage}
       >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+        <LastPageIcon />
       </IconButton>
     </Box>
   );
 }
 
-function createData(date: string, plan:string, status: string) {
-  return { date, plan, status };
+function createData(id:number, date: string, plan:string, status: string) {
+  return { id, date, plan, status };
 }
 
 const rows = [
-  createData('2022-10-11', 'git', 'RETROSPECTIVE_COMPLETE' ),
-  createData('2022-10-11', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'db 공부', 'RETROSPECTIVE_WAITING'),
-  createData('2022-10-11', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'git', 'RETROSPECTIVE_COMPLETE' ),
-  createData('2022-10-11', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'db 공부', 'RETROSPECTIVE_WAITING'),
-  createData('2022-10-11', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'git', 'RETROSPECTIVE_COMPLETE' ),
-  createData('2022-10-11', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'db 공부', 'RETROSPECTIVE_WAITING'),
-  createData('2022-10-11', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'git', 'RETROSPECTIVE_COMPLETE' ),
-  createData('2022-10-11', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
-  createData('2022-10-11', 'db 공부', 'RETROSPECTIVE_WAITING'),
-  createData('2022-10-11', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(1, '2022-10-1', 'git', 'RETROSPECTIVE_COMPLETE' ),
+  createData(2, '2022-10-2', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
+  createData(3, '2022-10-3', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(4, '2022-10-4', 'db 공부', 'RETROSPECTIVE_WAITING'),
+  createData(5, '2022-10-5', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(6, '2022-10-6', 'git', 'RETROSPECTIVE_COMPLETE' ),
+  createData(7, '2022-10-7', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
+  createData(8, '2022-10-8', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(9, '2022-10-9', 'db 공부', 'RETROSPECTIVE_WAITING'),
+  createData(10, '2022-10-10', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(11, '2022-10-11', 'git', 'RETROSPECTIVE_COMPLETE' ),
+  createData(12, '2022-10-12', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
+  createData(13, '2022-10-13', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(14, '2022-10-14', 'db 공부', 'RETROSPECTIVE_WAITING'),
+  createData(15, '2022-10-15', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(16, '2022-10-16', 'git', 'RETROSPECTIVE_COMPLETE' ),
+  createData(17, '2022-10-17', 'react 공부',  'RETROSPECTIVE_COMPLETE'),
+  createData(18, '2022-10-18', 'spring 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(19, '2022-10-19', 'db 공부', 'RETROSPECTIVE_WAITING'),
+  createData(20, '2022-10-20', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(21, '2022-10-21', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(22, '2022-10-22', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
+  createData(23, '2022-10-23', 'javascript 공부', 'RETROSPECTIVE_COMPLETE'),
 ];
 
 export default function ReservationsTable() {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const rowsPerPage = 10;
+
+  const startRow = page * rowsPerPage;
+  const endRow = page * rowsPerPage + rowsPerPage;
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
+  ) => setPage(newPage);
+  
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-      <TableHead>
-          <TableRow>
-            <StyledTableCell>계획 일자</StyledTableCell>
-            <StyledTableCell align="left">계획 내용</StyledTableCell>
-            <StyledTableCell align="right">회고 상세보기</StyledTableCell>
-            <StyledTableCell align="right">계획 상세보기</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map(({ date, plan, status }) => (
-            <TableRow key={date}>
-              <TableCell component="th" scope="row">
-                {date}
-              </TableCell>
-              <TableCell style={{ width: 1200 }} align="left">
-                {plan}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                <Button>
-                  {status === 'RETROSPECTIVE_COMPLETE' ? '회고제출' : '제출됨'}
-                </Button>
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                <Button>
-                  상세보기
-                </Button>
-              </TableCell>
+      <Table>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>계획 일자</StyledTableCell>
+              <StyledTableCell align="left">계획 내용</StyledTableCell>
+              <StyledTableCell align="right">회고 상세보기</StyledTableCell>
+              <StyledTableCell align="right">계획 상세보기</StyledTableCell>
             </TableRow>
-          ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+          </TableHead>
+
+          <TableBody>
+            {rows.slice(startRow, endRow).map(({ id, date, plan, status }) => (
+              <TableRow key={id}>
+                <TableCell>{date}</TableCell>
+                <TableCell align="left">{plan}</TableCell>
+                <TableCell align="right">
+                  <Button>
+                    {status === 'RETROSPECTIVE_COMPLETE' ? '회고제출' : '제출됨'}
+                  </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <Button>
+                    상세보기
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                labelRowsPerPage=""
+                rowsPerPageOptions={[10]}
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                ActionsComponent={TablePaginationActions}
+              />
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
         </TableFooter>
       </Table>
     </TableContainer>
