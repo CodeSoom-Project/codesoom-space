@@ -139,7 +139,7 @@ export default function ReservationsTable() {
       <TableHead>
           <TableRow>
             <StyledTableCell>계획 일자</StyledTableCell>
-            <StyledTableCell align="right">계획 내용</StyledTableCell>
+            <StyledTableCell align="left">계획 내용</StyledTableCell>
             <StyledTableCell align="right">회고 상세보기</StyledTableCell>
             <StyledTableCell align="right">계획 상세보기</StyledTableCell>
           </TableRow>
@@ -153,7 +153,7 @@ export default function ReservationsTable() {
               <TableCell component="th" scope="row">
                 {date}
               </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
+              <TableCell style={{ width: 1200 }} align="left">
                 {plan}
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
