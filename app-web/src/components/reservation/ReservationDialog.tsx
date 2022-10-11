@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import styled from '@emotion/styled';
 
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -18,13 +18,13 @@ const TextFieldWrap = styled.div({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-around',
-  margin: '10px',
+  padding:'1.5rem',
 });
 
 export default function ReservationDialog() {
   const [open, setOpen] = React.useState(true);
 
-  const [value, setValue] = React.useState<Dayjs | null>(null);
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs().add(1, 'day'));
 
   const handleClose = () => {
     setOpen(false);
@@ -35,7 +35,7 @@ export default function ReservationDialog() {
       open={open}
       onClose={handleClose}
       aria-labelledby="form-dialog-title">
-      <DialogTitle>예약하기</DialogTitle>
+      <DialogTitle>공부방 예약하기</DialogTitle>
 
       <TextFieldWrap>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -56,13 +56,13 @@ export default function ReservationDialog() {
           rows={3}
           placeholder="계획을 입력해주세요."
           fullWidth
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: '1rem' }}
         />
       </TextFieldWrap>
 
       <DialogActions>
         <Button variant="contained" size="small">
-        제출
+          제출
         </Button>
         <Button variant="outlined" size="small">
           수정
