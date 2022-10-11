@@ -47,6 +47,6 @@ public class ControllerErrorAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AlreadyReservedException.class)
     public String handleAlreadyReserved() {
-        return "이미 예약된 좌석입니다.";
+        return "방문 일자에 대한 예약 내역이 이미 존재합니다.";
     }
 }

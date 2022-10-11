@@ -99,7 +99,7 @@ public class DbInit {
                 .plan(plan1)
                 .build();
 
-        plan1.reserve(reservation1);
+        plan1.addReservation(reservation1);
 
         planRepo.save(plan1);
         reservationRepo.save(reservation1);

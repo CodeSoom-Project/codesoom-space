@@ -53,19 +53,6 @@ public class User {
         return passwordEncoder.matches(password, this.password);
     }
 
-    /**
-     * 예약 내역이 존재하면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
-     * 
-     * @return 예약 내역이 존재하면 true, 그렇지 않으면 false
-     */
-    public boolean status() {
-        if(this.seatReservation != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public void cancelReservation() {
         log.info("예약 취소");
 
