@@ -1,7 +1,10 @@
-import ReservationDialog from '../components/reservation/ReservationDialog';
+import RetrospectionModal from './RetrospectionModal';
 
 export default function Reservations() {
   return (
-    <ReservationDialog/>
+    <div>
+      <div>Reservations</div>
+      <RetrospectionModal />
+    </div>
   );
 }
