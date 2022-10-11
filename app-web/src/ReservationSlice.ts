@@ -14,15 +14,6 @@ export const reservationSlice = createSlice({
   name: 'reservation',
   initialState,
   reducers: {
-    changeReservationFields(state, { payload: { name, value } }) {
-      return {
-        ...state,
-        reservationFields: {
-          ...state.reservationFields,
-          [name]: value,
-        },
-      };
-    },
     changeReservationDetailsSeatNumber(state, { payload: { seatNumber } }) {
       return {
         ...state,
@@ -33,7 +24,6 @@ export const reservationSlice = createSlice({
 });
 
 export const {
-  changeReservationFields,
   changeReservationDetailsSeatNumber,
 } = reservationSlice.actions;
 

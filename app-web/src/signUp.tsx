@@ -12,6 +12,7 @@ export default function SignUp({ register, errors, handleSubmit, error, signUp, 
               password: data.password,
               name: data.name,
             });
+            console.log('회원가입동작');
           })
           }>
 
@@ -64,7 +65,9 @@ export default function SignUp({ register, errors, handleSubmit, error, signUp, 
 
               <tr>
                 <td></td>
-                <td><button type="submit">회원 가입하기</button></td>
+                <td>
+                  <button type="submit">회원 가입하기</button>
+                </td>
               </tr>
             </tbody>
           </table>
