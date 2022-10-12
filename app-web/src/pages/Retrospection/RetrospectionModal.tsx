@@ -13,9 +13,10 @@ const Wrap = styled.div({
 const ButtonWrap = styled.div({
   display: 'flex',
   justifyContent: 'flex-end',
-  //   '&button: nth - child(1)'{
-  //     marginRight: '1rem'
-  // }
+
+  'button: nth-child(1)': {
+    marginRight: '1rem',
+  },
 });
 
 const RetrospectionModal: React.FC = () => {
@@ -56,10 +57,10 @@ const RetrospectionModal: React.FC = () => {
           onChange={handleChange}
         />
         <ButtonWrap>
-          <Button variant='outlined'>
+          <Button variant='outlined' size='small'>
             취소
           </Button>
-          <Button variant='outlined'>
+          <Button variant='contained' size='small'>
             제출
           </Button>
         </ButtonWrap>
