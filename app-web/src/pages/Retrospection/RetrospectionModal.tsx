@@ -46,17 +46,17 @@ const RetrospectionModal: React.FC = () => {
           <CloseIcon />
         </IconButton>
         <TextField
+          inputProps={{ maxlength: characterLimit, minLength: 100 }}
           label='회고'
+          placeholder='회고를 입력해주세요.'
+          helperText={`${values.length} /${characterLimit}`}
+          value={values}
+          onChange={handleChange}
+          style={{ margin: '1rem 3rem 1rem 0' }}
           variant='outlined'
+          fullWidth
           multiline
           rows={3}
-          placeholder='회고를 입력해주세요.'
-          fullWidth
-          style={{ margin: '1rem 3rem 1rem 0' }}
-          inputProps={{ maxlength: characterLimit, minLength: 100 }}
-          value={values}
-          helperText={`${values.length} /${characterLimit}`}
-          onChange={handleChange}
         />
         <ButtonWrap>
           <Button variant='outlined' size='small'>
