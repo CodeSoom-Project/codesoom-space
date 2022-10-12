@@ -1,5 +1,7 @@
 package com.codesoom.myseat.domain;
 
+import com.codesoom.myseat.converters.ReservationStatusConverter;
+import com.codesoom.myseat.enums.ReservationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +22,7 @@ import static javax.persistence.CascadeType.PERSIST;
 @NoArgsConstructor
 @Slf4j
 public class SeatReservation {
+
     @Id
     @GeneratedValue
     @Column(name="seatReservation_id")
@@ -33,4 +36,16 @@ public class SeatReservation {
 
     @OneToOne(mappedBy = "seatReservation", cascade = PERSIST)
     private Plan plan;
+
+    @Convert(converter = ReservationStatusConverter.class)
+    @Column(name = "status")
+    private ReservationStatus status;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.status == null) {
+            this.status = ReservationStatus.RESERVED;
+        }
+    }
+
 }
