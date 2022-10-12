@@ -7,11 +7,10 @@ on:
     branches: [ "main" ]
 
 jobs: 
-  test:
+  build:
     runs-on: ubuntu-22.04
     env:
-          working-directory: ./app-web
-
+      working-directory: ./app-web
     steps:
     - uses: actions/checkout@v3
     - name:  Setup node.js 16.17.1
@@ -20,15 +19,15 @@ jobs:
         node-version: 16.17.1
         cache: 'npm'
         cache-dependency-path: app-web/package-lock.json
-    - name: ci    
-      working-directory: ${{env.working-directory}}
-      run: npm ci
-    - name: lint
-      working-directory: ${{env.working-directory}}
-      run: npm run lint
-    - name: test
-      working-directory: ${{env.working-directory}}
-      run: npm run test
     - name: build
       working-directory: ${{env.working-directory}}
       run: npm run build
+    - name: ci    
+      working-directory: ${{env.working-directory}}
+      run: npm ci
+    - name: test
+      working-directory: ${{env.working-directory}}
+      run: npm run test
+    - name: lint
+      working-directory: ${{env.working-directory}}
+      run: npm run lint
