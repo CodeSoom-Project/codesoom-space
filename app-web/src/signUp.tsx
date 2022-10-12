@@ -1,5 +1,3 @@
-import './index.css';
-
 export default function SignUp({ register, errors, handleSubmit, error, signUp, watch, setError }:
 { register: any, errors: any, handleSubmit: any, error: any, signUp: any, watch: any, setError: any }) {
   return (
@@ -58,9 +56,9 @@ export default function SignUp({ register, errors, handleSubmit, error, signUp, 
                 <td></td>
                 <td>
                   <p>{errors.passwordMatch?.message}</p>
-                    {errors.name?.type === 'required' && '이름을 입력 해 주세요'}
-                    {errors.email?.type === 'required' && '이메일을 입력 해 주세요'}
-                    {errors.password?.type === 'required' && '비밀번호를 입력 해 주세요'}</td>
+                  {errors.name?.type === 'required' && '이름을 입력 해 주세요'}
+                  {errors.email?.type === 'required' && '이메일을 입력 해 주세요'}
+                  {errors.password?.type === 'required' && '비밀번호를 입력 해 주세요'}</td>
               </tr>
 
               <tr>
