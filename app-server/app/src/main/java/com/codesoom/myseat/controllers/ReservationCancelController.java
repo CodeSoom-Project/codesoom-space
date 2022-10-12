@@ -3,7 +3,7 @@ package com.codesoom.myseat.controllers;
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.security.UserAuthentication;
-import com.codesoom.myseat.services.SeatReservationCancelService;
+import com.codesoom.myseat.services.ReservationCancelService;
 import com.codesoom.myseat.services.SeatService;
 import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/seat-reservation")
 @CrossOrigin
 @Slf4j
-public class SeatReservationCancelController {
-    private final SeatReservationCancelService cancelService;
+public class ReservationCancelController {
+    private final ReservationCancelService cancelService;
     private final UserService userService;
     private final SeatService seatService;
 
-    public SeatReservationCancelController(
-            SeatReservationCancelService cancelService,
+    public ReservationCancelController(
+            ReservationCancelService cancelService,
             UserService userService, 
             SeatService seatService
     ) {

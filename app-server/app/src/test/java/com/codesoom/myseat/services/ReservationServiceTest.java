@@ -1,11 +1,11 @@
 package com.codesoom.myseat.services;
 
-import com.codesoom.myseat.domain.SeatReservation;
+import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.enums.ReservationStatus;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.repositories.PlanRepository;
-import com.codesoom.myseat.repositories.SeatReservationRepository;
+import com.codesoom.myseat.repositories.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,11 +16,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 
-class SeatReservationServiceTest {
-    private SeatReservationService service;
+class ReservationServiceTest {
+    private ReservationService service;
 
     @Mock
-    private SeatReservationRepository reservationRepo;
+    private ReservationRepository reservationRepo;
 
     @Mock
     private PlanRepository planRepo;
@@ -29,7 +29,7 @@ class SeatReservationServiceTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         
-        service = new SeatReservationService(planRepo, reservationRepo);
+        service = new ReservationService(planRepo, reservationRepo);
     }
     
     @Test
@@ -42,7 +42,7 @@ class SeatReservationServiceTest {
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
 
-        SeatReservation reservation 
+        Reservation reservation 
                 = service.createReservation(mockUser, "2022-10-11", "책읽기, 코테 풀기");
         
         assertThat(reservation.getUser().getEmail()).isEqualTo("soo@email.com");

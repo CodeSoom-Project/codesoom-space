@@ -1,6 +1,6 @@
 package com.codesoom.myseat.repositories;
 
-import com.codesoom.myseat.domain.SeatReservation;
+import com.codesoom.myseat.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -8,23 +8,23 @@ import java.util.List;
 /**
  * 좌석 예약 레포지토리
  */
-public interface SeatReservationRepository
-        extends JpaRepository<SeatReservation, Long> {
+public interface ReservationRepository
+        extends JpaRepository<Reservation, Long> {
     /**
      * 
      * @param s must not be {@literal null}.
      * @return
      */
-    SeatReservation save(SeatReservation s);
+    Reservation save(Reservation s);
 
     /**
      * 좌석 예약 정보를 삭제한다.
      *
      * @param s must not be {@literal null}. 삭제할 좌석 예약 정보
      */
-    void delete(SeatReservation s);
+    void delete(Reservation s);
 
-    List<SeatReservation> findAll();
+    List<Reservation> findAll();
 
     /**
      * 주어진 방문 일자와 회원 id로 예약 내역 검색에 성공하면 true, 그렇지 않으면 false를 반환합니다.

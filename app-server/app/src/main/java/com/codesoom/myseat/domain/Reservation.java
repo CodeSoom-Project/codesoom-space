@@ -22,11 +22,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @Slf4j
-public class SeatReservation {
+public class Reservation {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name="seatReservation_id")
+    @Column(name="reservation_id")
     private Long id;
 
     private String date;
@@ -35,7 +35,7 @@ public class SeatReservation {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(mappedBy = "seatReservation", cascade = PERSIST)
+    @OneToOne(mappedBy = "reservation", cascade = PERSIST)
     private Plan plan;
 
     @Convert(converter = ReservationStatusConverter.class)

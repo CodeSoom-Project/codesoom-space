@@ -1,11 +1,11 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Plan;
-import com.codesoom.myseat.domain.SeatReservation;
+import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.repositories.PlanRepository;
-import com.codesoom.myseat.repositories.SeatReservationRepository;
+import com.codesoom.myseat.repositories.ReservationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +16,13 @@ import javax.transaction.Transactional;
  */
 @Service
 @Slf4j
-public class SeatReservationService {
+public class ReservationService {
     private final PlanRepository planRepo;
-    private final SeatReservationRepository reservationRepo;
+    private final ReservationRepository reservationRepo;
 
-    public SeatReservationService(
+    public ReservationService(
             PlanRepository planRepo, 
-            SeatReservationRepository reservationRepo
+            ReservationRepository reservationRepo
     ) {
         this.planRepo = planRepo;
         this.reservationRepo = reservationRepo;
@@ -38,7 +38,7 @@ public class SeatReservationService {
      * @throws AlreadyReservedException 방문 일자에 대한 예약 내역이 이미 존재하면 던집니다.
      */
     @Transactional
-    public SeatReservation createReservation(
+    public Reservation createReservation(
             User user,
             String date,
             String content
@@ -51,7 +51,7 @@ public class SeatReservationService {
                     .content(content)
                     .build();
 
-        SeatReservation reservation = SeatReservation.builder()
+        Reservation reservation = Reservation.builder()
                 .date(date)
                 .user(user)
                 .plan(plan)

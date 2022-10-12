@@ -3,7 +3,7 @@ package com.codesoom.myseat.controllers;
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.services.AuthenticationService;
-import com.codesoom.myseat.services.SeatReservationCancelService;
+import com.codesoom.myseat.services.ReservationCancelService;
 import com.codesoom.myseat.services.SeatService;
 import com.codesoom.myseat.services.UserService;
 import org.junit.jupiter.api.DisplayName;
@@ -25,12 +25,12 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SeatReservationCancelController.class)
+@WebMvcTest(ReservationCancelController.class)
 @AutoConfigureRestDocs(
         uriScheme = "https", 
         uriHost = "api.codesoom-myseat.site"
 )
-class SeatReservationCancelControllerTest {
+class ReservationCancelControllerTest {
     private static final String ACCESS_TOKEN 
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
@@ -50,7 +50,7 @@ class SeatReservationCancelControllerTest {
     private AuthenticationService authService;
 
     @MockBean
-    private SeatReservationCancelService cancelService;
+    private ReservationCancelService cancelService;
 
     @MockBean
     private UserService userService;

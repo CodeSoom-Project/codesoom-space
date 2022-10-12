@@ -29,17 +29,17 @@ public class Plan {
     private String content;
 
     @OneToOne(cascade = PERSIST)
-    @JoinColumn(name = "seatReservation_id")
-    private SeatReservation seatReservation;
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 
     /**
      * 예약을 추가합니다.
      * 
-     * @param seatReservation 예약
+     * @param reservation 예약
      */
     public void addReservation(
-            SeatReservation seatReservation
+            Reservation reservation
     ) {
-        this.seatReservation = seatReservation;
+        this.reservation = reservation;
     }
 }

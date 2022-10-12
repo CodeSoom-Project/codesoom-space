@@ -2,8 +2,8 @@ package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.domain.SeatReservation;
-import com.codesoom.myseat.repositories.SeatReservationRepository;
+import com.codesoom.myseat.domain.Reservation;
+import com.codesoom.myseat.repositories.ReservationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,14 +17,14 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class SeatReservationCancelService {
+public class ReservationCancelService {
     private static final SimpleDateFormat dateFormat
             = new SimpleDateFormat("HH:mm:ss");
 
-    private final SeatReservationRepository reservationRepo;
+    private final ReservationRepository reservationRepo;
 
-    public SeatReservationCancelService(
-            SeatReservationRepository reservationRepo
+    public ReservationCancelService(
+            ReservationRepository reservationRepo
     ) {
         this.reservationRepo = reservationRepo;
     }
@@ -39,7 +39,7 @@ public class SeatReservationCancelService {
             User user,
             Seat seat
     ) {
-        SeatReservation reservation = user.getSeatReservation();
+        Reservation reservation = user.getReservation();
         user.cancelReservation();
         reservationRepo.delete(reservation);
         seat.cancelReservation();
@@ -52,8 +52,8 @@ public class SeatReservationCancelService {
     public void reset() {
         log.info("현재 시간: {}", dateFormat.format(new Date()));
         
-        List<SeatReservation> reservations = reservationRepo.findAll();
-        for(SeatReservation s : reservations) {
+        List<Reservation> reservations = reservationRepo.findAll();
+        for(Reservation s : reservations) {
             s.getUser().cancelReservation();
             Seat seat = s.getUser().getSeat();
             
