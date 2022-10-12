@@ -21,19 +21,18 @@ const TextFieldWrap = styled.div({
   padding: '1.5rem',
 });
 
-export default function ReservationDialog() {
-  const [open, setOpen] = React.useState(true);
+interface PropsType {
+  open:boolean,
+  onClose: React.ReactEventHandler
+}
 
+export default function ReservationDialog({ open, onClose }: PropsType) {
   const [value, setValue] = React.useState<Dayjs | null>(dayjs().add(1, 'day'));
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
       <DialogTitle>공부방 예약하기</DialogTitle>
