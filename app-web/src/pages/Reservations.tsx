@@ -5,6 +5,8 @@ import { Button } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../hooks';
 
+import { get } from '../utils';
+
 import { toggleReservationsModal } from '../redux/reservationsSlice';
 
 import ReservationDialog from '../components/reservation/ReservationDialog';
@@ -38,7 +40,7 @@ const Title = styled.h1({
 
 export default function Reservations() {
   const dispatch = useAppDispatch();
-  const { isOpenReservationsModal } = useAppSelector((store) => store.reservations);
+  const { isOpenReservationsModal } = useAppSelector(get('reservations'));
 
   const onClicktoggleReservationsModal = () => {
     dispatch(toggleReservationsModal());
