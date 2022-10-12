@@ -1,6 +1,5 @@
 package com.codesoom.myseat.services;
 
-import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
@@ -18,18 +17,12 @@ import java.util.Optional;
 public class RetrospectiveService {
 
     private RetrospectiveRepository retrospectiveRepository;
-    private Retrospective retrospective;
+
     private SeatReservationRepository seatReservationRepository;
 
     public void createRetrospective(Long id, RetrospectiveRequest request) {
+        Retrospective retrospective = new Retrospective();
         Optional<SeatReservation> seatReservation = seatReservationRepository.findById(id);
-
-        retrospective = Retrospective.builder()
-                .plan(Plan.builder()
-                        .seatReservation(seatReservation.get())
-                        .build())
-                .retrospective(request.getRetrospective())
-                .build();
 
         retrospectiveRepository.save(retrospective);
     }

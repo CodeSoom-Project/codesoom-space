@@ -53,35 +53,9 @@ class RetrospectiveControllerTest {
 
     private SeatReservation seatReservation;
 
-    private Plan plan;
-
-    private User user;
 
     @BeforeEach
     private void setUp() {
-        user = User.builder()
-                .id(ID)
-                .name(NAME)
-                .email(EMAIL)
-                .password(ENCODED_PASSWORD)
-                .build();
-
-        seatReservation = seatReservation.builder()
-                .id(SEAT_ID)
-                .build();
-
-        retrospective = Retrospective.builder()
-                        .retrospective("잘했다.")
-                        .build();
-
-        plan = Plan.builder()
-                .seatReservation(seatReservation)
-                .id(1L)
-                .retrospective(retrospective)
-                .build();
-
-        given(authService.parseToken(ACCESS_TOKEN))
-                .willReturn(EMAIL);
     }
 
 
@@ -89,7 +63,7 @@ class RetrospectiveControllerTest {
     void retrospective_save() throws Exception {
         RetrospectiveRequest request = new RetrospectiveRequest("잘했다");
 
-        Long id = plan.getSeatReservation().getId();
+        Long id = 1L;
 
         mockMvc.perform(post("/reservations/{id}/retrospectives", id)
                         .contentType(MediaType.APPLICATION_JSON)
