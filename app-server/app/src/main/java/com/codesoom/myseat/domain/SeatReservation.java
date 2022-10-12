@@ -44,7 +44,7 @@ public class SeatReservation {
     @PrePersist
     public void prePersist() {
         if (this.status == null) {
-            this.status = ReservationStatus.RESERVED;
+            this.status = ReservationStatus.RETROSPECTIVE_WAITING;
         }
     }
 
