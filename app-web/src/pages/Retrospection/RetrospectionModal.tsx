@@ -1,22 +1,22 @@
+import { useState } from 'react';
+
 import styled from '@emotion/styled';
 import { Button, Dialog, IconButton, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
 
-const Wrap = styled.div`
-  padding:3rem;
-  display: flex;
-  flex-direction: column;
-`;
+const Wrap = styled.div({
+  display: 'flex',
+  padding: '3rem',
+  flexDirection: 'column',
+});
 
-const ButtonWrap = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  button:nth-child(1){
-      margin-right:1rem
-  }
-`;
+const ButtonWrap = styled.div({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  //   '&button: nth - child(1)'{
+  //     marginRight: '1rem'
+  // }
+});
 
 const RetrospectionModal: React.FC = () => {
   const characterLimit = 500;
@@ -52,7 +52,7 @@ const RetrospectionModal: React.FC = () => {
           style={{ margin: '1rem 3rem 1rem 0' }}
           inputProps={{ maxlength: characterLimit, minLength: 100 }}
           value={values}
-          helperText={`${values.length}/${characterLimit}`}
+          helperText={`${values.length} /${characterLimit}`}
           onChange={handleChange}
         />
         <ButtonWrap>
@@ -63,8 +63,8 @@ const RetrospectionModal: React.FC = () => {
             제출
           </Button>
         </ButtonWrap>
-      </Wrap>
-    </Dialog>
+      </Wrap >
+    </Dialog >
   );
 };
 
