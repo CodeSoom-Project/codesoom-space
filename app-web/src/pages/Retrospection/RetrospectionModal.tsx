@@ -40,17 +40,17 @@ const RetrospectionModal: React.FC = () => {
             justifyContent: 'flex-end',
             padding: 0,
           }}
-          color="primary"
-          aria-label="close dialog"
-          component="label">
+          color='primary'
+          aria-label='close dialog'
+          component='label'>
           <CloseIcon />
         </IconButton>
         <TextField
-          label="회고"
-          variant="outlined"
+          label='회고'
+          variant='outlined'
           multiline
           rows={3}
-          placeholder="회고를 입력해주세요."
+          placeholder='회고를 입력해주세요.'
           fullWidth
           style={{ margin: '1rem 3rem 1rem 0' }}
           inputProps={{ maxlength: characterLimit, minLength: 100 }}
