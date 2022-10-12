@@ -22,11 +22,11 @@ const TextFieldWrap = styled.div({
 });
 
 interface PropsType {
-  open:boolean,
-  onClose: React.ReactEventHandler
+  open : boolean,
+  onClose : React.ReactEventHandler
 }
 
-export default function ReservationDialog({ open, onClose }: PropsType) {
+export default function ReservationDialog({ open, onClose } : PropsType) {
   const [value, setValue] = React.useState<Dayjs | null>(dayjs().add(1, 'day'));
 
   return (
