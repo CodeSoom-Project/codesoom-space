@@ -76,6 +76,7 @@ class SeatReservationServiceTest {
                         .id(SEAT_RESERVATION_ID)
                         .date(DATE)
                         .user(user)
+                        .status(ReservationStatus.RESERVED)
                         .build());
 
         // when
