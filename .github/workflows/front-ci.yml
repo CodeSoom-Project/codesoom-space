@@ -2,32 +2,30 @@ name: FRONT CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
-jobs: 
+jobs:
   build:
     runs-on: ubuntu-22.04
-    env:
-      working-directory: ./app-web
+    defaults:
+      run:
+        working-directory: ./app-web
+
     steps:
-    - uses: actions/checkout@v3
-    - name:  Setup node.js 16.17.1
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.17.1
-        cache: 'npm'
-        cache-dependency-path: app-web/package-lock.json
-    - name: build
-      working-directory: ${{env.working-directory}}
-      run: npm run build
-    - name: ci    
-      working-directory: ${{env.working-directory}}
-      run: npm ci
-    - name: test
-      working-directory: ${{env.working-directory}}
-      run: npm run test
-    - name: lint
-      working-directory: ${{env.working-directory}}
-      run: npm run lint
+      - uses: actions/checkout@v3
+      - name: Setup node.js 16.17.1
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.17.1
+          cache: "npm"
+          cache-dependency-path: app-web/package-lock.json
+      - name: Install dependecies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm run test
+      - name: Run lint
+        run: npm run lint
