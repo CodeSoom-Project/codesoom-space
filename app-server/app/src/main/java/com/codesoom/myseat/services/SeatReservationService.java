@@ -7,7 +7,10 @@ import com.codesoom.myseat.repositories.PlanRepository;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.repositories.SeatReservationRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 /**
  * 좌석 예약 서비스
@@ -35,6 +38,7 @@ public class SeatReservationService {
      * @return 생성된 예약
      * @throws AlreadyReservedException 방문 일자에 대한 예약 내역이 이미 존재하면 던집니다.
      */
+    @Transactional
     public SeatReservation createReservation(
             User user,
             String date,
