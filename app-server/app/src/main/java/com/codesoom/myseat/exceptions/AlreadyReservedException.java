@@ -1,7 +1,7 @@
 package com.codesoom.myseat.exceptions;
 
 /**
- * 방문 일자에 대한 예약 내역이 이미 존재하면 던집니다.
+ * 이미 예약했던 방문 일자에 예약을 시도할 때 발생하는 예외입니다.
  */
 public class AlreadyReservedException extends RuntimeException {
     public AlreadyReservedException() {
