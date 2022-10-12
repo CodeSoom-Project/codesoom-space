@@ -18,7 +18,7 @@ const TextFieldWrap = styled.div({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-around',
-  padding:'1.5rem',
+  padding: '1.5rem',
 });
 
 export default function ReservationDialog() {
@@ -34,7 +34,8 @@ export default function ReservationDialog() {
     <Dialog
       open={open}
       onClose={handleClose}
-      aria-labelledby="form-dialog-title">
+      aria-labelledby="form-dialog-title"
+    >
       <DialogTitle>공부방 예약하기</DialogTitle>
 
       <TextFieldWrap>
