@@ -9,32 +9,38 @@ import com.codesoom.myseat.domain.*;
 import com.codesoom.myseat.repositories.PlanRepository;
 import com.codesoom.myseat.repositories.SeatReservationRepository;
 import com.codesoom.myseat.repositories.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
 class SeatReservationServiceTest {
-    @Autowired
     private SeatReservationService service;
 
-    @MockBean
+    @Mock
     private SeatReservationRepository reservationRepo;
 
-    @MockBean
+    @Mock
     private PlanRepository planRepo;
     
-    @MockBean
-    private UserRepository userRepo;
-
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+        
+        service = new SeatReservationService(planRepo, reservationRepo);
+    }
+    
     @Test
     @DisplayName("createReservation 메서드는 SeatReservation을 반환한다")
     void createReservation_returns_SeatReservation() {
         User mockUser = User.builder()
+                .id(1L)
                 .name("김철수")
                 .email("soo@email.com")
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
