@@ -76,7 +76,7 @@ class SeatReservationServiceTest {
                         .id(SEAT_RESERVATION_ID)
                         .date(DATE)
                         .user(user)
-                        .status(ReservationStatus.RESERVED)
+                        .status(ReservationStatus.RETROSPECTIVE_WAITING)
                         .build());
 
         // when
@@ -89,6 +89,6 @@ class SeatReservationServiceTest {
         assertThat(seatReservation.getUser().getName()).isEqualTo(NAME);
         assertThat(seatReservation.getUser().getEmail()).isEqualTo(EMAIL);
         assertThat(seatReservation.getUser().getPassword()).isEqualTo(ENCODED_PASSWORD);
-        assertThat(seatReservation.getStatus()).isEqualTo(ReservationStatus.RESERVED);
+        assertThat(seatReservation.getStatus()).isEqualTo(ReservationStatus.RETROSPECTIVE_WAITING);
     }
 }
