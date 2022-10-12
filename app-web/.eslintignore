@@ -3,3 +3,6 @@ dist
 babel.config.cjs
 jest.config.ts
 jest.setup.js
+fileMocks.js
+styleMock.js
+vite.config.ts

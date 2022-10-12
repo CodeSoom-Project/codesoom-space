@@ -30,15 +30,15 @@ export const seatReservation = async ({ seatNumber }:{ seatNumber:number }) => {
   try {
     return await request({ url: `/seat-reservation/${seatNumber}`, method: 'post' });
   } catch (err) {
-    throw window.alert(err.message);
+    alert(err.message);
   }
 };
 
 export const cancelReservation = async ({ seatNumber }: { seatNumber: number }) => {
   try {
     return await request({ url: `/seat-reservation/${seatNumber}`, method: 'delete' });
-  }  catch (err) {
-    throw window.alert(err.message);
+  } catch (err) {
+    alert(err.message);
   }
 };
 
@@ -47,10 +47,10 @@ export const login = async ({ email, password }: { email: string, password: stri
     .post('/login', {
       email,
       password,
-    }).then((res)=> {
+    }).then((res) => {
       const accessToken = res.data.token;
       saveItem('accessToken', accessToken);
-    }).catch((error)=> {
+    }).catch((error) => {
       window.alert(error.message);
     });
 };
@@ -65,7 +65,7 @@ export const signUp = async ({
       email,
       password,
       name,
-    }).catch((error)=> {
+    }).catch((error) => {
       window.alert(error.message);
     });
 };
