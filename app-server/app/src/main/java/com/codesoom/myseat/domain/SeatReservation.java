@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.PERSIST;
+
 /**
  * 좌석 예약 엔티티
  */
@@ -28,4 +30,7 @@ public class SeatReservation {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToOne(mappedBy = "seatReservation", cascade = PERSIST)
+    private Plan plan;
 }
