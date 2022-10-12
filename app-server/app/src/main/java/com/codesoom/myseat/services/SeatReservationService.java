@@ -69,14 +69,7 @@ public class SeatReservationService {
      * @param id 회원 id
      * @return 중복된 예약이면 true, 그렇지 않으면 false
      */
-    public Boolean isDuplicateReservation(String date, Long id) {
-        SeatReservation duplicateReservation
-                = reservationRepo.findReservationByDateAndUserId(date, id);
-        
-        if(duplicateReservation != null) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isDuplicateReservation(String date, Long id) {
+        return reservationRepo.existsByDateAndUser_Id(date, id);
     }
 }

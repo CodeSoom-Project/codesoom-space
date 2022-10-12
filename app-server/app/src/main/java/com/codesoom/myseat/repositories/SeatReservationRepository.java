@@ -2,8 +2,6 @@ package com.codesoom.myseat.repositories;
 
 import com.codesoom.myseat.domain.SeatReservation;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -29,12 +27,11 @@ public interface SeatReservationRepository
     List<SeatReservation> findAll();
 
     /**
-     * 방문 일자와 회원 아이디가 일치하는 예약 내역을 반환합니다.
+     * 주어진 방문 일자와 회원 id로 예약 내역 검색에 성공하면 true, 그렇지 않으면 false를 반환합니다.
      * 
      * @param date 방문 일자
-     * @param id 회원 아이디
-     * @return 예약 내역
+     * @param id 회원 id
+     * @return 주어진 방문 일자와 회원 id로 예약 내역 검색에 성공하면 true, 그렇지 않으면 false
      */
-    @Query("SELECT s FROM SeatReservation s WHERE s.date = :date and s.user.id = :userid")
-    SeatReservation findReservationByDateAndUserId(@Param("date") String date, @Param("userid") Long id);
+    boolean existsByDateAndUser_Id(String date, Long id);
 }

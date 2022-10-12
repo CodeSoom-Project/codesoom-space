@@ -6,19 +6,18 @@ import com.codesoom.myseat.enums.ReservationStatus;
 import com.codesoom.myseat.repositories.SeatRepository;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.domain.*;
+import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.repositories.PlanRepository;
 import com.codesoom.myseat.repositories.SeatReservationRepository;
-import com.codesoom.myseat.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 
 class SeatReservationServiceTest {
     private SeatReservationService service;
@@ -53,5 +52,22 @@ class SeatReservationServiceTest {
         assertThat(reservation.getDate()).isEqualTo("2022-10-11");
         assertThat(reservation.getPlan().getPlan()).isEqualTo("책읽기, 코테 풀기");
         assertThat(reservation.getStatus()).isEqualTo(ReservationStatus.RETROSPECTIVE_WAITING);
+    }
+
+    @Test
+    @DisplayName("이미 예약 했던 방문 일자가 주어지면 AlreadyReservedException를 던진다")
+    void If_date_that_already_reserved_given_It_throws_AlreadyReservedException() {
+        User mockUser = User.builder()
+                .id(1L)
+                .name("김철수")
+                .email("soo@email.com")
+                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
+                .build();
+
+        given(reservationRepo.existsByDateAndUser_Id("2022-10-11", 1L))
+                .willReturn(true);
+         
+        assertThatThrownBy(() -> service.createReservation(mockUser, "2022-10-11", "책읽기, 코테 풀기"))
+                .isInstanceOf(AlreadyReservedException.class);
     }
 }
