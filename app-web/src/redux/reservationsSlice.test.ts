@@ -19,6 +19,3 @@ describe('toggleRetrospectModal', () => {
     expect(state.isOpenRetrospectModal).toBe(!initialState.isOpenRetrospectModal);
   });
 });
-
-
-
