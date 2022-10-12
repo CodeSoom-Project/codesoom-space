@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SeatReservationRequest {
+public class ReservationRequest {
     private String date;
     
     private String content;

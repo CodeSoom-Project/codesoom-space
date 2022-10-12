@@ -2,7 +2,7 @@ package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.repositories.SeatReservationRepository;
+import com.codesoom.myseat.repositories.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-class SeatReservationCancelServiceTest {
+class ReservationCancelServiceTest {
     private static final Long USER_ID = 1L;
     private static final String NAME = "테스터";
     private static final String EMAIL = "test@example.com";
@@ -19,14 +19,14 @@ class SeatReservationCancelServiceTest {
     private static final Long SEAT_ID = 1L;
     private static final int SEAT_NUMBER = 1;
 
-    private SeatReservationCancelService service;
+    private ReservationCancelService service;
 
-    private final SeatReservationRepository reservationRepo
-            = mock(SeatReservationRepository.class);
+    private final ReservationRepository reservationRepo
+            = mock(ReservationRepository.class);
 
     @BeforeEach
     void setUp() {
-        service = new SeatReservationCancelService(
+        service = new ReservationCancelService(
                 reservationRepo
         );
     }

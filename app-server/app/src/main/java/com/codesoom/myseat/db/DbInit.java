@@ -11,14 +11,14 @@ import java.util.ArrayList;
 public class DbInit {
     private final UserRepository userRepo;
     private final RoleRepository roleRepo;
-    private final SeatReservationRepository reservationRepo;
+    private final ReservationRepository reservationRepo;
     private final PlanRepository planRepo;
     private final SeatRepository seatRepo;
 
     public DbInit(
             UserRepository userRepo, 
             RoleRepository roleRepo, 
-            SeatReservationRepository reservationRepo, 
+            ReservationRepository reservationRepo, 
             PlanRepository planRepo,
             SeatRepository seatRepo
     ) {
@@ -93,7 +93,7 @@ public class DbInit {
                 .content("책읽기, 코테풀기")
                 .build();
 
-        SeatReservation reservation1 = SeatReservation.builder()
+        Reservation reservation1 = Reservation.builder()
                 .date("2022-10-11")
                 .user(user1)
                 .plan(plan1)

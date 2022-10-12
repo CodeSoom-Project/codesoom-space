@@ -1,10 +1,10 @@
 package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.dto.SeatReservationRequest;
+import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.services.AuthenticationService;
-import com.codesoom.myseat.services.SeatReservationService;
+import com.codesoom.myseat.services.ReservationService;
 import com.codesoom.myseat.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,8 +24,8 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(SeatReservationController.class)
-class SeatReservationControllerTest {
+@WebMvcTest(ReservationController.class)
+class ReservationControllerTest {
     private static final String ACCESS_TOKEN 
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
@@ -39,7 +39,7 @@ class SeatReservationControllerTest {
     private UserService userService;
     
     @MockBean
-    private SeatReservationService reservationService;
+    private ReservationService reservationService;
 
     @Test
     @DisplayName("POST /reservations 요청 시 상태코드 204를 응답한다")
@@ -57,7 +57,7 @@ class SeatReservationControllerTest {
         given(userService.findUser("soo@email.com"))
                 .willReturn(mockUser);
 
-        SeatReservationRequest request = SeatReservationRequest.builder()
+        ReservationRequest request = ReservationRequest.builder()
                 .date("2022-10-11")
                 .content("책읽기, 코테풀기")
                 .build();
@@ -89,7 +89,7 @@ class SeatReservationControllerTest {
         given(reservationService.createReservation(mockUser, "2022-10-11", "책읽기, 코테풀기"))
                 .willThrow(AlreadyReservedException.class);
 
-        SeatReservationRequest request = SeatReservationRequest.builder()
+        ReservationRequest request = ReservationRequest.builder()
                 .date("2022-10-11")
                 .content("책읽기, 코테풀기")
                 .build();

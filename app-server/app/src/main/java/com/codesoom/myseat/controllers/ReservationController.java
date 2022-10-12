@@ -1,10 +1,10 @@
 package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.dto.SeatReservationRequest;
+import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.security.UserAuthentication;
-import com.codesoom.myseat.services.SeatReservationService;
+import com.codesoom.myseat.services.ReservationService;
 import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reservations")
 @CrossOrigin
 @Slf4j
-public class SeatReservationController {
-    private final SeatReservationService reservationService;
+public class ReservationController {
+    private final ReservationService reservationService;
     private final UserService userService;
 
-    public SeatReservationController(
-            SeatReservationService reservationService, 
+    public ReservationController(
+            ReservationService reservationService, 
             UserService userService
     ) {
         this.reservationService = reservationService;
@@ -41,7 +41,7 @@ public class SeatReservationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated()")
     public void reserve(
-            @RequestBody SeatReservationRequest request
+            @RequestBody ReservationRequest request
     ) {
         String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
         User user = userService.findUser(email);
