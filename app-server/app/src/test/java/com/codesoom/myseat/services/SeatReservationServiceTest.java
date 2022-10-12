@@ -2,6 +2,7 @@ package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.enums.ReservationStatus;
 import com.codesoom.myseat.repositories.SeatRepository;
 import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.repositories.SeatReservationRepository;
@@ -75,6 +76,7 @@ class SeatReservationServiceTest {
                         .id(SEAT_RESERVATION_ID)
                         .date(DATE)
                         .user(user)
+                        .status(ReservationStatus.RETROSPECTIVE_WAITING)
                         .build());
 
         // when
@@ -87,5 +89,6 @@ class SeatReservationServiceTest {
         assertThat(seatReservation.getUser().getName()).isEqualTo(NAME);
         assertThat(seatReservation.getUser().getEmail()).isEqualTo(EMAIL);
         assertThat(seatReservation.getUser().getPassword()).isEqualTo(ENCODED_PASSWORD);
+        assertThat(seatReservation.getStatus()).isEqualTo(ReservationStatus.RETROSPECTIVE_WAITING);
     }
 }
