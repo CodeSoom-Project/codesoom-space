@@ -1,12 +1,10 @@
 package com.codesoom.myseat.controllers;
 
-import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.exceptions.AlreadyHaveSeatException;
+import com.codesoom.myseat.dto.SeatReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.SeatReservationService;
-import com.codesoom.myseat.services.SeatService;
 import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,48 +16,39 @@ import org.springframework.web.bind.annotation.*;
  * 좌석 예약 요청 컨트롤러
  */
 @RestController
-@RequestMapping("/seat-reservation")
+@RequestMapping("/reservations")
 @CrossOrigin
 @Slf4j
 public class SeatReservationController {
     private final SeatReservationService reservationService;
     private final UserService userService;
-    private final SeatService seatService;
 
     public SeatReservationController(
             SeatReservationService reservationService, 
-            UserService userService,
-            SeatService seatService
+            UserService userService
     ) {
         this.reservationService = reservationService;
         this.userService = userService;
-        this.seatService = seatService;
     }
 
     /**
-     * 좌석을 예약한다.
-     * @param number
+     * 좌석을 예약하고 상태 코드 204를 응답합니다.
+     * 
+     * @param request 예약 폼에 입력된 데이터
+     * @throws AlreadyReservedException 방문 일자에 대한 예약 내역이 이미 존재하면 던집니다.
      */
-    @PostMapping("{number}")
+    @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated()")
     public void reserve(
-            @PathVariable int number
+            @RequestBody SeatReservationRequest request
     ) {
-        log.info("number: " + number);
         String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
         User user = userService.findUser(email);
 
-        if(user.status()) {
-            throw new AlreadyHaveSeatException();
-        }
+        String date = request.getDate();
+        String content = request.getContent();
 
-        Seat seat = seatService.findSeat(number);
-
-        if(seat.getStatus()) {
-            throw new AlreadyReservedException();
-        }
-
-        reservationService.createReservation(user, seat);
+        reservationService.createReservation(user, date, content);
     }
 }

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.persistence.*;
 
 import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * 계획 엔티티
@@ -21,11 +22,11 @@ import static javax.persistence.CascadeType.PERSIST;
 @Slf4j
 public class Plan {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name="plan_id")
     private Long id;
 
-    private String plan;
+    private String content;
 
     @OneToOne(cascade = PERSIST)
     @JoinColumn(name = "seatReservation_id")
