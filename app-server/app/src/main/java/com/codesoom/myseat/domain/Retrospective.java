@@ -18,6 +18,8 @@ import static javax.persistence.CascadeType.PERSIST;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Retrospective {
 
     @Id
@@ -29,12 +31,6 @@ public class Retrospective {
     @OneToOne(cascade = PERSIST)
     @JoinColumn(name = "plan_id")
     private Plan plan;
-
-    @Builder
-    public Retrospective(String retrospective, Plan plan) {
-        this.retrospective = retrospective;
-        this.plan = plan;
-    }
 
     public void addPlan(
             Plan plan
