@@ -21,8 +21,9 @@ const Header = styled.div({
   marginBottom: '1rem',
 });
 
-const Title = styled.div({
+const Title = styled.h1({
   fontSize: '2rem',
+  margin: '0',
 });
 
 export default function Reservations() {
