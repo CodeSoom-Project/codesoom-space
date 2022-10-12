@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './index.css';
+
 import Button from './components/Button';
 
 export default function Header({ accessToken, onClick }:any) {

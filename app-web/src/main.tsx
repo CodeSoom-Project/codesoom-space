@@ -16,8 +16,6 @@ import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
 import Reservations from './pages/Reservations';
 
-import './index.css';
-
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -30,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path="signup" element={<SignUpContainer/>}/>
             <Route path="login" element={<LogInContainer/>}/>
             <Route path="reservations" element={<Reservations/>}/>
-            
+
             <Route path="*" element={<NotFound/>}/>
           </Routes>
         </BrowserRouter>
