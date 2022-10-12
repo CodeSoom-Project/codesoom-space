@@ -1,11 +1,8 @@
 package com.codesoom.myseat.services;
 
-import com.codesoom.myseat.domain.Seat;
+import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.enums.ReservationStatus;
-import com.codesoom.myseat.repositories.SeatRepository;
-import com.codesoom.myseat.domain.SeatReservation;
-import com.codesoom.myseat.domain.*;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.repositories.PlanRepository;
 import com.codesoom.myseat.repositories.SeatReservationRepository;

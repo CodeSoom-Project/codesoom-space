@@ -1,13 +1,12 @@
 package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Plan;
+import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.repositories.PlanRepository;
-import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.repositories.SeatReservationRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
