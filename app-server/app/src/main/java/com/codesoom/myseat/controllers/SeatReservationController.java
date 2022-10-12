@@ -49,10 +49,6 @@ public class SeatReservationController {
         String date = request.getDate();
         String plan = request.getPlan();
 
-        try {
-            reservationService.createReservation(user, date, plan);
-        } catch (AlreadyReservedException e) {
-            throw e;
-        }
+        reservationService.createReservation(user, date, plan);
     }
 }
