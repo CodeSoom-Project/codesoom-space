@@ -11,7 +11,11 @@ const Container = styled.div({
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
-  padding: '0 4rem',
+});
+
+const Wrap = styled.div({
+  width: '90%',
+  paddingTop: '1rem',
 });
 
 const Header = styled.div({
@@ -29,11 +33,13 @@ const Title = styled.h1({
 export default function Reservations() {
   return (
     <Container>
-      <Header>
-        <Title>예약내역</Title>
-        <Button style={{ fontSize: '2rem' }}>예약하기</Button>
-      </Header>
-      <ReservationsTable/>
+      <Wrap>
+        <Header>
+          <Title>예약내역</Title>
+          <Button style={{ fontSize: '2rem' }}>예약하기</Button>
+        </Header>
+        <ReservationsTable/>
+      </Wrap>
     </Container>
   );
 }
