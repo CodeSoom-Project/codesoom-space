@@ -32,6 +32,9 @@ public class Plan {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
+    @OneToOne(mappedBy = "plan", cascade = PERSIST)
+    private Retrospective retrospective;
+
     /**
      * 예약을 추가합니다.
      * 
