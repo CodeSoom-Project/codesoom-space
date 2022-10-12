@@ -90,7 +90,7 @@ public class DbInit {
         roleRepo.save(role2);
 
         Plan plan1 = Plan.builder()
-                .plan("책읽기, 코테풀기")
+                .content("책읽기, 코테풀기")
                 .build();
 
         SeatReservation reservation1 = SeatReservation.builder()

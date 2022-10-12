@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 public class SeatReservationRequest {
     private String date;
     
-    private String plan;
+    private String content;
 }

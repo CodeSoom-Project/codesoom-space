@@ -50,7 +50,7 @@ class SeatReservationServiceTest {
         
         assertThat(reservation.getUser().getEmail()).isEqualTo("soo@email.com");
         assertThat(reservation.getDate()).isEqualTo("2022-10-11");
-        assertThat(reservation.getPlan().getPlan()).isEqualTo("책읽기, 코테 풀기");
+        assertThat(reservation.getPlan().getContent()).isEqualTo("책읽기, 코테 풀기");
         assertThat(reservation.getStatus()).isEqualTo(ReservationStatus.RETROSPECTIVE_WAITING);
     }
 

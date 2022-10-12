@@ -59,7 +59,7 @@ class SeatReservationControllerTest {
 
         SeatReservationRequest request = SeatReservationRequest.builder()
                 .date("2022-10-11")
-                .plan("책읽기, 코테풀기")
+                .content("책읽기, 코테풀기")
                 .build();
 
         ResultActions result =  mockMvc.perform(post("/reservations")
@@ -91,7 +91,7 @@ class SeatReservationControllerTest {
 
         SeatReservationRequest request = SeatReservationRequest.builder()
                 .date("2022-10-11")
-                .plan("책읽기, 코테풀기")
+                .content("책읽기, 코테풀기")
                 .build();
 
         ResultActions result = mockMvc.perform(post("/reservations")

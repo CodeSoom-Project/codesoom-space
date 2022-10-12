@@ -25,7 +25,7 @@ public class Plan {
     @Column(name="plan_id")
     private Long id;
 
-    private String plan;
+    private String content;
 
     @OneToOne(cascade = PERSIST)
     @JoinColumn(name = "seatReservation_id")

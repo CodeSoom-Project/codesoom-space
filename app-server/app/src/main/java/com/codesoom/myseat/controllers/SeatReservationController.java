@@ -47,8 +47,8 @@ public class SeatReservationController {
         User user = userService.findUser(email);
 
         String date = request.getDate();
-        String plan = request.getPlan();
+        String content = request.getContent();
 
-        reservationService.createReservation(user, date, plan);
+        reservationService.createReservation(user, date, content);
     }
 }

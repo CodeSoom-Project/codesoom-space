@@ -31,32 +31,32 @@ public class SeatReservationService {
      * 
      * @param user 회원
      * @param date 방문 일자
-     * @param plan 계획
+     * @param content 계획 내용
      * @return 생성된 예약
      * @throws AlreadyReservedException 방문 일자에 대한 예약 내역이 이미 존재하면 던집니다.
      */
     public SeatReservation createReservation(
             User user,
             String date,
-            String plan
+            String content
     ) {
         if(isDuplicateReservation(date, user.getId())) {
             throw new AlreadyReservedException();
         }
         
-        Plan savedPlan = Plan.builder()
-                    .plan(plan)
+        Plan plan = Plan.builder()
+                    .content(content)
                     .build();
 
         SeatReservation reservation = SeatReservation.builder()
                 .date(date)
                 .user(user)
-                .plan(savedPlan)
+                .plan(plan)
                 .build();
 
-        savedPlan.addReservation(reservation);
+        plan.addReservation(reservation);
 
-        planRepo.save(savedPlan);
+        planRepo.save(plan);
         reservationRepo.save(reservation);
 
         return reservation;
