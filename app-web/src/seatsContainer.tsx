@@ -25,7 +25,7 @@ export default function SeatsContainer() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data : seats } = useQuery(['getSeat'], getSeats, {
+  const { data: seats } = useQuery(['getSeat'], getSeats, {
     refetchOnWindowFocus: false,
     retry: 1,
   });

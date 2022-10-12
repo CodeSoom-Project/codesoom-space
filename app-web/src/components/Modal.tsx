@@ -23,7 +23,9 @@ const OVERLAY_STYLES = {
 };
 
 export default function Modal({ open, children, onClose }:any) {
-  if (!open) return null;
+  if (!open) {
+    return null;
+  }
   const handleClose = () => {
     onClose?.();
   };
