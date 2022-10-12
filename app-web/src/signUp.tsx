@@ -1,7 +1,6 @@
-import './index.css';
+export default function SignUp({ register, errors, handleSubmit, error, signUp, watch, setError }:
+{ register: any, errors: any, handleSubmit: any, error: any, signUp: any, watch: any, setError: any }) {
 
-export default function SignUp({ register, errors, handleSubmit, signUp }:
-{ register: any, errors: any, handleSubmit: any, signUp: any }) {
   return (
     <>
       <main style={{ padding: '1rem 0' }}>

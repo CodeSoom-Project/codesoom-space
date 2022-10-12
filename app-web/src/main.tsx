@@ -16,8 +16,6 @@ import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
 import Reservations from './pages/Reservations';
 
-import './index.css';
-
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
