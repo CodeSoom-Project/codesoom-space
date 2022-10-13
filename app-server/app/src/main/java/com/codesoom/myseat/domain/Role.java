@@ -9,13 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Role {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     private Long userId;

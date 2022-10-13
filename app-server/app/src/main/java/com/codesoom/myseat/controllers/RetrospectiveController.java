@@ -1,9 +1,9 @@
 package com.codesoom.myseat.controllers;
 
-import com.codesoom.myseat.domain.SeatReservation;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
 import com.codesoom.myseat.services.RetrospectiveService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,12 +22,13 @@ public class RetrospectiveController {
     }
 
     @PostMapping("/{id}/retrospectives")
+    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void writeRetrospection(
-            @PathVariable final SeatReservation id,
+    public void writeRetrospective(
+            @PathVariable final Long id,
             @RequestBody final RetrospectiveRequest request)
     {
-        retrospectiveService.createRetrospective(id.getId(), request);
+        retrospectiveService.createRetrospective(id, request);
     }
 
 }

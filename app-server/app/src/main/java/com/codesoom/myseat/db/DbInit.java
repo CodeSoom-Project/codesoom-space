@@ -1,7 +1,15 @@
 package com.codesoom.myseat.db;
 
-import com.codesoom.myseat.domain.*;
-import com.codesoom.myseat.repositories.*;
+import com.codesoom.myseat.domain.Plan;
+import com.codesoom.myseat.domain.Reservation;
+import com.codesoom.myseat.domain.Role;
+import com.codesoom.myseat.domain.Seat;
+import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.repositories.PlanRepository;
+import com.codesoom.myseat.repositories.ReservationRepository;
+import com.codesoom.myseat.repositories.RoleRepository;
+import com.codesoom.myseat.repositories.SeatRepository;
+import com.codesoom.myseat.repositories.UserRepository;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -16,9 +24,9 @@ public class DbInit {
     private final SeatRepository seatRepo;
 
     public DbInit(
-            UserRepository userRepo, 
-            RoleRepository roleRepo, 
-            ReservationRepository reservationRepo, 
+            UserRepository userRepo,
+            RoleRepository roleRepo,
+            ReservationRepository reservationRepo,
             PlanRepository planRepo,
             SeatRepository seatRepo
     ) {
@@ -65,7 +73,7 @@ public class DbInit {
         seats.add(seat7);
         seats.add(seat8);
         seatRepo.saveAll(seats);
-        
+
         User user1 = User.builder()
                 .name("김철수")
                 .email("soo@email.com")
