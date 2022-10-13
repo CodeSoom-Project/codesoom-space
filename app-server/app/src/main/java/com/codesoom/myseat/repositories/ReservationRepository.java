@@ -4,6 +4,7 @@ import com.codesoom.myseat.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 좌석 예약 레포지토리
@@ -50,6 +51,6 @@ public interface ReservationRepository
      * @param userId 회원 id
      * @return 예약 내역
      */
-    Reservation findByIdAndUser_Id(Long id, Long userId);
+    Optional<Reservation> findByIdAndUser_Id(Long id, Long userId);
 
 }
