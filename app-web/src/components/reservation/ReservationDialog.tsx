@@ -2,7 +2,9 @@ import * as React from 'react';
 
 import styled from '@emotion/styled';
 
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+
+import { useAppSelector } from '../../hooks';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -13,6 +15,9 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import { saveDate, savePlan } from '../../redux/reservationsSlice';
+import { useDispatch } from 'react-redux';
+
 
 const TextFieldWrap = styled.div({
   display: 'flex',
@@ -21,13 +26,16 @@ const TextFieldWrap = styled.div({
   padding: '1.5rem',
 });
 
+
 interface PropsType {
   open : boolean,
   onClose : React.ReactEventHandler
 }
 
-export default function ReservationDialog({ open, onClose } : PropsType) {
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs().add(1, 'day'));
+export default function ReservationDialog({ open, onClose }: PropsType) {
+  const dispatch = useDispatch();
+
+  const { date, plan } = useAppSelector(store => store.reservations);
 
   return (
     <Dialog
@@ -41,16 +49,22 @@ export default function ReservationDialog({ open, onClose } : PropsType) {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="방문일자"
-            value={value}
-            onChange={(newValue) => {
-              setValue(newValue);
+            value={date}
+            onChange={(value): any => {
+              dispatch(saveDate(dayjs(value).format('YYYY-MM-DD')));
             }}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => {
+              return (<TextField {...params} />);
+            }}
           />
         </LocalizationProvider>
 
         <TextField
           label="계획"
+          value={plan}
+          onChange={(e): any => {
+            dispatch(savePlan(e.target.value));
+          }}
           variant="outlined"
           multiline
           rows={3}
