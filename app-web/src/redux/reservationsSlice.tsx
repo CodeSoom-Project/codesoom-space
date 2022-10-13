@@ -1,8 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const initialState = {
+interface ReservationState {
+  isOpenReservationsModal: boolean,
+  isOpenRetrospectModal: boolean,
+
+  date: string | null,
+  plan: string,
+}
+
+export const initialState: ReservationState = {
   isOpenReservationsModal: false,
   isOpenRetrospectModal: false,
+
+  date: null,
+  plan: '',
 };
 
 const reservationsSlice = createSlice({
@@ -17,9 +28,25 @@ const reservationsSlice = createSlice({
       ...state,
       isOpenRetrospectModal: !state.isOpenRetrospectModal,
     }),
+
+    saveDate: (state, { payload }) => {
+      return ({
+        ...state,
+        date: payload,
+      });
+    },
+    savePlan: (state, { payload }) => ({
+      ...state,
+      plan: payload,
+    }),
   },
 });
 
-export const { toggleReservationsModal, toggleRetrospectModal } = reservationsSlice.actions;
+export const {
+  toggleReservationsModal,
+  toggleRetrospectModal,
+  saveDate,
+  savePlan,
+} = reservationsSlice.actions;
 
 export default reservationsSlice.reducer;
