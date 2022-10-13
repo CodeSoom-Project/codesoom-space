@@ -50,13 +50,22 @@ export default function Reservations() {
 
   return (
     <Container>
-      <ReservationDialog open={isOpenReservationsModal} onClose={onClicktoggleReservationsModal} />
+      <ReservationDialog
+        open={isOpenReservationsModal}
+        onClose={onClicktoggleReservationsModal}
+      />
 
       <Wrap>
         <Header>
           <Title>예약내역</Title>
-          <Button style={{ fontSize: '2rem' }} onClick={onClicktoggleReservationsModal}>예약하기</Button>
+
+          <Button
+            style={{ fontSize: '2rem' }}
+            onClick={onClicktoggleReservationsModal}
+          >예약하기
+          </Button>
         </Header>
+
         <ReservationsTable onOpenReservationModal={onClicktoggleReservationsModal} />
       </Wrap>
     </Container>
