@@ -21,6 +21,12 @@ public class RetrospectiveController {
         this.retrospectiveService = retrospectiveService;
     }
 
+    /**
+     * 회고를 작성하고 상태 코드 204를 응답합니다.
+     *
+     * @param id 예약자
+     * @param request 예약 폼에 입력된 데이터
+     */
     @PostMapping("/{id}/retrospectives")
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -28,7 +34,9 @@ public class RetrospectiveController {
             @PathVariable final Long id,
             @RequestBody final RetrospectiveRequest request)
     {
-        retrospectiveService.createRetrospective(id, request);
+        String retrospective = request.getRetrospective();
+
+        retrospectiveService.createRetrospective(id, retrospective);
     }
 
 }
