@@ -18,14 +18,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useAppSelector } from '../../hooks';
 import { saveDate, savePlan } from '../../redux/reservationsSlice';
 
-
 const TextFieldWrap = styled.div({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-around',
   padding: '1.5rem',
 });
-
 
 interface PropsType {
   open : boolean,
@@ -36,6 +34,12 @@ export default function ReservationDialog({ open, onClose }: PropsType) {
   const dispatch = useDispatch();
 
   const { date, plan } = useAppSelector(store => store.reservations);
+
+  const handleChange = (value: dayjs.Dayjs | null) => {
+    dispatch(
+      saveDate(value === null ? null : dayjs(value).format('YYYY-MM-DD')),
+    );
+  };
 
   return (
     <Dialog
@@ -50,11 +54,7 @@ export default function ReservationDialog({ open, onClose }: PropsType) {
           <DatePicker
             label="방문일자"
             value={date === null ? null : dayjs(date)}
-            onChange={(value) => {
-              dispatch(
-                saveDate(value === null ? null : dayjs(value).format('YYYY-MM-DD')),
-              );
-            }}
+            onChange={(value) => handleChange(value)}
             renderInput={(params) => {
               return (<TextField {...params} />);
             }}
