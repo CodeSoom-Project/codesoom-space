@@ -1,5 +1,6 @@
 package com.codesoom.myseat.config;
 
+import com.codesoom.myseat.filters.AuthenticationErrorFilter;
 import com.codesoom.myseat.filters.AuthenticationFilter;
 import com.codesoom.myseat.services.AuthenticationService;
 import org.springframework.context.annotation.Configuration;
@@ -30,9 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(
             HttpSecurity http
     ) throws Exception {
-        Filter authFilter 
-                = new AuthenticationFilter(authenticationManager(), authService);
-
         http
                 .cors()
                 .and()
@@ -51,12 +49,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**", "/", "/docs/**", "/signup", "/login", "/seats").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(authFilter)
+                .addFilter(authenticationFilter())
+                .addFilterBefore(authenticationErrorFilter(), AuthenticationFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(
-                        new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));;
+                        new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
     }
+
+    private Filter authenticationFilter() throws Exception {
+        return new AuthenticationFilter(authenticationManager(), authService);
+    }
+
+    private Filter authenticationErrorFilter() {
+        return new AuthenticationErrorFilter();
+    }
+
 }
