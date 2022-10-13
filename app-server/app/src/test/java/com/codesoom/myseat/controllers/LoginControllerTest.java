@@ -68,7 +68,7 @@ class LoginControllerTest {
                 .password(ENCODED_PASSWORD)
                 .build();
 
-        given(userService.findById(ID))
+        given(userService.findByEmail(EMAIL))
                 .willReturn(user);
 
         given(authService.login(user, PASSWORD))
