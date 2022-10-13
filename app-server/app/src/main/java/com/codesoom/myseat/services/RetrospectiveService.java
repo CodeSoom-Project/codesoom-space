@@ -1,34 +1,44 @@
 package com.codesoom.myseat.services;
 
-import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
-import com.codesoom.myseat.dto.RetrospectiveRequest;
+import com.codesoom.myseat.exceptions.NotExistedReservedException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
+@Slf4j
 public class RetrospectiveService {
 
-    private RetrospectiveRepository retrospectiveRepository;
-    private ReservationRepository reservationRepository;
+    private final RetrospectiveRepository retrospectiveRepository;
+    private final ReservationRepository reservationRepository;
 
-    public void createRetrospective(Long id, RetrospectiveRequest request) {
-        Optional<Reservation> reservation = reservationRepository.findById(id);
+    public RetrospectiveService(RetrospectiveRepository retrospectiveRepository, ReservationRepository reservationRepository) {
+        this.retrospectiveRepository = retrospectiveRepository;
+        this.reservationRepository = reservationRepository;
+    }
 
+    public Retrospective createRetrospective(Long id, String content) {
         Retrospective retrospective = Retrospective.builder()
-                .reservation(reservation.get())
-                .retrospective(request.getRetrospective())
+                .retrospective(content)
                 .build();
 
+        Reservation reservation = Reservation.builder()
+                .retrospective(retrospective)
+                .build();
+
+        if(reservation.getUser().getId() != id) {
+            throw new NotExistedReservedException();
+        }
+
+        retrospective.addReservation(reservation);
+
+        reservationRepository.save(reservation);
         retrospectiveRepository.save(retrospective);
+
+        return retrospective;
     }
 
 }
