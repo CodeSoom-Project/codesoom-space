@@ -49,4 +49,11 @@ public class ControllerErrorAdvice {
     public String handleAlreadyReserved() {
         return "방문 일자에 대한 예약 내역이 이미 존재합니다.";
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ReservationNotFoundException.class)
+    public String handleReservationNotFoundException(ReservationNotFoundException e) {
+        return e.getMessage();
+    }
+
 }
