@@ -40,6 +40,7 @@ export const {
   toggleReservationsModal,
   toggleRetrospectModal,
   saveDate,
-  savePlan } = reservationsSlice.actions;
+  savePlan,
+} = reservationsSlice.actions;
 
 export default reservationsSlice.reducer;
