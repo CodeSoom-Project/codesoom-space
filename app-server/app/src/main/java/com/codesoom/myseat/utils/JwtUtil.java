@@ -1,7 +1,9 @@
 package com.codesoom.myseat.utils;
 
+import com.codesoom.myseat.exceptions.InvalidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -51,18 +53,17 @@ public class JwtUtil {
     public Long parseAccessToken(String accessToken) {
         log.info("accessToken: " + accessToken);
 
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(accessToken)
-                .getBody();
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(accessToken)
+                    .getBody();
 
-        Long id = claims.get("id", Long.class);
-        log.info("id: " + id);
-        if(id == null) {
-            log.info("@@@@@@@@@@@없어");
+            return claims.get("id", Long.class);
+        } catch (JwtException e) {
+            e.printStackTrace();
+            throw new InvalidTokenException();
         }
-
-        return id;
     }
 }
