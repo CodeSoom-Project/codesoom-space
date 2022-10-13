@@ -2,7 +2,19 @@ import * as React from 'react';
 
 import { styled } from '@mui/material/styles';
 
-import { Box, Table, TableContainer, TablePagination, TableRow, Paper, IconButton, Button, TableHead, TableBody, TableFooter } from '@mui/material';
+import {
+  Box,
+  Table,
+  TableContainer,
+  TablePagination,
+  TableRow,
+  Paper,
+  IconButton,
+  Button,
+  TableHead,
+  TableBody,
+  TableFooter,
+} from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 import FirstPageIcon from '@mui/icons-material/FirstPage';
