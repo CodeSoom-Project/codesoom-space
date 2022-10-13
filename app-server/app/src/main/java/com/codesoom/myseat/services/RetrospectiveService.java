@@ -2,7 +2,7 @@ package com.codesoom.myseat.services;
 
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
-import com.codesoom.myseat.exceptions.NotExistedReservedException;
+import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,25 +20,16 @@ public class RetrospectiveService {
         this.reservationRepository = reservationRepository;
     }
 
-    public Retrospective createRetrospective(Long id, String content) {
+    public Retrospective createRetrospective(Long reservationId, String content) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(ReservationNotFoundException::new);
+
         Retrospective retrospective = Retrospective.builder()
                 .retrospective(content)
+                .reservation(reservation)
                 .build();
 
-        Reservation reservation = Reservation.builder()
-                .retrospective(retrospective)
-                .build();
-
-        if(reservation.getUser().getId() != id) {
-            throw new NotExistedReservedException();
-        }
-
-        retrospective.addReservation(reservation);
-
-        reservationRepository.save(reservation);
-        retrospectiveRepository.save(retrospective);
-
-        return retrospective;
+        return retrospectiveRepository.save(retrospective);
     }
 
 }

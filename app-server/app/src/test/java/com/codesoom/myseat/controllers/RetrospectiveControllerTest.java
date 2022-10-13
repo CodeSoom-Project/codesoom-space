@@ -46,7 +46,7 @@ class RetrospectiveControllerTest {
         RetrospectiveRequest request = new RetrospectiveRequest("잘했다");
 
         given(authService.parseToken(ACCESS_TOKEN))
-                .willReturn("soo@email.com");
+                .willReturn(ID);
 
         ResultActions result = mockMvc.perform(post("/reservations/{id}/retrospectives", ID)
                 .contentType(MediaType.APPLICATION_JSON)
