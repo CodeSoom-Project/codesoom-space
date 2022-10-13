@@ -25,12 +25,12 @@ const ButtonWrap = styled.div({
   },
 });
 
-interface PropsType {
+interface Props {
   open : boolean,
   onClose : React.ReactEventHandler
 }
 
-const RetrospectionModal: React.FC<PropsType> = ({ open, onClose } : PropsType) => {
+const RetrospectionModal: React.FC<Props> = ({ open, onClose } : Props) => {
   const dispatch = useDispatch();
 
   const { retrospections } = useAppSelector((state) => state.retrospections);

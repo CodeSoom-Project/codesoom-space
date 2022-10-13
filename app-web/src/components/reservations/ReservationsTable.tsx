@@ -125,12 +125,12 @@ const rows = [
   createData(23, '2022-10-23', 'javascript 공부', Status.RETROSPECTIVE_COMPLETE),
 ];
 
-interface PropsType {
+interface Props {
   onOpenReservationModal : React.ReactEventHandler,
   onOpenRetrospectModal : React.ReactEventHandler
 }
 
-export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }:PropsType) {
+export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }: Props) {
   const [page, setPage] = React.useState(0);
 
   const rowsPerPage = 10;
