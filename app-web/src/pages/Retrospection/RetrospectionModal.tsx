@@ -58,7 +58,7 @@ const RetrospectionModal: React.FC<Props> = ({ open, onClose } : Props) => {
           }}
           color='primary'
           aria-label='close dialog'
-          component='label'
+          component="label"
           onClick={onClose}
         >
           <CloseIcon />
