@@ -41,10 +41,8 @@ public class ReservationQueryService {
      */
     @Transactional(readOnly = true)
     public Reservation reservation(Long userId, Long reservationId) {
-        Reservation reservation = repository.findByIdAndUser_Id(reservationId, userId);
-        if (reservation == null) {
-            throw new ReservationNotFoundException();
-        }
-        return reservation;
+        return repository.findByIdAndUser_Id(reservationId, userId)
+                .orElseThrow(ReservationNotFoundException::new);
     }
+
 }

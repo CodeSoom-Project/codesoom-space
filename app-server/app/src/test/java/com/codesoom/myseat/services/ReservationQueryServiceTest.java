@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -92,12 +93,12 @@ class ReservationQueryServiceTest {
             void will_return_reservation() {
                 //given
                 given(reservationRepository.findByIdAndUser_Id(same(1L), same(1L)))
-                        .willReturn(Reservation.builder()
+                        .willReturn(Optional.ofNullable(Reservation.builder()
                                 .id(1L)
                                 .user(mockUser)
                                 .plan(plan)
                                 .date("2022-10-12")
-                                .build());
+                                .build()));
 
                 //when
                 Reservation reservation = service.reservation(1L, 1L);
