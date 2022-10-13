@@ -34,4 +34,13 @@ public interface ReservationRepository
      * @return 주어진 방문 일자와 회원 id로 예약 내역 검색에 성공하면 true, 그렇지 않으면 false
      */
     boolean existsByDateAndUser_Id(String date, Long id);
+
+    /**
+     * 주어진 회원 정보로 예약 내역을 조회합니다.
+     *
+     * @param id 회원 아이디(PK)
+     * @return 예약 내역
+     */
+    List<Reservation> findAllByUser_Id(Long id);
+
 }
