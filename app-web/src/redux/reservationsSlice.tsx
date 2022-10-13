@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
 
 interface ReservationState {
   isOpenReservationsModal: boolean,
   isOpenRetrospectModal: boolean,
 
-  date: dayjs.Dayjs | null,
+  date: string | null,
   plan: string,
 }
 

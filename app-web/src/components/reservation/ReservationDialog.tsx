@@ -64,7 +64,7 @@ export default function ReservationDialog({ open, onClose }: PropsType) {
         <TextField
           label="계획"
           value={plan}
-          onChange={(e): any => {
+          onChange={(e) => {
             dispatch(savePlan(e.target.value));
           }}
           variant="outlined"
