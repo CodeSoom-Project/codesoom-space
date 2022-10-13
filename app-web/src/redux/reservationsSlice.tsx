@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import dayjs from 'dayjs';
+
 
 export const initialState = {
   isOpenReservationsModal: false,
   isOpenRetrospectModal: false,
 
-  date: dayjs().add(1, 'day').format('YYYY-MM-DD'),
+  date: null,
   plan: '',
 };
 

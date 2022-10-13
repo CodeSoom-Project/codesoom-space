@@ -49,9 +49,11 @@ export default function ReservationDialog({ open, onClose }: PropsType) {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="방문일자"
-            value={date}
-            onChange={(value): any => {
-              dispatch(saveDate(dayjs(value).format('YYYY-MM-DD')));
+            value={date === null ? null : dayjs(date)}
+            onChange={(value) => {
+              dispatch(
+                saveDate(value === null ? null : dayjs(value).format('YYYY-MM-DD')),
+              );
             }}
             renderInput={(params) => {
               return (<TextField {...params} />);
