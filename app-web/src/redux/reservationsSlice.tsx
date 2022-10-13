@@ -1,7 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import dayjs from 'dayjs';
 
+interface ReservationState {
+  isOpenReservationsModal: boolean,
+  isOpenRetrospectModal: boolean,
 
-export const initialState = {
+  date: dayjs.Dayjs | null,
+  plan: string,
+}
+
+export const initialState: ReservationState = {
   isOpenReservationsModal: false,
   isOpenRetrospectModal: false,
 
