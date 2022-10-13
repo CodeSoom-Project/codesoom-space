@@ -49,9 +49,7 @@ class ReservationQueryServiceTest {
                 .plan(plan)
                 .date("2022-10-12")
                 .build();
-        plan.addReservation(reservation);
-        planRepository.save(plan);
-        reservationRepository.save(reservation);
+
         given(reservationRepository.findAllByUser_Id(same(1L)))
                 .willReturn(List.of(reservation));
 
