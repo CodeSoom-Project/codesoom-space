@@ -1,0 +1,2 @@
+GET https://api.codesoom-myseat.site/reservations
+Authorization: Bearer 

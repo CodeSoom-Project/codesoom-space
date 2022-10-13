@@ -1,0 +1,8 @@
+POST https://api.codesoom-myseat.site/signup
+Content-Type: application/json;charset=UTF-8
+
+{
+  "name" : "테스터",
+  "email" : "tester@email.com",
+  "password" : "1111"
+}

@@ -1,0 +1,2 @@
+PATCH http://localhost:8080/reservations/1
+Authorization: Bearer 
