@@ -3,14 +3,13 @@ package com.codesoom.myseat.controllers;
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.SeatDetailResponse;
-import com.codesoom.myseat.exceptions.AuthenticationFailureException;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.SeatService;
 import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -42,17 +41,12 @@ public class SeatDetailController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("isAuthenticated()")
     public SeatDetailResponse seatDetail(
+            @AuthenticationPrincipal UserAuthentication principal,
             @PathVariable int number
     ) {
         log.info("number: " + number);
 
-        String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
-        if(email == null) {
-            throw new AuthenticationFailureException();
-        }
-        log.info("email: " + email);
-
-        User user = userService.findUser(email);
+        User user = userService.findById(principal.getId());
 
         return toResponse(user, seatService.findSeat(number));
     }

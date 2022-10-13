@@ -52,9 +52,9 @@ class ReservationControllerTest {
                 .build();
         
         given(authService.parseToken(ACCESS_TOKEN))
-                .willReturn("soo@email.com");
+                .willReturn(1L);
         
-        given(userService.findUser("soo@email.com"))
+        given(userService.findById(1L))
                 .willReturn(mockUser);
 
         ReservationRequest request = ReservationRequest.builder()
@@ -81,9 +81,9 @@ class ReservationControllerTest {
                 .build();
 
         given(authService.parseToken(ACCESS_TOKEN))
-                .willReturn("soo@email.com");
+                .willReturn(1L);
 
-        given(userService.findUser("soo@email.com"))
+        given(userService.findById(1L))
                 .willReturn(mockUser);
 
         given(reservationService.createReservation(mockUser, "2022-10-11", "책읽기, 코테풀기"))

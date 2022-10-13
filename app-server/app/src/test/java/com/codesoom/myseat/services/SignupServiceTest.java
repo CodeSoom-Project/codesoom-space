@@ -49,7 +49,7 @@ class SignupServiceTest {
         // given
         given(roleRepo.save(any(Role.class)))
                 .will(invocation -> Role.builder()
-                        .email(EMAIL)
+                        .userId(1L)
                         .roleName("USER")
                         .build());
 

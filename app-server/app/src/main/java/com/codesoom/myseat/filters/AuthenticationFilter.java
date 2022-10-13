@@ -43,13 +43,13 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
             String accessToken = authHeader.substring("Bearer ".length());
             log.info("accessToken: " + accessToken);
 
-            String email = authService.parseToken(accessToken);
-            log.info("email: " + email);
+            Long id = authService.parseToken(accessToken);
+            log.info("id: " + id);
 
-            List<Role> roles = authService.roles(email);
+            List<Role> roles = authService.roles(id);
             log.info("roles: " + roles);
 
-            Authentication authentication = new UserAuthentication(email, roles);
+            Authentication authentication = new UserAuthentication(id, roles);
             log.info("authentication: " + authentication.getAuthorities());
 
             SecurityContext context = SecurityContextHolder.getContext();

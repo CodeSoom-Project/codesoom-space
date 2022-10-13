@@ -72,7 +72,7 @@ public class DbInit {
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
         Role role1 = Role.builder()
-                .email("soo@email.com")
+                .userId(1L)
                 .roleName("USER")
                 .build();
         User user2 = User.builder()
@@ -81,7 +81,7 @@ public class DbInit {
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
         Role role2 = Role.builder()
-                .email("young@email.com")
+                .userId(2L)
                 .roleName("USER")
                 .build();
         userRepo.save(user1);

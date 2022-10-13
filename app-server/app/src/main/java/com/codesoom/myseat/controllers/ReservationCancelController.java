@@ -9,7 +9,7 @@ import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -43,10 +43,10 @@ public class ReservationCancelController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("isAuthenticated()")
     public void cancelReservation(
+            @AuthenticationPrincipal UserAuthentication principal,
             @PathVariable int number
     ) {
-        String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
-        User user = userService.findUser(email);
+        User user = userService.findById(principal.getId());
         Seat seat = seatService.findSeat(number);
 
         cancelService.cancelReservation(user, seat);

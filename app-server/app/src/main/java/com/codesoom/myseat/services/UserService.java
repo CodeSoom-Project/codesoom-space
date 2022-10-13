@@ -21,12 +21,27 @@ public class UserService {
     }
 
     /**
-     * 이메일로 회원을 검색한다.
+     * id로 회원 조회에 성공하면 회원을 반환합니다.
      * 
-     * @param email
-     * @return
+     * @param id 아이디
+     * @return 조회된 회원
+     * @throws UserNotFoundException 회원 조회에 실패하면 던집니다.
      */
-    public User findUser(
+    public User findById(
+            Long id
+    ) {
+        return userRepo.findById(id)
+                .orElseThrow(() -> new UserNotFoundException());
+    }
+
+    /**
+     * 이메일로 회원 조회에 성공하면 회원을 반환합니다.
+     * 
+     * @param email 이메일
+     * @return 조회된 회원
+     * @throws UserNotFoundException 회원 조회에 실패하면 던집니다.
+     */
+    public User findByEmail(
             String email
     ) {
         return userRepo.findByEmail(email)

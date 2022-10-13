@@ -71,9 +71,9 @@ class ReservationQueryControllerTest {
                 .build();
 
         given(authService.parseToken(ACCESS_TOKEN))
-                .willReturn("soo@email.com");
+                .willReturn(1L);
 
-        given(userService.findUser("soo@email.com"))
+        given(userService.findById(1L))
                 .willReturn(mockUser);
     }
 

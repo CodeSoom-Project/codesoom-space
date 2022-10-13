@@ -9,7 +9,7 @@ import com.codesoom.myseat.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -41,10 +41,10 @@ public class ReservationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated()")
     public void reserve(
+            @AuthenticationPrincipal UserAuthentication principal,
             @RequestBody ReservationRequest request
     ) {
-        String email = ((UserAuthentication) SecurityContextHolder.getContext().getAuthentication()).getEmail();
-        User user = userService.findUser(email);
+        User user = userService.findById(principal.getId());
 
         String date = request.getDate();
         String content = request.getContent();

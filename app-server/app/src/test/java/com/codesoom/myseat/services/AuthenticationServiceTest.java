@@ -53,7 +53,7 @@ class AuthenticationServiceTest {
     @DisplayName("로그인 성공")
     void login_success() {
         // given
-        given(jwtUtil.makeAccessToken(EMAIL))
+        given(jwtUtil.makeAccessToken(1L))
                 .willReturn(ACCESS_TOKEN);
 
         User user = User.builder()
