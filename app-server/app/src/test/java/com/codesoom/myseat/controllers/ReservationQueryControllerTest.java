@@ -130,7 +130,7 @@ class ReservationQueryControllerTest {
         //given
         Long notExistReservationId = 100L;
         String content = "코테풀기, 공부, 과제";
-        given(reservationQueryService.reservation(1L, notExistReservationId))
+        given(reservationQueryService.reservation(notExistReservationId, 1L))
                 .willThrow(ReservationNotFoundException.class);
 
         //when & then
