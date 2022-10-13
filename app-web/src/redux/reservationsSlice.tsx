@@ -23,7 +23,6 @@ const reservationsSlice = createSlice({
     }),
 
     saveDate: (state, { payload }) => {
-      console.log(payload);
       return ({
         ...state,
         date: payload,
