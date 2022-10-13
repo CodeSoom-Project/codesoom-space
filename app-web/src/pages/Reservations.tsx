@@ -3,6 +3,13 @@ import styled from '@emotion/styled';
 
 import { Button } from '@mui/material';
 
+import { useAppDispatch, useAppSelector } from '../hooks';
+
+import { get } from '../utils';
+
+import { toggleReservationsModal } from '../redux/reservationsSlice';
+
+import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
 
 const Container = styled.div({
@@ -30,15 +37,36 @@ const Title = styled.h1({
   margin: '0',
 });
 
+
 export default function Reservations() {
+
+  const dispatch = useAppDispatch();
+
+  const { isOpenReservationsModal } = useAppSelector(get('reservations'));
+
+  const onClicktoggleReservationsModal = () => {
+    dispatch(toggleReservationsModal());
+  };
+
   return (
     <Container>
+      <ReservationDialog
+        open={isOpenReservationsModal}
+        onClose={onClicktoggleReservationsModal}
+      />
+
       <Wrap>
         <Header>
           <Title>예약내역</Title>
-          <Button style={{ fontSize: '2rem' }}>예약하기</Button>
+
+          <Button
+            style={{ fontSize: '2rem' }}
+            onClick={onClicktoggleReservationsModal}
+          >예약하기
+          </Button>
         </Header>
-        <ReservationsTable/>
+
+        <ReservationsTable onOpenReservationModal={onClicktoggleReservationsModal} />
       </Wrap>
     </Container>
   );
