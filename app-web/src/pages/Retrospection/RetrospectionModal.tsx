@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import styled from '@emotion/styled';
 
 import { Button, Dialog, IconButton, TextField } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
+
+import { writeRetrospection } from '../../redux/retrospectionSlice';
+import { useAppSelector } from '../../hooks';
 
 const Wrap = styled.div({
   display: 'flex',
@@ -16,17 +19,19 @@ const ButtonWrap = styled.div({
   display: 'flex',
   justifyContent: 'flex-end',
 
-  'button: nth-child(1)': {
+  'button: nth-of-type(1)': {
     marginRight: '1rem',
   },
 });
 
 const RetrospectionModal: React.FC = () => {
   const characterLimit = 500;
-  const [values, setValues] = useState('');
+
+  const dispatch = useDispatch();
+  const { retrospections } = useAppSelector((state) => state.retrospections);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    setValues(event.target.value);
+    dispatch(writeRetrospection(event.target.value));
   };
 
   return (
@@ -46,11 +51,11 @@ const RetrospectionModal: React.FC = () => {
           <CloseIcon />
         </IconButton>
         <TextField
-          inputProps={{ maxlength: characterLimit, minLength: 100 }}
+          inputProps={{ maxLength: characterLimit, minLength: 100 }}
           label='회고'
           placeholder='회고를 입력해주세요.'
-          helperText={`${values.length} /${characterLimit}`}
-          value={values}
+          helperText={`${retrospections.length} /${characterLimit}`}
+          value={retrospections}
           onChange={handleChange}
           style={{ margin: '1rem 3rem 1rem 0' }}
           variant='outlined'
