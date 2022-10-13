@@ -39,7 +39,9 @@ const Title = styled.h1({
 
 
 export default function Reservations() {
+
   const dispatch = useAppDispatch();
+
   const { isOpenReservationsModal } = useAppSelector(get('reservations'));
 
   const onClicktoggleReservationsModal = () => {
