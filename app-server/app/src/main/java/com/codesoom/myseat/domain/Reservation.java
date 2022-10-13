@@ -43,6 +43,9 @@ public class Reservation {
     @Builder.Default
     private ReservationStatus status = ReservationStatus.RETROSPECTIVE_WAITING;
 
+    @OneToOne(mappedBy = "reservation", cascade = PERSIST)
+    private Retrospective retrospective;
+
     @PrePersist
     public void prePersist() {
         if (this.status == null) {
