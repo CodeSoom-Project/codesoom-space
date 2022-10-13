@@ -61,7 +61,7 @@ class RetrospectiveControllerTest {
     }
 
     @Test
-    @DisplayName("POST /retrospectives 요청 시 상태코드 204를 응답한다")
+    @DisplayName("POST /retrospectives 요청 시 상태코드 401를 응답한다")
     void retrospective_invalid_Token() throws Exception {
         RetrospectiveRequest request = new RetrospectiveRequest("잘했다");
 
@@ -76,7 +76,7 @@ class RetrospectiveControllerTest {
         );
 
         result
-                .andExpect(MockMvcResultMatchers.status().isForbidden())
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andDo(print())
                 .andReturn();
     }
