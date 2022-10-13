@@ -30,10 +30,11 @@ const TextFieldWrap = styled.div({
 
 interface Props {
   open : boolean,
-  onClose : React.ReactEventHandler
+  onClose : React.ReactEventHandler,
+  onApply : React.ReactEventHandler
 }
 
-export default function ReservationDialog({ open, onClose }: Props) {
+export default function ReservationDialog({ open, onClose, onApply }: Props) {
   const dispatch = useDispatch();
 
   const { date, plan } = useAppSelector(get('reservations'));
@@ -80,7 +81,7 @@ export default function ReservationDialog({ open, onClose }: Props) {
       </TextFieldWrap>
 
       <DialogActions>
-        <Button disabled={!date || !plan} variant="contained" size="small">
+        <Button disabled={!date || !plan} onClick={onApply} variant="contained" size="small">
           제출
         </Button>
         <Button variant="outlined" size="small">
