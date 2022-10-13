@@ -67,11 +67,11 @@ public class ReservationQueryController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public ReservationResponse reservation(@AuthenticationPrincipal UserAuthentication principal,
-                                           @PathVariable(name = "id") int reservationId) {
+                                           @PathVariable(name = "id") Long reservationId) {
         String email = principal.getEmail();
         User user = userService.findUser(email);
 
-        return new ReservationResponse(service.reservation(user.getId(), Long.valueOf(reservationId)));
+        return new ReservationResponse(service.reservation(reservationId, user.getId()));
     }
 
 }
