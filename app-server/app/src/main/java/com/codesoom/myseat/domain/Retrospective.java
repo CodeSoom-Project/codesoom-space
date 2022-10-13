@@ -5,14 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.GenerationType.IDENTITY;
 
 
 @Entity
@@ -23,18 +24,19 @@ import static javax.persistence.CascadeType.PERSIST;
 public class Retrospective {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name="retrospective_id")
     Long id;
 
     String retrospective;
 
     @OneToOne(cascade = PERSIST)
-    @JoinColumn(name = "plan_id")
-    private Plan plan;
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 
-    public void addPlan(
-            Plan plan
+    public void addReservation(
+            Reservation reservation
     ) {
-        this.plan = plan;
+        this.reservation = reservation;
     }
 }
