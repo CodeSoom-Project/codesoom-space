@@ -4,6 +4,7 @@ import com.codesoom.myseat.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 좌석 예약 레포지토리
@@ -36,11 +37,20 @@ public interface ReservationRepository
     boolean existsByDateAndUser_Id(String date, Long id);
 
     /**
-     * 주어진 회원 정보로 예약 내역을 조회합니다.
+     * 주어진 회원 id로 예약 내역을 모두 조회합니다.
      *
-     * @param id 회원 아이디(PK)
-     * @return 예약 내역
+     * @param id 회원 id
+     * @return 모든 예약 내역
      */
     List<Reservation> findAllByUser_Id(Long id);
+
+    /**
+     * 주어진 reservation id와 user id로 예약 내역을 조회합니다.
+     *
+     * @param id 예약 id
+     * @param userId 회원 id
+     * @return 예약 내역
+     */
+    Optional<Reservation> findByIdAndUser_Id(Long id, Long userId);
 
 }

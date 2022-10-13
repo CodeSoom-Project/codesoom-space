@@ -3,6 +3,7 @@ package com.codesoom.myseat.controllers;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.services.AuthenticationService;
 import com.codesoom.myseat.services.ReservationQueryService;
 import com.codesoom.myseat.services.UserService;
@@ -60,12 +61,7 @@ class ReservationQueryControllerTest {
                 .apply(springSecurity())
                 .alwaysDo(print())
                 .build();
-    }
 
-    @DisplayName("요청한 유저의 모든 예약 목록을 응답한다.")
-    @Test
-    void GET_reservations_with_200_status() throws Exception {
-        String content = "코테풀기, 공부, 과제";
         //given
         User mockUser = User.builder()
                 .id(1L)
@@ -79,7 +75,13 @@ class ReservationQueryControllerTest {
 
         given(userService.findUser("soo@email.com"))
                 .willReturn(mockUser);
+    }
 
+    @DisplayName("요청한 유저의 모든 예약 목록을 응답한다.")
+    @Test
+    void GET_reservations_with_200_status() throws Exception {
+        //given
+        String content = "코테풀기, 공부, 과제";
         given(reservationQueryService.reservations(1L))
                 .willReturn(List.of(
                         Reservation.builder()
@@ -97,6 +99,44 @@ class ReservationQueryControllerTest {
         MvcResult result = perform.andReturn();
         assertThat(result.getResponse().getStatus()).isEqualTo(200);
         assertThat(result.getResponse().getContentAsString()).contains(content);
+    }
+
+    @DisplayName("주어진 예약 id로 예약 정보를 찾을 수 있으면 예약 정보를 응답한다.")
+    @Test
+    void GET_reservation_with_200_status() throws Exception {
+        //given
+        Long reservationId = 1L;
+        String content = "코테풀기, 공부, 과제";
+        given(reservationQueryService.reservation(1L, reservationId))
+                .willReturn(Reservation.builder()
+                        .id(reservationId)
+                        .plan(Plan.builder().id(1L).content(content).build())
+                        .date("2022-10-13")
+                        .build());
+
+        //when
+        ResultActions perform = mockMvc.perform(get(String.format("/reservations/%d", reservationId))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN));
+
+        //then
+        MvcResult result = perform.andReturn();
+        assertThat(result.getResponse().getStatus()).isEqualTo(200);
+        assertThat(result.getResponse().getContentAsString()).contains(content);
+    }
+
+    @DisplayName("주어진 예약 id로 예약 정보를 찾을 수 없으면 404 not found를 응답한다.")
+    @Test
+    void GET_reservation_with_404_status() throws Exception {
+        //given
+        Long notExistReservationId = 100L;
+        String content = "코테풀기, 공부, 과제";
+        given(reservationQueryService.reservation(notExistReservationId, 1L))
+                .willThrow(ReservationNotFoundException.class);
+
+        //when & then
+        mockMvc.perform(get(String.format("/reservations/%d", notExistReservationId))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+                .andExpect(status().isNotFound());
     }
 
 }
