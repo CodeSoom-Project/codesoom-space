@@ -48,7 +48,7 @@ export const login = async ({ email, password }: { email: string, password: stri
       email,
       password,
     }).then((res) => {
-      const accessToken = res.data.token;
+      const accessToken = res.data.accessToken;
       saveItem('accessToken', accessToken);
     }).catch((error) => {
       window.alert(error.message);
