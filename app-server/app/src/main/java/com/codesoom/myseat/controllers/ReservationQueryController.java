@@ -67,8 +67,7 @@ public class ReservationQueryController {
     @GetMapping("/{id}")
     public ReservationResponse reservation(@AuthenticationPrincipal UserAuthentication principal,
                                            @PathVariable(name = "id") Long reservationId) {
-        String email = principal.getEmail();
-        User user = userService.findUser(email);
+        User user = userService.findById(principal.getId());
 
         return new ReservationResponse(service.reservation(reservationId, user.getId()));
     }
