@@ -34,9 +34,4 @@ public class Retrospective {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
-    public void addReservation(
-            Reservation reservation
-    ) {
-        this.reservation = reservation;
-    }
 }
