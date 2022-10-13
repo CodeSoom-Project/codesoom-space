@@ -1,3 +1,0 @@
-DELETE http://localhost:8080/seat-reservation/5
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Imp5QGVtYWlsLmNvbSIsImlhdCI6MTY2MDkxMDU2MSwiZXhwIjoxNjYwOTQ2NTYxfQ.jUQSi7fOAhGQI7O97_jJo-EICPwKpl1Q2jRu9qFTl_o

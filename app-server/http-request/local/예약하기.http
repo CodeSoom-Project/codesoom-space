@@ -1,0 +1,8 @@
+POST http://localhost:8080/reservations
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer 
+
+{
+  "date" : "2022-10-05",
+  "content" : "책 읽기, 코테풀기"
+}

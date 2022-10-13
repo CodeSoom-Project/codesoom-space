@@ -1,8 +1,0 @@
-POST http://localhost:8080/seat-reservation/2
-Content-Type: application/json;charset=UTF-8
-
-{
-  "userName" : "코드숨",
-  "checkIn" : "09:30",
-  "checkOut" : "17:30"
-}
