@@ -127,9 +127,10 @@ const rows = [
 
 interface PropsType {
   onOpenReservationModal : React.ReactEventHandler,
+  onOpenRetrospectModal : React.ReactEventHandler
 }
 
-export default function ReservationsTable({ onOpenReservationModal }:PropsType) {
+export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }:PropsType) {
   const [page, setPage] = React.useState(0);
 
   const rowsPerPage = 10;
@@ -162,7 +163,7 @@ export default function ReservationsTable({ onOpenReservationModal }:PropsType) 
               <TableCell>{date}</TableCell>
               <TableCell align="left">{plan}</TableCell>
               <TableCell align="right">
-                <Button>
+                <Button onClick={onOpenRetrospectModal}>
                   {status === 'RETROSPECTIVE_COMPLETE' ? '회고제출' : '제출됨'}
                 </Button>
               </TableCell>
