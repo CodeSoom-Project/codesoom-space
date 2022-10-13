@@ -46,16 +46,16 @@ public class AuthenticationService {
             throw new AuthenticationFailureException();
         }
 
-        return jwtUtil.makeAccessToken(user.getEmail());
+        return jwtUtil.makeAccessToken(user.getId());
     }
 
     /**
      * 토큰을 파싱한다.
      * 
      * @param accessToken 토큰
-     * @return 이메일
+     * @return 회원 id
      */
-    public String parseToken(
+    public Long parseToken(
             String accessToken
     ) {
         return jwtUtil.parseAccessToken(accessToken);
@@ -64,12 +64,12 @@ public class AuthenticationService {
     /**
      * 권한 목록을 반환한다.
      * 
-     * @param email 이메일
+     * @param id 회원 id
      * @return 권한 목록
      */
     public List<Role> roles(
-            String email
+            Long id
     ) {
-        return roleRepo.findAllByEmail(email);
+        return roleRepo.findAllByUserId(id);
     }
 }

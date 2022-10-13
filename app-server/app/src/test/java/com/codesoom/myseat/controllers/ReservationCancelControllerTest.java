@@ -78,9 +78,9 @@ class ReservationCancelControllerTest {
                 .build();
 
         given(authService.parseToken(ACCESS_TOKEN))
-                .willReturn(EMAIL);
+                .willReturn(1L);
 
-        given(userService.findUser(EMAIL))
+        given(userService.findById(1L))
                 .willReturn(user);
 
         given(seatService.findSeat(NUMBER))

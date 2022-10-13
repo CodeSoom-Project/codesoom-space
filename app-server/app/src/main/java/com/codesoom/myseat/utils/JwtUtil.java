@@ -26,10 +26,10 @@ public class JwtUtil {
     /**
      * 생성된 토큰을 반환한다.
      * 
-     * @param email 토큰을 부여할 회원 이메일
+     * @param id 토큰을 부여할 회원의 id
      * @return 토큰 
      */
-    public String makeAccessToken(String email) {
+    public String makeAccessToken(Long id) {
         Date now = new Date();
 
         return Jwts.builder()
@@ -37,7 +37,7 @@ public class JwtUtil {
                 .setIssuer("fresh")
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + Duration.ofMinutes(30).toMillis()))
-                .claim("email", email)
+                .claim("id", id)
                 .signWith(key)
                 .compact();
     }
@@ -48,7 +48,7 @@ public class JwtUtil {
      * @param accessToken
      * @return 이메일
      */
-    public String parseAccessToken(String accessToken) {
+    public Long parseAccessToken(String accessToken) {
         log.info("accessToken: " + accessToken);
 
         Claims claims = Jwts.parserBuilder()
@@ -57,12 +57,12 @@ public class JwtUtil {
                 .parseClaimsJws(accessToken)
                 .getBody();
 
-        String email = claims.get("email", String.class);
-        log.info("email: " + email);
-        if(email == null) {
+        Long id = claims.get("id", Long.class);
+        log.info("id: " + id);
+        if(id == null) {
             log.info("@@@@@@@@@@@없어");
         }
 
-        return email;
+        return id;
     }
 }

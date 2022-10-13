@@ -10,18 +10,18 @@ import java.util.stream.Collectors;
 
 public class UserAuthentication 
         extends AbstractAuthenticationToken {
-    private final String email;
+    private final Long id;
 
     public UserAuthentication(
-            String email,
+            Long id,
             List<Role> roles
     ) {
         super(authorities(roles));
-        this.email = email;
+        this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public Long getId() {
+        return id;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class UserAuthentication
 
     @Override
     public Object getPrincipal() {
-        return email;
+        return id;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserAuthentication
 
     @Override
     public String toString() {
-        return "Authentication: " + email;
+        return "Authentication: " + id;
     }
 
     private static List<GrantedAuthority> authorities(

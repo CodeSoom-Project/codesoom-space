@@ -65,7 +65,7 @@ class SeatAddControllerTest {
                 .build();
 
         given(authService.parseToken(ACCESS_TOKEN))
-                .willReturn(EMAIL);
+                .willReturn(1L);
         
         given(seatAddService.createSeat(NUMBER))
                 .will(invocation -> Seat.builder()

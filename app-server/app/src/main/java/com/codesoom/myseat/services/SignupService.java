@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * 회원 가입 서비스
  */
@@ -36,23 +38,25 @@ public class SignupService {
      * @param password 비밀번호
      * @return 회원
      */
+    @Transactional
     public User createUser(
             String name,
             String email,
             String password
     ) {
-        Role role = Role.builder()
-                .email(email)
-                .roleName("USER")
-                .build();
-        
-        roleRepo.save(role);
-
-        return userRepo.save(User.builder()
+        User user = userRepo.save(User.builder()
                 .name(name)
                 .email(email)
                 .password(passwordEncoder.encode(password))
-                .build()
-        );
+                .build());
+
+        Role role = Role.builder()
+                .userId(user.getId())
+                .roleName("USER")
+                .build();
+
+        roleRepo.save(role);
+        
+        return user;
     }
 }

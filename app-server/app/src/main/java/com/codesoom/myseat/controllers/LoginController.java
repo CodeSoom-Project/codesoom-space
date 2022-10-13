@@ -42,7 +42,7 @@ public class LoginController {
         String email = request.getEmail();
         String password = request.getPassword();
 
-        User user = userService.findUser(email);
+        User user = userService.findByEmail(email);
 
         String accessToken = authService.login(user, password);
         log.info("accessToken: " + accessToken);

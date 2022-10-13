@@ -18,7 +18,7 @@ public class Role {
     @GeneratedValue
     private Long id;
 
-    private String email;
+    private Long userId;
 
     @Getter
     private String roleName;

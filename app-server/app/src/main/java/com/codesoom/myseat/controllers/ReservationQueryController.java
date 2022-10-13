@@ -38,8 +38,7 @@ public class ReservationQueryController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public ReservationListResponse reservations(@AuthenticationPrincipal UserAuthentication principal) {
-        String email = principal.getEmail();
-        User user = userService.findUser(email);
+        User user = userService.findById(principal.getId());
 
         return new ReservationListResponse(
                 service.reservations(user.getId())

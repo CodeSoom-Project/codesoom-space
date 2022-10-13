@@ -20,10 +20,18 @@ public interface UserRepository
     User save(User user);
 
     /**
-     * 이메일로 회원 엔티티를 검색한다.
+     * 주어진 id로 회원을 조회하고, 조회된 회원 엔티티를 반환합니다.
+     * 
+     * @param id 회원 id
+     * @return 조회된 회원 엔티티
+     */
+    Optional<User> findById(Long id);
+
+    /**
+     * 주어진 이메일로 회원을 조회하고, 조회된 회원 엔티티를 반환합니다.
      * 
      * @param email 이메일
-     * @return 회원 엔티티
+     * @return 조회된 회원 엔티티
      */
     Optional<User> findByEmail(String email);
 }
