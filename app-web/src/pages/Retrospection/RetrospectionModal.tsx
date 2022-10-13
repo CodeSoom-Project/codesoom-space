@@ -26,10 +26,11 @@ const ButtonWrap = styled.div({
 });
 
 const RetrospectionModal: React.FC = () => {
-  const characterLimit = 500;
-
   const dispatch = useDispatch();
   const { retrospections } = useAppSelector((state) => state.retrospections);
+
+  const characterLimit = 1000;
+  const isMinimum = retrospections.length > 100;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     dispatch(writeRetrospection(event.target.value));
@@ -68,7 +69,10 @@ const RetrospectionModal: React.FC = () => {
           <Button variant='outlined' size='small'>
             취소
           </Button>
-          <Button variant='contained' size='small'>
+          <Button
+            variant='contained' size='small'
+            disabled={!isMinimum}
+          >
             제출
           </Button>
         </ButtonWrap>
