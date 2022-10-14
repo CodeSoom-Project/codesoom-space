@@ -6,7 +6,9 @@ import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.UserNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
+import com.codesoom.myseat.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -28,6 +30,9 @@ class RetrospectiveServiceTest {
     @Mock
     private ReservationRepository reservationRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
 
     @BeforeEach
     void setUp() {
@@ -36,6 +41,7 @@ class RetrospectiveServiceTest {
     }
 
     @Test
+    @DisplayName("createRetrospective 메서드는 retrospective을 반환한다.")
     void will_return_retrospective() {
         User mockUser = User.builder()
                 .id(1L)
@@ -43,23 +49,27 @@ class RetrospectiveServiceTest {
                 .email("soo@email.com")
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
+
         Retrospective mockRetrospective = Retrospective.builder().retrospective("잘했다.").build();
-        Reservation reservation = Reservation.builder()
-                .retrospective(mockRetrospective)
+
+        Reservation mockReservation = Reservation.builder()
+                .id(1L)
                 .user(mockUser)
                 .build();
 
-        given(reservationRepository.findById(1L)).willReturn(Optional.of(reservation));
-        given(retrospectiveRepository.findById(1L)).willReturn(Optional.of(mockRetrospective));
+        given(userRepository.findById(1L)).willReturn(Optional.of(mockUser));
+        given(reservationRepository.findById(1L)).willReturn(Optional.of(mockReservation));
+        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId()))
+                .willReturn(true);
 
         Retrospective retrospective = service.createRetrospective(mockUser, 1L, "잘했다.");
 
-        assertThat(retrospective.getRetrospective()).isEqualTo("잘했다.");
-        assertThat(reservation.getRetrospective().getRetrospective()).isEqualTo("잘했다.");
+        assertThat(retrospective.getRetrospective()).isEqualTo(mockRetrospective.getRetrospective());
 
     }
 
     @Test
+    @DisplayName("UserId와ReservationId가 동일하지 않으면 UserNotFoundException을 던진다.")
     void If_UserId_And_ReservationId_Is_Not_Collect_Given_It_throws_UserNotFoundException() {
         User mockUser = User.builder()
                 .id(1L)
@@ -67,6 +77,9 @@ class RetrospectiveServiceTest {
                 .email("soo@email.com")
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
+
+        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId()))
+                .willReturn(true);
 
         assertThatThrownBy(() -> service.createRetrospective(mockUser, 2L, "잘했다."))
                 .isInstanceOf(UserNotFoundException.class);

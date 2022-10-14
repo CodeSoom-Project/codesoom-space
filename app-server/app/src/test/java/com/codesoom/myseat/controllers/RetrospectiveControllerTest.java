@@ -80,27 +80,6 @@ class RetrospectiveControllerTest {
                 .andReturn();
     }
 
-    @Test
-    @DisplayName("POST /retrospectives 요청 시 상태코드 401를 응답한다")
-    void retrospective_invalid_Token() throws Exception {
-        RetrospectiveRequest request = new RetrospectiveRequest("잘했다");
-
-        given(authService.parseToken(INVALID_TOKEN))
-                .willThrow(new AuthenticationFailureException());
-
-        ResultActions result = mockMvc.perform(post("/reservations/{id}/retrospectives", ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + INVALID_TOKEN)
-                .content(toJson(request))
-        );
-
-        result
-                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
-                .andDo(print())
-                .andReturn();
-    }
-
     private String toJson(
             Object object
     ) throws JsonProcessingException {

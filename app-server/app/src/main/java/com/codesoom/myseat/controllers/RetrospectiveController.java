@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @CrossOrigin
+@RestController
 @RequestMapping("/reservations")
 public class RetrospectiveController {
 
@@ -33,7 +33,7 @@ public class RetrospectiveController {
      * 회고를 작성하고 상태 코드 204를 응답합니다.
      *
      * @param id 예약 Id
-     * @param request 예약 폼에 입력된 데이터
+     * @param request 회고 폼에 입력된 데이터
      */
     @PostMapping("/{id}/retrospectives")
     @PreAuthorize("isAuthenticated()")
