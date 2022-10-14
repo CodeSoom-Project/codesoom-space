@@ -63,6 +63,7 @@ export default function Reservations() {
     dispatch(checkIsDetail(true));
   };
 
+
   const onClicktoggleRetrospectModal = () => {
     dispatch(toggleRetrospectModal());
   };
@@ -126,7 +127,6 @@ export default function Reservations() {
         onClose={onClicktoggleRetrospectModal}
         onApply={onClickApplyRetrospectives}
       />
-
 
       <Wrap>
         <Header>
