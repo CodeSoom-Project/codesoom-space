@@ -65,6 +65,7 @@ export default function Reservations() {
   const { mutate: reservationMutate, isLoading: reservationIsLoading } = useMutation(fetchReservation, {
     onSuccess: () => {
       alert('예약이 신청되셨습니다.');
+      onClicktoggleReservationsModal();
     },
     onError: () => {
       alert('예약이 실패하였습니다 다시 신청해주세요.');
@@ -81,6 +82,7 @@ export default function Reservations() {
   const { mutate: retrospectiveMutate, isLoading: retrospectiveIsLoading } = useMutation(fetchRetrospectives, {
     onSuccess: () => {
       alert('회고가 제출되었습니다.');
+      onClicktoggleRetrospectModal();
     },
     onError: () => {
       alert('회고 제출에 실패했습니다. 다시 시도해주세요.');
