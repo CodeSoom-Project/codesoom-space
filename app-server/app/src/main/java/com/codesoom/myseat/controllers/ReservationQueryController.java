@@ -11,6 +11,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 /**
  * 예약 조회 컨트롤러
  */
+@CrossOrigin
 @RequestMapping("/reservations")
 @RestController
 public class ReservationQueryController {
