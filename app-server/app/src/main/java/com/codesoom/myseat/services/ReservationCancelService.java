@@ -39,9 +39,9 @@ public class ReservationCancelService {
             User user,
             Seat seat
     ) {
-        Reservation reservation = user.getReservation();
+//        Reservation reservation = user.getReservation();
         user.cancelReservation();
-        reservationRepo.delete(reservation);
+//        reservationRepo.delete(reservation);
         seat.cancelReservation();
     }
 
