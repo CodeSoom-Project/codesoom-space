@@ -107,12 +107,11 @@ export default function Reservations() {
 
   return (
     <Container>
-      {isOpenReservationsModal && (
-        <ReservationDialog
-          onClose={onClicktoggleReservationsModal}
-          onApply={onClickApplyReservation}
-        />
-      )}
+      <ReservationDialog
+        open={isOpenReservationsModal}
+        onClose={onClicktoggleReservationsModal}
+        onApply={onClickApplyReservation}
+      />
 
       <RetrospectivesModal
         open={isOpenRetrospectModal}

@@ -72,8 +72,9 @@ const TextBox = styled.div({
 });
 
 interface Props {
-  onClose: React.ReactEventHandler,
-  onApply: React.ReactEventHandler
+  open : boolean;
+  onClose : React.ReactEventHandler;
+  onApply : React.ReactEventHandler;
 }
 
 function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler }) {
@@ -103,7 +104,10 @@ function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler 
   );
 }
 
-function ApplyReservationDialog({ onClose, onApply }:Props) {
+function ApplyReservationDialog({ onClose, onApply }:{
+  onClose : React.ReactEventHandler;
+  onApply : React.ReactEventHandler;
+}) {
   const dispatch = useDispatch();
 
   const { date, content } = useAppSelector(get('reservations'));
@@ -158,12 +162,12 @@ function ApplyReservationDialog({ onClose, onApply }:Props) {
 }
 
 
-export default function ReservationDialog({ onClose, onApply }: Props) {
+export default function ReservationDialog({ open, onClose, onApply }: Props) {
   const { isDetail } = useAppSelector(get('reservations'));
 
   return (
     <Dialog
-      open={true}
+      open={open}
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
