@@ -57,8 +57,6 @@ public class ReservationService {
                 .plan(plan)
                 .build();
 
-        plan.addReservation(reservation);
-
         planRepo.save(plan);
         reservationRepo.save(reservation);
 

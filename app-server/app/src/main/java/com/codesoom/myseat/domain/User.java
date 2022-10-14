@@ -30,11 +30,6 @@ public class User {
 
     private String password;
 
-
-    @OneToOne
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
-
     /**
      * 비밀번호 인증에 성공하면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
      * 
@@ -49,11 +44,5 @@ public class User {
         log.info("password: " + password);
         log.info("this.password: " + this.password);
         return passwordEncoder.matches(password, this.password);
-    }
-
-    public void cancelReservation() {
-        log.info("예약 취소");
-
-//        reservation = null;
     }
 }

@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
-import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -27,19 +26,4 @@ public class Plan {
     private Long id;
 
     private String content;
-
-    @OneToOne(cascade = PERSIST)
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
-
-    /**
-     * 예약을 추가합니다.
-     * 
-     * @param reservation 예약
-     */
-    public void addReservation(
-            Reservation reservation
-    ) {
-        this.reservation = reservation;
-    }
 }

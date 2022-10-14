@@ -28,23 +28,6 @@ public class Seat {
     @Builder.Default
     private boolean status = false;
 
-    @OneToOne(mappedBy = "seat")
-    private User user;
-
-    public void reserve(
-            User user
-    ) {
-        this.status = true;
-        this.user = user;
-    }
-
-    public void cancelReservation() {
-        log.info("예약 취소");
-        
-        status = false;
-        this.user = null;
-    }
-
     public boolean getStatus() {
         return this.status;
     }

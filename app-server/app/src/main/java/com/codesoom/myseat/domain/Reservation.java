@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
-import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -35,7 +34,8 @@ public class Reservation {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(mappedBy = "reservation", cascade = PERSIST)
+    @OneToOne
+    @JoinColumn(name = "plan_id")
     private Plan plan;
 
     @Convert(converter = ReservationStatusConverter.class)
