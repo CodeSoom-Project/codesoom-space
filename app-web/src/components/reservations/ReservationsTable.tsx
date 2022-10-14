@@ -106,7 +106,7 @@ interface Props {
 interface Reservations {
   id: number;
   date: string;
-  plan: string;
+  content: string;
   status: string;
 }
 
@@ -177,15 +177,10 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
         </TableHead>
 
         <TableBody>
-          {reservations.slice(startRow, endRow).map(({
-            id,
-            date,
-            plan,
-            status,
-          }: Reservations) => (
+          {reservations.slice(startRow, endRow).map(({ id, date, content, status }: Reservations) => (
             <TableRow key={id}>
               <TableCell>{date}</TableCell>
-              <TableCell align="left">{plan}</TableCell>
+              <TableCell align="left">{content}</TableCell>
               <TableCell align="right">
                 <Button onClick={(e) => {
                   handleClickRetrospective(e, id);

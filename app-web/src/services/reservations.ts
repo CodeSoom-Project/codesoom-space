@@ -19,14 +19,14 @@ export const getReservation = async () => {
   return data;
 };
 
-export const fetchReservation = async ({ date, plan }:{ date : string, plan : string }) => {
+export const fetchReservation = async ({ date, content }:{ date : string, content : string }) => {
   const accessToken = loadItem('accessToken');
 
   const response = await api({
     method: 'post',
     url: '/reservations',
     headers: { Authorization: `Bearer ${accessToken}` },
-    data: { date, plan },
+    data: { date, content },
   });
 
   return response;
