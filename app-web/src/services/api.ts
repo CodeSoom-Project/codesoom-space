@@ -10,8 +10,8 @@ const api = axios.create({
 export const request = ({ ...options }) => {
   const token = loadItem('accessToken');
   api.defaults.headers.common.Authorization = token ? `Bearer ${token}` : '';
-  const onSuccess = (response:any) => response;
-  const onError = (error:any) => {
+  const onSuccess = (response: any) => response;
+  const onError = (error: any) => {
     return error;
   };
 
@@ -22,11 +22,11 @@ export const getSeats = () => {
   return api.get('/seats');
 };
 
-export const getSeatDetail = (seatNumber:number) => {
+export const getSeatDetail = (seatNumber: number) => {
   return request({ url: `/seat/${seatNumber}`, method: 'get' });
 };
 
-export const seatReservation = async ({ seatNumber }:{ seatNumber:number }) => {
+export const seatReservation = async ({ seatNumber }: { seatNumber: number }) => {
   try {
     return await request({ url: `/seat-reservation/${seatNumber}`, method: 'post' });
   } catch (err) {
