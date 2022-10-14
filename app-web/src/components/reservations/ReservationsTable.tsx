@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useQuery } from 'react-query';
+
 import { styled } from '@mui/material/styles';
 
 import {
@@ -17,10 +19,13 @@ import {
 } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
+import { getReservation } from '../../services/reservations';
+
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+
 
 interface TablePaginationActionsProps {
   count: number;
@@ -90,12 +95,21 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-const rows = [];
-
 interface Props {
   onOpenReservationModal : React.ReactEventHandler,
   onOpenRetrospectModal : React.ReactEventHandler
 }
+
+interface Reservations {
+  id: number;
+  date: string;
+  plan: string;
+  status: string;
+}
+
+type StatusType = {
+  [key: string]: string;
+};
 
 export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }: Props) {
   const [page, setPage] = React.useState(0);
@@ -112,6 +126,28 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
     setPage(newPage);
   };
 
+  const statusName: StatusType = {
+    'RESERVED': '예약완료',
+    'CANCELED': '취소',
+    'RETROSPECTIVE_COMPLETE': '회고 제출하기',
+    'RETROSPECTIVE_WAITING': '회고 작성전',
+  };
+
+  const { isLoading, data, isError } = useQuery('reservations', getReservation, {
+    retry: 1,
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error</div>;
+  }
+
+  const { reservations } = data;
+
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -125,13 +161,13 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
         </TableHead>
 
         <TableBody>
-          {rows.slice(startRow, endRow).map(({ id, date, plan, status }) => (
+          {reservations.slice(startRow, endRow).map(({ id, date, plan, status }:Reservations) => (
             <TableRow key={id}>
               <TableCell>{date}</TableCell>
               <TableCell align="left">{plan}</TableCell>
               <TableCell align="right">
                 <Button onClick={onOpenRetrospectModal}>
-                  {status === 'RETROSPECTIVE_COMPLETE' ? '회고제출' : '제출됨'}
+                  {statusName[status]}
                 </Button>
               </TableCell>
               <TableCell align="right">
@@ -148,7 +184,7 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
             <TablePagination
               labelRowsPerPage=""
               rowsPerPageOptions={[10]}
-              count={rows.length}
+              count={reservations.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

@@ -8,6 +8,17 @@ const api = axios.create({
   baseURL: BASE_URL,
 });
 
+export const getReservation = async () => {
+  const accessToken = loadItem('accessToken');
+  const { data } = await api({
+    method: 'get',
+    url: '/reservations',
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+  return data;
+};
+
 export const fetchReservation = async ({ date, plan }:{ date : string, plan : string }) => {
   const accessToken = loadItem('accessToken');
 
