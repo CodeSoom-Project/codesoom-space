@@ -31,3 +31,19 @@ export const fetchReservation = async ({ date, content }:{ date : string, conten
 
   return response;
 };
+
+export const reservationsKeys = {
+  reservationsById: (id : number) => ['retrospectives', id] as const,
+};
+
+export const getReservations = async (id : number) => {
+  const accessToken = loadItem('accessToken');
+
+  const { data } = await api({
+    method: 'get',
+    url: `reservations/${id}`,
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+  return data;
+};

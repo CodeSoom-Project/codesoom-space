@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import styled from '@emotion/styled';
 
+import { useQuery } from 'react-query';
+
 import dayjs from 'dayjs';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -19,6 +21,8 @@ import { useAppSelector } from '../../hooks';
 import { get } from '../../utils';
 
 import { saveDate, saveContent } from '../../redux/reservationsSlice';
+
+import { getReservations, reservationsKeys } from '../../services/reservations';
 
 const TextFieldWrap = styled.div({
   display: 'flex',
@@ -54,6 +58,20 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
   const dispatch = useDispatch();
 
   const { date, content } = useAppSelector(get('reservations'));
+
+  const id = 2;
+
+  const { isLoading, data, isError } = useQuery(
+    reservationsKeys.reservationsById(id),
+    () => getReservations(id), { retry: 1 });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error</div>;
+  }
 
   const handleChange = (value: dayjs.Dayjs | null) => {
     dispatch(
