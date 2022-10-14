@@ -6,7 +6,7 @@ import { Button, Dialog, IconButton, TextField } from '@mui/material';
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import { writeRetrospection } from '../../redux/retrospectionSlice';
+import { writeRetrospectives } from '../../redux/retrospectivesSlice';
 
 import { useAppSelector } from '../../hooks';
 
@@ -31,18 +31,18 @@ interface Props {
   onApply: React.ReactEventHandler,
 }
 
-const RetrospectionModal: React.FC<Props> = ({ open, onClose, onApply }: Props) => {
+const RetrospectivesModal: React.FC<Props> = ({ open, onClose, onApply }: Props) => {
   const dispatch = useDispatch();
 
-  const { retrospections } = useAppSelector((state) => state.retrospections);
+  const { retrospectives } = useAppSelector((state) => state.retrospectives);
 
   const characterMinimum = 100;
   const characterMaximum = 1000;
 
-  const isMinimum = retrospections.length > characterMinimum;
+  const isMinimum = retrospectives.length > characterMinimum;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    dispatch(writeRetrospection(event.target.value));
+    dispatch(writeRetrospectives(event.target.value));
   };
 
   return (
@@ -68,8 +68,8 @@ const RetrospectionModal: React.FC<Props> = ({ open, onClose, onApply }: Props) 
           inputProps={{ maxLength: characterMaximum, minLength: characterMinimum }}
           label='회고'
           placeholder='회고를 입력해주세요.'
-          helperText={`${retrospections.length} /${characterMaximum}`}
-          value={retrospections}
+          helperText={`${retrospectives.length} /${characterMaximum}`}
+          value={retrospectives}
           onChange={handleChange}
           style={{ margin: '1rem 3rem 1rem 0' }}
           variant='outlined'
@@ -94,4 +94,4 @@ const RetrospectionModal: React.FC<Props> = ({ open, onClose, onApply }: Props) 
   );
 };
 
-export default RetrospectionModal;
+export default RetrospectivesModal;

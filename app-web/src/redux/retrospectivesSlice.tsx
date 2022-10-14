@@ -1,27 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface RetrospectionState {
-  isOpenRetrospectModal:boolean,
-  retrospections: string,
+interface RetrospectivesState {
+  isOpenRetrospectModal: boolean,
+  retrospectives: string,
 }
 
-const initialState: RetrospectionState = {
+const initialState: RetrospectivesState = {
   isOpenRetrospectModal: false,
-  retrospections: '',
+  retrospectives: '',
 };
 
 const { reducer, actions } = createSlice({
-  name: 'retrospections',
+  name: 'retrospectives',
   initialState,
   reducers: {
     toggleRetrospectModal: (state) => ({
       ...state,
       isOpenRetrospectModal: !state.isOpenRetrospectModal,
     }),
-    writeRetrospection: (state, { payload }) => {
+    writeRetrospectives: (state, { payload }) => {
       return {
         ...state,
-        retrospections: payload,
+        retrospectives: payload,
       };
     },
   },
@@ -29,7 +29,7 @@ const { reducer, actions } = createSlice({
 
 export const {
   toggleRetrospectModal,
-  writeRetrospection,
+  writeRetrospectives,
 } = actions;
 
 export default reducer;
