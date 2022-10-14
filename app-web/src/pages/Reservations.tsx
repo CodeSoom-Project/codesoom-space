@@ -61,7 +61,8 @@ export default function Reservations() {
     dispatch(resetRetrospectives());
   };
 
-  const { mutate: reservationMutate, isLoading: reservationIsLoading } = useMutation(fetchReservation, {
+  const { mutate: reservationMutate, isLoading: reservationIsLoading } =
+  useMutation(fetchReservation, {
     onSuccess: () => {
       alert('예약이 신청되셨습니다.');
       onClicktoggleReservationsModal();
@@ -78,7 +79,8 @@ export default function Reservations() {
     });
   };
 
-  const { mutate: retrospectiveMutate, isLoading: retrospectiveIsLoading } = useMutation(fetchRetrospectives, {
+  const { mutate: retrospectiveMutate, isLoading: retrospectiveIsLoading } =
+  useMutation(fetchRetrospectives, {
     onSuccess: () => {
       alert('회고가 제출되었습니다.');
       onClicktoggleRetrospectModal();
@@ -112,11 +114,13 @@ export default function Reservations() {
         onClose={onClicktoggleReservationsModal}
         onApply={onClickApplyReservation}
       />
-      <RetrospectivesModal
-        open={isOpenRetrospectModal}
-        onClose={onClicktoggleRetrospectModal}
-        onApply={onClickApplyRetrospectives}
-      />
+      {
+        isOpenRetrospectModal &&
+     (<RetrospectivesModal
+       onClose={onClicktoggleRetrospectModal}
+       onApply={onClickApplyRetrospectives}
+     />)
+      }
 
       <Wrap>
         <Header>
