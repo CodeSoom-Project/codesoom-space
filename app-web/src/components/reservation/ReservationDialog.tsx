@@ -38,6 +38,7 @@ interface Props {
 }
 
 export default function ReservationDialog({ open, onClose, onApply, isDetail }: Props) {
+
   const dispatch = useDispatch();
 
   const { date, plan } = useAppSelector(get('reservations'));

@@ -118,7 +118,6 @@ export default function Reservations() {
         open={isOpenRetrospectModal}
         onClose={onClicktoggleRetrospectModal}
         onApply={onClickApplyRetrospectives}
-      />
 
       <Wrap>
         <Header>
