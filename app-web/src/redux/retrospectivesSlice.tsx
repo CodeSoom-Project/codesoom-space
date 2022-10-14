@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 interface RetrospectivesState {
   isOpenRetrospectModal: boolean,
   retrospectives: string,
+  id: number,
 }
 
 const initialState: RetrospectivesState = {
   isOpenRetrospectModal: false,
   retrospectives: '',
+  id: 0,
 };
 
 const { reducer, actions } = createSlice({
@@ -28,6 +30,10 @@ const { reducer, actions } = createSlice({
       ...state,
       retrospectives: initialState.retrospectives,
     }),
+    selectResetRetrospectiveId: (state, { payload }) => ({
+      ...state,
+      id: payload,
+    }),
   },
 });
 
@@ -35,6 +41,7 @@ export const {
   toggleRetrospectModal,
   writeRetrospectives,
   resetRetrospectives,
+  selectResetRetrospectiveId,
 } = actions;
 
 export default reducer;

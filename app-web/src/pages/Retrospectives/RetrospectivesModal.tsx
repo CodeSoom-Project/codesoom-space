@@ -42,7 +42,7 @@ interface Props {
 const RetrospectivesModal: React.FC<Props> = ({ open, onClose, onApply }: Props) => {
   const dispatch = useDispatch();
 
-  const { retrospectives } = useAppSelector((state) => state.retrospectives);
+  const { retrospectives, id } = useAppSelector((state) => state.retrospectives);
 
   const characterMinimum = 100;
   const characterMaximum = 1000;

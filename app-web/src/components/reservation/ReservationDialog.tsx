@@ -53,7 +53,7 @@ interface Props {
 export default function ReservationDialog({ open, onClose, onApply }: Props) {
   const dispatch = useDispatch();
 
-  const { date, plan } = useAppSelector(get('reservations'));
+  const { date, plan, id } = useAppSelector(get('reservations'));
 
   const handleChange = (value: dayjs.Dayjs | null) => {
     dispatch(

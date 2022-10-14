@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useDispatch } from 'react-redux';
+
 import { useQuery } from 'react-query';
 
 import { styled } from '@mui/material/styles';
@@ -21,10 +23,16 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 import { getReservation } from '../../services/reservations';
 
+import { selectResetRetrospectiveId } from '../../redux/retrospectivesSlice';
+import { selectReservationId } from '../../redux/reservationsSlice';
+
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+
+
+
 
 
 interface TablePaginationActionsProps {
@@ -111,6 +119,8 @@ type StatusType = {
 };
 
 export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }: Props) {
+  const dispatch = useDispatch();
+
   const [page, setPage] = React.useState(0);
 
   const rowsPerPage = 10;
@@ -146,6 +156,7 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
 
   const { reservations } = data;
 
+  console.log(reservations);
 
   return (
     <TableContainer component={Paper}>
@@ -165,12 +176,18 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
               <TableCell>{date}</TableCell>
               <TableCell align="left">{plan}</TableCell>
               <TableCell align="right">
-                <Button onClick={onOpenRetrospectModal}>
+                <Button onClick={(e) => {
+                  onOpenRetrospectModal(e);
+                  dispatch(selectReservationId(id));
+                }}>
                   {statusName[status]}
                 </Button>
               </TableCell>
               <TableCell align="right">
-                <Button onClick={onOpenReservationModal}>
+                <Button onClick={(e) => {
+                  onOpenReservationModal(e);
+                  dispatch(selectResetRetrospectiveId(id));
+                }}>
                   상세보기
                 </Button>
               </TableCell>
