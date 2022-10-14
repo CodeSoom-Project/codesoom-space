@@ -44,7 +44,7 @@ public class RetrospectiveController {
             @RequestBody final RetrospectiveRequest request)
     {
         User user = userService.findById(principal.getId());
-        String content = request.getRetrospective();
+        String content = request.getContent();
 
         retrospectiveService.createRetrospective(user, id, content);
     }

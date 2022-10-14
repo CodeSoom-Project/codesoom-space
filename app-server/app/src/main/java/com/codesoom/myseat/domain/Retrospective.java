@@ -28,15 +28,10 @@ public class Retrospective {
     @Column(name = "retrospective_id")
     Long id;
 
-    String retrospective;
+    String content;
 
     @OneToOne(cascade = PERSIST)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
-    public void addReservation(
-            Reservation reservation
-    ) {
-        this.reservation = reservation;
-    }
 }

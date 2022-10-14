@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RetrospectiveRequest {
 
-    String retrospective;
+    String content;
 }
