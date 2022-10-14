@@ -28,13 +28,13 @@ const TextFieldWrap = styled.div({
   padding: '1.5rem',
 });
 
-interface PropsType {
+interface Props {
   open : boolean,
   onClose : React.ReactEventHandler,
   onApply : React.ReactEventHandler
 }
 
-export default function ReservationDialog({ open, onClose, onApply }: PropsType) {
+export default function ReservationDialog({ open, onClose, onApply }: Props) {
   const dispatch = useDispatch();
 
   const { date, plan } = useAppSelector(get('reservations'));
