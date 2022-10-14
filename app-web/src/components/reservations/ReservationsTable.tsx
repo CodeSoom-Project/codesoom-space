@@ -95,6 +95,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
+const rows = [];
+
 interface Props {
   onOpenReservationModal: React.ReactEventHandler,
   onOpenRetrospectModal: React.ReactEventHandler
@@ -161,7 +163,7 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
         </TableHead>
 
         <TableBody>
-          {reservations.slice(startRow, endRow).map(({ id, date, plan, status }:Reservations) => (
+          {reservations.slice(startRow, endRow).map(({ id, date, plan, status }: Reservations) => (
             <TableRow key={id}>
               <TableCell>{date}</TableCell>
               <TableCell align="left">{plan}</TableCell>
