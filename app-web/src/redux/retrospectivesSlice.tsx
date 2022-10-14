@@ -24,6 +24,10 @@ const { reducer, actions } = createSlice({
         retrospectives: payload,
       };
     },
+    resetRetrospectives: (state) => ({
+      ...state,
+      retrospectives: initialState.retrospectives,
+    }),
   },
 });
 
