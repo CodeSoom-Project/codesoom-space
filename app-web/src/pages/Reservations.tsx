@@ -60,7 +60,7 @@ export default function Reservations() {
     dispatch(toggleRetrospectModal());
   };
 
-  const { mutate: reservationMutate, isLoading } = useMutation(fetchReservation, {
+  const { mutate: reservationMutate, isLoading: reservationIsLoading } = useMutation(fetchReservation, {
     onSuccess: () => {
       alert('예약이 신청되셨습니다.');
     },
@@ -76,13 +76,7 @@ export default function Reservations() {
     });
   };
 
-  if (isLoading) {
-    return (
-      <LinearProgress />
-    );
-  }
-
-  const { mutate: retrospectiveMutate } = useMutation(fetchRetrospection, {
+  const { mutate: retrospectiveMutate, isLoading: retrospectiveIsLoading } = useMutation(fetchRetrospection, {
     onSuccess: () => {
       alert('회고가 제출되었습니다.');
     },
@@ -97,6 +91,12 @@ export default function Reservations() {
       retrospections: retrospections,
     });
   };
+
+  if (reservationIsLoading || retrospectiveIsLoading) {
+    return (
+      <LinearProgress />
+    );
+  }
 
   return (
     <Container>
