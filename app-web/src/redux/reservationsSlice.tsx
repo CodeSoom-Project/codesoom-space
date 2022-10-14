@@ -32,6 +32,11 @@ const reservationsSlice = createSlice({
       ...state,
       plan: payload,
     }),
+    resetReservations: (state) => ({
+      ...state,
+      date: initialState.date,
+      plan: initialState.plan,
+    }),
   },
 });
 
@@ -39,6 +44,7 @@ export const {
   toggleReservationsModal,
   saveDate,
   savePlan,
+  resetReservations,
 } = reservationsSlice.actions;
 
 export default reservationsSlice.reducer;

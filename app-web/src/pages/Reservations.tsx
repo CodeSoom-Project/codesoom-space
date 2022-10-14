@@ -8,8 +8,8 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { get } from '../utils';
 
-import { toggleReservationsModal } from '../redux/reservationsSlice';
-import { toggleRetrospectModal } from '../redux/retrospectivesSlice';
+import { resetReservations, toggleReservationsModal } from '../redux/reservationsSlice';
+import { resetRetrospectives, toggleRetrospectModal } from '../redux/retrospectivesSlice';
 
 import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
@@ -54,10 +54,12 @@ export default function Reservations() {
 
   const onClicktoggleReservationsModal = () => {
     dispatch(toggleReservationsModal());
+    dispatch(resetReservations());
   };
 
   const onClicktoggleRetrospectModal = () => {
     dispatch(toggleRetrospectModal());
+    dispatch(resetRetrospectives());
   };
 
   const { mutate: reservationMutate, isLoading: reservationIsLoading } = useMutation(fetchReservation, {

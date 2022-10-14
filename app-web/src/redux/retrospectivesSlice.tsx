@@ -24,12 +24,17 @@ const { reducer, actions } = createSlice({
         retrospectives: payload,
       };
     },
+    resetRetrospectives: (state) => ({
+      ...state,
+      retrospectives: initialState.retrospectives,
+    }),
   },
 });
 
 export const {
   toggleRetrospectModal,
   writeRetrospectives,
+  resetRetrospectives,
 } = actions;
 
 export default reducer;
