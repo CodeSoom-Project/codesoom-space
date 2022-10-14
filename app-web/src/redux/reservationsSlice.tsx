@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface ReservationState {
   isOpenReservationsModal: boolean,
+  isOpenReservationDetailsModal: boolean,
 
   date: string | null,
   plan: string,
@@ -9,6 +10,7 @@ interface ReservationState {
 
 export const initialState: ReservationState = {
   isOpenReservationsModal: false,
+  isOpenReservationDetailsModal: false,
 
   date: null,
   plan: '',
@@ -21,6 +23,10 @@ const reservationsSlice = createSlice({
     toggleReservationsModal: (state) => ({
       ...state,
       isOpenReservationsModal: !state.isOpenReservationsModal,
+    }),
+    toggleReservationDetailsModal: (state) => ({
+      ...state,
+      isOpenReservationDetailsModal: !state.isOpenReservationDetailsModal,
     }),
     saveDate: (state, { payload }) => {
       return ({
@@ -42,6 +48,7 @@ const reservationsSlice = createSlice({
 
 export const {
   toggleReservationsModal,
+  toggleReservationDetailsModal,
   saveDate,
   savePlan,
   resetReservations,

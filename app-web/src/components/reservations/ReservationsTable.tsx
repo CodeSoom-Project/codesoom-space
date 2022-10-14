@@ -1,31 +1,26 @@
 import * as React from 'react';
 
-import { useQuery } from 'react-query';
-
 import { styled } from '@mui/material/styles';
 
 import {
   Box,
+  Button,
+  IconButton,
+  Paper,
   Table,
+  TableBody,
   TableContainer,
+  TableFooter,
+  TableHead,
   TablePagination,
   TableRow,
-  Paper,
-  IconButton,
-  Button,
-  TableHead,
-  TableBody,
-  TableFooter,
 } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-
-import { getReservation } from '../../services/reservations';
 
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-
 
 interface TablePaginationActionsProps {
   count: number;
@@ -49,19 +44,19 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
   const LastPage = Math.ceil(count / rowsPerPage) - 1;
 
-  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, 0);
   };
 
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, page - 1);
   };
 
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, page + 1);
   };
 
-  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, LastPage);
   };
 
@@ -94,23 +89,16 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     </Box>
   );
 }
+
+const rows = [];
+
 interface Props {
-  onOpenReservationModal: React.ReactEventHandler,
-  onOpenRetrospectModal: React.ReactEventHandler
+  onOpenReservationModal : React.ReactEventHandler,
+  onOpenRetrospectModal : React.ReactEventHandler
 }
 
-interface Reservations {
-  id: number;
-  date: string;
-  plan: string;
-  status: string;
-}
+export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }:Props) {
 
-type StatusType = {
-  [key: string]: string;
-};
-
-export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }: Props) {
   const [page, setPage] = React.useState(0);
 
   const rowsPerPage = 10;
@@ -121,31 +109,9 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
-  ): void => {
+  ):void => {
     setPage(newPage);
   };
-
-  const statusName: StatusType = {
-    'RESERVED': '예약완료',
-    'CANCELED': '취소',
-    'RETROSPECTIVE_COMPLETE': '회고 제출하기',
-    'RETROSPECTIVE_WAITING': '회고 작성전',
-  };
-
-  const { isLoading, data, isError } = useQuery('reservations', getReservation, {
-    retry: 1,
-  });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error</div>;
-  }
-
-  const { reservations } = data;
-
 
   return (
     <TableContainer component={Paper}>
@@ -160,18 +126,18 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
         </TableHead>
 
         <TableBody>
-          {reservations.slice(startRow, endRow).map(({ id, date, plan, status }: Reservations) => (
+          {rows.slice(startRow, endRow).map(({ id, date, plan, status }) => (
             <TableRow key={id}>
               <TableCell>{date}</TableCell>
               <TableCell align="left">{plan}</TableCell>
               <TableCell align="right">
                 <Button onClick={onOpenRetrospectModal}>
-                  {statusName[status]}
+                  {status === 'RETROSPECTIVE_COMPLETE' ? '회고제출' : '제출됨'}
                 </Button>
               </TableCell>
               <TableCell align="right">
                 <Button onClick={onOpenReservationModal}>
-                  상세보기
+                    상세보기
                 </Button>
               </TableCell>
             </TableRow>
@@ -183,7 +149,7 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
             <TablePagination
               labelRowsPerPage=""
               rowsPerPageOptions={[10]}
-              count={reservations.length}
+              count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

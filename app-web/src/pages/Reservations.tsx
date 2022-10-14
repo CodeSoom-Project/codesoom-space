@@ -8,8 +8,8 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { get } from '../utils';
 
-import { resetReservations, toggleReservationsModal } from '../redux/reservationsSlice';
-import { resetRetrospectives, toggleRetrospectModal } from '../redux/retrospectivesSlice';
+import { checkIsDetail, toggleReservationsModal } from '../redux/reservationsSlice';
+import { toggleRetrospectModal } from '../redux/retrospectivesSlice';
 
 import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
@@ -49,17 +49,22 @@ export default function Reservations() {
 
   const dispatch = useAppDispatch();
 
-  const { isOpenReservationsModal, date, plan } = useAppSelector(get('reservations'));
+  const { isOpenReservationsModal, isDetail, date, plan } = useAppSelector(get('reservations'));
   const { isOpenRetrospectModal, retrospectives } = useAppSelector(get('retrospectives'));
 
   const onClicktoggleReservationsModal = () => {
     dispatch(toggleReservationsModal());
-    dispatch(resetReservations());
+    dispatch(checkIsDetail(false));
   };
+
+  const onClickToggleReservationDetailsModal = () => {
+    dispatch(toggleReservationsModal());
+    dispatch(checkIsDetail(true));
+  };
+
 
   const onClicktoggleRetrospectModal = () => {
     dispatch(toggleRetrospectModal());
-    dispatch(resetRetrospectives());
   };
 
   const { mutate: reservationMutate, isLoading: reservationIsLoading } = useMutation(fetchReservation, {
@@ -106,7 +111,9 @@ export default function Reservations() {
         open={isOpenReservationsModal}
         onClose={onClicktoggleReservationsModal}
         onApply={onClickApplyReservation}
+        isDetail={isDetail}
       />
+
       <RetrospectivesModal
         open={isOpenRetrospectModal}
         onClose={onClicktoggleRetrospectModal}
@@ -125,7 +132,7 @@ export default function Reservations() {
         </Header>
 
         <ReservationsTable
-          onOpenReservationModal={onClicktoggleReservationsModal}
+          onOpenReservationModal={onClickToggleReservationDetailsModal}
           onOpenRetrospectModal={onClicktoggleRetrospectModal}
         />
       </Wrap>

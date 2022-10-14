@@ -13,6 +13,9 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
 
 import { useAppSelector } from '../../hooks';
 
@@ -27,30 +30,14 @@ const TextFieldWrap = styled.div({
   padding: '1.5rem',
 });
 
-const ButtonWrap = styled.div({
-  display: 'flex',
-  justifyContent: 'flex-end',
-
-  'button: nth-of-type(1)': {
-    marginRight: '1rem',
-  },
-});
-
-const Title = styled(DialogTitle)({
-  margin: '1rem 3rem 0 0',
-});
-
-const Text = styled(TextField)({
-  margin: '1rem 3rem 1rem 0',
-});
-
 interface Props {
-  open: boolean,
-  onClose: React.ReactEventHandler,
-  onApply: React.ReactEventHandler
+  open : boolean,
+  onClose : React.ReactEventHandler,
+  onApply : React.ReactEventHandler,
+  isDetail : boolean,
 }
 
-export default function ReservationDialog({ open, onClose, onApply }: Props) {
+export default function ReservationDialog({ open, onClose, onApply, isDetail }: Props) {
   const dispatch = useDispatch();
 
   const { date, plan } = useAppSelector(get('reservations'));
@@ -61,15 +48,30 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
     );
   };
 
+  if (isDetail) {
+    return (
+      <Dialog
+        open={open}
+        onClose={onClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle>10월 1일</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            git 공부하기
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog
       open={open}
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
-      <Title>
-        공부방 예약하기
-      </Title>
+      <DialogTitle>공부방 예약하기</DialogTitle>
 
       <TextFieldWrap>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -83,7 +85,7 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
           />
         </LocalizationProvider>
 
-        <Text
+        <TextField
           label="계획"
           value={plan}
           onChange={(e) => {
@@ -94,16 +96,18 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
           rows={3}
           placeholder="계획을 입력해주세요."
           fullWidth
+          style={{ marginTop: '1rem' }}
         />
-        <ButtonWrap>
-          <Button variant="outlined" size="small" onClick={onClose}>
-            취소
-          </Button>
-          <Button disabled={!date || !plan} onClick={onApply} variant="contained" size="small">
-            제출
-          </Button>
-        </ButtonWrap>
       </TextFieldWrap>
-    </Dialog >
+
+      <DialogActions>
+        <Button disabled={!date || !plan} onClick={onApply} variant="contained" size="small">
+          제출
+        </Button>
+        <Button variant="outlined" size="small">
+          수정
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
