@@ -1,70 +1,70 @@
-package com.codesoom.myseat.db;
-
-import com.codesoom.myseat.domain.*;
-import com.codesoom.myseat.repositories.*;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-
-@Component
-public class DbInit {
-    private final UserRepository userRepo;
-    private final RoleRepository roleRepo;
-    private final ReservationRepository reservationRepo;
-    private final PlanRepository planRepo;
-    private final SeatRepository seatRepo;
-
-    public DbInit(
-            UserRepository userRepo, 
-            RoleRepository roleRepo, 
-            ReservationRepository reservationRepo, 
-            PlanRepository planRepo,
-            SeatRepository seatRepo
-    ) {
-        this.userRepo = userRepo;
-        this.roleRepo = roleRepo;
-        this.reservationRepo = reservationRepo;
-        this.planRepo = planRepo;
-        this.seatRepo = seatRepo;
-    }
-
-    @PostConstruct
-    private void postConstruct() {
-        User user1 = User.builder()
-                .name("김철수")
-                .email("soo@email.com")
-                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
-                .build();
-        Role role1 = Role.builder()
-                .userId(1L)
-                .roleName("USER")
-                .build();
-        User user2 = User.builder()
-                .name("김영희")
-                .email("young@email.com")
-                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
-                .build();
-        Role role2 = Role.builder()
-                .userId(2L)
-                .roleName("USER")
-                .build();
-        userRepo.save(user1);
-        roleRepo.save(role1);
-        userRepo.save(user2);
-        roleRepo.save(role2);
-
-        Plan plan1 = Plan.builder()
-                .content("책읽기, 코테풀기")
-                .build();
-
-        Reservation reservation1 = Reservation.builder()
-                .date("2022-10-11")
-                .user(user1)
-                .plan(plan1)
-                .build();
-
-        planRepo.save(plan1);
-        reservationRepo.save(reservation1);
-    }
-}
+//package com.codesoom.myseat.db;
+//
+//import com.codesoom.myseat.domain.*;
+//import com.codesoom.myseat.repositories.*;
+//import org.springframework.stereotype.Component;
+//
+//import javax.annotation.PostConstruct;
+//import java.util.ArrayList;
+//
+//@Component
+//public class DbInit {
+//    private final UserRepository userRepo;
+//    private final RoleRepository roleRepo;
+//    private final ReservationRepository reservationRepo;
+//    private final PlanRepository planRepo;
+//    private final SeatRepository seatRepo;
+//
+//    public DbInit(
+//            UserRepository userRepo, 
+//            RoleRepository roleRepo, 
+//            ReservationRepository reservationRepo, 
+//            PlanRepository planRepo,
+//            SeatRepository seatRepo
+//    ) {
+//        this.userRepo = userRepo;
+//        this.roleRepo = roleRepo;
+//        this.reservationRepo = reservationRepo;
+//        this.planRepo = planRepo;
+//        this.seatRepo = seatRepo;
+//    }
+//
+//    @PostConstruct
+//    private void postConstruct() {
+//        User user1 = User.builder()
+//                .name("김철수")
+//                .email("soo@email.com")
+//                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
+//                .build();
+//        Role role1 = Role.builder()
+//                .userId(1L)
+//                .roleName("USER")
+//                .build();
+//        User user2 = User.builder()
+//                .name("김영희")
+//                .email("young@email.com")
+//                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
+//                .build();
+//        Role role2 = Role.builder()
+//                .userId(2L)
+//                .roleName("USER")
+//                .build();
+//        userRepo.save(user1);
+//        roleRepo.save(role1);
+//        userRepo.save(user2);
+//        roleRepo.save(role2);
+//
+//        Plan plan1 = Plan.builder()
+//                .content("책읽기, 코테풀기")
+//                .build();
+//
+//        Reservation reservation1 = Reservation.builder()
+//                .date("2022-10-11")
+//                .user(user1)
+//                .plan(plan1)
+//                .build();
+//
+//        planRepo.save(plan1);
+//        reservationRepo.save(reservation1);
+//    }
+//}
