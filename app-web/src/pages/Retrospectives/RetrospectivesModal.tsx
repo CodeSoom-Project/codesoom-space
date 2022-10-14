@@ -4,9 +4,10 @@ import styled from '@emotion/styled';
 
 import { Button, Dialog, DialogTitle, TextField } from '@mui/material';
 
-import { writeRetrospectives } from '../../redux/retrospectivesSlice';
+import { saveRetrospectives } from '../../redux/retrospectivesSlice';
 
 import { useAppSelector } from '../../hooks';
+import { get } from '../../utils';
 
 const Wrap = styled.div({
   display: 'flex',
@@ -42,7 +43,7 @@ interface Props {
 const RetrospectivesModal: React.FC<Props> = ({ open, onClose, onApply }: Props) => {
   const dispatch = useDispatch();
 
-  const { retrospectives } = useAppSelector((state) => state.retrospectives);
+  const { retrospectives } = useAppSelector(get('retrospectives'));
 
   const characterMinimum = 100;
   const characterMaximum = 1000;
@@ -50,7 +51,7 @@ const RetrospectivesModal: React.FC<Props> = ({ open, onClose, onApply }: Props)
   const isMinimum = retrospectives.length > characterMinimum;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    dispatch(writeRetrospectives(event.target.value));
+    dispatch(saveRetrospectives(event.target.value));
   };
 
   return (
