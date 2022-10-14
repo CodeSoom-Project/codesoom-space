@@ -12,13 +12,14 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { useAppSelector } from '../../hooks';
 
 import { get } from '../../utils';
 
-import { saveDate, saveContent } from '../../redux/reservationsSlice';
+import { saveDate, savePlan } from '../../redux/reservationsSlice';
 
 const TextFieldWrap = styled.div({
   display: 'flex',
@@ -27,33 +28,16 @@ const TextFieldWrap = styled.div({
   padding: '1.5rem',
 });
 
-const ButtonWrap = styled.div({
-  display: 'flex',
-  justifyContent: 'flex-end',
-
-  'button: nth-of-type(1)': {
-    marginRight: '1rem',
-  },
-});
-
-const Title = styled(DialogTitle)({
-  margin: '1rem 3rem 0 0',
-});
-
-const Text = styled(TextField)({
-  margin: '1rem 3rem 1rem 0',
-});
-
 interface Props {
-  open: boolean,
-  onClose: React.ReactEventHandler,
-  onApply: React.ReactEventHandler
+  open : boolean,
+  onClose : React.ReactEventHandler,
+  onApply : React.ReactEventHandler
 }
 
 export default function ReservationDialog({ open, onClose, onApply }: Props) {
   const dispatch = useDispatch();
 
-  const { date, content } = useAppSelector(get('reservations'));
+  const { date, plan } = useAppSelector(get('reservations'));
 
   const handleChange = (value: dayjs.Dayjs | null) => {
     dispatch(
@@ -67,9 +51,7 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
-      <Title>
-        공부방 예약하기
-      </Title>
+      <DialogTitle>공부방 예약하기</DialogTitle>
 
       <TextFieldWrap>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -83,27 +65,29 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
           />
         </LocalizationProvider>
 
-        <Text
+        <TextField
           label="계획"
-          value={content}
+          value={plan}
           onChange={(e) => {
-            dispatch(saveContent(e.target.value));
+            dispatch(savePlan(e.target.value));
           }}
           variant="outlined"
           multiline
           rows={3}
           placeholder="계획을 입력해주세요."
           fullWidth
+          style={{ marginTop: '1rem' }}
         />
-        <ButtonWrap>
-          <Button variant="outlined" size="small" onClick={onClose}>
-            취소
-          </Button>
-          <Button disabled={!date || !content} onClick={onApply} variant="contained" size="small">
-            제출
-          </Button>
-        </ButtonWrap>
       </TextFieldWrap>
-    </Dialog >
+
+      <DialogActions>
+        <Button disabled={!date || !plan} onClick={onApply} variant="contained" size="small">
+          제출
+        </Button>
+        <Button variant="outlined" size="small">
+          수정
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }

@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useQuery } from 'react-query';
+
 import { styled } from '@mui/material/styles';
 
 import {
@@ -17,14 +19,13 @@ import {
 } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
-import { selectResetRetrospectiveId } from '../../redux/retrospectivesSlice';
-import { selectReservationId } from '../../redux/reservationsSlice';
+import { getReservation } from '../../services/reservations';
 
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { useAppDispatch } from '../../hooks';
+
 
 interface TablePaginationActionsProps {
   count: number;
@@ -48,19 +49,19 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
   const LastPage = Math.ceil(count / rowsPerPage) - 1;
 
-  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, 0);
   };
 
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, page - 1);
   };
 
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, page + 1);
   };
 
-  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
     onPageChange(event, LastPage);
   };
 
@@ -96,21 +97,13 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
 interface Props {
   onOpenReservationModal : React.ReactEventHandler,
-  onOpenRetrospectModal: React.ReactEventHandler
-  isLoading: boolean,
-  isError: boolean,
-  reservations: {
-    id: number,
-    date: string,
-    content: string,
-    status:string
-  }[]
+  onOpenRetrospectModal : React.ReactEventHandler
 }
 
 interface Reservations {
   id: number;
   date: string;
-  content: string;
+  plan: string;
   status: string;
 }
 
@@ -118,14 +111,7 @@ type StatusType = {
   [key: string]: string;
 };
 
-export default function ReservationsTable({
-  onOpenReservationModal,
-  onOpenRetrospectModal,
-  isLoading,
-  isError,
-  reservations,
-}: Props) {
-  const dispatch = useAppDispatch();
+export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }: Props) {
   const [page, setPage] = React.useState(0);
 
   const rowsPerPage = 10;
@@ -136,20 +122,8 @@ export default function ReservationsTable({
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
-  ): void => {
+  ):void => {
     setPage(newPage);
-  };
-
-  const handleClickReservation = (e: React.MouseEvent<HTMLButtonElement>, id:number) => {
-    onOpenReservationModal(e);
-
-    dispatch(selectReservationId(id));
-  };
-
-  const handleClickRetrospective = (e: React.MouseEvent<HTMLButtonElement>, id:number) => {
-    onOpenRetrospectModal(e);
-
-    dispatch(selectResetRetrospectiveId(id));
   };
 
   const statusName: StatusType = {
@@ -159,6 +133,9 @@ export default function ReservationsTable({
     'RETROSPECTIVE_WAITING': '회고 작성전',
   };
 
+  const { isLoading, data, isError } = useQuery('reservations', getReservation, {
+    retry: 1,
+  });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -167,6 +144,9 @@ export default function ReservationsTable({
   if (isError) {
     return <div>Error</div>;
   }
+
+  const { reservations } = data;
+
 
   return (
     <TableContainer component={Paper}>
@@ -181,23 +161,18 @@ export default function ReservationsTable({
         </TableHead>
 
         <TableBody>
-          {reservations.slice(startRow, endRow).map(({ id, date, content, status }:Reservations) => (
+          {reservations.slice(startRow, endRow).map(({ id, date, plan, status }:Reservations) => (
             <TableRow key={id}>
               <TableCell>{date}</TableCell>
-              <TableCell align="left">{content}</TableCell>
+              <TableCell align="left">{plan}</TableCell>
               <TableCell align="right">
-                <Button onClick={(e) => {
-                  handleClickRetrospective(e, id);
-                }}>
+                <Button onClick={onOpenRetrospectModal}>
                   {statusName[status]}
                 </Button>
               </TableCell>
               <TableCell align="right">
-                <Button
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    handleClickReservation(e, id);
-                  }}>
-                  상세보기
+                <Button onClick={onOpenReservationModal}>
+                    상세보기
                 </Button>
               </TableCell>
             </TableRow>
