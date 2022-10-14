@@ -20,7 +20,7 @@ const { reducer, actions } = createSlice({
       ...state,
       isOpenRetrospectModal: !state.isOpenRetrospectModal,
     }),
-    writeRetrospectives: (state, { payload }) => {
+    saveRetrospectives: (state, { payload }) => {
       return {
         ...state,
         retrospectives: payload,
@@ -39,7 +39,7 @@ const { reducer, actions } = createSlice({
 
 export const {
   toggleRetrospectModal,
-  writeRetrospectives,
+  saveRetrospectives,
   resetRetrospectives,
   selectResetRetrospectiveId,
 } = actions;
