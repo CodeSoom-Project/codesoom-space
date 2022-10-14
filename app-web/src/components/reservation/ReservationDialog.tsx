@@ -76,16 +76,8 @@ interface Props {
   onApply: React.ReactEventHandler
 }
 
-export default function ReservationDialog({ onClose, onApply }: Props) {
-  const dispatch = useDispatch();
-
-  const { date, content, id, isDetail } = useAppSelector(get('reservations'));
-
-  const handleChange = (value: dayjs.Dayjs | null) => {
-    dispatch(
-      saveDate(value === null ? null : dayjs(value).format('YYYY-MM-DD')),
-    );
-  };
+function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler }) {
+  const { id } = useAppSelector(get('reservations'));
 
   const { isLoading, data } = useQuery(
     reservationsKeys.reservationsById(id),
@@ -96,54 +88,61 @@ export default function ReservationDialog({ onClose, onApply }: Props) {
   }
 
   return (
-    <Dialog
-      open={true}
-      onClose={onClose}
-      aria-labelledby="form-dialog-title"
-    >
-      {!isDetail && (
-        <Title>
+    <TextFieldWrap>
+      <DateTitle>예약일 : {data.date}</DateTitle>
+
+      <TextTitle>계획</TextTitle>
+      <TextBox>{data.content.split('\n').map((line:string) => (<p>{line}</p>))}</TextBox>
+
+      <ButtonWrap>
+        <Button variant="outlined" size="small" onClick={onClose}>
+            취소
+        </Button>
+      </ButtonWrap>
+    </TextFieldWrap>
+  );
+}
+
+function ApplyReservationDialog({ onClose, onApply }:Props) {
+  const dispatch = useDispatch();
+
+  const { date, content } = useAppSelector(get('reservations'));
+
+  const handleChange = (value: dayjs.Dayjs | null) => {
+    dispatch(
+      saveDate(value === null ? null : dayjs(value).format('YYYY-MM-DD')),
+    );
+  };
+
+  return (
+    <>
+      <Title>
           공부방 예약하기
-        </Title>
-      )}
-
-
+      </Title>
       <TextFieldWrap>
-        {isDetail && (<DateTitle>예약일 : {data.date}</DateTitle>)}
-        {!isDetail && (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="방문일자"
-              value={date === null ? null : dayjs(date)}
-              onChange={(value) => handleChange(value)}
-              renderInput={(params) => {
-                return (<TextField {...params} />);
-              }}
-            />
-          </LocalizationProvider>
-        )}
-
-        {isDetail && (
-          <>
-            <TextTitle>계획</TextTitle>
-            <TextBox>{data.content.split('\n').map((line:string) => (<p>{line}</p>))}</TextBox>
-          </>
-        )
-        }
-        {!isDetail && (
-          <Text
-            label="계획"
-            value={content}
-            onChange={(e) => {
-              dispatch(saveContent(e.target.value));
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="방문일자"
+            value={date === null ? null : dayjs(date)}
+            onChange={(value) => handleChange(value)}
+            renderInput={(params) => {
+              return (<TextField {...params} />);
             }}
-            variant="outlined"
-            multiline
-            rows={3}
-            placeholder="계획을 입력해주세요."
-            fullWidth
           />
-        )}
+        </LocalizationProvider>
+
+        <Text
+          label="계획"
+          value={content}
+          onChange={(e) => {
+            dispatch(saveContent(e.target.value));
+          }}
+          variant="outlined"
+          multiline
+          rows={3}
+          placeholder="계획을 입력해주세요."
+          fullWidth
+        />
 
         <ButtonWrap>
           <Button variant="outlined" size="small" onClick={onClose}>
@@ -154,6 +153,23 @@ export default function ReservationDialog({ onClose, onApply }: Props) {
           </Button>
         </ButtonWrap>
       </TextFieldWrap>
+    </>
+  );
+}
+
+
+export default function ReservationDialog({ onClose, onApply }: Props) {
+  const { isDetail } = useAppSelector(get('reservations'));
+
+  return (
+    <Dialog
+      open={true}
+      onClose={onClose}
+      aria-labelledby="form-dialog-title"
+    >
+      {isDetail
+        ? <DetailReservationDialog onClose={onClose} />
+        : <ApplyReservationDialog onClose={onClose} onApply={onApply} />}
     </Dialog >
   );
 }
