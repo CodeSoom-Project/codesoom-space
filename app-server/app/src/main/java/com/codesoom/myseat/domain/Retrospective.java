@@ -25,7 +25,7 @@ public class Retrospective {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name="retrospective_id")
+    @Column(name = "retrospective_id")
     Long id;
 
     String retrospective;
@@ -39,5 +39,4 @@ public class Retrospective {
     ) {
         this.reservation = reservation;
     }
-
 }
