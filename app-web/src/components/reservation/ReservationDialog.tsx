@@ -18,7 +18,7 @@ import { useAppSelector } from '../../hooks';
 
 import { get } from '../../utils';
 
-import { saveDate, savePlan } from '../../redux/reservationsSlice';
+import { saveDate, saveContent } from '../../redux/reservationsSlice';
 
 const TextFieldWrap = styled.div({
   display: 'flex',
@@ -53,7 +53,7 @@ interface Props {
 export default function ReservationDialog({ open, onClose, onApply }: Props) {
   const dispatch = useDispatch();
 
-  const { date, plan } = useAppSelector(get('reservations'));
+  const { date, content } = useAppSelector(get('reservations'));
 
   const handleChange = (value: dayjs.Dayjs | null) => {
     dispatch(
@@ -85,9 +85,9 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
 
         <Text
           label="계획"
-          value={plan}
+          value={content}
           onChange={(e) => {
-            dispatch(savePlan(e.target.value));
+            dispatch(saveContent(e.target.value));
           }}
           variant="outlined"
           multiline
@@ -99,7 +99,7 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
           <Button variant="outlined" size="small" onClick={onClose}>
             취소
           </Button>
-          <Button disabled={!date || !plan} onClick={onApply} variant="contained" size="small">
+          <Button disabled={!date || !content} onClick={onApply} variant="contained" size="small">
             제출
           </Button>
         </ButtonWrap>
