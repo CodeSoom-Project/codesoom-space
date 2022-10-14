@@ -98,6 +98,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     </Box>
   );
 }
+
 interface Props {
   onOpenReservationModal: React.ReactEventHandler,
   onOpenRetrospectModal: React.ReactEventHandler
