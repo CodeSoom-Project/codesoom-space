@@ -1,6 +1,0 @@
-POST http://localhost:8080/reservations/1/retrospectives
-Content-Type: application/json
-
-{
- "retrospective": "잘했다"
-}
