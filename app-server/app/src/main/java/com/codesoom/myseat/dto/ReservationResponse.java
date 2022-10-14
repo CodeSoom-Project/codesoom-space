@@ -11,13 +11,13 @@ public class ReservationResponse {
 
     private Long id;
     private String date;
-    private String plan;
+    private String content;
     private String status;
 
     public ReservationResponse(Reservation reservation) {
         this.id = reservation.getId();
         this.date = reservation.getDate();
-        this.plan = reservation.getPlan().getContent();
+        this.content = reservation.getPlan().getContent();
         this.status = reservation.getStatus().name();
     }
 
