@@ -1,9 +1,13 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
+import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.RetrospectiveService;
+import com.codesoom.myseat.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RetrospectiveController {
 
     private final RetrospectiveService retrospectiveService;
+    private final UserService userService;
 
-    public RetrospectiveController(RetrospectiveService retrospectiveService) {
+    public RetrospectiveController(RetrospectiveService retrospectiveService, UserService userService) {
         this.retrospectiveService = retrospectiveService;
+        this.userService = userService;
     }
 
     /**
@@ -33,12 +39,14 @@ public class RetrospectiveController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void writeRetrospective(
+            @AuthenticationPrincipal UserAuthentication principal,
             @PathVariable final Long id,
             @RequestBody final RetrospectiveRequest request)
     {
+        User user = userService.findById(principal.getId());
         String content = request.getRetrospective();
 
-        retrospectiveService.createRetrospective(id, content);
+        retrospectiveService.createRetrospective(user, id, content);
     }
 
 }
