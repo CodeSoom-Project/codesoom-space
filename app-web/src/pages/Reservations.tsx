@@ -9,15 +9,15 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { get } from '../utils';
 
 import { toggleReservationsModal } from '../redux/reservationsSlice';
-import { toggleRetrospectModal } from '../redux/retrospectionSlice';
+import { toggleRetrospectModal } from '../redux/retrospectivesSlice';
 
 import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
 
-import RetrospectionModal from './Retrospection';
+import RetrospectivesModal from './Retrospectives';
 
 import { fetchReservation } from '../services/reservations';
-import { fetchRetrospection } from '../services/retrospection';
+import { fetchRetrospectives } from '../services/retrospectives';
 
 const Container = styled.div({
   display: 'flex',
@@ -50,7 +50,7 @@ export default function Reservations() {
   const dispatch = useAppDispatch();
 
   const { isOpenReservationsModal, date, plan } = useAppSelector(get('reservations'));
-  const { isOpenRetrospectModal, retrospections } = useAppSelector(get('retrospections'));
+  const { isOpenRetrospectModal, retrospectives } = useAppSelector(get('retrospectives'));
 
   const onClicktoggleReservationsModal = () => {
     dispatch(toggleReservationsModal());
@@ -76,7 +76,7 @@ export default function Reservations() {
     });
   };
 
-  const { mutate: retrospectiveMutate, isLoading: retrospectiveIsLoading } = useMutation(fetchRetrospection, {
+  const { mutate: retrospectiveMutate, isLoading: retrospectiveIsLoading } = useMutation(fetchRetrospectives, {
     onSuccess: () => {
       alert('회고가 제출되었습니다.');
     },
@@ -85,10 +85,10 @@ export default function Reservations() {
     },
   });
 
-  const onClickApplyRetrospection = () => {
+  const onClickApplyRetrospectives = () => {
     retrospectiveMutate({
       id: 1,
-      retrospections: retrospections,
+      retrospectives: retrospectives,
     });
   };
 
@@ -105,10 +105,10 @@ export default function Reservations() {
         onClose={onClicktoggleReservationsModal}
         onApply={onClickApplyReservation}
       />
-      <RetrospectionModal
+      <RetrospectivesModal
         open={isOpenRetrospectModal}
         onClose={onClicktoggleRetrospectModal}
-        onApply={onClickApplyRetrospection}
+        onApply={onClickApplyRetrospectives}
       />
 
       <Wrap>

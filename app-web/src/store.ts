@@ -2,14 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import reservationReducer from './ReservationSlice';
 import authSlice from './authSlice';
-import retrospectionsReducer from './redux/retrospectionSlice';
+import retrospectivesReducer from './redux/retrospectivesSlice';
 import reservationsSlice from './redux/reservationsSlice';
 
 export const store = configureStore({
   reducer: {
     reservation: reservationReducer,
     auth: authSlice,
-    retrospections: retrospectionsReducer,
+    retrospectives: retrospectivesReducer,
     reservations: reservationsSlice,
   },
 

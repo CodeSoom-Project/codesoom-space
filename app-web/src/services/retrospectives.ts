@@ -8,13 +8,13 @@ const api = axios.create({
   baseURL: BASE_URL,
 });
 
-export const fetchRetrospection = ({ id, retrospections }: { id: number, retrospections: string }) => {
+export const fetchRetrospectives = ({ id, retrospectives }: { id: number, retrospectives: string }) => {
   const accessToken = loadItem('accessToken');
 
   return api({
     method: 'post',
     url: `/reservations/${id}/retrospectives`,
     headers: { Authorization: `Bearer ${accessToken}` },
-    data: { retrospective: retrospections },
+    data: { retrospectives: retrospectives },
   });
 };
