@@ -27,10 +27,11 @@ const ButtonWrap = styled.div({
 
 interface Props {
   open: boolean,
-  onClose: React.ReactEventHandler
+  onClose: React.ReactEventHandler,
+  onApply: React.ReactEventHandler,
 }
 
-const RetrospectionModal: React.FC<Props> = ({ open, onClose }: Props) => {
+const RetrospectionModal: React.FC<Props> = ({ open, onClose, onApply }: Props) => {
   const dispatch = useDispatch();
 
   const { retrospections } = useAppSelector((state) => state.retrospections);
@@ -83,6 +84,7 @@ const RetrospectionModal: React.FC<Props> = ({ open, onClose }: Props) => {
           <Button
             variant='contained' size='small'
             disabled={!isMinimum}
+            onClick={onApply}
           >
             제출
           </Button>

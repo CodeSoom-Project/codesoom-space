@@ -49,7 +49,7 @@ export default function Reservations() {
   const dispatch = useAppDispatch();
 
   const { isOpenReservationsModal, date, plan } = useAppSelector(get('reservations'));
-  const { isOpenRetrospectModal } = useAppSelector(get('retrospections'));
+  const { isOpenRetrospectModal, retrospections } = useAppSelector(get('retrospections'));
 
   const onClicktoggleReservationsModal = () => {
     dispatch(toggleReservationsModal());
@@ -92,8 +92,8 @@ export default function Reservations() {
 
   const onClickApplyRetrospection = () => {
     retrospectiveMutate({
-      id: 2,
-      retrospective: '자바스크립트 공부하기 회고',
+      id: 1,
+      retrospections: retrospections,
     });
   };
 
@@ -107,6 +107,7 @@ export default function Reservations() {
       <RetrospectionModal
         open={isOpenRetrospectModal}
         onClose={onClicktoggleRetrospectModal}
+        onApply={onClickApplyRetrospection}
       />
 
       <Wrap>

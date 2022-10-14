@@ -1,9 +1,21 @@
-import { request } from './api';
+import axios from 'axios';
 
-export const fetchRetrospection = ({ id, retrospective }: { id: number, retrospective: string }) => {
-  return request({
+import { loadItem } from './stoage';
+
+const BASE_URL = 'https://api.codesoom-myseat.site';
+
+const api = axios.create({
+  baseURL: BASE_URL,
+});
+
+export const fetchRetrospection = ({ id, retrospections }: { id: number, retrospections: string }) => {
+  console.log(id, retrospections);
+  const accessToken = loadItem('accessToken');
+
+  return api({
     method: 'post',
-    url: `/res/reservations/${id}/retrospectives`,
-    data: { retrospective },
+    url: `/reservations/${id}/retrospectives`,
+    headers: { Authorization: `Bearer ${accessToken}` },
+    data: { retrospective: retrospections },
   });
 };
