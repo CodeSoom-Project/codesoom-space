@@ -31,10 +31,6 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 
-
-
-
-
 interface TablePaginationActionsProps {
   count: number;
   page: number;
@@ -135,6 +131,18 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
     setPage(newPage);
   };
 
+  const handleClickReservation = (e: React.MouseEvent<HTMLButtonElement>, id:number) => {
+    onOpenReservationModal(e);
+
+    dispatch(selectReservationId(id));
+  };
+
+  const handleClickRetrospective = (e: React.MouseEvent<HTMLButtonElement>, id:number) => {
+    onOpenRetrospectModal(e);
+
+    dispatch(selectResetRetrospectiveId(id));
+  };
+
   const statusName: StatusType = {
     'RESERVED': '예약완료',
     'CANCELED': '취소',
@@ -169,23 +177,27 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
         </TableHead>
 
         <TableBody>
-          {reservations.slice(startRow, endRow).map(({ id, date, plan, status }: Reservations) => (
+          {reservations.slice(startRow, endRow).map(({
+            id,
+            date,
+            plan,
+            status,
+          }: Reservations) => (
             <TableRow key={id}>
               <TableCell>{date}</TableCell>
               <TableCell align="left">{plan}</TableCell>
               <TableCell align="right">
                 <Button onClick={(e) => {
-                  onOpenRetrospectModal(e);
-                  dispatch(selectReservationId(id));
+                  handleClickRetrospective(e, id);
                 }}>
                   {statusName[status]}
                 </Button>
               </TableCell>
               <TableCell align="right">
-                <Button onClick={(e) => {
-                  onOpenReservationModal(e);
-                  dispatch(selectResetRetrospectiveId(id));
-                }}>
+                <Button
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    handleClickReservation(e, id);
+                  }}>
                   상세보기
                 </Button>
               </TableCell>
