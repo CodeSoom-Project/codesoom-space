@@ -9,6 +9,9 @@ import { saveRetrospectives } from '../../redux/retrospectivesSlice';
 import { useAppSelector } from '../../hooks';
 import { get } from '../../utils';
 
+import { useQuery } from 'react-query';
+import { getRetrospective, retrospectivesKeys } from '../../services/retrospectives';
+
 const Wrap = styled.div({
   display: 'flex',
   flexDirection: 'column',
@@ -35,15 +38,20 @@ const Text = styled(TextField)({
 });
 
 interface Props {
-  open: boolean,
   onClose: React.ReactEventHandler,
   onApply: React.ReactEventHandler,
 }
 
-const RetrospectivesModal: React.FC<Props> = ({ open, onClose, onApply }: Props) => {
+const RetrospectivesModal: React.FC<Props> = ({
+  onClose,
+  onApply,
+}: Props) => {
   const dispatch = useDispatch();
 
-  const { retrospectives } = useAppSelector(get('retrospectives'));
+  const {
+    retrospectives,
+    isDetail,
+    id } = useAppSelector(get('retrospectives'));
 
   const characterMinimum = 100;
   const characterMaximum = 1000;
@@ -54,9 +62,24 @@ const RetrospectivesModal: React.FC<Props> = ({ open, onClose, onApply }: Props)
     dispatch(saveRetrospectives(event.target.value));
   };
 
+  const { isLoading, data } = useQuery(
+    retrospectivesKeys.retrospectivesById(id),
+    () => getRetrospective(id),
+    {
+      retry: 1,
+    });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const { retrospective } = data;
+
+
+
   return (
     <Dialog
-      open={open}
+      open={true}
       onClose={onClose}
     >
       <Title>
@@ -64,17 +87,22 @@ const RetrospectivesModal: React.FC<Props> = ({ open, onClose, onApply }: Props)
       </Title>
 
       <Wrap>
-        <Text
-          inputProps={{ maxLength: characterMaximum, minLength: characterMinimum }}
-          placeholder='회고를 입력해주세요.'
-          helperText={`${retrospectives.length} /${characterMaximum}`}
-          value={retrospectives}
-          onChange={handleChange}
-          variant='outlined'
-          fullWidth
-          multiline
-          rows={3}
-        />
+        {!isDetail &&
+            <Text
+              inputProps={{ maxLength: characterMaximum, minLength: characterMinimum }}
+              placeholder='회고를 입력해주세요.'
+              helperText={`${retrospectives.length} /${characterMaximum}`}
+              value={retrospectives}
+              onChange={handleChange}
+              variant='outlined'
+              fullWidth
+              multiline
+              rows={3}
+            />
+        }
+        {isDetail &&
+          <div>{retrospective}</div>
+        }
         <ButtonWrap>
           <Button variant='outlined' size='small' onClick={onClose}>
             취소
