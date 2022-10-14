@@ -95,7 +95,6 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 interface Props {
-<<<<<<< HEAD
   onOpenReservationModal : React.ReactEventHandler,
   onOpenRetrospectModal: React.ReactEventHandler
   isLoading: boolean,
@@ -106,10 +105,6 @@ interface Props {
     content: string,
     status:string
   }[]
-=======
-  onOpenReservationModal: React.ReactEventHandler,
-  onOpenRetrospectModal: React.ReactEventHandler
->>>>>>> d5e16c0 (🎨 예약 모달과 회고 모달 디자인 통일 작업)
 }
 
 interface Reservations {
