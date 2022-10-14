@@ -32,8 +32,10 @@ public class RetrospectiveService {
 
         Retrospective retrospective = Retrospective.builder()
                 .reservation(reservation)
-                .retrospective(content)
+                .content(content)
                 .build();
+
+        //reservation.register(retrosepctive);
 
         return retrospectiveRepository.save(retrospective);
     }
