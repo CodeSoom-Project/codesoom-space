@@ -16,6 +16,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { useAppSelector } from '../../hooks';
+
+import { get } from '../../utils';
+
 import { saveDate, savePlan } from '../../redux/reservationsSlice';
 
 const TextFieldWrap = styled.div({
@@ -25,15 +28,15 @@ const TextFieldWrap = styled.div({
   padding: '1.5rem',
 });
 
-interface PropsType {
+interface Props {
   open : boolean,
   onClose : React.ReactEventHandler
 }
 
-export default function ReservationDialog({ open, onClose }: PropsType) {
+export default function ReservationDialog({ open, onClose }: Props) {
   const dispatch = useDispatch();
 
-  const { date, plan } = useAppSelector(store => store.reservations);
+  const { date, plan } = useAppSelector(get('reservations'));
 
   const handleChange = (value: dayjs.Dayjs | null) => {
     dispatch(

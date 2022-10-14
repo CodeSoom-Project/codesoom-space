@@ -8,9 +8,12 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { get } from '../utils';
 
 import { toggleReservationsModal } from '../redux/reservationsSlice';
+import { toggleRetrospectModal } from '../redux/retrospectionSlice';
 
 import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
+
+import RetrospectionModal from './Retrospection';
 
 const Container = styled.div({
   display: 'flex',
@@ -43,9 +46,14 @@ export default function Reservations() {
   const dispatch = useAppDispatch();
 
   const { isOpenReservationsModal } = useAppSelector(get('reservations'));
+  const { isOpenRetrospectModal } = useAppSelector(get('retrospections'));
 
   const onClicktoggleReservationsModal = () => {
     dispatch(toggleReservationsModal());
+  };
+
+  const onClicktoggleRetrospectModal = () => {
+    dispatch(toggleRetrospectModal());
   };
 
   return (
@@ -53,6 +61,10 @@ export default function Reservations() {
       <ReservationDialog
         open={isOpenReservationsModal}
         onClose={onClicktoggleReservationsModal}
+      />
+      <RetrospectionModal
+        open={isOpenRetrospectModal}
+        onClose={onClicktoggleRetrospectModal}
       />
 
       <Wrap>
@@ -66,7 +78,10 @@ export default function Reservations() {
           </Button>
         </Header>
 
-        <ReservationsTable onOpenReservationModal={onClicktoggleReservationsModal} />
+        <ReservationsTable
+          onOpenReservationModal={onClicktoggleReservationsModal}
+          onOpenRetrospectModal={onClicktoggleRetrospectModal}
+        />
       </Wrap>
     </Container>
   );

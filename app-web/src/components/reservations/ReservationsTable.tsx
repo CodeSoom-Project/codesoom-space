@@ -125,11 +125,12 @@ const rows = [
   createData(23, '2022-10-23', 'javascript 공부', Status.RETROSPECTIVE_COMPLETE),
 ];
 
-interface PropsType {
+interface Props {
   onOpenReservationModal : React.ReactEventHandler,
+  onOpenRetrospectModal : React.ReactEventHandler
 }
 
-export default function ReservationsTable({ onOpenReservationModal }:PropsType) {
+export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }: Props) {
   const [page, setPage] = React.useState(0);
 
   const rowsPerPage = 10;
@@ -162,7 +163,7 @@ export default function ReservationsTable({ onOpenReservationModal }:PropsType) 
               <TableCell>{date}</TableCell>
               <TableCell align="left">{plan}</TableCell>
               <TableCell align="right">
-                <Button>
+                <Button onClick={onOpenRetrospectModal}>
                   {status === 'RETROSPECTIVE_COMPLETE' ? '회고제출' : '제출됨'}
                 </Button>
               </TableCell>

@@ -25,8 +25,14 @@ const ButtonWrap = styled.div({
   },
 });
 
-const RetrospectionModal: React.FC = () => {
+interface Props {
+  open : boolean,
+  onClose : React.ReactEventHandler
+}
+
+const RetrospectionModal: React.FC<Props> = ({ open, onClose } : Props) => {
   const dispatch = useDispatch();
+
   const { retrospections } = useAppSelector((state) => state.retrospections);
 
   const characterMinimum = 100;
@@ -40,7 +46,8 @@ const RetrospectionModal: React.FC = () => {
 
   return (
     <Dialog
-      open
+      open={open}
+      onClose={onClose}
     >
       <Wrap>
         <IconButton
@@ -51,7 +58,9 @@ const RetrospectionModal: React.FC = () => {
           }}
           color='primary'
           aria-label='close dialog'
-          component='label'>
+          component="label"
+          onClick={onClose}
+        >
           <CloseIcon />
         </IconButton>
         <TextField
@@ -68,7 +77,7 @@ const RetrospectionModal: React.FC = () => {
           rows={3}
         />
         <ButtonWrap>
-          <Button variant='outlined' size='small'>
+          <Button onClick={onClose} variant='outlined' size='small'>
             취소
           </Button>
           <Button
