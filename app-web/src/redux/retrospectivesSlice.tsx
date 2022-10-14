@@ -34,6 +34,7 @@ const { reducer, actions } = createSlice({
 export const {
   toggleRetrospectModal,
   writeRetrospectives,
+  resetRetrospectives,
 } = actions;
 
 export default reducer;
