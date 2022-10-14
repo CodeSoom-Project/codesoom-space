@@ -48,7 +48,7 @@ export default function Reservations() {
 
   const dispatch = useAppDispatch();
 
-  const { isOpenReservationsModal, date, plan } = useAppSelector(get('reservations'));
+  const { isOpenReservationsModal, date, content } = useAppSelector(get('reservations'));
   const { isOpenRetrospectModal, retrospectives } = useAppSelector(get('retrospectives'));
 
   const onClicktoggleReservationsModal = () => {
@@ -73,7 +73,7 @@ export default function Reservations() {
   const onClickApplyReservation = () => {
     reservationMutate({
       date,
-      plan,
+      content,
     });
   };
 

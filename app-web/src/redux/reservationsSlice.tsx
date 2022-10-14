@@ -4,14 +4,14 @@ interface ReservationState {
   isOpenReservationsModal: boolean,
 
   date: string | null,
-  plan: string,
+  content: string,
 }
 
 export const initialState: ReservationState = {
   isOpenReservationsModal: false,
 
   date: null,
-  plan: '',
+  content: '',
 };
 
 const reservationsSlice = createSlice({
@@ -28,14 +28,14 @@ const reservationsSlice = createSlice({
         date: payload,
       });
     },
-    savePlan: (state, { payload }) => ({
+    saveContent: (state, { payload }) => ({
       ...state,
-      plan: payload,
+      content: payload,
     }),
     resetReservations: (state) => ({
       ...state,
       date: initialState.date,
-      plan: initialState.plan,
+      content: initialState.content,
     }),
   },
 });
@@ -43,7 +43,7 @@ const reservationsSlice = createSlice({
 export const {
   toggleReservationsModal,
   saveDate,
-  savePlan,
+  saveContent,
   resetReservations,
 } = reservationsSlice.actions;
 

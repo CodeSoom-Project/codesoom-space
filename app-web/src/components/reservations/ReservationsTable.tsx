@@ -152,7 +152,6 @@ export default function ReservationsTable({
     return <div>Error</div>;
   }
 
-
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -166,7 +165,7 @@ export default function ReservationsTable({
         </TableHead>
 
         <TableBody>
-          {reservations.slice(startRow, endRow).map(({ id, date, content, status }:Reservations) => (
+          {reservations.slice(startRow, endRow).map(({ id, date, content, status }: Reservations) => (
             <TableRow key={id}>
               <TableCell>{date}</TableCell>
               <TableCell align="left">{content}</TableCell>
