@@ -40,9 +40,7 @@ public class ReservationCancelService {
             Seat seat
     ) {
 //        Reservation reservation = user.getReservation();
-        user.cancelReservation();
 //        reservationRepo.delete(reservation);
-        seat.cancelReservation();
     }
 
     /**
@@ -53,12 +51,12 @@ public class ReservationCancelService {
         log.info("현재 시간: {}", dateFormat.format(new Date()));
         
         List<Reservation> reservations = reservationRepo.findAll();
-        for(Reservation s : reservations) {
-            s.getUser().cancelReservation();
-            Seat seat = s.getUser().getSeat();
-            
-            reservationRepo.delete(s);
-            seat.cancelReservation();
-        }
+//        for(Reservation s : reservations) {
+//            s.getUser().cancelReservation();
+//            Seat seat = s.getUser().getSeat();
+//            
+//            reservationRepo.delete(s);
+//            seat.cancelReservation();
+//        }
     }
 }
