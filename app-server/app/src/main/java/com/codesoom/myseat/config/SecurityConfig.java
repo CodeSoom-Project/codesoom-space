@@ -37,7 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf()
-                .ignoringAntMatchers("/h2-console/**")
                 .disable()
                 .headers()
                 .addHeaderWriter(
@@ -48,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/h2-console/**", "/", "/docs/**", "/signup", "/login", "/seats").permitAll()
+                .antMatchers("/", "/docs/**", "/signup", "/login", "/seats").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(authFilter)
