@@ -31,41 +31,6 @@ public class DbInit {
 
     @PostConstruct
     private void postConstruct() {
-        Seat seat1 = Seat.builder()
-                .number(1)
-                .build();
-        Seat seat2 = Seat.builder()
-                .number(2)
-                .build();
-        Seat seat3 = Seat.builder()
-                .number(3)
-                .build();
-        Seat seat4 = Seat.builder()
-                .number(4)
-                .build();
-        Seat seat5 = Seat.builder()
-                .number(5)
-                .build();
-        Seat seat6 = Seat.builder()
-                .number(6)
-                .build();
-        Seat seat7 = Seat.builder()
-                .number(7)
-                .build();
-        Seat seat8 = Seat.builder()
-                .number(8)
-                .build();
-        ArrayList<Seat> seats = new ArrayList<>();
-        seats.add(seat1);
-        seats.add(seat2);
-        seats.add(seat3);
-        seats.add(seat4);
-        seats.add(seat5);
-        seats.add(seat6);
-        seats.add(seat7);
-        seats.add(seat8);
-        seatRepo.saveAll(seats);
-        
         User user1 = User.builder()
                 .name("김철수")
                 .email("soo@email.com")
