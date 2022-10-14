@@ -94,8 +94,6 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-const rows = [];
-
 interface Props {
 <<<<<<< HEAD
   onOpenReservationModal : React.ReactEventHandler,
