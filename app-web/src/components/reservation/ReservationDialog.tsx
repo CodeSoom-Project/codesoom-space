@@ -77,7 +77,7 @@ export default function ReservationDialog({ open, onClose }: PropsType) {
       </TextFieldWrap>
 
       <DialogActions>
-        <Button variant="contained" size="small">
+        <Button disabled={!date || !plan} variant="contained" size="small">
           제출
         </Button>
         <Button variant="outlined" size="small">
