@@ -30,7 +30,7 @@ const RetrospectionModal: React.FC = () => {
   const { retrospections } = useAppSelector((state) => state.retrospections);
 
   const characterMinimum = 100;
-  const characterLimit = 1000;
+  const characterMaximum = 1000;
 
   const isMinimum = retrospections.length > characterMinimum;
 
@@ -55,10 +55,10 @@ const RetrospectionModal: React.FC = () => {
           <CloseIcon />
         </IconButton>
         <TextField
-          inputProps={{ maxLength: characterLimit, minLength: characterMinimum }}
+          inputProps={{ maxLength: characterMaximum, minLength: characterMinimum }}
           label='회고'
           placeholder='회고를 입력해주세요.'
-          helperText={`${retrospections.length} /${characterLimit}`}
+          helperText={`${retrospections.length} /${characterMaximum}`}
           value={retrospections}
           onChange={handleChange}
           style={{ margin: '1rem 3rem 1rem 0' }}
