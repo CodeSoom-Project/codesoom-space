@@ -9,7 +9,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -o upstream -d dist",
+    "deploy": "npm run build && echo 'space.codesoom.com' > dist/CNAME && cp dist/index.html dist/404.html && gh-pages -o upstream -d dist",
     "test": "jest"
   },
   "dependencies": {
