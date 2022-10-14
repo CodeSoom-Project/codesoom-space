@@ -2,9 +2,7 @@ import { useDispatch } from 'react-redux';
 
 import styled from '@emotion/styled';
 
-import { Button, Dialog, IconButton, TextField } from '@mui/material';
-
-import CloseIcon from '@mui/icons-material/Close';
+import { Button, Dialog, DialogTitle, TextField } from '@mui/material';
 
 import { writeRetrospectives } from '../../redux/retrospectivesSlice';
 
@@ -12,8 +10,9 @@ import { useAppSelector } from '../../hooks';
 
 const Wrap = styled.div({
   display: 'flex',
-  padding: '3rem',
   flexDirection: 'column',
+  justifyContent: 'space-around',
+  padding: '1.5rem',
 });
 
 const ButtonWrap = styled.div({
@@ -23,6 +22,15 @@ const ButtonWrap = styled.div({
   'button: nth-of-type(1)': {
     marginRight: '1rem',
   },
+});
+
+const Title = styled(DialogTitle)({
+  marginBottom: '0',
+  paddingBottom: '0',
+});
+
+const Text = styled(TextField)({
+  margin: '1rem 3rem 1rem 0',
 });
 
 interface Props {
@@ -50,35 +58,24 @@ const RetrospectivesModal: React.FC<Props> = ({ open, onClose, onApply }: Props)
       open={open}
       onClose={onClose}
     >
+      <Title>
+        회고 작성하기
+      </Title>
+
       <Wrap>
-        <IconButton
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            padding: 0,
-          }}
-          color='primary'
-          aria-label='close dialog'
-          component="label"
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
-        <TextField
+        <Text
           inputProps={{ maxLength: characterMaximum, minLength: characterMinimum }}
-          label='회고'
           placeholder='회고를 입력해주세요.'
           helperText={`${retrospectives.length} /${characterMaximum}`}
           value={retrospectives}
           onChange={handleChange}
-          style={{ margin: '1rem 3rem 1rem 0' }}
           variant='outlined'
           fullWidth
           multiline
           rows={3}
         />
         <ButtonWrap>
-          <Button onClick={onClose} variant='outlined' size='small'>
+          <Button variant='outlined' size='small' onClick={onClose}>
             취소
           </Button>
           <Button

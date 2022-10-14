@@ -49,19 +49,19 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 
   const LastPage = Math.ceil(count / rowsPerPage) - 1;
 
-  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
+  const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, 0);
   };
 
-  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
+  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, page - 1);
   };
 
-  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
+  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, page + 1);
   };
 
-  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>):void => {
+  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, LastPage);
   };
 
@@ -96,8 +96,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 interface Props {
-  onOpenReservationModal : React.ReactEventHandler,
-  onOpenRetrospectModal : React.ReactEventHandler
+  onOpenReservationModal: React.ReactEventHandler,
+  onOpenRetrospectModal: React.ReactEventHandler
 }
 
 interface Reservations {
@@ -122,7 +122,7 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
-  ):void => {
+  ): void => {
     setPage(newPage);
   };
 
@@ -172,7 +172,7 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
               </TableCell>
               <TableCell align="right">
                 <Button onClick={onOpenReservationModal}>
-                    상세보기
+                  상세보기
                 </Button>
               </TableCell>
             </TableRow>
