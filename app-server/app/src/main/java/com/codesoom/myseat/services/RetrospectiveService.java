@@ -3,6 +3,7 @@ package com.codesoom.myseat.services;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.exceptions.UserNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
@@ -22,25 +23,22 @@ public class RetrospectiveService {
     }
 
     public Retrospective createRetrospective(User user, Long reservationId, String content) {
-        if(reservationId != user.getId()) {
+        if (!isValid(reservationId, user.getId())) {
             throw new UserNotFoundException();
         }
 
-        Reservation reservation = Reservation.builder()
-                .user(user)
-                .build();
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(ReservationNotFoundException::new);
 
         Retrospective retrospective = Retrospective.builder()
-                .retrospective(content)
                 .reservation(reservation)
+                .retrospective(content)
                 .build();
 
-        retrospective.addReservation(reservation);
-
-        reservationRepository.save(reservation);
-        retrospectiveRepository.save(retrospective);
-
-        return retrospective;
+        return retrospectiveRepository.save(retrospective);
     }
 
+    public boolean isValid(Long reservationId, Long userId) {
+        return reservationRepository.existsByIdAndUser_Id(reservationId, userId);
+    }
 }
