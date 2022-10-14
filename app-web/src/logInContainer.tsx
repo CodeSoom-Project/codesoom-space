@@ -23,7 +23,7 @@ export default function LogInContainer() {
   const { mutate } = useMutation('login', loginMutate, {
     onSuccess: async () => {
       console.log('login 성공');
-      navigate('/my-seat', { replace: true });
+      navigate('/', { replace: true });
     },
     onError: async (e) => {
       console.error(e);

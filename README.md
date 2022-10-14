@@ -2,7 +2,7 @@
 
 코드숨 공부방 좌석 예약 애플리케이션
 
-https://codesoom-project.github.io/my-seat/
+https://space.codesoom.com
 
 # 구현 기능
 
