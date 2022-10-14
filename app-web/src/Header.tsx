@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import Button from './components/Button';
+import { Button } from '@mui/material';
 
 import styled from '@emotion/styled';
 
@@ -38,11 +38,22 @@ export default function Header({ accessToken, onClick }: any) {
         <Link to="/">CodeSoom Space</Link>
       </MainText>
       <LoginText>
-        <Link to="/signup">회원 가입</Link> | {' '}
+        <Button>
+          <Link to="/signup">회원 가입</Link>
+        </Button>
         {accessToken ? (
-          <Button onClick={onClick}>로그아웃</Button>
+          <>
+            <Button onClick={onClick}>로그아웃</Button>
+            <Button>
+              <Link to="/reservations">
+                예약
+              </Link>
+            </Button>
+          </>
         ) : (
-          <Link to="/login">로그인</Link>
+          <Button>
+            <Link to="/login">로그인</Link>
+          </Button>
         )}
       </LoginText>
     </header>
