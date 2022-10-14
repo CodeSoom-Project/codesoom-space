@@ -9,7 +9,6 @@ import { useAppDispatch } from './hooks';
 import { setAccessToken } from './authSlice';
 
 import HeaderContainer from './HeaderContainer';
-import SeatsContainer from './seatsContainer';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -25,7 +24,6 @@ export default function App() {
   return (
     <div>
       <HeaderContainer/>
-      <SeatsContainer/>
     </div>
   );
 }
