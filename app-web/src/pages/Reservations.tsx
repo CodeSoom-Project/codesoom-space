@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { Button, LinearProgress } from '@mui/material';
 
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 import { useAppDispatch, useAppSelector } from '../hooks';
 
@@ -13,10 +13,9 @@ import { resetRetrospectives, toggleRetrospectModal } from '../redux/retrospecti
 
 import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
-
 import RetrospectivesModal from './Retrospectives';
 
-import { fetchReservation } from '../services/reservations';
+import { fetchReservation, getReservation } from '../services/reservations';
 import { fetchRetrospectives } from '../services/retrospectives';
 
 const Container = styled.div({
@@ -96,6 +95,10 @@ export default function Reservations() {
     });
   };
 
+  const { isLoading, data, isError } = useQuery('reservations', getReservation, {
+    retry: 1,
+  });
+
   if (reservationIsLoading || retrospectiveIsLoading) {
     return (
       <LinearProgress />
@@ -129,6 +132,9 @@ export default function Reservations() {
         <ReservationsTable
           onOpenReservationModal={onClicktoggleReservationsModal}
           onOpenRetrospectModal={onClicktoggleRetrospectModal}
+          isLoading={isLoading}
+          reservations={data?.reservations}
+          isError={isError}
         />
       </Wrap>
     </Container >

@@ -1,9 +1,5 @@
 import * as React from 'react';
 
-import { useDispatch } from 'react-redux';
-
-import { useQuery } from 'react-query';
-
 import { styled } from '@mui/material/styles';
 
 import {
@@ -21,8 +17,6 @@ import {
 } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
-import { getReservation } from '../../services/reservations';
-
 import { selectResetRetrospectiveId } from '../../redux/retrospectivesSlice';
 import { selectReservationId } from '../../redux/reservationsSlice';
 
@@ -30,6 +24,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import { useAppDispatch } from '../../hooks';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -98,9 +93,18 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     </Box>
   );
 }
+
 interface Props {
-  onOpenReservationModal: React.ReactEventHandler,
+  onOpenReservationModal : React.ReactEventHandler,
   onOpenRetrospectModal: React.ReactEventHandler
+  isLoading: boolean,
+  isError: boolean,
+  reservations: {
+    id: number,
+    date: string,
+    content: string,
+    status:string
+  }[]
 }
 
 interface Reservations {
@@ -114,9 +118,14 @@ type StatusType = {
   [key: string]: string;
 };
 
-export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }: Props) {
-  const dispatch = useDispatch();
-
+export default function ReservationsTable({
+  onOpenReservationModal,
+  onOpenRetrospectModal,
+  isLoading,
+  isError,
+  reservations,
+}: Props) {
+  const dispatch = useAppDispatch();
   const [page, setPage] = React.useState(0);
 
   const rowsPerPage = 10;
@@ -150,9 +159,6 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
     'RETROSPECTIVE_WAITING': '회고 작성전',
   };
 
-  const { isLoading, data, isError } = useQuery('reservations', getReservation, {
-    retry: 1,
-  });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -161,8 +167,6 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
   if (isError) {
     return <div>Error</div>;
   }
-
-  const { reservations } = data;
 
   return (
     <TableContainer component={Paper}>
@@ -177,7 +181,7 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
         </TableHead>
 
         <TableBody>
-          {reservations.slice(startRow, endRow).map(({ id, date, content, status }: Reservations) => (
+          {reservations.slice(startRow, endRow).map(({ id, date, content, status }:Reservations) => (
             <TableRow key={id}>
               <TableCell>{date}</TableCell>
               <TableCell align="left">{content}</TableCell>
