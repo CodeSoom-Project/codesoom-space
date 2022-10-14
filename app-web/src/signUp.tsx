@@ -2,15 +2,22 @@ import { Button } from '@mui/material';
 
 import styled from '@emotion/styled';
 
-const Label = styled.label({
-  display: 'inline-block',
-  width: '100px',
+const FormWrapper = styled.form({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '1rem 0',
+  justifyContent: 'center',
 });
 
 const LabelWrapper = styled.div({
   'div:not(:first-of-type)': {
     marginTop: '8px',
   },
+});
+
+const Label = styled.label({
+  display: 'inline-block',
+  width: '100px',
 });
 
 const ButtonWrapper = styled.div({
@@ -20,14 +27,13 @@ const ButtonWrapper = styled.div({
 interface Props {
   register: any;
   errors: any;
-  handleSubmit: any
+  handleSubmit: any;
   signUp: any;
 }
 
 export default function SignUp({ register, errors, handleSubmit, signUp }: Props) {
   return (
-    <form
-      style={{ display: 'flex', alignItems: 'center', padding: '1rem 0', justifyContent: 'center' }}
+    <FormWrapper
       onSubmit={handleSubmit(async (data: any) => {
         await signUp({
           email: data.email,
@@ -81,6 +87,6 @@ export default function SignUp({ register, errors, handleSubmit, signUp }: Props
       <ButtonWrapper>
         <Button type="submit" variant="outlined">회원가입하기</Button>
       </ButtonWrapper>
-    </form>
+    </FormWrapper>
   );
 }
