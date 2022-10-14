@@ -9,7 +9,6 @@ const api = axios.create({
 });
 
 export const fetchRetrospection = ({ id, retrospections }: { id: number, retrospections: string }) => {
-  console.log(id, retrospections);
   const accessToken = loadItem('accessToken');
 
   return api({
