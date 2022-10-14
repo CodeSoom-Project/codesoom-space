@@ -89,42 +89,6 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     </Box>
   );
 }
-
-const enum Status {
-  RETROSPECTIVE_COMPLETE = 'RETROSPECTIVE_COMPLETE',
-  RETROSPECTIVE_WAITING = 'RETROSPECTIVE_WAITING',
-}
-
-function createData(id:number, date: string, plan:string, status:Status) {
-  return { id, date, plan, status };
-}
-
-const rows = [
-  createData(1, '2022-10-1', 'git', Status.RETROSPECTIVE_COMPLETE),
-  createData(2, '2022-10-2', 'react 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(3, '2022-10-3', 'spring 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(4, '2022-10-4', 'db 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(5, '2022-10-5', 'javascript 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(6, '2022-10-6', 'git', Status.RETROSPECTIVE_COMPLETE),
-  createData(7, '2022-10-7', 'react 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(8, '2022-10-8', 'spring 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(9, '2022-10-9', 'db 공부', Status.RETROSPECTIVE_WAITING),
-  createData(10, '2022-10-10', 'javascript 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(11, '2022-10-11', 'git', Status.RETROSPECTIVE_COMPLETE),
-  createData(12, '2022-10-12', 'react 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(13, '2022-10-13', 'spring 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(14, '2022-10-14', 'db 공부', Status.RETROSPECTIVE_WAITING),
-  createData(15, '2022-10-15', 'javascript 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(16, '2022-10-16', 'git', Status.RETROSPECTIVE_WAITING),
-  createData(17, '2022-10-17', 'react 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(18, '2022-10-18', 'spring 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(19, '2022-10-19', 'db 공부', Status.RETROSPECTIVE_WAITING),
-  createData(20, '2022-10-20', 'javascript 공부', Status.RETROSPECTIVE_WAITING),
-  createData(21, '2022-10-21', 'javascript 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(22, '2022-10-22', 'javascript 공부', Status.RETROSPECTIVE_COMPLETE),
-  createData(23, '2022-10-23', 'javascript 공부', Status.RETROSPECTIVE_COMPLETE),
-];
-
 interface Props {
   onOpenReservationModal : React.ReactEventHandler,
   onOpenRetrospectModal : React.ReactEventHandler
