@@ -98,6 +98,7 @@ interface Props {
 }
 
 export default function ReservationsTable({ onOpenReservationModal, onOpenRetrospectModal }:Props) {
+
   const [page, setPage] = React.useState(0);
 
   const rowsPerPage = 10;

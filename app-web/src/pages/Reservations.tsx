@@ -50,6 +50,7 @@ export default function Reservations() {
   const dispatch = useAppDispatch();
 
   const { isOpenReservationsModal, isDetail, date, plan } = useAppSelector(get('reservations'));
+
   const { isOpenRetrospectModal, retrospectives } = useAppSelector(get('retrospectives'));
 
   const onClicktoggleReservationsModal = () => {
@@ -61,7 +62,6 @@ export default function Reservations() {
     dispatch(toggleReservationsModal());
     dispatch(checkIsDetail(true));
   };
-
 
   const onClicktoggleRetrospectModal = () => {
     dispatch(toggleRetrospectModal());
@@ -118,6 +118,15 @@ export default function Reservations() {
         open={isOpenRetrospectModal}
         onClose={onClicktoggleRetrospectModal}
         onApply={onClickApplyRetrospectives}
+      />
+
+
+      <RetrospectivesModal
+        open={isOpenRetrospectModal}
+        onClose={onClicktoggleRetrospectModal}
+        onApply={onClickApplyRetrospectives}
+      />
+
 
       <Wrap>
         <Header>
