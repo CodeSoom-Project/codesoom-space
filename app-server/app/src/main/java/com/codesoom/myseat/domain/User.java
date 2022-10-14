@@ -30,8 +30,6 @@ public class User {
 
     private String password;
 
-    @OneToOne(mappedBy = "user")
-    private Reservation reservation;
 
     @OneToOne
     @JoinColumn(name = "seat_id")
@@ -56,6 +54,6 @@ public class User {
     public void cancelReservation() {
         log.info("예약 취소");
 
-        reservation = null;
+//        reservation = null;
     }
 }
