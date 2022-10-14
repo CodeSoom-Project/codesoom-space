@@ -156,8 +156,6 @@ export default function ReservationsTable({ onOpenReservationModal, onOpenRetros
 
   const { reservations } = data;
 
-  console.log(reservations);
-
   return (
     <TableContainer component={Paper}>
       <Table>
