@@ -5,6 +5,7 @@ interface ReservationState {
 
   date: string | null,
   plan: string,
+  id: number,
 }
 
 export const initialState: ReservationState = {
@@ -12,6 +13,7 @@ export const initialState: ReservationState = {
 
   date: null,
   plan: '',
+  id: 0,
 };
 
 const reservationsSlice = createSlice({
@@ -37,6 +39,10 @@ const reservationsSlice = createSlice({
       date: initialState.date,
       plan: initialState.plan,
     }),
+    selectReservationId: (state, { payload }) => ({
+      ...state,
+      id: payload,
+    }),
   },
 });
 
@@ -45,6 +51,7 @@ export const {
   saveDate,
   savePlan,
   resetReservations,
+  selectReservationId,
 } = reservationsSlice.actions;
 
 export default reservationsSlice.reducer;
