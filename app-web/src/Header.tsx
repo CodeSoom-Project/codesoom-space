@@ -2,19 +2,49 @@ import { Link } from 'react-router-dom';
 
 import Button from './components/Button';
 
-export default function Header({ accessToken, onClick }:any) {
-  return (
-    <header>
-      <h1>
-        <Link to="/">코드숨 공부방</Link>
-      </h1>
-      <Link to="/signup">회원 가입</Link> | {' '}
+import styled from '@emotion/styled';
 
-      {accessToken ? (
-        <Button onClick={onClick}>로그아웃</Button>
-      ) : (
-        <Link to="/login">로그인</Link>
-      )}
+const MainText = styled.h1({
+  color: 'black',
+  textShadow: '-1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000',
+
+  'a': {
+    color: 'inherit',
+    textDecoration: 'none',
+  },
+  'a: hover': {
+    color: 'grey',
+  },
+});
+
+const LoginText = styled.div({
+  color: 'black',
+
+  textShadow: '1px 1px 1px lightgrey',
+
+  'a': {
+    color: 'inherit',
+    textDecoration: 'none',
+  },
+  'a: hover': {
+    color: 'grey',
+  },
+});
+
+export default function Header({ accessToken, onClick }: any) {
+  return (
+    <header style={{ textAlign: 'center' }}>
+      <MainText>
+        <Link to="/">CodeSoom Space</Link>
+      </MainText>
+      <LoginText>
+        <Link to="/signup">회원 가입</Link> | {' '}
+        {accessToken ? (
+          <Button onClick={onClick}>로그아웃</Button>
+        ) : (
+          <Link to="/login">로그인</Link>
+        )}
+      </LoginText>
     </header>
   );
 }
