@@ -29,8 +29,10 @@ const RetrospectionModal: React.FC = () => {
   const dispatch = useDispatch();
   const { retrospections } = useAppSelector((state) => state.retrospections);
 
+  const characterMinimum = 100;
   const characterLimit = 1000;
-  const isMinimum = retrospections.length > 100;
+
+  const isMinimum = retrospections.length > characterMinimum;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     dispatch(writeRetrospection(event.target.value));
@@ -53,7 +55,7 @@ const RetrospectionModal: React.FC = () => {
           <CloseIcon />
         </IconButton>
         <TextField
-          inputProps={{ maxLength: characterLimit, minLength: 100 }}
+          inputProps={{ maxLength: characterLimit, minLength: characterMinimum }}
           label='회고'
           placeholder='회고를 입력해주세요.'
           helperText={`${retrospections.length} /${characterLimit}`}
