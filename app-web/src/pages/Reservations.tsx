@@ -15,8 +15,8 @@ import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
 import RetrospectionModal from './Retrospection';
 
-import RetrospectionModal from './Retrospection';
 import { fetchReservation } from '../services/reservations';
+import { fetchRetrospection } from '../services/retrospection';
 
 const Container = styled.div({
   display: 'flex',
@@ -59,7 +59,7 @@ export default function Reservations() {
     dispatch(toggleRetrospectModal());
   };
 
-  const { mutate, isLoading } = useMutation(fetchReservation, {
+  const { mutate: reservationMutate, isLoading } = useMutation(fetchReservation, {
     onSuccess: () => {
       alert('예약이 신청되셨습니다.');
     },
@@ -69,7 +69,7 @@ export default function Reservations() {
   });
 
   const onClickApplyReservation = () => {
-    mutate({
+    reservationMutate({
       date,
       plan,
     });
@@ -80,6 +80,22 @@ export default function Reservations() {
       <LinearProgress />
     );
   }
+
+  const { mutate: retrospectiveMutate } = useMutation(fetchRetrospection, {
+    onSuccess: () => {
+      alert('회고가 제출되었습니다.');
+    },
+    onError: () => {
+      alert('회고 제출에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+
+  const onClickApplyRetrospection = () => {
+    retrospectiveMutate({
+      id: 2,
+      retrospective: '자바스크립트 공부하기 회고',
+    });
+  };
 
   return (
     <Container>
@@ -109,6 +125,6 @@ export default function Reservations() {
           onOpenRetrospectModal={onClicktoggleRetrospectModal}
         />
       </Wrap>
-    </Container>
+    </Container >
   );
 }

@@ -10,8 +10,6 @@ import { writeRetrospection } from '../../redux/retrospectionSlice';
 
 import { useAppSelector } from '../../hooks';
 
-import { fetchRetrospection } from '../../services/retrospection';
-
 const Wrap = styled.div({
   display: 'flex',
   padding: '3rem',
@@ -44,10 +42,6 @@ const RetrospectionModal: React.FC<Props> = ({ open, onClose }: Props) => {
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     dispatch(writeRetrospection(event.target.value));
-  };
-
-  const handleSubmit = ({ id, retrospective }: { id: number, retrospective: string }) => {
-    fetchRetrospection({ id, retrospective });
   };
 
   return (
