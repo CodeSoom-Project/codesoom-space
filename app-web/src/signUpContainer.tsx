@@ -11,7 +11,7 @@ import SignUp from './signUp';
 import HeaderContainer from './HeaderContainer';
 
 export default function SignUpContainer() {
-  const { register, formState: { errors }, handleSubmit, watch, setError } = useForm();
+  const { register, formState: { errors }, handleSubmit } = useForm();
 
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export default function SignUpContainer() {
     return signUpResult;
   };
 
-  const { error, mutate } = useMutation('signup', signUpMutate, {
+  const { mutate } = useMutation('signup', signUpMutate, {
     onSuccess: async () => {
       console.log('회원가입 성공');
       alert('회원가입 되었습니다');
@@ -42,10 +42,7 @@ export default function SignUpContainer() {
         register={register}
         errors={errors}
         handleSubmit={handleSubmit}
-        error={error}
         signUp={mutate}
-        watch={watch}
-        setError={setError}
       />
     </>
   );
