@@ -62,7 +62,7 @@ class RetrospectiveControllerTest {
                 .willReturn(mockUser);
 
         RetrospectiveRequest request = RetrospectiveRequest.builder()
-                .retrospective("잘했다.")
+                .content("잘했다.")
                 .build();
 
         given(authService.parseToken(ACCESS_TOKEN))
