@@ -35,8 +35,6 @@ public class RetrospectiveService {
                 .content(content)
                 .build();
 
-        //reservation.register(retrosepctive);
-
         return retrospectiveRepository.save(retrospective);
     }
 
