@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
