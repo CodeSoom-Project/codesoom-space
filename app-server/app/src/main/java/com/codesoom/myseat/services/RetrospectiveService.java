@@ -22,6 +22,16 @@ public class RetrospectiveService {
         this.reservationRepository = reservationRepository;
     }
 
+    /**
+     * 생성된 회고 내역을 반환합니다.
+     *
+     * @param user 회원
+     * @param reservationId 예약 Id
+     * @param content 회고 내용
+     * @return 생성된 회고
+     * @throws UserNotFoundException 회원과 예약 동일하지 않으면 던집니다.
+     */
+
     public Retrospective createRetrospective(User user, Long reservationId, String content) {
         if (!isValid(reservationId, user.getId())) {
             throw new UserNotFoundException();
