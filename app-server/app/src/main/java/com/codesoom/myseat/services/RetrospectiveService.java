@@ -31,7 +31,6 @@ public class RetrospectiveService {
      * @return 생성된 회고
      * @throws UserNotFoundException 회원과 예약 동일하지 않으면 던집니다.
      */
-
     public Retrospective createRetrospective(User user, Long reservationId, String content) {
         if (!isValid(reservationId, user.getId())) {
             throw new UserNotFoundException();
