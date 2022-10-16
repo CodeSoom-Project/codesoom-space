@@ -3,7 +3,7 @@ package com.codesoom.myseat.services;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.exceptions.UserNotFoundException;
+import com.codesoom.myseat.exceptions.NotRegisteredReservation;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
 import com.codesoom.myseat.repositories.UserRepository;
@@ -70,8 +70,8 @@ class RetrospectiveServiceTest {
     }
 
     @Test
-    @DisplayName("UserId와ReservationId가 동일하지 않으면 UserNotFoundException을 던진다.")
-    void If_UserId_And_ReservationId_Is_Not_Collect_Given_It_throws_UserNotFoundException() {
+    @DisplayName("예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 한다면 NotRegisteredReservation 예외를 던진다.")
+    void If_Unreserved_User_Write_Retrospective_Given_It_throws_NotRegisteredReservation() {
         User mockUser = User.builder()
                 .id(1L)
                 .name("김철수")
@@ -79,11 +79,11 @@ class RetrospectiveServiceTest {
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
 
-        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId()))
-                .willReturn(true);
+        given(reservationRepository.existsByIdAndUser_Id(1000L, mockUser.getId()))
+                .willReturn(false);
 
-        assertThatThrownBy(() -> service.createRetrospective(mockUser, 2L, "잘했다."))
-                .isInstanceOf(UserNotFoundException.class);
+        assertThatThrownBy(() -> service.createRetrospective(mockUser, 1000L, "잘했다."))
+                .isInstanceOf(NotRegisteredReservation.class);
     }
 
 }

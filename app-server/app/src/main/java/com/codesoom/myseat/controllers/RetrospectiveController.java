@@ -2,7 +2,7 @@ package com.codesoom.myseat.controllers;
 
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
-import com.codesoom.myseat.exceptions.UserNotFoundException;
+import com.codesoom.myseat.exceptions.NotRegisteredReservation;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.RetrospectiveService;
 import com.codesoom.myseat.services.UserService;
@@ -35,7 +35,7 @@ public class RetrospectiveController {
      *
      * @param id 예약 Id
      * @param request 회고 폼에 입력된 데이터
-     * @throws UserNotFoundException 회원과 예약 동일하지 않으면 던집니다.
+     * @throws NotRegisteredReservation 예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 한다면 예외를 던집니다.
      */
     @PostMapping("/{id}/retrospectives")
     @PreAuthorize("isAuthenticated()")
