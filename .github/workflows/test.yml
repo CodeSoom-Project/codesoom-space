@@ -44,7 +44,7 @@ jobs:
         if: github.ref == 'refs/heads/test'
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.ROLE }}
+          role-to-assume: ${{ secrets.AWS_ROLE }}
           aws-region: ap-northeast-2
       - name: Deploy
         if: github.ref == 'refs/heads/test'
