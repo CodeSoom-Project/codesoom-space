@@ -7,6 +7,7 @@ import com.codesoom.myseat.exceptions.UserNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
 import com.codesoom.myseat.repositories.UserRepository;
+import org.checkerframework.checker.nullness.Opt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 
 class RetrospectiveServiceTest {
@@ -50,21 +53,24 @@ class RetrospectiveServiceTest {
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
 
-        Retrospective mockRetrospective = Retrospective.builder().retrospective("잘했다.").build();
-
         Reservation mockReservation = Reservation.builder()
                 .id(1L)
                 .user(mockUser)
                 .build();
 
-        given(userRepository.findById(1L)).willReturn(Optional.of(mockUser));
+        Retrospective mockRetrospective = Retrospective.builder()
+                .content("잘했다.")
+                .reservation(mockReservation)
+                .build();
+
         given(reservationRepository.findById(1L)).willReturn(Optional.of(mockReservation));
         given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId()))
                 .willReturn(true);
+        given(retrospectiveRepository.save(any())).willReturn(mockRetrospective);
 
         Retrospective retrospective = service.createRetrospective(mockUser, 1L, "잘했다.");
 
-        assertThat(retrospective.getRetrospective()).isEqualTo(mockRetrospective.getRetrospective());
+        assertThat(retrospective.getContent()).isEqualTo("잘했다.");
 
     }
 
