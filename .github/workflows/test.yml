@@ -2,7 +2,7 @@ name: FRONT CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["test"]
     # paths:
     #   - "app-web/**"
   pull_request:
