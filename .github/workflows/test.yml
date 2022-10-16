@@ -10,10 +10,6 @@ on:
     # paths:
     #   - "app-web/**"
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -22,6 +18,7 @@ jobs:
         working-directory: ./app-web
 
     permissions:
+      id-token: write
       contents: write
 
     steps:
