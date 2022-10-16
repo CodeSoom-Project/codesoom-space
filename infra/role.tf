@@ -12,7 +12,7 @@ resource "aws_iam_role" "upload-role" {
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:codesoom-project/my-seat:*"
+            "token.actions.githubusercontent.com:sub" = "repo:CodeSoom-Project/my-seat:*"
             # "token.actions.githubusercontent.com:sub" = "repo:codesoom-project/my-seat:ref:refs/heads/main"
           },
           "ForAllValues:StringEquals" = {
