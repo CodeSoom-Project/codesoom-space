@@ -3,12 +3,12 @@ name: FRONT CI
 on:
   push:
     branches: ["main"]
-    paths:
-      - "app-web/**"
+    # paths:
+    #   - "app-web/**"
   pull_request:
     branches: ["main"]
-    paths:
-      - "app-web/**"
+    # paths:
+    #   - "app-web/**"
 
 jobs:
   build:
