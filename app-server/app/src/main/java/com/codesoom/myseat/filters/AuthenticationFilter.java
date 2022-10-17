@@ -3,7 +3,7 @@ package com.codesoom.myseat.filters;
 import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.exceptions.InvalidTokenException;
 import com.codesoom.myseat.security.UserAuthentication;
-import com.codesoom.myseat.services.AuthenticationService;
+import com.codesoom.myseat.services.auth.AuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpHeaders;

@@ -1,7 +1,7 @@
 package com.codesoom.myseat.controllers.signup;
 
 import com.codesoom.myseat.dto.SignupRequest;
-import com.codesoom.myseat.services.SignupService;
+import com.codesoom.myseat.services.auth.SignupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

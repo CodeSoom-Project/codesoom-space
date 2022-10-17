@@ -1,4 +1,4 @@
-package com.codesoom.myseat.services;
+package com.codesoom.myseat.services.auth;
 
 import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;

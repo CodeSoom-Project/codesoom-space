@@ -1,4 +1,4 @@
-package com.codesoom.myseat.services;
+package com.codesoom.myseat.services.seats;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.repositories.SeatRepository;

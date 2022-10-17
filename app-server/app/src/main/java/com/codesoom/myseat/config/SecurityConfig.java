@@ -2,7 +2,7 @@ package com.codesoom.myseat.config;
 
 import com.codesoom.myseat.filters.AuthenticationErrorFilter;
 import com.codesoom.myseat.filters.AuthenticationFilter;
-import com.codesoom.myseat.services.AuthenticationService;
+import com.codesoom.myseat.services.auth.AuthenticationService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,4 +1,4 @@
-package com.codesoom.myseat.services;
+package com.codesoom.myseat.services.users;
 
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.UserNotFoundException;

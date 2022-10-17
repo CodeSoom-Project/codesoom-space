@@ -2,7 +2,7 @@ package com.codesoom.myseat.controllers.seats;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.dto.SeatListResponse;
-import com.codesoom.myseat.services.SeatListService;
+import com.codesoom.myseat.services.seats.SeatListService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

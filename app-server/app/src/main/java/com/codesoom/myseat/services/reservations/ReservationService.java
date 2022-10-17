@@ -1,4 +1,4 @@
-package com.codesoom.myseat.services;
+package com.codesoom.myseat.services.reservations;
 
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;

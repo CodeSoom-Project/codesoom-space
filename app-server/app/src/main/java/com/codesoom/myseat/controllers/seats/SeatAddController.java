@@ -1,7 +1,7 @@
 package com.codesoom.myseat.controllers.seats;
 
 import com.codesoom.myseat.dto.SeatAddRequest;
-import com.codesoom.myseat.services.SeatAddService;
+import com.codesoom.myseat.services.seats.SeatAddService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
