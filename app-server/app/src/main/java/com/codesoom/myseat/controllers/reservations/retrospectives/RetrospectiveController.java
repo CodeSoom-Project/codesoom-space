@@ -1,4 +1,4 @@
-package com.codesoom.myseat.controllers;
+package com.codesoom.myseat.controllers.reservations.retrospectives;
 
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;

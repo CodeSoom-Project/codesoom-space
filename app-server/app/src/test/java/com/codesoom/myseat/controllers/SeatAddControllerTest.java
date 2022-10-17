@@ -1,8 +1,8 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.controllers.seats.SeatAddController;
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.dto.SeatAddRequest;
-import com.codesoom.myseat.exceptions.UserNotFoundException;
 import com.codesoom.myseat.services.AuthenticationService;
 import com.codesoom.myseat.services.SeatAddService;
 import com.fasterxml.jackson.core.JsonProcessingException;

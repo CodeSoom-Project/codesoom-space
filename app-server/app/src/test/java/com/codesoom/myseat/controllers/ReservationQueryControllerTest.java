@@ -1,5 +1,6 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.controllers.reservations.ReservationQueryController;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
@@ -137,6 +138,25 @@ class ReservationQueryControllerTest {
         mockMvc.perform(get(String.format("/reservations/%d", notExistReservationId))
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
                 .andExpect(status().isNotFound());
+    }
+
+    @DisplayName("유효하지 않은 토큰이 주어지면 401 unauthorized를 응답한다.")
+    @Test
+    void GET_reservation_with_401_status() throws Exception {
+        //given
+        Long reservationId = 1L;
+        String content = "코테풀기, 공부, 과제";
+        given(reservationQueryService.reservation(1L, reservationId))
+                .willReturn(Reservation.builder()
+                        .id(reservationId)
+                        .plan(Plan.builder().id(1L).content(content).build())
+                        .date("2022-10-13")
+                        .build());
+
+        //when & then
+        mockMvc.perform(get(String.format("/reservations/%d", reservationId))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + "akdjfisdlkfajsdlk"))
+                .andExpect(status().isUnauthorized());
     }
 
 }

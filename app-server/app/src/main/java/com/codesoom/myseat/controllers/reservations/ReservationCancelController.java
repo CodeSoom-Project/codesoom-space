@@ -1,4 +1,4 @@
-package com.codesoom.myseat.controllers;
+package com.codesoom.myseat.controllers.reservations;
 
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.domain.User;

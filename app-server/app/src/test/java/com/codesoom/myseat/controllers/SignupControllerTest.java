@@ -1,5 +1,6 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.controllers.signup.SignupController;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.SignupRequest;
 import com.codesoom.myseat.services.AuthenticationService;

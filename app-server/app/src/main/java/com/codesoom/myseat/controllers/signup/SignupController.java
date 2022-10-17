@@ -1,4 +1,4 @@
-package com.codesoom.myseat.controllers;
+package com.codesoom.myseat.controllers.signup;
 
 import com.codesoom.myseat.dto.SignupRequest;
 import com.codesoom.myseat.services.SignupService;

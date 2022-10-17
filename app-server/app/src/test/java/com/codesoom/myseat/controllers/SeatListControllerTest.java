@@ -1,5 +1,6 @@
 package com.codesoom.myseat.controllers;
 
+import com.codesoom.myseat.controllers.seats.SeatListController;
 import com.codesoom.myseat.domain.Seat;
 import com.codesoom.myseat.services.AuthenticationService;
 import com.codesoom.myseat.services.SeatListService;

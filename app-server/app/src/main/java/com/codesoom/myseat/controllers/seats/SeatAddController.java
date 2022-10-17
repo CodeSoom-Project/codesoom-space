@@ -1,4 +1,4 @@
-package com.codesoom.myseat.controllers;
+package com.codesoom.myseat.controllers.seats;
 
 import com.codesoom.myseat.dto.SeatAddRequest;
 import com.codesoom.myseat.services.SeatAddService;
