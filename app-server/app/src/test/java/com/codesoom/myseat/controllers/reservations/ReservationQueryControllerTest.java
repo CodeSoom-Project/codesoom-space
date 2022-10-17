@@ -1,13 +1,13 @@
-package com.codesoom.myseat.controllers;
+package com.codesoom.myseat.controllers.reservations;
 
 import com.codesoom.myseat.controllers.reservations.ReservationQueryController;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
-import com.codesoom.myseat.services.AuthenticationService;
-import com.codesoom.myseat.services.ReservationQueryService;
-import com.codesoom.myseat.services.UserService;
+import com.codesoom.myseat.services.auth.AuthenticationService;
+import com.codesoom.myseat.services.reservations.ReservationQueryService;
+import com.codesoom.myseat.services.users.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,11 +1,11 @@
-package com.codesoom.myseat.controllers;
+package com.codesoom.myseat.controllers.reservations.retrospectives;
 
 import com.codesoom.myseat.controllers.reservations.retrospectives.RetrospectiveController;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
-import com.codesoom.myseat.services.AuthenticationService;
-import com.codesoom.myseat.services.RetrospectiveService;
-import com.codesoom.myseat.services.UserService;
+import com.codesoom.myseat.services.auth.AuthenticationService;
+import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveService;
+import com.codesoom.myseat.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;

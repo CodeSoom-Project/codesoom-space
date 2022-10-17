@@ -1,9 +1,10 @@
-package com.codesoom.myseat.services;
+package com.codesoom.myseat.services.auth;
 
 import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.repositories.RoleRepository;
 import com.codesoom.myseat.repositories.UserRepository;
+import com.codesoom.myseat.services.auth.SignupService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

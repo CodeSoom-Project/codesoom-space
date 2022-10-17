@@ -2,10 +2,10 @@
 //
 //import com.codesoom.myseat.domain.Seat;
 //import com.codesoom.myseat.domain.User;
-//import com.codesoom.myseat.services.AuthenticationService;
-//import com.codesoom.myseat.services.ReservationCancelService;
-//import com.codesoom.myseat.services.SeatService;
-//import com.codesoom.myseat.services.UserService;
+//import com.codesoom.myseat.services.auth.AuthenticationService;
+//import com.codesoom.myseat.services.reservations.ReservationCancelService;
+//import com.codesoom.myseat.services.seats.SeatService;
+//import com.codesoom.myseat.services.users.UserService;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;

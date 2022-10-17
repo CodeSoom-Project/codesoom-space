@@ -1,4 +1,4 @@
-package com.codesoom.myseat.services;
+package com.codesoom.myseat.services.reservations;
 
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
@@ -6,6 +6,7 @@ import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.PlanRepository;
 import com.codesoom.myseat.repositories.ReservationRepository;
+import com.codesoom.myseat.services.reservations.ReservationQueryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

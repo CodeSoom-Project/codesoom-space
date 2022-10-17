@@ -1,10 +1,10 @@
-package com.codesoom.myseat.controllers;
+package com.codesoom.myseat.controllers.signup;
 
 import com.codesoom.myseat.controllers.signup.SignupController;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.SignupRequest;
-import com.codesoom.myseat.services.AuthenticationService;
-import com.codesoom.myseat.services.SignupService;
+import com.codesoom.myseat.services.auth.AuthenticationService;
+import com.codesoom.myseat.services.auth.SignupService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;

@@ -1,12 +1,12 @@
-package com.codesoom.myseat.controllers;
+package com.codesoom.myseat.controllers.reservations;
 
 import com.codesoom.myseat.controllers.reservations.ReservationController;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
-import com.codesoom.myseat.services.AuthenticationService;
-import com.codesoom.myseat.services.ReservationService;
-import com.codesoom.myseat.services.UserService;
+import com.codesoom.myseat.services.auth.AuthenticationService;
+import com.codesoom.myseat.services.reservations.ReservationService;
+import com.codesoom.myseat.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;

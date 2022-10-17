@@ -1,9 +1,9 @@
-package com.codesoom.myseat.controllers;
+package com.codesoom.myseat.controllers.seats;
 
 import com.codesoom.myseat.controllers.seats.SeatListController;
 import com.codesoom.myseat.domain.Seat;
-import com.codesoom.myseat.services.AuthenticationService;
-import com.codesoom.myseat.services.SeatListService;
+import com.codesoom.myseat.services.auth.AuthenticationService;
+import com.codesoom.myseat.services.seats.SeatListService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
