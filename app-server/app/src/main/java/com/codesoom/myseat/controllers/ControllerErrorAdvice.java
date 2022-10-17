@@ -56,4 +56,9 @@ public class ControllerErrorAdvice {
         return e.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotRegisteredReservation.class)
+    public String handleNotRegisteredReservation(NotRegisteredReservation e) {
+        return e.getMessage();
+    }
 }
