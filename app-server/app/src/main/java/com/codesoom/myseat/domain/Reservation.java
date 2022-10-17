@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -42,6 +43,9 @@ public class Reservation {
     @Column(name = "status")
     @Builder.Default
     private ReservationStatus status = ReservationStatus.RETROSPECTIVE_WAITING;
+
+    @OneToOne(mappedBy = "reservation", cascade = PERSIST)
+    private Retrospective retrospective;
 
     @PrePersist
     public void prePersist() {
