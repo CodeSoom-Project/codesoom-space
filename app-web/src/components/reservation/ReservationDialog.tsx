@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 
 import dayjs from 'dayjs';
 
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, LinearProgress } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -73,6 +73,7 @@ const TextBox = styled.div({
 });
 
 interface Props {
+  loading:boolean;
   open : boolean;
   onClose : React.ReactEventHandler;
   onApply : React.ReactEventHandler;
@@ -163,7 +164,7 @@ function ApplyReservationDialog({ onClose, onApply }:{
 }
 
 
-export default function ReservationDialog({ open, onClose, onApply }: Props) {
+export default function ReservationDialog({ loading, open, onClose, onApply }: Props) {
   const { isDetail } = useAppSelector(get('reservations'));
 
   return (
@@ -172,6 +173,8 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
+      {loading && <LinearProgress/>}
+
       {isDetail
         ? <DetailReservationDialog onClose={onClose} />
         : <ApplyReservationDialog onClose={onClose} onApply={onApply} />}

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { Button, LinearProgress } from '@mui/material';
+import { Button } from '@mui/material';
 
 import { useMutation, useQuery } from 'react-query';
 
@@ -99,15 +99,10 @@ export default function Reservations() {
     retry: 1,
   });
 
-  if (reservationIsLoading || retrospectiveIsLoading) {
-    return (
-      <LinearProgress />
-    );
-  }
-
   return (
     <Container>
       <ReservationDialog
+        loading={reservationIsLoading}
         open={isOpenReservationsModal}
         onClose={onClicktoggleReservationsModal}
         onApply={onClickApplyReservation}
@@ -132,7 +127,6 @@ export default function Reservations() {
           >예약하기
           </Button>
         </Header>
-
         <ReservationsTable
           onOpenReservationModal={onClicktoggleReservationsModal}
           onOpenRetrospectModal={onClicktoggleRetrospectModal}
