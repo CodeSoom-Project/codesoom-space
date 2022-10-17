@@ -1,5 +1,16 @@
 import * as React from 'react';
 
+import {
+  saveIsDetailRetrospectives,
+} from '../../redux/retrospectivesSlice';
+
+import {
+  saveIsDetail,
+  selectReservationId,
+} from '../../redux/reservationsSlice';
+
+import { useAppDispatch } from '../../hooks';
+
 import { styled } from '@mui/material/styles';
 
 import {
@@ -15,15 +26,13 @@ import {
   TableBody,
   TableFooter,
 } from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
-import { saveIsDetail, selectReservationId } from '../../redux/reservationsSlice';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { useAppDispatch } from '../../hooks';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -32,7 +41,7 @@ interface TablePaginationActionsProps {
   onPageChange: (
     event: React.MouseEvent<HTMLButtonElement>,
     newPage: number,
-  ) => void;
+  )=> void;
 }
 
 const StyledTableCell = styled(TableCell)({
@@ -145,17 +154,29 @@ export default function ReservationsTable({
     dispatch(selectReservationId(id));
   };
 
-  const handleClickRetrospective = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+  const handleClickRetrospective = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: number,
+    status: string,
+  ) => {
     onOpenRetrospectModal(e);
 
     dispatch(selectReservationId(id));
+
+    if (status === 'RETROSPECTIVE_WAITING') {
+      dispatch(saveIsDetailRetrospectives(true));
+    }
+
+    if (status === 'RETROSPECTIVE_WAITING') {
+      dispatch(saveIsDetailRetrospectives(false));
+    }
   };
 
   const statusName: StatusType = {
     'RESERVED': '예약완료',
     'CANCELED': '취소',
-    'RETROSPECTIVE_COMPLETE': '회고 제출하기',
-    'RETROSPECTIVE_WAITING': '회고 작성전',
+    'RETROSPECTIVE_COMPLETE': '회고 상세보기',
+    'RETROSPECTIVE_WAITING': '회고 작성',
   };
 
 
@@ -187,7 +208,7 @@ export default function ReservationsTable({
               <TableCell align="left">{content}</TableCell>
               <TableCell align="center">
                 <Button onClick={(e) => {
-                  handleClickRetrospective(e, id);
+                  handleClickRetrospective(e, id, status);
                 }}>
                   {statusName[status]}
                 </Button>
