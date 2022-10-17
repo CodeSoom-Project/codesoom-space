@@ -1,0 +1,89 @@
+package com.codesoom.myseat.services;
+
+import com.codesoom.myseat.domain.Reservation;
+import com.codesoom.myseat.domain.Retrospective;
+import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.exceptions.NotRegisteredReservation;
+import com.codesoom.myseat.repositories.ReservationRepository;
+import com.codesoom.myseat.repositories.RetrospectiveRepository;
+import com.codesoom.myseat.repositories.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+
+
+class RetrospectiveServiceTest {
+
+    private RetrospectiveService service;
+
+    @Mock
+    private RetrospectiveRepository retrospectiveRepository;
+
+    @Mock
+    private ReservationRepository reservationRepository;
+
+    @Mock
+    private UserRepository userRepository;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+        service = new RetrospectiveService(retrospectiveRepository, reservationRepository);
+    }
+
+    @Test
+    @DisplayName("createRetrospective 메서드는 retrospective을 반환한다.")
+    void will_return_retrospective() {
+        User mockUser = User.builder()
+                .id(1L)
+                .name("김철수")
+                .email("soo@email.com")
+                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
+                .build();
+
+        Reservation mockReservation = Reservation.builder()
+                .id(1L)
+                .user(mockUser)
+                .build();
+
+        Retrospective mockRetrospective = Retrospective.builder()
+                .content("잘했다.")
+                .reservation(mockReservation)
+                .build();
+
+        given(reservationRepository.findById(1L)).willReturn(Optional.of(mockReservation));
+        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId())).willReturn(true);
+        given(retrospectiveRepository.save(any())).willReturn(mockRetrospective);
+
+        Retrospective retrospective = service.createRetrospective(mockUser, 1L, "잘했다.");
+
+        assertThat(retrospective.getContent()).isEqualTo("잘했다.");
+    }
+
+    @Test
+    @DisplayName("예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 한다면 NotRegisteredReservation 예외를 던진다.")
+    void If_Unreserved_User_Write_Retrospective_Given_It_throws_NotRegisteredReservation() {
+        User mockUser = User.builder()
+                .id(1L)
+                .name("김철수")
+                .email("soo@email.com")
+                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
+                .build();
+
+        given(reservationRepository.existsByIdAndUser_Id(1000L, mockUser.getId()))
+                .willReturn(false);
+
+        assertThatThrownBy(() -> service.createRetrospective(mockUser, 1000L, "잘했다."))
+                .isInstanceOf(NotRegisteredReservation.class);
+    }
+
+}
