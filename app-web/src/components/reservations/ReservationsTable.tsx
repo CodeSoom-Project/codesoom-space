@@ -18,7 +18,7 @@ import {
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 import { selectResetRetrospectiveId } from '../../redux/retrospectivesSlice';
-import { selectReservationId } from '../../redux/reservationsSlice';
+import { saveIsDetail, selectReservationId } from '../../redux/reservationsSlice';
 
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -196,6 +196,7 @@ export default function ReservationsTable({
                 <Button
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     handleClickReservation(e, id);
+                    dispatch(saveIsDetail(true));
                   }}>
                   상세보기
                 </Button>

@@ -1,10 +1,14 @@
 import * as React from 'react';
+
 import { useDispatch } from 'react-redux';
 
 import styled from '@emotion/styled';
 
+import { useQuery } from 'react-query';
+
 import dayjs from 'dayjs';
 
+import { CircularProgress } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -19,6 +23,8 @@ import { useAppSelector } from '../../hooks';
 import { get } from '../../utils';
 
 import { saveDate, saveContent } from '../../redux/reservationsSlice';
+
+import { getReservations, reservationsKeys } from '../../services/reservations';
 
 const TextFieldWrap = styled.div({
   display: 'flex',
@@ -44,13 +50,65 @@ const Text = styled(TextField)({
   margin: '1rem 3rem 1rem 0',
 });
 
+const DateTitle = styled.h1({
+  margin: '0',
+  fontSize: '1.3rem',
+});
+
+const TextTitle = styled.h1({
+  marginBottom: '1rem',
+  fontSize: '1.3rem',
+});
+
+const TextBox = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  maxHeight: '20rem',
+  overflow: 'auto',
+  marginBottom: '2rem',
+
+  'p': {
+    margin: '0 0 1rem 0',
+  },
+});
+
 interface Props {
-  open: boolean,
-  onClose: React.ReactEventHandler,
-  onApply: React.ReactEventHandler
+  open : boolean;
+  onClose : React.ReactEventHandler;
+  onApply : React.ReactEventHandler;
 }
 
-export default function ReservationDialog({ open, onClose, onApply }: Props) {
+function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler }) {
+  const { id } = useAppSelector(get('reservations'));
+
+  const { isLoading, data } = useQuery(
+    reservationsKeys.reservationsById(id),
+    () => getReservations(id), { retry: 1 });
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+
+  return (
+    <TextFieldWrap>
+      <DateTitle>예약일 : {data.date}</DateTitle>
+
+      <TextTitle>계획</TextTitle>
+      <TextBox>{data.content.split('\n').map((line:string) => (<p>{line}</p>))}</TextBox>
+
+      <ButtonWrap>
+        <Button variant="outlined" size="small" onClick={onClose}>
+            취소
+        </Button>
+      </ButtonWrap>
+    </TextFieldWrap>
+  );
+}
+
+function ApplyReservationDialog({ onClose, onApply }:{
+  onClose : React.ReactEventHandler;
+  onApply : React.ReactEventHandler;
+}) {
   const dispatch = useDispatch();
 
   const { date, content } = useAppSelector(get('reservations'));
@@ -62,15 +120,10 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      aria-labelledby="form-dialog-title"
-    >
+    <>
       <Title>
-        공부방 예약하기
+          공부방 예약하기
       </Title>
-
       <TextFieldWrap>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
@@ -95,6 +148,7 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
           placeholder="계획을 입력해주세요."
           fullWidth
         />
+
         <ButtonWrap>
           <Button variant="outlined" size="small" onClick={onClose}>
             취소
@@ -104,6 +158,23 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
           </Button>
         </ButtonWrap>
       </TextFieldWrap>
+    </>
+  );
+}
+
+
+export default function ReservationDialog({ open, onClose, onApply }: Props) {
+  const { isDetail } = useAppSelector(get('reservations'));
+
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      aria-labelledby="form-dialog-title"
+    >
+      {isDetail
+        ? <DetailReservationDialog onClose={onClose} />
+        : <ApplyReservationDialog onClose={onClose} onApply={onApply} />}
     </Dialog >
   );
 }

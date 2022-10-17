@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { get } from '../utils';
 
-import { resetReservations, toggleReservationsModal } from '../redux/reservationsSlice';
+import { resetReservations, saveIsDetail, toggleReservationsModal } from '../redux/reservationsSlice';
 import { resetRetrospectives, toggleRetrospectModal } from '../redux/retrospectivesSlice';
 
 import ReservationDialog from '../components/reservation/ReservationDialog';
@@ -112,6 +112,7 @@ export default function Reservations() {
         onClose={onClicktoggleReservationsModal}
         onApply={onClickApplyReservation}
       />
+
       <RetrospectivesModal
         open={isOpenRetrospectModal}
         onClose={onClicktoggleRetrospectModal}
@@ -124,7 +125,10 @@ export default function Reservations() {
 
           <Button
             style={{ fontSize: '2rem' }}
-            onClick={onClicktoggleReservationsModal}
+            onClick={() => {
+              onClicktoggleReservationsModal();
+              dispatch(saveIsDetail(false));
+            }}
           >예약하기
           </Button>
         </Header>
