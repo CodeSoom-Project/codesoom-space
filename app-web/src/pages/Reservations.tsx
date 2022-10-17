@@ -109,6 +109,7 @@ export default function Reservations() {
       />
 
       <RetrospectivesModal
+        loading={retrospectiveIsLoading}
         open={isOpenRetrospectModal}
         onClose={onClicktoggleRetrospectModal}
         onApply={onClickApplyRetrospectives}

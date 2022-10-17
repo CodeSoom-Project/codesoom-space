@@ -35,6 +35,7 @@ const Text = styled(TextField)({
 });
 
 interface Props {
+  loading: boolean,
   open: boolean,
   onClose: React.ReactEventHandler,
   onApply: React.ReactEventHandler,
