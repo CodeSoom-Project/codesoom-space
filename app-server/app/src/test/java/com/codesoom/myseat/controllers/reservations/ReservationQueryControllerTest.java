@@ -4,6 +4,7 @@ import com.codesoom.myseat.controllers.reservations.ReservationQueryController;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.exceptions.InvalidTokenException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.services.auth.AuthenticationService;
 import com.codesoom.myseat.services.reservations.ReservationQueryService;
@@ -27,6 +28,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -152,6 +154,9 @@ class ReservationQueryControllerTest {
                         .plan(Plan.builder().id(1L).content(content).build())
                         .date("2022-10-13")
                         .build());
+
+        given(authService.parseToken(anyString()))
+                .willThrow(new InvalidTokenException());
 
         //when & then
         mockMvc.perform(get(String.format("/reservations/%d", reservationId))
