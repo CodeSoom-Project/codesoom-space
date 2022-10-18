@@ -6,6 +6,7 @@ import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveService;
 import com.codesoom.myseat.services.users.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping("/reservations")
+@Slf4j
 public class RetrospectiveController {
 
     private final RetrospectiveService retrospectiveService;
@@ -47,6 +49,7 @@ public class RetrospectiveController {
     {
         User user = userService.findById(principal.getId());
         String content = request.getContent();
+        log.info("회고 요청: " + content);
 
         retrospectiveService.createRetrospective(user, id, content);
     }

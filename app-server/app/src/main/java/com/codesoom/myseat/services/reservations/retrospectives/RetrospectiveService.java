@@ -37,6 +37,7 @@ public class RetrospectiveService {
         if (!isReservedUser(reservationId, user.getId())) {
             throw new NotOwnedReservationException();
         }
+        log.info("회고 요청: " + content);
 
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(ReservationNotFoundException::new);
@@ -45,6 +46,8 @@ public class RetrospectiveService {
                 .reservation(reservation)
                 .content(content)
                 .build();
+
+        log.info("회고 요청: " + retrospective.getContent());
 
         return retrospectiveRepository.save(retrospective);
     }
