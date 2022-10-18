@@ -45,10 +45,5 @@ module.exports = {
 
     "react/jsx-filename-extension": [0],
     "import/extensions": "off",
-
-    "@typescript-eslint/type-annotation-spacing": ["error", {
-      before: false,
-      after: true
-    }],
   }
 };
