@@ -2,13 +2,13 @@ import './App.css';
 
 import { useEffect } from 'react';
 
-import { loadItem } from './services/stoage';
-
 import { useAppDispatch } from './hooks';
 
 import { setAccessToken } from './authSlice';
 
 import HeaderContainer from './HeaderContainer';
+
+import { loadItem } from './services/stoage';
 
 export default function App() {
   const dispatch = useAppDispatch();
