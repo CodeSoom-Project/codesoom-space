@@ -11,12 +11,14 @@ import { get } from '../utils';
 import { resetReservations, saveIsDetail, toggleReservationsModal } from '../redux/reservationsSlice';
 import { resetRetrospectives, toggleRetrospectModal } from '../redux/retrospectivesSlice';
 
+import HeaderContainer from '../HeaderContainer';
 import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
 import RetrospectivesModal from './Retrospectives';
 
 import { fetchReservation, getReservation } from '../services/reservations';
 import { fetchRetrospectives } from '../services/retrospectives';
+
 
 const Container = styled.div({
   display: 'flex',
@@ -101,6 +103,7 @@ export default function Reservations() {
 
   return (
     <Container>
+      <HeaderContainer/>
       <ReservationDialog
         loading={reservationIsLoading}
         open={isOpenReservationsModal}
