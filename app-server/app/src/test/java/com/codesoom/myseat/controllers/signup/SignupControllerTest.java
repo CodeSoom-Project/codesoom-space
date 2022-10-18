@@ -5,6 +5,7 @@ import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.SignupRequest;
 import com.codesoom.myseat.services.auth.AuthenticationService;
 import com.codesoom.myseat.services.auth.SignupService;
+import com.codesoom.myseat.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -45,6 +46,9 @@ class SignupControllerTest {
 
     @MockBean
     private SignupService signupService;
+    
+    @MockBean
+    private UserService userService;
 
     @MockBean
     private AuthenticationService authService;
