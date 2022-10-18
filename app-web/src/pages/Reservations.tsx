@@ -19,7 +19,6 @@ import RetrospectivesModal from './Retrospectives';
 import { fetchReservation, getReservation } from '../services/reservations';
 import { fetchRetrospectives } from '../services/retrospectives';
 
-
 const Container = styled.div({
   display: 'flex',
   flexDirection: 'column',
