@@ -3,7 +3,7 @@ interface DetailType {
   userName: string;
 }
 
-export default function Detail({ seatNumber, userName }:DetailType) {
+export default function Detail({ seatNumber, userName }: DetailType) {
 
   return (
     <>

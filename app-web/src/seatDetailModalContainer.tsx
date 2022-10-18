@@ -3,7 +3,7 @@ import { useAppSelector } from './hooks';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { cancelReservation, getSeatDetail, seatReservation } from './services/api';
 
-export default function SeatDetailModalContainer({ open, onClose }:any) {
+export default function SeatDetailModalContainer({ open, onClose }: any) {
   const seatNumber = useAppSelector((state) => state.reservation.seatNumber);
 
   const queryClient = useQueryClient();
@@ -17,7 +17,7 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
   );
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const cancel = async ({ seatNumber }: { seatNumber:number }) => {
+  const cancel = async ({ seatNumber }: { seatNumber: number }) => {
     const deleteSeatResult = await cancelReservation({ seatNumber });
     return deleteSeatResult;
   };
@@ -33,7 +33,7 @@ export default function SeatDetailModalContainer({ open, onClose }:any) {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const reservation = async ({ seatNumber }: { seatNumber:number }) => {
+  const reservation = async ({ seatNumber }: { seatNumber: number }) => {
     const bookingSeatResult = await seatReservation({ seatNumber });
     return bookingSeatResult;
   };

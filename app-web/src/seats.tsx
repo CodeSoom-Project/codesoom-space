@@ -1,6 +1,6 @@
 import Button from './components/Button';
 
-export default function Seats({ seats, onClick }:any) {
+export default function Seats({ seats, onClick }: any) {
   return (
     <>
       {seats?.data?.map(seat => (

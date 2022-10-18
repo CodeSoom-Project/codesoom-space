@@ -30,7 +30,7 @@ export default function SeatsContainer() {
     retry: 1,
   });
 
-  const handleChange = (seatNumber:any) => {
+  const handleChange = (seatNumber: any) => {
     dispatch(changeReservationDetailsSeatNumber({ seatNumber }));
   };
 
@@ -42,7 +42,7 @@ export default function SeatsContainer() {
     setIsOpen(false);
   };
 
-  const handleClick = (seatNumber:any) => {
+  const handleClick = (seatNumber: any) => {
     handleChange(seatNumber);
     handleOpen();
   };

@@ -22,7 +22,7 @@ const OVERLAY_STYLES = {
   zIndex: 1000,
 };
 
-export default function Modal({ open, children, onClose }:any) {
+export default function Modal({ open, children, onClose }: any) {
   if (!open) {
     return null;
   }
