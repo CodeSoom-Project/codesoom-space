@@ -173,32 +173,38 @@ export default function ReservationsTable({
       <Table>
         <TableHead>
           <TableRow>
-            <StyledTableCell>계획 일자</StyledTableCell>
-            <StyledTableCell align="left">계획 내용</StyledTableCell>
-            <StyledTableCell align="right">회고 상세보기</StyledTableCell>
-            <StyledTableCell align="right">계획 상세보기</StyledTableCell>
+            <StyledTableCell align="center">계획 일자</StyledTableCell>
+            <StyledTableCell align="center">계획 내용</StyledTableCell>
+            <StyledTableCell align="center">회고 상세보기</StyledTableCell>
+            <StyledTableCell align="center">계획 상세보기</StyledTableCell>
+            <StyledTableCell align="center">예약 취소</StyledTableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
           {reservations.slice(startRow, endRow).map(({ id, date, content, status }:Reservations) => (
             <TableRow key={id}>
-              <TableCell>{date}</TableCell>
+              <TableCell align="center">{date}</TableCell>
               <TableCell align="left">{content}</TableCell>
-              <TableCell align="right">
+              <TableCell align="center">
                 <Button onClick={(e) => {
                   handleClickRetrospective(e, id);
                 }}>
                   {statusName[status]}
                 </Button>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="center">
                 <Button
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     handleClickReservation(e, id);
                     dispatch(saveIsDetail(true));
                   }}>
                   상세보기
+                </Button>
+              </TableCell>
+              <TableCell align="center">
+                <Button>
+                  예약취소
                 </Button>
               </TableCell>
             </TableRow>
