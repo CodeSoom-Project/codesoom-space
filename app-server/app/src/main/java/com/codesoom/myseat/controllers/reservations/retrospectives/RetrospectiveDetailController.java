@@ -20,16 +20,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @Slf4j
 public class RetrospectiveDetailController {
-    private final UserService userService;
     private final ReservationQueryService reservationQueryService;
     private final RetrospectiveDetailService retrospectiveDetailService;
 
     public RetrospectiveDetailController(
-            UserService userService,
             ReservationQueryService reservationQueryService, 
             RetrospectiveDetailService retrospectiveDetailService
     ) {
-        this.userService = userService;
         this.reservationQueryService = reservationQueryService;
         this.retrospectiveDetailService = retrospectiveDetailService;
     }
@@ -47,8 +44,8 @@ public class RetrospectiveDetailController {
             @AuthenticationPrincipal UserAuthentication principal,
             @PathVariable Long id
     ) {
-        User user = userService.findById(principal.getId());
-        Reservation reservation = reservationQueryService.reservation(id, user.getId());
+        log.info("###########: " + principal.getId());
+        Reservation reservation = reservationQueryService.reservation(id, principal.getId());
         Retrospective retrospective = retrospectiveDetailService.retrospective(id);
         
         return toResponse(retrospective, reservation.getDate());
