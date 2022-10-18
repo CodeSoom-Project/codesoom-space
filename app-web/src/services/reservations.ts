@@ -19,7 +19,7 @@ export const getReservation = async () => {
   return data;
 };
 
-export const fetchReservation = async ({ date, content }:{ date : string, content : string }) => {
+export const fetchReservation = async ({ date, content }: { date: string, content: string }) => {
   const accessToken = loadItem('accessToken');
 
   const response = await api({
@@ -33,10 +33,10 @@ export const fetchReservation = async ({ date, content }:{ date : string, conten
 };
 
 export const reservationsKeys = {
-  reservationsById: (id : number) => ['retrospectives', id] as const,
+  reservationsById: (id: number) => ['retrospectives', id] as const,
 };
 
-export const getReservations = async (id : number) => {
+export const getReservations = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
   const { data } = await api({

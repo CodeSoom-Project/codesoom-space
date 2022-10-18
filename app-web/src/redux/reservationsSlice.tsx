@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface ReservationState {
   isOpenReservationsModal: boolean;
-  isDetail:boolean;
+  isDetail: boolean;
 
   date: string | null;
   id: number;

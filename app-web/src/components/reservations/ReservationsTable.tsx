@@ -33,7 +33,7 @@ interface TablePaginationActionsProps {
   onPageChange: (
     event: React.MouseEvent<HTMLButtonElement>,
     newPage: number,
-  ) => void;
+  )=> void;
 }
 
 const StyledTableCell = styled(TableCell)({
@@ -95,7 +95,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 interface Props {
-  onOpenReservationModal : React.ReactEventHandler,
+  onOpenReservationModal: React.ReactEventHandler,
   onOpenRetrospectModal: React.ReactEventHandler
   isLoading: boolean,
   isError: boolean,
@@ -103,7 +103,7 @@ interface Props {
     id: number,
     date: string,
     content: string,
-    status:string
+    status: string
   }[]
 }
 
@@ -140,13 +140,13 @@ export default function ReservationsTable({
     setPage(newPage);
   };
 
-  const handleClickReservation = (e: React.MouseEvent<HTMLButtonElement>, id:number) => {
+  const handleClickReservation = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
     onOpenReservationModal(e);
 
     dispatch(selectReservationId(id));
   };
 
-  const handleClickRetrospective = (e: React.MouseEvent<HTMLButtonElement>, id:number) => {
+  const handleClickRetrospective = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
     onOpenRetrospectModal(e);
 
     dispatch(selectResetRetrospectiveId(id));
@@ -182,7 +182,7 @@ export default function ReservationsTable({
         </TableHead>
 
         <TableBody>
-          {reservations.slice(startRow, endRow).map(({ id, date, content, status }:Reservations) => (
+          {reservations.slice(startRow, endRow).map(({ id, date, content, status }: Reservations) => (
             <TableRow key={id}>
               <TableCell align="center">{date}</TableCell>
               <TableCell align="left">{content}</TableCell>
