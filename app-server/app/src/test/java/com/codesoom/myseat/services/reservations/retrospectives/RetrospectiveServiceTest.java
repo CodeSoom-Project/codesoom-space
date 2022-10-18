@@ -3,11 +3,10 @@ package com.codesoom.myseat.services.reservations.retrospectives;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.exceptions.NotRegisteredReservation;
+import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
 import com.codesoom.myseat.repositories.UserRepository;
-import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -84,7 +83,7 @@ class RetrospectiveServiceTest {
                 .willReturn(false);
 
         assertThatThrownBy(() -> service.createRetrospective(mockUser, 1000L, "잘했다."))
-                .isInstanceOf(NotRegisteredReservation.class);
+                .isInstanceOf(NotOwnedReservationException.class);
     }
 
 }
