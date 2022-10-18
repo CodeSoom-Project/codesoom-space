@@ -3,7 +3,7 @@ package com.codesoom.myseat.services.reservations.retrospectives;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.User;
-import com.codesoom.myseat.exceptions.NotRegisteredReservation;
+import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
@@ -29,13 +29,13 @@ public class RetrospectiveService {
      * @param reservationId 예약 Id
      * @param content 회고 내용
      * @return 생성된 회고
-     * @throws NotRegisteredReservation 예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 한다면 예외를 던집니다.
+     * @throws NotOwnedReservationException 예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 한다면 예외를 던집니다.
      */
     public Retrospective createRetrospective(final User user,
                                              final Long reservationId,
                                              final String content) {
         if (!isReservedUser(reservationId, user.getId())) {
-            throw new NotRegisteredReservation();
+            throw new NotOwnedReservationException();
         }
 
         Reservation reservation = reservationRepository.findById(reservationId)
