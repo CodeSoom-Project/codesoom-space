@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 
 import dayjs from 'dayjs';
 
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, LinearProgress } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -73,12 +73,13 @@ const TextBox = styled.div({
 });
 
 interface Props {
-  open : boolean;
-  onClose : React.ReactEventHandler;
-  onApply : React.ReactEventHandler;
+  loading: boolean;
+  open: boolean;
+  onClose: React.ReactEventHandler;
+  onApply: React.ReactEventHandler;
 }
 
-function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler }) {
+function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler }) {
   const { id } = useAppSelector(get('reservations'));
 
   const { isLoading, data } = useQuery(
@@ -94,7 +95,7 @@ function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler 
       <DateTitle>예약일 : {data.date}</DateTitle>
 
       <TextTitle>계획</TextTitle>
-      <TextBox>{data.content.split('\n').map((line:string) => (<p>{line}</p>))}</TextBox>
+      <TextBox>{data.content.split('\n').map((line: string) => (<p>{line}</p>))}</TextBox>
 
       <ButtonWrap>
         <Button variant="outlined" size="small" onClick={onClose}>
@@ -105,9 +106,9 @@ function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler 
   );
 }
 
-function ApplyReservationDialog({ onClose, onApply }:{
-  onClose : React.ReactEventHandler;
-  onApply : React.ReactEventHandler;
+function ApplyReservationDialog({ onClose, onApply }: {
+  onClose: React.ReactEventHandler;
+  onApply: React.ReactEventHandler;
 }) {
   const dispatch = useDispatch();
 
@@ -163,7 +164,7 @@ function ApplyReservationDialog({ onClose, onApply }:{
 }
 
 
-export default function ReservationDialog({ open, onClose, onApply }: Props) {
+export default function ReservationDialog({ loading, open, onClose, onApply }: Props) {
   const { isDetail } = useAppSelector(get('reservations'));
 
   return (
@@ -172,6 +173,8 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
+      {loading && <LinearProgress/>}
+
       {isDetail
         ? <DetailReservationDialog onClose={onClose} />
         : <ApplyReservationDialog onClose={onClose} onApply={onApply} />}
