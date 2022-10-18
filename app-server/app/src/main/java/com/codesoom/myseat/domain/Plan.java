@@ -26,4 +26,8 @@ public class Plan {
     private Long id;
 
     private String content;
+
+    public void update(String content) {
+        this.content = content;
+    }
 }
