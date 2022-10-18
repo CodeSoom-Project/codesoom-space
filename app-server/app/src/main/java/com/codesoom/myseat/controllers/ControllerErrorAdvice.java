@@ -61,4 +61,10 @@ public class ControllerErrorAdvice {
     public String handleNotRegisteredReservation(NotOwnedReservationException e) {
         return e.getMessage();
     }
+    
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(RetrospectiveNotFoundException.class)
+    public String handleRetrospectiveNotFound() {
+        return "회고 조회에 실패했습니다.";
+    }
 }
