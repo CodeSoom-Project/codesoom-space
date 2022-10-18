@@ -11,7 +11,5 @@ import lombok.Getter;
 public class RetrospectiveResponse {
     Long id;
     
-    String date;
-    
     String content;
 }

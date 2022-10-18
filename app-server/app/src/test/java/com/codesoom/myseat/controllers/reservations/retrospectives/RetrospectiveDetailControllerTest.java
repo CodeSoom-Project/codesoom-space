@@ -97,7 +97,6 @@ class RetrospectiveDetailControllerTest {
         
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4L))
-                .andExpect(jsonPath("$.date").value("2022-10-18"))
                 .andExpect(jsonPath("$.content").value("잘했다."))
                 .andDo(print())
                 .andReturn();

@@ -2,12 +2,10 @@ package com.codesoom.myseat.controllers.reservations.retrospectives;
 
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
-import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveResponse;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.reservations.ReservationQueryService;
 import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveDetailService;
-import com.codesoom.myseat.services.users.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,20 +42,17 @@ public class RetrospectiveDetailController {
             @AuthenticationPrincipal UserAuthentication principal,
             @PathVariable Long id
     ) {
-        log.info("###########: " + principal.getId());
         Reservation reservation = reservationQueryService.reservation(id, principal.getId());
         Retrospective retrospective = retrospectiveDetailService.retrospective(id);
         
-        return toResponse(retrospective, reservation.getDate());
+        return toResponse(retrospective);
     }
     
     private RetrospectiveResponse toResponse(
-            Retrospective retrospective,
-            String date
+            Retrospective retrospective
     ) {
         return RetrospectiveResponse.builder()
                 .id(retrospective.getId())
-                .date(date)
                 .content(retrospective.getContent())
                 .build();
     }
