@@ -78,7 +78,7 @@ export default function Reservations() {
     });
   };
 
-  const { mutate: retrospectiveMutate, isLoading: retrospectiveIsLoading } = useMutation(fetchRetrospectives, {
+  const { mutate: retrospectiveMutate } = useMutation(fetchRetrospectives, {
     onSuccess: () => {
       alert('회고가 제출되었습니다.');
       onClicktoggleRetrospectModal();
@@ -109,7 +109,6 @@ export default function Reservations() {
       />
 
       <RetrospectivesModal
-        loading={retrospectiveIsLoading}
         open={isOpenRetrospectModal}
         onClose={onClicktoggleRetrospectModal}
         onApply={onClickApplyRetrospectives}
