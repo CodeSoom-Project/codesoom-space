@@ -3,8 +3,12 @@ name: Build
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "app-server/**"
   pull_request:
     branches: [ "main" ]
+    paths:
+      - "app-server/**"
 
 permissions:
   contents: read
