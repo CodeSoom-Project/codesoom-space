@@ -33,6 +33,7 @@ module.exports = {
     'comma-style': ['error', 'last'],
     'comma-dangle': ['error', 'always-multiline'],
     'space-in-parens': ['error', 'never'],
+
     'block-spacing': 'error',
     'array-bracket-spacing': ['error', 'never'],
     'object-curly-spacing': ['error', 'always'],
@@ -44,5 +45,10 @@ module.exports = {
 
     "react/jsx-filename-extension": [0],
     "import/extensions": "off",
+
+    "@typescript-eslint/type-annotation-spacing": ["error", {
+      before: false,
+      after: true
+    }],
   }
 };

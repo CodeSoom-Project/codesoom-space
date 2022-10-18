@@ -73,13 +73,13 @@ const TextBox = styled.div({
 });
 
 interface Props {
-  loading:boolean;
-  open : boolean;
-  onClose : React.ReactEventHandler;
-  onApply : React.ReactEventHandler;
+  loading: boolean;
+  open: boolean;
+  onClose: React.ReactEventHandler;
+  onApply: React.ReactEventHandler;
 }
 
-function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler }) {
+function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler }) {
   const { id } = useAppSelector(get('reservations'));
 
   const { isLoading, data } = useQuery(
@@ -95,7 +95,7 @@ function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler 
       <DateTitle>예약일 : {data.date}</DateTitle>
 
       <TextTitle>계획</TextTitle>
-      <TextBox>{data.content.split('\n').map((line:string) => (<p>{line}</p>))}</TextBox>
+      <TextBox>{data.content.split('\n').map((line: string) => (<p>{line}</p>))}</TextBox>
 
       <ButtonWrap>
         <Button variant="outlined" size="small" onClick={onClose}>
@@ -106,9 +106,9 @@ function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler 
   );
 }
 
-function ApplyReservationDialog({ onClose, onApply }:{
-  onClose : React.ReactEventHandler;
-  onApply : React.ReactEventHandler;
+function ApplyReservationDialog({ onClose, onApply }: {
+  onClose: React.ReactEventHandler;
+  onApply: React.ReactEventHandler;
 }) {
   const dispatch = useDispatch();
 
