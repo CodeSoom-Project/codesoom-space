@@ -38,7 +38,7 @@ public class JwtUtil {
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setIssuer("fresh")
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + Duration.ofMinutes(30).toMillis()))
+                .setExpiration(new Date(now.getTime() + Duration.ofMinutes(1440).toMillis()))
                 .claim("id", id)
                 .signWith(key)
                 .compact();
