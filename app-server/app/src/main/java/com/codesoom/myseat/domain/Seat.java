@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * 좌석 엔티티
  */
@@ -19,7 +21,7 @@ import javax.persistence.*;
 @Slf4j
 public class Seat {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name="seat_id")
     private Long id;
 
