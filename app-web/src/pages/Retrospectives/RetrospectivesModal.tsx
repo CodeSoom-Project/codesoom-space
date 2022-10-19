@@ -71,7 +71,7 @@ interface Props {
   onApply: React.ReactEventHandler,
 }
 
-function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler }) {
+function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler }) {
   const { id } = useAppSelector(get('retrospectives'));
 
   const { isLoading, data } = useQuery(
@@ -85,7 +85,7 @@ function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler 
   return (
     <Wrap>
       <TextTitle>회고</TextTitle>
-      <TextBox>{data.content.split('\n').map((line:string) => (<p>{line}</p>))}</TextBox>
+      <TextBox>{data.content.split('\n').map((line: string) => (<p>{line}</p>))}</TextBox>
       <ButtonWrap>
         <Button variant="outlined" size="small" onClick={onClose}>
             취소
@@ -95,9 +95,9 @@ function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler 
   );
 }
 
-function ApplyReservationDialog({ onClose, onApply }:{
-  onClose : React.ReactEventHandler;
-  onApply : React.ReactEventHandler;
+function ApplyReservationDialog({ onClose, onApply }: {
+  onClose: React.ReactEventHandler;
+  onApply: React.ReactEventHandler;
 }) {
   const dispatch = useDispatch();
 

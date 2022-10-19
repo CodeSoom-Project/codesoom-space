@@ -20,10 +20,10 @@ export const fetchRetrospectives = ({ id, content }: { id: number, content: stri
 };
 
 export const retrospectivesKeys = {
-  retrospectivesById: (id : number) => ['retrospectives', id] as const,
+  retrospectivesById: (id: number) => ['retrospectives', id] as const,
 };
 
-export const getRetrospective = async (id : number) => {
+export const getRetrospective = async (id: number) => {
   const accessToken = loadItem('accessToken');
   const { data } = await api({
     method: 'get',
