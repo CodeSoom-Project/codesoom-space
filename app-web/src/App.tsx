@@ -10,6 +10,13 @@ import HeaderContainer from './HeaderContainer';
 
 import { loadItem } from './services/stoage';
 
+import { Routes, Route } from 'react-router-dom';
+
+import NotFound from './NotFound';
+import LogInContainer from './logInContainer';
+import SignUpContainer from './signUpContainer';
+import Reservations from './pages/Reservations';
+
 export default function App() {
   const dispatch = useAppDispatch();
 
@@ -24,6 +31,13 @@ export default function App() {
   return (
     <div>
       <HeaderContainer/>
+      <Routes>
+        <Route path="/"/>
+        <Route path="signup" element={<SignUpContainer/>}/>
+        <Route path="login" element={<LogInContainer/>}/>
+        <Route path="reservations" element={<Reservations/>}/>
+        <Route path="*" element={<NotFound/>}/>
+      </Routes>
     </div>
   );
 }
