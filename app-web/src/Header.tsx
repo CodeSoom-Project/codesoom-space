@@ -17,18 +17,14 @@ const MainText = styled.h1({
   },
 });
 
-const LoginText = styled.div({
-  color: 'black',
-
-  textShadow: '1px 1px 1px lightgrey',
-
-  'a': {
-    color: 'inherit',
-    textDecoration: 'none',
-  },
-  'a: hover': {
+const TextButton = styled(Button)({
+  '&: hover': {
     color: 'grey',
   },
+});
+
+const LinkButton = styled(Link)({
+  textDecoration: 'none',
 });
 
 export default function Header({ accessToken, onClick }: any) {
@@ -37,23 +33,25 @@ export default function Header({ accessToken, onClick }: any) {
       <MainText>
         <Link to="/">CodeSoom Space</Link>
       </MainText>
-      <LoginText>
-        <Link to="/signup">
-          <Button>회원 가입</Button>
-        </Link>
-        {accessToken ? (
-          <>
-            <Button onClick={onClick}>로그아웃</Button>
-            <Link to="/reservations">
-              <Button>예약</Button>
-            </Link>
-          </>
-        ) : (
-          <Link to="/login">
-            <Button>로그인</Button>
-          </Link>
-        )}
-      </LoginText>
+      {accessToken ? (
+        <>
+          <TextButton onClick={onClick}>
+            로그아웃
+          </TextButton>
+          <LinkButton to="/reservations" >
+            <TextButton>예약</TextButton>
+          </LinkButton>
+        </>
+      ) : (
+        <>
+          <LinkButton to="/signup">
+            <TextButton>회원 가입</TextButton>
+          </LinkButton>
+          <LinkButton to="/login">
+            <TextButton>로그인</TextButton>
+          </LinkButton>
+        </>
+      )}
     </header>
   );
 }
