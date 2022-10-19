@@ -7,14 +7,9 @@ import { store } from './store';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
-
-import NotFound from './NotFound';
-import LogInContainer from './logInContainer';
-import SignUpContainer from './signUpContainer';
-import Reservations from './pages/Reservations';
 
 const queryClient = new QueryClient();
 
@@ -23,14 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<App/>}/>
-            <Route path="signup" element={<SignUpContainer/>}/>
-            <Route path="login" element={<LogInContainer/>}/>
-            <Route path="reservations" element={<Reservations/>}/>
-
-            <Route path="*" element={<NotFound/>}/>
-          </Routes>
+          <App/>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen/>
       </Provider>
