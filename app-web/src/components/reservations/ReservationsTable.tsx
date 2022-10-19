@@ -17,7 +17,6 @@ import {
 } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
-import { selectResetRetrospectiveId } from '../../redux/retrospectivesSlice';
 import { saveIsDetail, selectReservationId } from '../../redux/reservationsSlice';
 
 import FirstPageIcon from '@mui/icons-material/FirstPage';
@@ -33,7 +32,7 @@ interface TablePaginationActionsProps {
   onPageChange: (
     event: React.MouseEvent<HTMLButtonElement>,
     newPage: number,
-  )=> void;
+  ) => void;
 }
 
 const StyledTableCell = styled(TableCell)({
