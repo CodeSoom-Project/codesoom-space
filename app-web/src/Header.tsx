@@ -17,24 +17,14 @@ const MainText = styled.h1({
   },
 });
 
-const TextDiv = styled.div({
-  color: 'black',
-
-  textShadow: '1px 1px 1px lightgrey',
-
-  'a': {
-    color: 'inherit',
-    textDecoration: 'none',
-  },
-  'a: hover': {
-    color: 'grey',
-  },
-});
-
 const TextButton = styled(Button)({
   '&: hover': {
     color: 'grey',
   },
+});
+
+const LinkButton = styled(Link)({
+  textDecoration: 'none',
 });
 
 export default function Header({ accessToken, onClick }: any) {
@@ -48,19 +38,19 @@ export default function Header({ accessToken, onClick }: any) {
           <TextButton onClick={onClick}>
             로그아웃
           </TextButton>
-          <Link to="/reservations" style={{ textDecoration: 'none' }}>
+          <LinkButton to="/reservations" >
             <TextButton>예약</TextButton>
-          </Link>
+          </LinkButton>
         </>
       ) : (
-        <TextDiv>
-          <Button>
-            <Link to="/signup">회원 가입</Link>
-          </Button>
-          <Button>
-            <Link to="/login">로그인</Link>
-          </Button>
-        </TextDiv>
+        <>
+          <LinkButton to="/signup">
+            <TextButton>회원 가입</TextButton>
+          </LinkButton>
+          <LinkButton to="/login">
+            <TextButton>로그인</TextButton>
+          </LinkButton>
+        </>
       )}
     </header>
   );
