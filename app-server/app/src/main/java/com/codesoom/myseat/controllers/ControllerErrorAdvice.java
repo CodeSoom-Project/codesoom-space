@@ -73,4 +73,10 @@ public class ControllerErrorAdvice {
     public String handleDuplicatedEmail() {
         return "이미 가입된 이메일입니다. 다른 이메일로 회원 가입을 해주세요";
     }
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AlreadyPostedRetrospectiveException.class)
+    public String handleAlreadyPostedRetrospective() {
+        return "이미 회고를 작성했습니다.";
+    }
 }

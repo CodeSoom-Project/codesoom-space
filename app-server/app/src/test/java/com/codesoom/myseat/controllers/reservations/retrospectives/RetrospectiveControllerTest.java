@@ -1,9 +1,12 @@
 package com.codesoom.myseat.controllers.reservations.retrospectives;
 
 import com.codesoom.myseat.controllers.reservations.retrospectives.RetrospectiveController;
+import com.codesoom.myseat.domain.Plan;
+import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
 import com.codesoom.myseat.services.auth.AuthenticationService;
+import com.codesoom.myseat.services.reservations.ReservationService;
 import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveService;
 import com.codesoom.myseat.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -41,6 +44,9 @@ class RetrospectiveControllerTest {
 
     @MockBean
     private RetrospectiveService retrospectiveService;
+    
+    @MockBean
+    private ReservationService reservationService;
 
     @MockBean
     private UserService userService;
@@ -54,12 +60,26 @@ class RetrospectiveControllerTest {
                 .email("soo@email.com")
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
+        
+        Plan mockPlan = Plan.builder()
+                .id(2L)
+                .content("밥먹기, 코테풀기")
+                .build();
+        
+        Reservation mockReservation = Reservation.builder()
+                .id(3L)
+                .user(mockUser)
+                .plan(mockPlan)
+                .build();
 
         given(authService.parseToken(ACCESS_TOKEN))
                 .willReturn(1L);
 
         given(userService.findById(1L))
                 .willReturn(mockUser);
+
+        given(reservationService.findReservation(1L))
+                .willReturn(mockReservation);
 
         RetrospectiveRequest request = RetrospectiveRequest.builder()
                 .content("잘했다.")

@@ -1,9 +1,13 @@
 package com.codesoom.myseat.controllers.reservations.retrospectives;
 
+import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
+import com.codesoom.myseat.exceptions.AlreadyPostedRetrospectiveException;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
+import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.security.UserAuthentication;
+import com.codesoom.myseat.services.reservations.ReservationService;
 import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveService;
 import com.codesoom.myseat.services.users.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +30,12 @@ public class RetrospectiveController {
 
     private final RetrospectiveService retrospectiveService;
     private final UserService userService;
+    private final ReservationService reservationService;
 
-    public RetrospectiveController(RetrospectiveService retrospectiveService, UserService userService) {
+    public RetrospectiveController(RetrospectiveService retrospectiveService, UserService userService, ReservationService reservationService) {
         this.retrospectiveService = retrospectiveService;
         this.userService = userService;
+        this.reservationService = reservationService;
     }
 
     /**
@@ -38,6 +44,7 @@ public class RetrospectiveController {
      * @param id 예약 Id
      * @param request 회고 폼에 입력된 데이터
      * @throws NotOwnedReservationException 예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 한다면 예외를 던집니다.
+     * @throws ReservationNotFoundException 예약 조회에 실패하면 던집니다.
      */
     @PostMapping("/{id}/retrospectives")
     @PreAuthorize("isAuthenticated()")
@@ -48,6 +55,12 @@ public class RetrospectiveController {
             @RequestBody final RetrospectiveRequest request)
     {
         User user = userService.findById(principal.getId());
+        
+        Reservation reservation = reservationService.findReservation(id);
+        if(reservation.haveRetrospective()) {
+            throw new AlreadyPostedRetrospectiveException();
+        }
+        
         String content = request.getContent();
         log.info("회고 요청: " + content);
 
