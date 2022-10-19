@@ -49,7 +49,7 @@ export default function Reservations() {
 
   const dispatch = useAppDispatch();
 
-  const { isOpenReservationsModal, date, content } = useAppSelector(get('reservations'));
+  const { isOpenReservationsModal, date, content, id } = useAppSelector(get('reservations'));
   const { isOpenRetrospectModal, retrospectives } = useAppSelector(get('retrospectives'));
 
   const onClicktoggleReservationsModal = () => {
@@ -91,8 +91,8 @@ export default function Reservations() {
 
   const onClickApplyRetrospectives = () => {
     retrospectiveMutate({
-      id: 1,
-      retrospectives: retrospectives,
+      id,
+      content: retrospectives,
     });
   };
 
@@ -102,7 +102,7 @@ export default function Reservations() {
 
   return (
     <Container>
-      <HeaderContainer/>
+      <HeaderContainer />
       <ReservationDialog
         loading={reservationIsLoading}
         open={isOpenReservationsModal}
