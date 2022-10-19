@@ -49,8 +49,8 @@ export default function Reservations() {
 
   const dispatch = useAppDispatch();
 
-  const { isOpenReservationsModal, date, content } = useAppSelector(get('reservations'));
-  const { isOpenRetrospectModal, retrospectives, id } = useAppSelector(get('retrospectives'));
+  const { isOpenReservationsModal, date, content, id } = useAppSelector(get('reservations'));
+  const { isOpenRetrospectModal, retrospectives } = useAppSelector(get('retrospectives'));
 
   const onClicktoggleReservationsModal = () => {
     dispatch(toggleReservationsModal());
@@ -102,7 +102,7 @@ export default function Reservations() {
 
   return (
     <Container>
-      <HeaderContainer/>
+      <HeaderContainer />
       <ReservationDialog
         loading={reservationIsLoading}
         open={isOpenReservationsModal}

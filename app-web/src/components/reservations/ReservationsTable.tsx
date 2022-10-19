@@ -149,7 +149,7 @@ export default function ReservationsTable({
   const handleClickRetrospective = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
     onOpenRetrospectModal(e);
 
-    dispatch(selectResetRetrospectiveId(id));
+    dispatch(selectReservationId(id));
   };
 
   const statusName: StatusType = {
