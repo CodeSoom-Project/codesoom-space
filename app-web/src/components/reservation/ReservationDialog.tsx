@@ -30,7 +30,9 @@ const TextFieldWrap = styled.div({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-around',
+  width: '20rem',
   padding: '1.5rem',
+
 });
 
 const ButtonWrap = styled.div({
@@ -50,22 +52,25 @@ const Text = styled(TextField)({
   margin: '1rem 3rem 1rem 0',
 });
 
-const DateTitle = styled.h1({
+const DateTitle = styled.h3({
   margin: '0',
+  fontWeight: 'normal',
   fontSize: '1.3rem',
 });
 
 const TextTitle = styled.h1({
   marginBottom: '1rem',
+  fontWeight: 'normal',
   fontSize: '1.3rem',
 });
 
 const TextBox = styled.div({
   display: 'flex',
   flexDirection: 'column',
-  maxHeight: '20rem',
-  overflow: 'auto',
+  width: '100%',
+  minHeight: '10rem',
   marginBottom: '2rem',
+  backgroundColor: '#f2f2f2',
 
   'p': {
     margin: '0 0 1rem 0',
@@ -95,11 +100,23 @@ function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler
       <DateTitle>예약일 : {data.date}</DateTitle>
 
       <TextTitle>계획</TextTitle>
-      <TextBox>{data.content.split('\n').map((line: string) => (<p>{line}</p>))}</TextBox>
+      <TextBox>
+        {data.content.split('\n').map((line: string) => (<p>{line}</p>))}
+      </TextBox>
 
       <ButtonWrap>
-        <Button variant="outlined" size="small" onClick={onClose}>
-            취소
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={onClose}
+        >
+            닫기
+        </Button>
+        <Button
+          variant="contained"
+          size="small"
+        >
+            수정
         </Button>
       </ButtonWrap>
     </TextFieldWrap>
@@ -151,10 +168,19 @@ function ApplyReservationDialog({ onClose, onApply }: {
         />
 
         <ButtonWrap>
-          <Button variant="outlined" size="small" onClick={onClose}>
+          <Button
+            onClick={onClose}
+            variant="outlined"
+            size="small"
+          >
             취소
           </Button>
-          <Button disabled={!date || !content} onClick={onApply} variant="contained" size="small">
+          <Button
+            onClick={onApply}
+            disabled={!date || !content}
+            variant="contained"
+            size="small"
+          >
             제출
           </Button>
         </ButtonWrap>
