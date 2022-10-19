@@ -7,8 +7,6 @@ import { useMutation } from 'react-query';
 import { login } from './services/api';
 
 import LogIn from './logIn';
-import HeaderContainer from './HeaderContainer';
-
 
 export default function LogInContainer() {
   const { register, formState: { errors }, handleSubmit } = useForm();
@@ -32,7 +30,6 @@ export default function LogInContainer() {
 
   return (
     <>
-      <HeaderContainer/>
       <LogIn
         register={register}
         errors={errors}

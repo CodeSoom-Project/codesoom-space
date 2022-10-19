@@ -11,7 +11,6 @@ import { get } from '../utils';
 import { resetReservations, saveIsDetail, toggleReservationsModal } from '../redux/reservationsSlice';
 import { resetRetrospectives, toggleRetrospectModal } from '../redux/retrospectivesSlice';
 
-import HeaderContainer from '../HeaderContainer';
 import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
 import RetrospectivesModal from './Retrospectives';
@@ -102,7 +101,6 @@ export default function Reservations() {
 
   return (
     <Container>
-      <HeaderContainer />
       <ReservationDialog
         loading={reservationIsLoading}
         open={isOpenReservationsModal}
