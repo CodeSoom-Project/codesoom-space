@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * 회원 엔티티
  */
@@ -20,7 +22,7 @@ import javax.persistence.*;
 @Slf4j
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name="user_id")
     private Long id;
 
