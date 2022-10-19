@@ -41,7 +41,7 @@ public class SignupController {
         log.info("request: " + request.toString());
 
         String email = request.getEmail();
-        if(isDuplicatedEmail(email)) {
+        if(userService.isDuplicatedEmail(email)) {
             throw new DuplicatedEmailException();
         }
         
@@ -49,17 +49,5 @@ public class SignupController {
         String password = request.getPassword();
 
         service.createUser(name, email, password);
-    }
-
-    /**
-     * 이미 가입된 이메일이면 true, 그렇지 않으면 false를 반환합니다.
-     * 
-     * @param email 이메일
-     * @return 이미 가입된 이메일이면 true, 그렇지 않으면 false
-     */
-    public Boolean isDuplicatedEmail(
-            String email
-    ) {
-        return userService.existByEmail(email);
     }
 }

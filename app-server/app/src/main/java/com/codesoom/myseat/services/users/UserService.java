@@ -49,12 +49,12 @@ public class UserService {
     }
 
     /**
-     * 주어진 이메일로 회원 조회에 성공하면 true, 그렇지 않으면 false를 반환합니다.
-     * 
+     * 이미 가입된 이메일이면 true, 그렇지 않으면 false를 반환합니다.
+     *
      * @param email 이메일
-     * @return 회원 조회에 성공하면 true, 그렇지 않으면 false
+     * @return 이미 가입된 이메일이면 true, 그렇지 않으면 false
      */
-    public Boolean existByEmail(String email) {
+    public Boolean isDuplicatedEmail(String email) {
         return userRepo.existsByEmail(email);
     }
 }
