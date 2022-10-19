@@ -17,7 +17,7 @@ const MainText = styled.h1({
   },
 });
 
-const LoginText = styled.div({
+const TextDiv = styled.div({
   color: 'black',
 
   textShadow: '1px 1px 1px lightgrey',
@@ -31,31 +31,37 @@ const LoginText = styled.div({
   },
 });
 
+const TextButton = styled(Button)({
+  '&: hover': {
+    color: 'grey',
+  },
+});
+
 export default function Header({ accessToken, onClick }: any) {
   return (
     <header style={{ textAlign: 'center' }}>
       <MainText>
         <Link to="/">CodeSoom Space</Link>
       </MainText>
-      <LoginText>
-        {accessToken ? (
-          <>
-            <Button onClick={onClick}>로그아웃</Button>
-            <Link to="/reservations">
-              <Button>예약</Button>
-            </Link>
-          </>
-        ) : (
-          <>
-            <Button>
-              <Link to="/signup">회원 가입</Link>
-            </Button>
-            <Button>
-              <Link to="/login">로그인</Link>
-            </Button>
-          </>
-        )}
-      </LoginText>
+      {accessToken ? (
+        <>
+          <TextButton onClick={onClick}>
+            로그아웃
+          </TextButton>
+          <Link to="/reservations" style={{ textDecoration: 'none' }}>
+            <TextButton>예약</TextButton>
+          </Link>
+        </>
+      ) : (
+        <TextDiv>
+          <Button>
+            <Link to="/signup">회원 가입</Link>
+          </Button>
+          <Button>
+            <Link to="/login">로그인</Link>
+          </Button>
+        </TextDiv>
+      )}
     </header>
   );
 }
