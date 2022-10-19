@@ -17,7 +17,7 @@ import javax.servlet.Filter;
 import java.util.Arrays;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationService authService;
 
