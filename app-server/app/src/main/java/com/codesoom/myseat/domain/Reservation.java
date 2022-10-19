@@ -1,6 +1,7 @@
 package com.codesoom.myseat.domain;
 
 import com.codesoom.myseat.converters.ReservationStatusConverter;
+import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.enums.ReservationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+
+import java.util.Objects;
 
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -52,6 +55,15 @@ public class Reservation {
         if (this.status == null) {
             this.status = ReservationStatus.RETROSPECTIVE_WAITING;
         }
+    }
+
+    public boolean isOwnReservation(Long userId) {
+        return this.user.getId().equals(userId);
+    }
+
+    public void update(ReservationRequest updateData) {
+        this.date = updateData.getDate();
+        this.plan.update(updateData.getContent());
     }
 
 }
