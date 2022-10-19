@@ -72,4 +72,9 @@ public class Reservation {
     public boolean haveRetrospective() {
         return this.retrospective != null;
     }
+
+    public void cancel() {
+        this.status = ReservationStatus.CANCELED;
+    }
+
 }
