@@ -18,3 +18,18 @@ export const fetchRetrospectives = ({ id, content }: { id: number, content: stri
     data: { content },
   });
 };
+
+export const retrospectivesKeys = {
+  retrospectivesById: (id: number) => ['retrospectives', id] as const,
+};
+
+export const getRetrospective = async (id: number) => {
+  const accessToken = loadItem('accessToken');
+  const { data } = await api({
+    method: 'get',
+    url: `reservations/${id}/retrospectives`,
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+  return data;
+};

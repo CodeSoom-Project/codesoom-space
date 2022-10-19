@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface RetrospectivesState {
   isOpenRetrospectModal: boolean,
+  isDetail: boolean,
   retrospectives: string,
 }
 
 const initialState: RetrospectivesState = {
   isOpenRetrospectModal: false,
+  isDetail: false,
   retrospectives: '',
 };
 
@@ -28,13 +30,18 @@ const { reducer, actions } = createSlice({
       ...state,
       retrospectives: initialState.retrospectives,
     }),
+    saveIsDetailRetrospectives: (state, { payload }) => ({
+      ...state,
+      isDetail: payload,
+    }),
   },
 });
 
 export const {
-  toggleRetrospectModal,
-  saveRetrospectives,
   resetRetrospectives,
+  saveRetrospectives,
+  saveIsDetailRetrospectives,
+  toggleRetrospectModal,
 } = actions;
 
 export default reducer;
