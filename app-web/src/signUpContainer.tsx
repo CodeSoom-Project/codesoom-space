@@ -8,8 +8,6 @@ import { signUp } from './services/api';
 
 import SignUp from './signUp';
 
-import HeaderContainer from './HeaderContainer';
-
 export default function SignUpContainer() {
   const { register, formState: { errors }, handleSubmit } = useForm();
 
@@ -37,7 +35,6 @@ export default function SignUpContainer() {
 
   return (
     <>
-      <HeaderContainer/>
       <SignUp
         register={register}
         errors={errors}
