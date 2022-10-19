@@ -1,16 +1,11 @@
 package com.codesoom.myseat.services.reservations;
 
-import com.codesoom.myseat.domain.Seat;
-import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.domain.Reservation;
+import com.codesoom.myseat.exceptions.NotOwnedReservationException;
+import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 /**
  * 좌석 예약 취소 서비스
@@ -18,45 +13,28 @@ import java.util.List;
 @Service
 @Slf4j
 public class ReservationCancelService {
-    private static final SimpleDateFormat dateFormat
-            = new SimpleDateFormat("HH:mm:ss");
 
-    private final ReservationRepository reservationRepo;
+    private final ReservationRepository repository;
 
-    public ReservationCancelService(
-            ReservationRepository reservationRepo
-    ) {
-        this.reservationRepo = reservationRepo;
+    public ReservationCancelService(ReservationRepository repository) {
+        this.repository = repository;
     }
 
     /**
-     * 예약을 취소한다.
-     * 
-     * @param user
-     * @param seat
+     * 주어진 예약 id로 찾은 예약 정보의 상태를 취소로 변경합니다.
+     *
+     * @param userId 취소 요청한 회원 id
+     * @param id 예약 id
+     * @throws ReservationNotFoundException 주어진 예약 id로 예약을 찾지 못한 경우
+     * @throws NotOwnedReservationException 요청한 회원의 소유한 예약이 아닌 경우
      */
-    public void cancelReservation(
-            User user,
-            Seat seat
-    ) {
-//        Reservation reservation = user.getReservation();
-//        reservationRepo.delete(reservation);
+    public void cancelReservation(Long userId, Long id) {
+        Reservation reservation = repository.findById(id)
+                .orElseThrow(ReservationNotFoundException::new);
+        if (!reservation.isOwnReservation(userId)) {
+            throw new NotOwnedReservationException();
+        }
+        reservation.cancel();
     }
 
-    /**
-     * 매일 23시에 모든 예약을 초기화한다.
-     */
-    @Scheduled(cron = "0 0 23 * * *")
-    public void reset() {
-        log.info("현재 시간: {}", dateFormat.format(new Date()));
-        
-        List<Reservation> reservations = reservationRepo.findAll();
-//        for(Reservation s : reservations) {
-//            s.getUser().cancelReservation();
-//            Seat seat = s.getUser().getSeat();
-//            
-//            reservationRepo.delete(s);
-//            seat.cancelReservation();
-//        }
-    }
 }
