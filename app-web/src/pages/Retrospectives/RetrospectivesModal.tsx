@@ -72,7 +72,7 @@ interface Props {
 }
 
 function DetailReservationDialog({ onClose }:{ onClose: React.ReactEventHandler }) {
-  const { id } = useAppSelector(get('reservations'));
+  const { id } = useAppSelector(get('retrospectives'));
 
   const { isLoading, data } = useQuery(
     retrospectivesKeys.retrospectivesById(id),
