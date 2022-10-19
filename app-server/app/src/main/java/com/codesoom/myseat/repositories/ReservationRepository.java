@@ -62,4 +62,12 @@ public interface ReservationRepository
      * @return 예약한 회원이면 true, 그렇지 않으면 false
      */
     boolean existsByIdAndUser_Id(Long id, Long userId);
+
+    /**
+     * 주어진 예약 id로 조회된 예약을 반환합니다.
+     * 
+     * @param id must not be {@literal null}. 예약 id
+     * @return 조회된 예약
+     */
+    Optional<Reservation> findById(Long id);
 }

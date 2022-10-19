@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
-import java.util.Objects;
-
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -66,4 +64,12 @@ public class Reservation {
         this.plan.update(updateData.getContent());
     }
 
+    /**
+     * 회고가 null이 아니면 true, 그렇지 않으면 false를 반환합니다.
+     * 
+     * @return 회고가 null이면 true, 그렇지 않으면 false
+     */
+    public boolean haveRetrospective() {
+        return this.retrospective != null;
+    }
 }

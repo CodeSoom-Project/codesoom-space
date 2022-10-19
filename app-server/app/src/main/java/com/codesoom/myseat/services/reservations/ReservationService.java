@@ -4,6 +4,7 @@ import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
+import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.PlanRepository;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -72,5 +73,17 @@ public class ReservationService {
      */
     public boolean isDuplicateReservation(String date, Long id) {
         return reservationRepo.existsByDateAndUser_Id(date, id);
+    }
+
+    /**
+     * 주어진 id로 조회된 예약을 반환합니다.
+     * 
+     * @param id 예약 id
+     * @return 조회된 예약
+     * @throws ReservationNotFoundException 예약 조회에 실패하면 던집니다.
+     */
+    public Reservation findReservation(Long id) {
+        return reservationRepo.findById(id)
+                .orElseThrow(() -> new ReservationNotFoundException());
     }
 }
