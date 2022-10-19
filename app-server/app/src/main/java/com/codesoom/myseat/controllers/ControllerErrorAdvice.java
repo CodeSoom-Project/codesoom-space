@@ -67,4 +67,10 @@ public class ControllerErrorAdvice {
     public String handleRetrospectiveNotFound() {
         return "회고 조회에 실패했습니다.";
     }
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DuplicatedEmailException.class)
+    public String handleDuplicatedEmail() {
+        return "이미 가입된 이메일입니다. 다른 이메일로 회원 가입을 해주세요";
+    }
 }
