@@ -38,9 +38,6 @@ export default function Header({ accessToken, onClick }: any) {
         <Link to="/">CodeSoom Space</Link>
       </MainText>
       <LoginText>
-        <Link to="/signup">
-          <Button>회원 가입</Button>
-        </Link>
         {accessToken ? (
           <>
             <Button onClick={onClick}>로그아웃</Button>
@@ -49,9 +46,14 @@ export default function Header({ accessToken, onClick }: any) {
             </Link>
           </>
         ) : (
-          <Link to="/login">
-            <Button>로그인</Button>
-          </Link>
+          <>
+            <Button>
+              <Link to="/signup">회원 가입</Link>
+            </Button>
+            <Button>
+              <Link to="/login">로그인</Link>
+            </Button>
+          </>
         )}
       </LoginText>
     </header>
