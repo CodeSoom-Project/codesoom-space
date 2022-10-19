@@ -69,7 +69,6 @@ const TextBox = styled.div({
   flexDirection: 'column',
   width: '100%',
   minHeight: '10rem',
-  overflow: 'hidden',
   marginBottom: '2rem',
   backgroundColor: '#f2f2f2',
 
@@ -109,12 +108,14 @@ function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler
         <Button
           variant="outlined"
           size="small"
-          onClick={onClose}>
+          onClick={onClose}
+        >
             닫기
         </Button>
         <Button
           variant="contained"
-          size="small" >
+          size="small"
+        >
             수정
         </Button>
       </ButtonWrap>
@@ -167,10 +168,19 @@ function ApplyReservationDialog({ onClose, onApply }: {
         />
 
         <ButtonWrap>
-          <Button variant="outlined" size="small" onClick={onClose}>
+          <Button
+            onClick={onClose}
+            variant="outlined"
+            size="small"
+          >
             취소
           </Button>
-          <Button disabled={!date || !content} onClick={onApply} variant="contained" size="small">
+          <Button
+            onClick={onApply}
+            disabled={!date || !content}
+            variant="contained"
+            size="small"
+          >
             제출
           </Button>
         </ButtonWrap>
