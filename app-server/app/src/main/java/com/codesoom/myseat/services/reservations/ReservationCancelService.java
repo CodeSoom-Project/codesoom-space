@@ -35,6 +35,7 @@ public class ReservationCancelService {
             throw new NotOwnedReservationException();
         }
         reservation.cancel();
+        repository.save(reservation);
     }
 
 }
