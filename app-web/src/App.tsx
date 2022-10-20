@@ -49,9 +49,10 @@ export default function App() {
     localStorage.removeItem('accessToken');
 
     dispatch(logout());
-    dispatch(setIsTokenExpired(false));
 
     navigate('/login');
+
+    window.location.reload();
   };
 
   useEffect(() => {
