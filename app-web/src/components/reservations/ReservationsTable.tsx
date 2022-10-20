@@ -33,6 +33,8 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import { useMutation } from 'react-query';
+import { cancelReservation } from '../../services/reservations';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -41,7 +43,7 @@ interface TablePaginationActionsProps {
   onPageChange: (
     event: React.MouseEvent<HTMLButtonElement>,
     newPage: number,
-  )=> void;
+  ) => void;
 }
 
 const StyledTableCell = styled(TableCell)({
@@ -50,6 +52,8 @@ const StyledTableCell = styled(TableCell)({
     color: '#ffff',
   },
 });
+
+
 
 function TablePaginationActions(props: TablePaginationActionsProps) {
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -71,6 +75,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, LastPage);
   };
+
+
 
   return (
     <Box sx={{ flexShrink: 0, ml: 5 }}>
@@ -140,6 +146,19 @@ export default function ReservationsTable({
 
   const startRow = page * rowsPerPage;
   const endRow = page * rowsPerPage + rowsPerPage;
+
+  const { mutate: cancelReservationMutate } = useMutation(cancelReservation, {
+    onSuccess: () => {
+      alert('예약이 취소되셨습니다.');
+    },
+    onError: () => {
+      alert('예약 취소에 실패하였습니다. 다시 신청해주세요.');
+    },
+  });
+
+  const onClickCancelReservation = (id: number) => {
+    cancelReservationMutate(id);
+  };
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -223,9 +242,15 @@ export default function ReservationsTable({
                 </Button>
               </TableCell>
               <TableCell align="center">
-                <Button>
-                  예약취소
-                </Button>
+                {status === 'CANCELED' ? (
+                  <div>
+                    예약이 취소되었습니다.
+                  </div>
+                ) : (
+                  <Button onClick={() => onClickCancelReservation(id)}>
+                    예약취소
+                  </Button>
+                )}
               </TableCell>
             </TableRow>
           ))}

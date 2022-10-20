@@ -59,3 +59,14 @@ export const getReservations = async (id: number) => {
 
   return data;
 };
+
+export const cancelReservation = async (id: number) => {
+  const accessToken = loadItem('accessToken');
+
+  await api({
+    method: 'patch',
+    url: `reservations/${id}`,
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+};
