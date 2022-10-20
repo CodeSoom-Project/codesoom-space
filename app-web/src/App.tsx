@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from './hooks';
 
 import { get } from './utils';
 
-import { logout, setAccessToken, setIsTokenExpired } from './authSlice';
+import { setAccessToken } from './authSlice';
 
 import { setAccessToken } from './redux/authSlice';
 
