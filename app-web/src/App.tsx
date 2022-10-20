@@ -2,16 +2,23 @@ import './App.css';
 
 import { useEffect } from 'react';
 
-import { Routes, Route } from 'react-router-dom';
+import styled from '@emotion/styled';
 
-import PrivateRoute from './routes/PrivateRoute';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+
+import { Button, Dialog } from '@mui/material';
+
+import { useAppDispatch, useAppSelector } from './hooks';
+
+import { get } from './utils';
+
+import { logout, setAccessToken, setIsTokenExpired } from './authSlice';
 
 import { setAccessToken } from './redux/authSlice';
 
 import { loadItem } from './services/stoage';
 
-import { useAppDispatch } from './hooks';
-
+import PrivateRoute from './routes/PrivateRoute';
 
 import NotFound from './NotFound';
 import Reservations from './pages/Reservations';
@@ -20,8 +27,32 @@ import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
 import HeaderContainer from './HeaderContainer';
 
+
+const TokenExpiredDialogContent = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end',
+  backgroundColor: '#fffff',
+  padding: '2rem',
+});
+
 export default function App() {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
+
+  const accessToken = loadItem('accessToken');
+
+  const { isTokenExpired } = useAppSelector(get('auth'));
+
+  const handleClickLogout = () => {
+    localStorage.removeItem('accessToken');
+
+    dispatch(logout());
+    dispatch(setIsTokenExpired(false));
+
+    navigate('/login');
+  };
 
   useEffect(() => {
     dispatch(setAccessToken(loadItem('accessToken')));
@@ -29,6 +60,19 @@ export default function App() {
 
   return (
     <div>
+      {isTokenExpired && (
+        <Dialog open={true}>
+          <TokenExpiredDialogContent>
+            <p>
+              토큰이 만료되었습니다. 다시로그인해주세요
+            </p>
+            <Button onClick={handleClickLogout} variant="contained">
+              확인
+            </Button>
+          </TokenExpiredDialogContent>
+        </Dialog>
+      )}
+
       <HeaderContainer/>
       <Routes>
         <Route path="/"/>
