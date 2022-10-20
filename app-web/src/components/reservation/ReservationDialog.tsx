@@ -101,7 +101,6 @@ function DetailReservationDialog({ onClose }: {
     reservationsKeys.reservationsById(id),
     () => getReservations(id), { retry: 1 });
 
-
   if (isLoading) {
     return <CircularProgress />;
   }
