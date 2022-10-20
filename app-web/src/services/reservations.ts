@@ -4,16 +4,17 @@ import { loadItem } from './stoage';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
-const api = axios.create({
-  baseURL: BASE_URL,
-});
+export const reservationsKeys = {
+  reservationsById: (id: number) => ['retrospectives', id] as const,
+};
 
 export const getReservation = async () => {
   const accessToken = loadItem('accessToken');
-  const { data } = await api({
-    method: 'get',
-    url: '/reservations',
-    headers: { Authorization: `Bearer ${accessToken}` },
+
+  const { data } = await axios.get(`${BASE_URL}/reservations`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
   return data;
@@ -22,11 +23,11 @@ export const getReservation = async () => {
 export const fetchReservation = async ({ date, content }: { date: string, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await api({
-    method: 'post',
-    url: '/reservations',
+  const response = await axios.post(`${BASE_URL}/reservations`, {
+    date,
+    content,
+  }, {
     headers: { Authorization: `Bearer ${accessToken}` },
-    data: { date, content },
   });
 
   return response;
@@ -35,26 +36,20 @@ export const fetchReservation = async ({ date, content }: { date: string, conten
 export const updateReservation = async ({ id, date, content }: { id: number, date: string, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await api({
-    method: 'put',
-    url: `/reservations/${id}`,
+  const response = await axios.put(`${BASE_URL}/reservations/${id}`, {
+    date,
+    content,
+  }, {
     headers: { Authorization: `Bearer ${accessToken}` },
-    data: { date, content },
   });
 
   return response;
 };
 
-export const reservationsKeys = {
-  reservationsById: (id: number) => ['retrospectives', id] as const,
-};
-
 export const getReservations = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await api({
-    method: 'get',
-    url: `reservations/${id}`,
+  const { data } = await axios.get(`${BASE_URL}/reservations/${id}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
