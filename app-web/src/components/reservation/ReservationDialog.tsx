@@ -159,7 +159,8 @@ function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (isUpdate) {
-      return onUpdate(e);
+      onUpdate(e);
+      return;
     }
     onApply(e);
   };
@@ -238,14 +239,18 @@ export default function ReservationDialog({
       {updateLoading && <LinearProgress />}
 
       {isDetail
-        ? <DetailReservationDialog
-          onClose={onClose}
-        />
-        : <ApplyReservationDialog
-          onClose={onClose}
-          onApply={onApply}
-          onUpdate={onUpdate}
-        />}
+        ? (
+          <DetailReservationDialog
+            onClose={onClose}
+          />
+        )
+        : (
+          <ApplyReservationDialog
+            onClose={onClose}
+            onApply={onApply}
+            onUpdate={onUpdate}
+          />
+        )}
     </Dialog >
   );
 }
