@@ -19,7 +19,7 @@ instance.interceptors.response.use(
       store.dispatch(setIsTokenExpired(true));
     }
 
-    return Promise.reject(error);
+    return error;
   });
 
 const api = axios.create({
