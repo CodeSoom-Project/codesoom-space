@@ -77,4 +77,8 @@ public class Reservation {
         this.status = ReservationStatus.CANCELED;
     }
 
+    public void completeRetrospective() {
+        this.status = ReservationStatus.RETROSPECTIVE_COMPLETE;
+    }
+
 }
