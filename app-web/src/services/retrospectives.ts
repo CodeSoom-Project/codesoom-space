@@ -1,12 +1,6 @@
-import axios from 'axios';
+import { instance } from './api';
 
 import { loadItem } from './stoage';
-
-const BASE_URL = 'https://api.codesoom-myseat.site';
-
-const api = axios.create({
-  baseURL: BASE_URL,
-});
 
 export const retrospectivesKeys = {
   retrospectivesById: (id: number) => ['retrospectives', id] as const,
@@ -15,7 +9,7 @@ export const retrospectivesKeys = {
 export const fetchRetrospectives = async ({ id, content }: { id: number, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await api.post(`reservations/${id}/retrospectives`, {
+  const response = await instance.post(`reservations/${id}/retrospectives`, {
     content,
   }, {
     headers: { Authorization: `Bearer ${accessToken}` },
@@ -27,7 +21,7 @@ export const fetchRetrospectives = async ({ id, content }: { id: number, content
 export const getRetrospective = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await api.get(`/reservations/${id}/retrospectives`, {
+  const { data } = await instance.get(`/reservations/${id}/retrospectives`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
