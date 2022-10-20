@@ -106,12 +106,13 @@ function DetailReservationDialog({ onClose }: {
   }
   const { date, content } = data;
 
-  const handleClick = () => {
+  const changeReservationMode = () => {
     dispatch(saveIsDetail(false));
     dispatch(saveIsUpdate(true));
     dispatch(saveContent(content));
     dispatch(saveDate(date));
   };
+
 
   return (
     <TextFieldWrap>
@@ -131,7 +132,7 @@ function DetailReservationDialog({ onClose }: {
             닫기
         </Button>
         <Button
-          onClick={handleClick}
+          onClick={changeReservationMode}
           variant="contained"
           size="small"
         >
@@ -216,7 +217,6 @@ function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
     </>
   );
 }
-
 
 export default function ReservationDialog({
   loading,
