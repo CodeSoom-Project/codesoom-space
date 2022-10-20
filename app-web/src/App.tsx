@@ -46,8 +46,6 @@ export default function App() {
   const { isTokenExpired } = useAppSelector(get('auth'));
 
   const handleClickLogout = () => {
-    localStorage.removeItem('accessToken');
-
     dispatch(logout());
 
     navigate('/login');
