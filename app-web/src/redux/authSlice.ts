@@ -15,10 +15,10 @@ const authSlice = createSlice({
       };
     },
 
-    setIsTokenExpired(state, { payload }) {
+    setIsTokenExpired(state) {
       return {
         ...state,
-        isTokenExpired: payload,
+        isTokenExpired: true,
       };
     },
 
@@ -27,6 +27,7 @@ const authSlice = createSlice({
       return {
         ...state,
         accessToken: '',
+        isTokenExpired: false,
       };
     },
   },

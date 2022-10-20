@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from './hooks';
 
 import { get } from './utils';
 
-import { setAccessToken } from './authSlice';
+import { logout, setAccessToken } from './authSlice';
 
 import { setAccessToken } from './redux/authSlice';
 
@@ -48,9 +48,9 @@ export default function App() {
   const handleClickLogout = () => {
     localStorage.removeItem('accessToken');
 
-    navigate('/login');
+    dispatch(logout());
 
-    window.location.reload();
+    navigate('/login');
   };
 
   useEffect(() => {
