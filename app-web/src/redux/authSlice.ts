@@ -2,8 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: { accessToken: '' },
+  initialState: {
+    isTokenExpired: false,
+
+    accessToken: '',
+  },
   reducers: {
+    toggleIsTokenExpired(state) {
+      return {
+        ...state,
+        isTokenExpired: !state.isTokenExpired,
+      };
+    },
+
     setAccessToken(state, { payload: accessToken }) {
       return {
         ...state,
@@ -20,6 +31,10 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAccessToken, logout } = authSlice.actions;
+export const {
+  toggleIsTokenExpired,
+  setAccessToken,
+  logout,
+} = authSlice.actions;
 
 export default authSlice.reducer;
