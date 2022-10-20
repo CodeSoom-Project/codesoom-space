@@ -60,7 +60,7 @@ class ReservationQueryServiceTest {
                     .date("2022-10-12")
                     .build();
 
-            given(reservationRepository.findAllByUser_Id(same(1L)))
+            given(reservationRepository.findAllByUser_IdOrderByDateDesc(same(1L)))
                     .willReturn(List.of(reservation));
 
             //when

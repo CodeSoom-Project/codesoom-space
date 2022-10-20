@@ -28,7 +28,7 @@ public class ReservationQueryService {
      */
     @Transactional(readOnly = true)
     public List<Reservation> reservations(Long userId) {
-        return repository.findAllByUser_Id(userId);
+        return repository.findAllByUser_IdOrderByDateDesc(userId);
     }
 
     /**
