@@ -1,8 +1,26 @@
 import axios from 'axios';
 
-import { loadItem } from './stoage';
+import { store } from '../store';
+
+import { loadItem, saveItem } from './stoage';
+
+import { setIsTokenExpired } from '../redux/authSlice';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
+
+export const instance = axios.create({
+  baseURL: BASE_URL,
+});
+
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 401) {
+      store.dispatch(setIsTokenExpired(true));
+    }
+
+    return Promise.reject(error);
+  });
 
 const api = axios.create({
   baseURL: BASE_URL,
