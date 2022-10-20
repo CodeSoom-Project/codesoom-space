@@ -16,7 +16,7 @@ import ReservationsTable from '../components/reservations/ReservationsTable';
 import RetrospectivesModal from './Retrospectives';
 
 import { fetchReservation, getReservation, updateReservation } from '../services/reservations';
-import { fetchRetrospectives } from '../services/retrospectives';
+import { fetchRetrospectives, updateRetrospectives } from '../services/retrospectives';
 
 const Container = styled.div({
   display: 'flex',
@@ -124,6 +124,23 @@ export default function Reservations() {
     });
   };
 
+  const { mutate: updateRetrospectiveMutate } = useMutation(updateRetrospectives, {
+    onSuccess: () => {
+      alert('회고가 수정되었습니다.');
+      onClickToggleRetrospectModal();
+    },
+    onError: () => {
+      alert('회고 수정에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+
+  const onClickUpdateRetrospectives = () => {
+    updateRetrospectiveMutate({
+      id,
+      content: retrospectives,
+    });
+  };
+
   const { isLoading, data, isError } = useQuery('reservations', getReservation, {
     retry: 1,
   });
@@ -143,6 +160,7 @@ export default function Reservations() {
         open={isOpenRetrospectModal}
         onClose={onClickToggleRetrospectModal}
         onApply={onClickApplyRetrospectives}
+        onUpdate={onClickUpdateRetrospectives}
       />
 
       <Wrap>
