@@ -60,18 +60,16 @@ export default function App() {
 
   return (
     <div>
-      {isTokenExpired && (
-        <Dialog open={true}>
-          <TokenExpiredDialogContent>
-            <p>
+      <Dialog open={isTokenExpired}>
+        <TokenExpiredDialogContent>
+          <p>
               토큰이 만료되었습니다. 다시로그인해주세요
-            </p>
-            <Button onClick={handleClickLogout} variant="contained">
+          </p>
+          <Button onClick={handleClickLogout} variant="contained">
               확인
-            </Button>
-          </TokenExpiredDialogContent>
-        </Dialog>
-      )}
+          </Button>
+        </TokenExpiredDialogContent>
+      </Dialog>
 
       <HeaderContainer/>
       <Routes>
