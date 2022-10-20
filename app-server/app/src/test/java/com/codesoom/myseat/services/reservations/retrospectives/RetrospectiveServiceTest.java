@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
+import static com.codesoom.myseat.enums.ReservationStatus.RETROSPECTIVE_COMPLETE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -84,6 +85,35 @@ class RetrospectiveServiceTest {
 
         assertThatThrownBy(() -> service.createRetrospective(mockUser, 1000L, "잘했다."))
                 .isInstanceOf(NotOwnedReservationException.class);
+    }
+
+    @Test
+    @DisplayName("회고 작성이 완료가 되면 RETROSPECTIVE_COMPLETE으로 반환한다.")
+    void status_return_RETROSPECTIVE_COMPLETE() {
+        User mockUser = User.builder()
+                .id(1L)
+                .name("김철수")
+                .email("soo@email.com")
+                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
+                .build();
+
+        Reservation mockReservation = Reservation.builder()
+                .id(1L)
+                .user(mockUser)
+                .build();
+
+        Retrospective mockRetrospective = Retrospective.builder()
+                .content("잘했다.")
+                .reservation(mockReservation)
+                .build();
+
+        given(reservationRepository.findById(1L)).willReturn(Optional.of(mockReservation));
+        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId())).willReturn(true);
+        given(retrospectiveRepository.save(any())).willReturn(mockRetrospective);
+
+        Retrospective retrospective = service.createRetrospective(mockUser, 1L, "잘했다.");
+
+        assertThat(retrospective.getReservation().getStatus()).isEqualTo(RETROSPECTIVE_COMPLETE);
     }
 
 }
