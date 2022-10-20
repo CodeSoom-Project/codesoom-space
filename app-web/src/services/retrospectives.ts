@@ -9,13 +9,13 @@ export const retrospectivesKeys = {
 export const fetchRetrospectives = async ({ id, content }: { id: number, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await instance.post(`reservations/${id}/retrospectives`, {
+  const { data } = await instance.post(`reservations/${id}/retrospectives`, {
     content,
   }, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
-  return response;
+  return data;
 };
 
 export const getRetrospective = async (id: number) => {
