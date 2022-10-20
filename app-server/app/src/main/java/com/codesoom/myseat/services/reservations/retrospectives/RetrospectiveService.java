@@ -42,6 +42,8 @@ public class RetrospectiveService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(ReservationNotFoundException::new);
 
+        reservation.completeRetrospective();
+
         Retrospective retrospective = Retrospective.builder()
                 .reservation(reservation)
                 .content(content)
