@@ -8,14 +8,14 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { get } from '../utils';
 
-import { resetReservations, saveIsDetail, toggleReservationsModal } from '../redux/reservationsSlice';
+import { resetReservations, saveIsDetail, saveIsUpdate, toggleReservationsModal } from '../redux/reservationsSlice';
 import { resetRetrospectives, toggleRetrospectModal } from '../redux/retrospectivesSlice';
 
 import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
 import RetrospectivesModal from './Retrospectives';
 
-import { fetchReservation, getReservation } from '../services/reservations';
+import { fetchReservation, getReservation, updateReservation } from '../services/reservations';
 import { fetchRetrospectives } from '../services/retrospectives';
 
 const Container = styled.div({
@@ -51,27 +51,50 @@ export default function Reservations() {
   const { isOpenReservationsModal, date, content, id } = useAppSelector(get('reservations'));
   const { isOpenRetrospectModal, retrospectives } = useAppSelector(get('retrospectives'));
 
-  const onClicktoggleReservationsModal = () => {
+  const onClickToggleReservationsModal = () => {
     dispatch(toggleReservationsModal());
     dispatch(resetReservations());
   };
 
-  const onClicktoggleRetrospectModal = () => {
+  const onClickToggleRetrospectModal = () => {
     dispatch(toggleRetrospectModal());
     dispatch(resetRetrospectives());
   };
 
+
+
+  const { mutate: updateReservationMutate, isLoading: updateReservationisLoading } = useMutation(updateReservation, {
+    onSuccess: () => {
+      alert('예약이 수정되었습니다.');
+      onClickToggleReservationsModal();
+      dispatch(saveIsUpdate(false));
+    },
+    onError: () => {
+      alert('수정이 실패하였습니다 다시 시도해주세요.');
+    },
+  });
+
   const { mutate: reservationMutate, isLoading: reservationIsLoading } = useMutation(fetchReservation, {
     onSuccess: () => {
       alert('예약이 신청되셨습니다.');
-      onClicktoggleReservationsModal();
+      onClickToggleReservationsModal();
     },
     onError: () => {
       alert('예약이 실패하였습니다 다시 신청해주세요.');
     },
   });
 
+
+  const onClickUpdateRservation = () => {
+    updateReservationMutate({
+      id,
+      date,
+      content,
+    });
+  };
+
   const onClickApplyReservation = () => {
+
     reservationMutate({
       date,
       content,
@@ -81,7 +104,7 @@ export default function Reservations() {
   const { mutate: retrospectiveMutate } = useMutation(fetchRetrospectives, {
     onSuccess: () => {
       alert('회고가 제출되었습니다.');
-      onClicktoggleRetrospectModal();
+      onClickToggleRetrospectModal();
     },
     onError: () => {
       alert('회고 제출에 실패했습니다. 다시 시도해주세요.');
@@ -103,14 +126,16 @@ export default function Reservations() {
     <Container>
       <ReservationDialog
         loading={reservationIsLoading}
+        updateLoading={updateReservationisLoading}
         open={isOpenReservationsModal}
-        onClose={onClicktoggleReservationsModal}
+        onClose={onClickToggleReservationsModal}
         onApply={onClickApplyReservation}
+        onUpdate={onClickUpdateRservation}
       />
 
       <RetrospectivesModal
         open={isOpenRetrospectModal}
-        onClose={onClicktoggleRetrospectModal}
+        onClose={onClickToggleRetrospectModal}
         onApply={onClickApplyRetrospectives}
       />
 
@@ -121,15 +146,16 @@ export default function Reservations() {
           <Button
             style={{ fontSize: '2rem' }}
             onClick={() => {
-              onClicktoggleReservationsModal();
+              onClickToggleReservationsModal();
               dispatch(saveIsDetail(false));
             }}
           >예약하기
           </Button>
         </Header>
+
         <ReservationsTable
-          onOpenReservationModal={onClicktoggleReservationsModal}
-          onOpenRetrospectModal={onClicktoggleRetrospectModal}
+          onOpenReservationModal={onClickToggleReservationsModal}
+          onOpenRetrospectModal={onClickToggleRetrospectModal}
           isLoading={isLoading}
           reservations={data?.reservations}
           isError={isError}

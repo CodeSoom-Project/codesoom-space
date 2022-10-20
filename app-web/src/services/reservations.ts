@@ -32,6 +32,19 @@ export const fetchReservation = async ({ date, content }: { date: string, conten
   return response;
 };
 
+export const updateReservation = async ({ id, date, content }: { id: number, date: string, content: string }) => {
+  const accessToken = loadItem('accessToken');
+
+  const response = await api({
+    method: 'put',
+    url: `/reservations/${id}`,
+    headers: { Authorization: `Bearer ${accessToken}` },
+    data: { date, content },
+  });
+
+  return response;
+};
+
 export const reservationsKeys = {
   reservationsById: (id: number) => ['retrospectives', id] as const,
 };

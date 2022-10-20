@@ -22,7 +22,11 @@ import { useAppSelector } from '../../hooks';
 
 import { get } from '../../utils';
 
-import { saveDate, saveContent } from '../../redux/reservationsSlice';
+import { saveIsDetail,
+  saveDate,
+  saveContent,
+  saveIsUpdate,
+} from '../../redux/reservationsSlice';
 
 import { getReservations, reservationsKeys } from '../../services/reservations';
 
@@ -52,13 +56,13 @@ const Text = styled(TextField)({
   margin: '1rem 3rem 1rem 0',
 });
 
-const DateTitle = styled.h3({
+const DateTitle = styled.p({
   margin: '0',
   fontWeight: 'normal',
   fontSize: '1.3rem',
 });
 
-const TextTitle = styled.h1({
+const TextTitle = styled.p({
   marginBottom: '1rem',
   fontWeight: 'normal',
   fontSize: '1.3rem',
@@ -79,12 +83,18 @@ const TextBox = styled.div({
 
 interface Props {
   loading: boolean;
+  updateLoading: boolean;
   open: boolean;
   onClose: React.ReactEventHandler;
   onApply: React.ReactEventHandler;
+  onUpdate: React.ReactEventHandler;
 }
 
-function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler }) {
+function DetailReservationDialog({ onClose }: {
+  onClose: React.ReactEventHandler
+}) {
+  const dispatch = useDispatch();
+
   const { id } = useAppSelector(get('reservations'));
 
   const { isLoading, data } = useQuery(
@@ -94,25 +104,35 @@ function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler
   if (isLoading) {
     return <CircularProgress />;
   }
+  const { date, content } = data;
+
+  const changeReservationMode = () => {
+    dispatch(saveIsDetail(false));
+    dispatch(saveIsUpdate(true));
+    dispatch(saveContent(content));
+    dispatch(saveDate(date));
+  };
+
 
   return (
     <TextFieldWrap>
-      <DateTitle>예약일 : {data.date}</DateTitle>
+      <DateTitle>예약일 : {date}</DateTitle>
 
       <TextTitle>계획</TextTitle>
       <TextBox>
-        {data.content.split('\n').map((line: string) => (<p>{line}</p>))}
+        {content.split('\n').map((line: string) => (<p key={id}>{line}</p>))}
       </TextBox>
 
       <ButtonWrap>
         <Button
+          onClick={onClose}
           variant="outlined"
           size="small"
-          onClick={onClose}
         >
             닫기
         </Button>
         <Button
+          onClick={changeReservationMode}
           variant="contained"
           size="small"
         >
@@ -123,18 +143,27 @@ function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler
   );
 }
 
-function ApplyReservationDialog({ onClose, onApply }: {
+function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
   onClose: React.ReactEventHandler;
   onApply: React.ReactEventHandler;
+  onUpdate: React.ReactEventHandler;
 }) {
   const dispatch = useDispatch();
 
-  const { date, content } = useAppSelector(get('reservations'));
+  const { isUpdate, date, content } = useAppSelector(get('reservations'));
 
   const handleChange = (value: dayjs.Dayjs | null) => {
     dispatch(
       saveDate(value === null ? null : dayjs(value).format('YYYY-MM-DD')),
     );
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (isUpdate) {
+      onUpdate(e);
+      return;
+    }
+    onApply(e);
   };
 
   return (
@@ -176,7 +205,7 @@ function ApplyReservationDialog({ onClose, onApply }: {
             취소
           </Button>
           <Button
-            onClick={onApply}
+            onClick={handleClick}
             disabled={!date || !content}
             variant="contained"
             size="small"
@@ -189,8 +218,15 @@ function ApplyReservationDialog({ onClose, onApply }: {
   );
 }
 
+export default function ReservationDialog({
+  loading,
+  updateLoading,
+  open,
+  onClose,
+  onApply,
+  onUpdate,
+}: Props) {
 
-export default function ReservationDialog({ loading, open, onClose, onApply }: Props) {
   const { isDetail } = useAppSelector(get('reservations'));
 
   return (
@@ -199,11 +235,22 @@ export default function ReservationDialog({ loading, open, onClose, onApply }: P
       onClose={onClose}
       aria-labelledby="form-dialog-title"
     >
-      {loading && <LinearProgress/>}
+      {loading && <LinearProgress />}
+      {updateLoading && <LinearProgress />}
 
       {isDetail
-        ? <DetailReservationDialog onClose={onClose} />
-        : <ApplyReservationDialog onClose={onClose} onApply={onApply} />}
+        ? (
+          <DetailReservationDialog
+            onClose={onClose}
+          />
+        )
+        : (
+          <ApplyReservationDialog
+            onClose={onClose}
+            onApply={onApply}
+            onUpdate={onUpdate}
+          />
+        )}
     </Dialog >
   );
 }
