@@ -8,19 +8,20 @@ const authSlice = createSlice({
     accessToken: '',
   },
   reducers: {
-    toggleIsTokenExpired(state) {
-      return {
-        ...state,
-        isTokenExpired: !state.isTokenExpired,
-      };
-    },
-
     setAccessToken(state, { payload: accessToken }) {
       return {
         ...state,
         accessToken,
       };
     },
+
+    setIsTokenExpired(state, { payload }) {
+      return {
+        ...state,
+        isTokenExpired: payload,
+      };
+    },
+
 
     logout(state) {
       return {
@@ -32,8 +33,8 @@ const authSlice = createSlice({
 });
 
 export const {
-  toggleIsTokenExpired,
   setAccessToken,
+  setIsTokenExpired,
   logout,
 } = authSlice.actions;
 
