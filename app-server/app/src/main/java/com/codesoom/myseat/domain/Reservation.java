@@ -81,4 +81,14 @@ public class Reservation {
         this.status = ReservationStatus.RETROSPECTIVE_COMPLETE;
     }
 
+    /**
+     * 예약의 날짜와 주어진 날짜가 다른지 확인합니다.
+     *
+     * @param date 비교하려는 날짜
+     * @return 원래 날짜와 주어진 날짜가 다르면 true, 같으면 false
+     */
+    public boolean isDifferentDate(String date) {
+        return !this.date.equals(date);
+    }
+
 }
