@@ -8,14 +8,14 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { get } from '../utils';
 
-import { resetReservations, saveIsDetail, toggleReservationsModal } from '../redux/reservationsSlice';
+import { resetReservations, saveIsDetail, saveIsUpdate, toggleReservationsModal } from '../redux/reservationsSlice';
 import { resetRetrospectives, toggleRetrospectModal } from '../redux/retrospectivesSlice';
 
 import ReservationDialog from '../components/reservation/ReservationDialog';
 import ReservationsTable from '../components/reservations/ReservationsTable';
 import RetrospectivesModal from './Retrospectives';
 
-import { fetchReservation, getReservation } from '../services/reservations';
+import { fetchReservation, getReservation, updateReservation } from '../services/reservations';
 import { fetchRetrospectives } from '../services/retrospectives';
 
 const Container = styled.div({
@@ -61,6 +61,19 @@ export default function Reservations() {
     dispatch(resetRetrospectives());
   };
 
+
+
+  const { mutate: updateReservationMutate, isLoading: updateReservationisLoading } = useMutation(updateReservation, {
+    onSuccess: () => {
+      alert('예약이 수정되었습니다.');
+      onClicktoggleReservationsModal();
+      dispatch(saveIsUpdate(false));
+    },
+    onError: () => {
+      alert('수정이 실패하였습니다 다시 시도해주세요.');
+    },
+  });
+
   const { mutate: reservationMutate, isLoading: reservationIsLoading } = useMutation(fetchReservation, {
     onSuccess: () => {
       alert('예약이 신청되셨습니다.');
@@ -71,7 +84,17 @@ export default function Reservations() {
     },
   });
 
+
+  const onClickUpdateRservation = () => {
+    updateReservationMutate({
+      id,
+      date,
+      content,
+    });
+  };
+
   const onClickApplyReservation = () => {
+
     reservationMutate({
       date,
       content,
@@ -103,9 +126,11 @@ export default function Reservations() {
     <Container>
       <ReservationDialog
         loading={reservationIsLoading}
+        updateLoading={updateReservationisLoading}
         open={isOpenReservationsModal}
         onClose={onClicktoggleReservationsModal}
         onApply={onClickApplyReservation}
+        onUpdate={onClickUpdateRservation}
       />
 
       <RetrospectivesModal
@@ -127,6 +152,7 @@ export default function Reservations() {
           >예약하기
           </Button>
         </Header>
+
         <ReservationsTable
           onOpenReservationModal={onClicktoggleReservationsModal}
           onOpenRetrospectModal={onClicktoggleRetrospectModal}
