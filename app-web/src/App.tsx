@@ -2,16 +2,17 @@ import './App.css';
 
 import { useEffect } from 'react';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import PrivateRoute from './routes/PrivateRoute';
 
-import { setAccessToken } from './redux/authSlice';
+import { logout, setAccessToken } from './redux/authSlice';
 
-import { loadItem } from './services/stoage';
+import { loadItem, removeItem } from './services/stoage';
 
-import { useAppDispatch } from './hooks';
+import { useAppDispatch, useAppSelector } from './hooks';
 
+import { get } from './utils';
 
 import NotFound from './NotFound';
 import Reservations from './pages/Reservations';
@@ -20,8 +21,26 @@ import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
 import HeaderContainer from './HeaderContainer';
 
+import Alert from './components/Alert';
+
 export default function App() {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
+
+  const { tokenExpired } = useAppSelector(get('auth'));
+
+  const removeToken = () => {
+    removeItem('accessToken');
+  };
+
+  const handleClickLogout = () => {
+    removeToken();
+
+    dispatch(logout());
+
+    navigate('/login');
+  };
 
   useEffect(() => {
     dispatch(setAccessToken(loadItem('accessToken')));
@@ -29,6 +48,12 @@ export default function App() {
 
   return (
     <div>
+      <Alert
+        open={tokenExpired}
+        content="토큰이 만료되었습니다. 다시로그인해주세요."
+        onClick={handleClickLogout}
+      />
+
       <HeaderContainer/>
       <Routes>
         <Route path="/"/>

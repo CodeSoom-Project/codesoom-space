@@ -1,25 +1,43 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+interface State {
+  tokenExpired: boolean;
+
+  accessToken: string;
+}
+
+const initialState: State = {
+  tokenExpired: false,
+
+  accessToken: '',
+};
+
 const authSlice = createSlice({
   name: 'auth',
-  initialState: { accessToken: '' },
+  initialState,
   reducers: {
-    setAccessToken(state, { payload: accessToken }) {
-      return {
-        ...state,
-        accessToken,
-      };
-    },
+    setAccessToken: (state, { payload: accessToken }) => ({
+      ...state,
+      accessToken,
+    }),
 
-    logout(state) {
-      return {
-        ...state,
-        accessToken: '',
-      };
-    },
+    setTokenExpired: (state) => ({
+      ...state,
+      tokenExpired: true,
+    }),
+
+    logout: (state) => ({
+      ...state,
+      accessToken: '',
+      tokenExpired: false,
+    }),
   },
 });
 
-export const { setAccessToken, logout } = authSlice.actions;
+export const {
+  setAccessToken,
+  setTokenExpired,
+  logout,
+} = authSlice.actions;
 
 export default authSlice.reducer;

@@ -22,12 +22,10 @@ const { reducer, actions } = createSlice({
       ...state,
       isOpenRetrospectModal: !state.isOpenRetrospectModal,
     }),
-    saveRetrospectives: (state, { payload }) => {
-      return {
-        ...state,
-        retrospectives: payload,
-      };
-    },
+    saveRetrospectives: (state, { payload }) => ({
+      ...state,
+      retrospectives: payload,
+    }),
     resetRetrospectives: (state) => ({
       ...state,
       retrospectives: initialState.retrospectives,
