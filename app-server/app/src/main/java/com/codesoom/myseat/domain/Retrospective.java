@@ -26,9 +26,9 @@ public class Retrospective {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "retrospective_id")
-    Long id;
+    private Long id;
 
-    String content;
+    private String content;
 
     @OneToOne(cascade = PERSIST)
     @JoinColumn(name = "reservation_id")
