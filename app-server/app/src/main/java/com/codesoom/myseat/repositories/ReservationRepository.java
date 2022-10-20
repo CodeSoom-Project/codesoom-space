@@ -42,7 +42,7 @@ public interface ReservationRepository
      * @param id 회원 id
      * @return 모든 예약 내역
      */
-    List<Reservation> findAllByUser_Id(Long id);
+    List<Reservation> findAllByUser_IdOrderByDateDesc(Long id);
 
     /**
      * 주어진 reservation id와 user id로 예약 내역을 조회합니다.
