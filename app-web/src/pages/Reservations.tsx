@@ -181,7 +181,7 @@ export default function Reservations() {
           onOpenReservationModal={onClickToggleReservationsModal}
           onOpenRetrospectModal={onClickToggleRetrospectModal}
           isLoading={isLoading}
-          reservations={data?.data.reservations}
+          reservations={data?.reservations}
           isError={isError}
         />
       </Wrap>
