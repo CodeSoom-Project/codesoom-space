@@ -48,8 +48,6 @@ export default function App() {
   const handleClickLogout = () => {
     localStorage.removeItem('accessToken');
 
-    dispatch(logout());
-
     navigate('/login');
 
     window.location.reload();
