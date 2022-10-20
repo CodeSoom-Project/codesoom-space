@@ -4,24 +4,19 @@ import { useAppSelector } from '../../hooks';
 
 import { get } from '../../utils';
 
-import { saveRetrospectives } from '../../redux/retrospectivesSlice';
+import {
+  saveIsDetailRetrospectives,
+  saveIsUpdateRetrospectives,
+  saveRetrospectives,
+} from '../../redux/retrospectivesSlice';
 
 import { useQuery } from 'react-query';
 
-import {
-  getRetrospective,
-  retrospectivesKeys,
-} from '../../services/retrospectives';
+import { getRetrospective, retrospectivesKeys } from '../../services/retrospectives';
 
 import styled from '@emotion/styled';
 
-import {
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogTitle,
-  TextField }
-  from '@mui/material';
+import { Button, CircularProgress, Dialog, DialogTitle, TextField } from '@mui/material';
 
 const Wrap = styled.div({
   display: 'flex',
@@ -69,14 +64,27 @@ interface Props {
   open: boolean,
   onClose: React.ReactEventHandler,
   onApply: React.ReactEventHandler,
+  onUpdate: React.ReactEventHandler,
 }
 
-function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler }) {
+function DetailRetrospectivesDialog({ onClose }: { onClose: React.ReactEventHandler }) {
+  const dispatch = useDispatch();
+
   const { id } = useAppSelector(get('reservations'));
 
   const { isLoading, data } = useQuery(
     retrospectivesKeys.retrospectivesById(id),
-    () => getRetrospective(id), { retry: 1 });
+    () => getRetrospective(id), {
+      onSuccess: (response) => {
+        dispatch(saveRetrospectives(response.content));
+      },
+    },
+  );
+
+  const onClickUpdate = () => {
+    dispatch(saveIsDetailRetrospectives(false));
+    dispatch(saveIsUpdateRetrospectives(true));
+  };
 
   if (isLoading) {
     return <CircularProgress />;
@@ -85,23 +93,27 @@ function DetailReservationDialog({ onClose }: { onClose: React.ReactEventHandler
   return (
     <Wrap>
       <TextTitle>회고</TextTitle>
-      <TextBox>{data.content.split('\n').map((line: string) => (<p>{line}</p>))}</TextBox>
+      <TextBox>{data.content.split('\n').map((line: string) => (<p key={id}>{line}</p>))}</TextBox>
       <ButtonWrap>
         <Button variant="outlined" size="small" onClick={onClose}>
-            취소
+          취소
+        </Button>
+        <Button variant="outlined" size="small" onClick={onClickUpdate}>
+          수정
         </Button>
       </ButtonWrap>
     </Wrap>
   );
 }
 
-function ApplyReservationDialog({ onClose, onApply }: {
+function ApplyRetrospectivesDialog({ onClose, onApply, onUpdate }: {
   onClose: React.ReactEventHandler;
   onApply: React.ReactEventHandler;
+  onUpdate: React.ReactEventHandler;
 }) {
   const dispatch = useDispatch();
 
-  const { retrospectives } = useAppSelector(get('retrospectives'));
+  const { retrospectives, isUpdate } = useAppSelector(get('retrospectives'));
 
   const characterMinimum = 100;
   const characterMaximum = 1000;
@@ -115,7 +127,7 @@ function ApplyReservationDialog({ onClose, onApply }: {
   return (
     <>
       <Title>
-          회고 작성하기
+        회고 작성하기
       </Title>
       <Wrap>
         <Text
@@ -131,24 +143,34 @@ function ApplyReservationDialog({ onClose, onApply }: {
         />
         <ButtonWrap>
           <Button variant='outlined' size='small' onClick={onClose}>
-              취소
+            취소
           </Button>
-          <Button
-            variant='contained' size='small'
-            disabled={!isMinimum}
-            onClick={onApply}
-          >
-              제출
-          </Button>
+          {isUpdate
+            ? (
+              <Button
+                variant='contained' size='small'
+                disabled={!isMinimum}
+                onClick={onUpdate}
+              >
+                수정
+              </Button>
+            )
+            : (
+              <Button
+                variant='contained' size='small'
+                disabled={!isMinimum}
+                onClick={onApply}
+              >
+                제출
+              </Button>
+            )}
         </ButtonWrap>
       </Wrap >
     </>
   );
 }
 
-
-
-export default function ReservationDialog({ open, onClose, onApply }: Props) {
+export default function RetrospectivesModal({ open, onClose, onApply, onUpdate }: Props) {
   const { isDetail } = useAppSelector(get('retrospectives'));
 
   return (
@@ -158,8 +180,8 @@ export default function ReservationDialog({ open, onClose, onApply }: Props) {
       aria-labelledby="form-dialog-title"
     >
       {isDetail
-        ? <DetailReservationDialog onClose={onClose} />
-        : <ApplyReservationDialog onClose={onClose} onApply={onApply} />}
+        ? <DetailRetrospectivesDialog onClose={onClose} />
+        : <ApplyRetrospectivesDialog onClose={onClose} onApply={onApply} onUpdate={onUpdate} />}
     </Dialog >
   );
 }
