@@ -4,6 +4,10 @@ import { loadItem } from './stoage';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
+const api = axios.create({
+  baseURL: BASE_URL,
+});
+
 export const reservationsKeys = {
   reservationsById: (id: number) => ['retrospectives', id] as const,
 };
@@ -11,7 +15,7 @@ export const reservationsKeys = {
 export const getReservation = async () => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await axios.get(`${BASE_URL}/reservations`, {
+  const { data } = await api.get('/reservations', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -23,7 +27,7 @@ export const getReservation = async () => {
 export const fetchReservation = async ({ date, content }: { date: string, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await axios.post(`${BASE_URL}/reservations`, {
+  const response = await api.post('/reservations', {
     date,
     content,
   }, {
@@ -36,7 +40,7 @@ export const fetchReservation = async ({ date, content }: { date: string, conten
 export const updateReservation = async ({ id, date, content }: { id: number, date: string, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await axios.put(`${BASE_URL}/reservations/${id}`, {
+  const response = await api.put(`/reservations/${id}`, {
     date,
     content,
   }, {
@@ -49,7 +53,7 @@ export const updateReservation = async ({ id, date, content }: { id: number, dat
 export const getReservations = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await axios.get(`${BASE_URL}/reservations/${id}`, {
+  const { data } = await api.get(`reservations/${id}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
