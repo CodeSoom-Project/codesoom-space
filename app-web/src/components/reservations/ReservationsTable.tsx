@@ -1,13 +1,8 @@
 import * as React from 'react';
 
-import {
-  saveIsDetailRetrospectives,
-} from '../../redux/retrospectivesSlice';
+import { saveIsDetailRetrospectives } from '../../redux/retrospectivesSlice';
 
-import {
-  saveIsDetail,
-  selectReservationId,
-} from '../../redux/reservationsSlice';
+import { saveIsDetail, selectReservationId } from '../../redux/reservationsSlice';
 
 import { useAppDispatch } from '../../hooks';
 
@@ -15,16 +10,16 @@ import { styled } from '@mui/material/styles';
 
 import {
   Box,
+  Button,
+  IconButton,
+  Paper,
   Table,
+  TableBody,
   TableContainer,
+  TableFooter,
+  TableHead,
   TablePagination,
   TableRow,
-  Paper,
-  IconButton,
-  Button,
-  TableHead,
-  TableBody,
-  TableFooter,
 } from '@mui/material';
 
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -180,7 +175,7 @@ export default function ReservationsTable({
 
     dispatch(selectReservationId(id));
 
-    if (status === 'RETROSPECTIVE_WAITING') {
+    if (status === 'RETROSPECTIVE_COMPLETE') {
       dispatch(saveIsDetailRetrospectives(true));
     }
 
