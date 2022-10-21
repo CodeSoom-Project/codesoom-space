@@ -10,7 +10,7 @@ import { cancelReservation } from '../../services/reservations';
 
 import { saveIsDetailRetrospectives, saveIsUpdateRetrospectives } from '../../redux/retrospectivesSlice';
 
-import { saveIsDetail, selectReservationId } from '../../redux/reservationsSlice';
+import { reservationStatus, saveIsDetail, selectReservationId } from '../../redux/reservationsSlice';
 
 import { useAppDispatch } from '../../hooks';
 
@@ -237,19 +237,14 @@ export default function ReservationsTable({
                 )}
               </TableCell>
               <TableCell align="center">
-                {status === 'CANCELED' ? (
-                  <div>
-                    상세보기
-                  </div>
-                ) : (
-                  <Button
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      handleClickReservation(e, id);
-                      dispatch(saveIsDetail(true));
-                    }}>
-                    상세보기
-                  </Button>
-                )}
+                <Button
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    handleClickReservation(e, id);
+                    dispatch(saveIsDetail(true));
+                    dispatch(reservationStatus(status));
+                  }}>
+                  상세보기
+                </Button>
               </TableCell>
               <TableCell align="center">
                 {status === 'CANCELED' ? (
