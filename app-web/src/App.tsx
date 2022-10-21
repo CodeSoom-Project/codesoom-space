@@ -10,7 +10,7 @@ import { get } from './utils';
 
 import { logout, setAccessToken } from './redux/authSlice';
 
-import { loadItem } from './services/stoage';
+import { loadItem, removeItem } from './services/stoage';
 
 import PrivateRoute from './routes/PrivateRoute';
 
@@ -32,7 +32,7 @@ export default function App() {
   const { isTokenExpired } = useAppSelector(get('auth'));
 
   const removeToken = () => {
-    localStorage.removeItem('accessToken');
+    removeItem('accessToken');
   };
 
   const handleClickLogout = () => {
