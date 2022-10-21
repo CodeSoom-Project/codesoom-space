@@ -63,9 +63,9 @@ export const getReservations = async (id: number) => {
 export const cancelReservation = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
-  await api({
-    method: 'patch',
-    url: `reservations/${id}`,
-    headers: { Authorization: `Bearer ${accessToken}` },
+  await api.patch(`reservations/${id}`, {}, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 };
