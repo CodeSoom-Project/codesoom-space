@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { get } from './utils';
 
-import { logout } from './authSlice';
+import { logout } from './redux/authSlice';
 
 import Header from './Header';
 
