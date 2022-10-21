@@ -40,7 +40,7 @@ const Title = styled(DialogTitle)({
 });
 
 const Text = styled(TextField)({
-  margin: '1rem 3rem 1rem 0',
+  margin: '1rem 3rem 0 0',
 });
 
 const TextTitle = styled.h1({
@@ -58,6 +58,12 @@ const TextBox = styled.div({
   'p': {
     margin: '0 0 1rem 0',
   },
+});
+
+const CharacterMinimumValidation = styled.p({
+  fontSize: '0.75rem',
+  color: 'red',
+  margin: '0 0 1rem 0.875rem',
 });
 
 interface Props {
@@ -133,6 +139,7 @@ function ApplyRetrospectivesDialog({ onClose, onApply, onUpdate }: {
       </Title>
       <Wrap>
         <Text
+          error={!isMinimum}
           inputProps={{ maxLength: characterMaximum, minLength: characterMinimum }}
           placeholder='회고를 100자 이상 작성해 주세요'
           helperText={`${retrospectives.length} /${characterMaximum}`}
@@ -143,6 +150,7 @@ function ApplyRetrospectivesDialog({ onClose, onApply, onUpdate }: {
           multiline
           rows={3}
         />
+        <CharacterMinimumValidation>{!isMinimum ? '100자 이상 입력해주세요' : '' }</CharacterMinimumValidation>
         <ButtonWrap>
           <Button
             variant='outlined'
