@@ -2,27 +2,28 @@ import './App.css';
 
 import { useEffect } from 'react';
 
-import { useAppDispatch } from './hooks';
+import { Routes, Route } from 'react-router-dom';
+import PrivateRoute from './routes/PrivateRoute';
 
 import { setAccessToken } from './redux/authSlice';
 
+import { useAppDispatch, useAppSelector } from './hooks';
+
+import { get } from './utils';
+
 import HeaderContainer from './HeaderContainer';
 
-import { Routes, Route } from 'react-router-dom';
 
 import NotFound from './NotFound';
 import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
 import Reservations from './pages/Reservations';
 
-import PrivateRoute from './routes/PrivateRoute';
-import { useSelector } from 'react-redux';
-import { get } from './utils';
 
 export default function App() {
   const dispatch = useAppDispatch();
 
-  const { accessToken } = useSelector(get('auth'));
+  const { accessToken } = useAppSelector(get('auth'));
 
   useEffect(() => {
     if (accessToken) {

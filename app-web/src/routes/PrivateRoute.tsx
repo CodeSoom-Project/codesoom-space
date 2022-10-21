@@ -1,8 +1,6 @@
 import { FC, ReactElement } from 'react';
 
-import {
-  Navigate,
-} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { get } from '../utils';
@@ -12,8 +10,6 @@ interface Props {
 }
 
 const PrivateRoute: FC<Props> = ({ children }) => {
-
-
   const { accessToken } = useSelector(get('auth'));
 
   if (!accessToken) {
@@ -21,6 +17,7 @@ const PrivateRoute: FC<Props> = ({ children }) => {
   }
 
   return children;
+
 };
 
 export default PrivateRoute;
