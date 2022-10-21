@@ -72,7 +72,7 @@ function DetailRetrospectivesDialog({ onClose }: { onClose: React.ReactEventHand
 
   const { id } = useAppSelector(get('reservations'));
 
-  const { isLoading, data: { content } } = useQuery(
+  const { isLoading, data } = useQuery(
     retrospectivesKeys.retrospectivesById(id),
     () => getRetrospective(id), {
       onSuccess: (response) => {
@@ -89,6 +89,8 @@ function DetailRetrospectivesDialog({ onClose }: { onClose: React.ReactEventHand
   if (isLoading) {
     return <CircularProgress />;
   }
+
+  const { content } = data;
 
   return (
     <Wrap>
