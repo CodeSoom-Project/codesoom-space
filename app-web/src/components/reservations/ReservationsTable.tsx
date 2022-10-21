@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { saveIsDetailRetrospectives } from '../../redux/retrospectivesSlice';
+import { saveIsDetailRetrospectives, saveIsUpdateRetrospectives } from '../../redux/retrospectivesSlice';
 
 import { saveIsDetail, selectReservationId } from '../../redux/reservationsSlice';
 
@@ -176,6 +176,8 @@ export default function ReservationsTable({
     onOpenRetrospectModal(e);
 
     dispatch(selectReservationId(id));
+
+    dispatch(saveIsUpdateRetrospectives(false));
 
     if (status === 'RETROSPECTIVE_COMPLETE') {
       dispatch(saveIsDetailRetrospectives(true));

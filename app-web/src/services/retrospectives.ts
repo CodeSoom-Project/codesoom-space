@@ -33,3 +33,13 @@ export const getRetrospective = async (id: number) => {
 
   return data;
 };
+
+export const updateRetrospectives = ({ id, content }: { id: number, content: string }) => {
+  const accessToken = loadItem('accessToken');
+
+  return api.put(`/reservations/${id}/retrospectives`, { content }, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};
