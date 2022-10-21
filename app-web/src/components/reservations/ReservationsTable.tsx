@@ -186,6 +186,8 @@ export default function ReservationsTable({
     if (status === 'RETROSPECTIVE_WAITING') {
       dispatch(saveIsDetailRetrospectives(false));
     }
+
+    dispatch(saveIsUpdateRetrospectives(false));
   };
 
   const statusName: StatusType = {

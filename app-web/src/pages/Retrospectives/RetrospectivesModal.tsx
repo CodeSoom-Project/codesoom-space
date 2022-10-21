@@ -1,8 +1,8 @@
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 
-import { useAppSelector } from '../../hooks';
+import {useAppSelector} from '../../hooks';
 
-import { get } from '../../utils';
+import {get} from '../../utils';
 
 import {
   saveIsDetailRetrospectives,
@@ -10,13 +10,13 @@ import {
   saveRetrospectives,
 } from '../../redux/retrospectivesSlice';
 
-import { useQuery } from 'react-query';
+import {useQuery} from 'react-query';
 
-import { getRetrospective, retrospectivesKeys } from '../../services/retrospectives';
+import {getRetrospective, retrospectivesKeys} from '../../services/retrospectives';
 
 import styled from '@emotion/styled';
 
-import { Button, CircularProgress, Dialog, DialogTitle, TextField } from '@mui/material';
+import {Button, CircularProgress, Dialog, DialogTitle, TextField} from '@mui/material';
 
 const Wrap = styled.div({
   display: 'flex',
@@ -72,7 +72,7 @@ function DetailRetrospectivesDialog({ onClose }: { onClose: React.ReactEventHand
 
   const { id } = useAppSelector(get('reservations'));
 
-  const { isLoading, data } = useQuery(
+  const { isLoading, data :{content}} = useQuery(
     retrospectivesKeys.retrospectivesById(id),
     () => getRetrospective(id), {
       onSuccess: (response) => {
@@ -93,7 +93,7 @@ function DetailRetrospectivesDialog({ onClose }: { onClose: React.ReactEventHand
   return (
     <Wrap>
       <TextTitle>회고</TextTitle>
-      <TextBox>{data.content.split('\n').map((line: string) => (<p key={id}>{line}</p>))}</TextBox>
+      <TextBox>{content.split('\n').map((line: string) => (<p key={id}>{line}</p>))}</TextBox>
       <ButtonWrap>
         <Button variant="outlined" size="small" onClick={onClose}>
           취소
@@ -142,7 +142,11 @@ function ApplyRetrospectivesDialog({ onClose, onApply, onUpdate }: {
           rows={3}
         />
         <ButtonWrap>
-          <Button variant='outlined' size='small' onClick={onClose}>
+          <Button
+            variant='outlined'
+            size='small'
+            onClick={onClose}
+          >
             취소
           </Button>
           {isUpdate
