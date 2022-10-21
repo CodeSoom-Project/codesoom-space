@@ -16,25 +16,21 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAccessToken(state, { payload: accessToken }) {
-      return {
-        ...state,
-        accessToken,
-      };
-    },
+    setAccessToken: (state, { payload: accessToken }) => ({
+      ...state,
+      accessToken,
+    }),
 
     setIsTokenExpired: (state) => ({
       ...state,
       isTokenExpired: true,
     }),
 
-    logout(state) {
-      return {
-        ...state,
-        accessToken: '',
-        isTokenExpired: false,
-      };
-    },
+    logout: (state) => ({
+      ...state,
+      accessToken: '',
+      isTokenExpired: false,
+    }),
   },
 });
 

@@ -28,12 +28,10 @@ const reservationsSlice = createSlice({
       ...state,
       isOpenReservationsModal: !state.isOpenReservationsModal,
     }),
-    saveDate: (state, { payload }) => {
-      return ({
-        ...state,
-        date: payload,
-      });
-    },
+    saveDate: (state, { payload }) => ({
+      ...state,
+      date: payload,
+    }),
     saveContent: (state, { payload }) => ({
       ...state,
       content: payload,
