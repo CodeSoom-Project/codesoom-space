@@ -4,13 +4,11 @@ import { useEffect } from 'react';
 
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
-
 import { useAppDispatch, useAppSelector } from './hooks';
 
 import { get } from './utils';
 
 import { logout, setAccessToken } from './redux/authSlice';
-
 
 import { loadItem } from './services/stoage';
 
