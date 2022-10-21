@@ -1,10 +1,6 @@
 import axios from 'axios';
 
-import { loadItem, saveItem } from './stoage';
-
-import { store } from '../store';
-
-import { setAccessToken } from '../redux/authSlice';
+import { loadItem } from './stoage';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
