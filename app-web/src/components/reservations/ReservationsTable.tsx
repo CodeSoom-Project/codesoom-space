@@ -34,6 +34,10 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 
+import { useMutation } from 'react-query';
+
+import { cancelReservation } from '../../services/reservations';
+
 interface TablePaginationActionsProps {
   count: number;
   page: number;
@@ -141,6 +145,19 @@ export default function ReservationsTable({
   const startRow = page * rowsPerPage;
   const endRow = page * rowsPerPage + rowsPerPage;
 
+  const { mutate: cancelReservationMutate } = useMutation(cancelReservation, {
+    onSuccess: () => {
+      alert('예약이 취소되셨습니다.');
+    },
+    onError: () => {
+      alert('예약 취소에 실패하였습니다. 다시 신청해주세요.');
+    },
+  });
+
+  const onClickCancelReservation = (id: number) => {
+    cancelReservationMutate(id);
+  };
+
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
@@ -178,7 +195,6 @@ export default function ReservationsTable({
     'RETROSPECTIVE_COMPLETE': '회고 상세보기',
     'RETROSPECTIVE_WAITING': '회고 작성',
   };
-
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -223,9 +239,15 @@ export default function ReservationsTable({
                 </Button>
               </TableCell>
               <TableCell align="center">
-                <Button>
-                  예약취소
-                </Button>
+                {status === 'CANCELED' ? (
+                  <div>
+                    예약이 취소되었습니다.
+                  </div>
+                ) : (
+                  <Button onClick={() => onClickCancelReservation(id)}>
+                    예약취소
+                  </Button>
+                )}
               </TableCell>
             </TableRow>
           ))}
