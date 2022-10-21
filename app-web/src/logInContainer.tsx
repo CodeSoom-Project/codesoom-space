@@ -1,26 +1,31 @@
 import { useNavigate } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+
 import { useForm } from 'react-hook-form';
 
 import { useMutation } from 'react-query';
 
+import { setAccessToken } from './redux/authSlice';
+
+import { saveItem } from './services/stoage';
 import { login } from './services/api';
 
 import LogIn from './logIn';
 
 export default function LogInContainer() {
+  const dispatch = useDispatch();
+
   const { register, formState: { errors }, handleSubmit } = useForm();
 
   const navigate = useNavigate();
 
-  const loginMutate = async ({ email, password }: { email: any, password: string }) => {
-    const accessToken = await login({ email, password });
-    return accessToken;
-  };
+  const { mutate } = useMutation('login', login, {
+    onSuccess: async (accessToken) => {
+      saveItem('accessToken', accessToken);
 
-  const { mutate } = useMutation('login', loginMutate, {
-    onSuccess: async () => {
-      console.log('login 성공');
+      dispatch(setAccessToken(accessToken));
+
       navigate('/', { replace: true });
     },
     onError: async (e) => {
@@ -29,13 +34,11 @@ export default function LogInContainer() {
   });
 
   return (
-    <>
-      <LogIn
-        register={register}
-        errors={errors}
-        handleSubmit={handleSubmit}
-        login={mutate}
-      />
-    </>
+    <LogIn
+      register={register}
+      errors={errors}
+      handleSubmit={handleSubmit}
+      login={mutate}
+    />
   );
 }

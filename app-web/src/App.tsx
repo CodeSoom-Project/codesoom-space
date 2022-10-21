@@ -2,31 +2,30 @@ import './App.css';
 
 import { useEffect } from 'react';
 
-import { useAppDispatch } from './hooks';
+import { Routes, Route } from 'react-router-dom';
 
-import { setAccessToken } from './authSlice';
+import PrivateRoute from './routes/PrivateRoute';
 
-import HeaderContainer from './HeaderContainer';
+import { setAccessToken } from './redux/authSlice';
 
 import { loadItem } from './services/stoage';
 
-import { Routes, Route } from 'react-router-dom';
+import { useAppDispatch } from './hooks';
+
 
 import NotFound from './NotFound';
+import Reservations from './pages/Reservations';
+
 import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
-import Reservations from './pages/Reservations';
+import HeaderContainer from './HeaderContainer';
 
 export default function App() {
   const dispatch = useAppDispatch();
 
-  const accessToken = loadItem('accessToken');
-
   useEffect(() => {
-    if (accessToken) {
-      dispatch(setAccessToken(accessToken));
-    }
-  }, [accessToken]);
+    dispatch(setAccessToken(loadItem('accessToken')));
+  }, []);
 
   return (
     <div>
@@ -35,7 +34,11 @@ export default function App() {
         <Route path="/"/>
         <Route path="signup" element={<SignUpContainer/>}/>
         <Route path="login" element={<LogInContainer/>}/>
-        <Route path="reservations" element={<Reservations/>}/>
+        <Route path="reservations" element={
+          <PrivateRoute>
+            <Reservations/>
+          </PrivateRoute>
+        }/>
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </div>

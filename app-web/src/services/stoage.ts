@@ -1,7 +1,7 @@
-export function saveItem(key: any, value: any) {
+export function saveItem(key: string, value: string) {
   localStorage.setItem(key, value);
 }
 
-export function loadItem(key: any) {
+export function loadItem(key: string) {
   return localStorage.getItem(key);
 }
