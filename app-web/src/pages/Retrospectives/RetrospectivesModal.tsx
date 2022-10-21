@@ -1,8 +1,8 @@
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import {useAppSelector} from '../../hooks';
+import { useAppSelector } from '../../hooks';
 
-import {get} from '../../utils';
+import { get } from '../../utils';
 
 import {
   saveIsDetailRetrospectives,
@@ -10,13 +10,13 @@ import {
   saveRetrospectives,
 } from '../../redux/retrospectivesSlice';
 
-import {useQuery} from 'react-query';
+import { useQuery } from 'react-query';
 
-import {getRetrospective, retrospectivesKeys} from '../../services/retrospectives';
+import { getRetrospective, retrospectivesKeys } from '../../services/retrospectives';
 
 import styled from '@emotion/styled';
 
-import {Button, CircularProgress, Dialog, DialogTitle, TextField} from '@mui/material';
+import { Button, CircularProgress, Dialog, DialogTitle, TextField } from '@mui/material';
 
 const Wrap = styled.div({
   display: 'flex',
@@ -72,7 +72,7 @@ function DetailRetrospectivesDialog({ onClose }: { onClose: React.ReactEventHand
 
   const { id } = useAppSelector(get('reservations'));
 
-  const { isLoading, data :{content}} = useQuery(
+  const { isLoading, data: { content } } = useQuery(
     retrospectivesKeys.retrospectivesById(id),
     () => getRetrospective(id), {
       onSuccess: (response) => {
