@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface State {
-  isTokenExpired: boolean,
+  isTokenExpired: boolean;
 
-  accessToken: string,
+  accessToken: string;
 }
 
 const initialState: State = {
