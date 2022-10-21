@@ -1,5 +1,10 @@
 import axios from 'axios';
+
 import { loadItem, saveItem } from './stoage';
+
+import { store } from '../store';
+
+import { setAccessToken } from '../redux/authSlice';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
@@ -50,6 +55,8 @@ export const login = async ({ email, password }: { email: string, password: stri
     }).then((res) => {
       const accessToken = res.data.accessToken;
       saveItem('accessToken', accessToken);
+
+      store.dispatch(setAccessToken(accessToken));
     }).catch((error) => {
       window.alert(error.message);
     });
