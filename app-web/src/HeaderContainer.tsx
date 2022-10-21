@@ -29,7 +29,7 @@ export default function HeaderContainer() {
     handleLogout();
     handleRemoveAccessToken();
 
-    navigate('/login');
+    navigate('/');
   }
 
   return (
