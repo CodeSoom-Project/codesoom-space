@@ -134,7 +134,7 @@ function ApplyRetrospectivesDialog({ onClose, onApply, onUpdate }: {
       <Wrap>
         <Text
           inputProps={{ maxLength: characterMaximum, minLength: characterMinimum }}
-          placeholder='회고를 입력해주세요.'
+          placeholder='회고를 100자 이상 작성해 주세요'
           helperText={`${retrospectives.length} /${characterMaximum}`}
           value={retrospectives}
           onChange={handleChange}
