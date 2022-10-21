@@ -36,8 +36,10 @@ public class ReservationUpdateService {
         if (!reservation.isOwnReservation(userId)) {
             throw new NotOwnedReservationException();
         }
-        if (hasSameDateReservation(request.getDate(), userId)) {
-            throw new AlreadyReservedException();
+        if (reservation.isDifferentDate(reservation.getDate())) {
+            if (hasSameDateReservation(request.getDate(), userId)) {
+                throw new AlreadyReservedException();
+            }
         }
         reservation.update(request);
     }
