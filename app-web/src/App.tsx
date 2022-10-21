@@ -51,7 +51,7 @@ export default function App() {
     <div>
       <Alert
         open={isTokenExpired}
-        text='토큰이 만료되었습니다. 다시로그인해주세요.'
+        text="토큰이 만료되었습니다. 다시로그인해주세요."
         onClick={handleClickLogout}
       />
 
