@@ -202,7 +202,8 @@ function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
             variant="outlined"
             size="small"
           >
-            취소
+            {isUpdate && '수정 취소'}
+            {!isUpdate && '닫기'}
           </Button>
           <Button
             onClick={handleClick}
