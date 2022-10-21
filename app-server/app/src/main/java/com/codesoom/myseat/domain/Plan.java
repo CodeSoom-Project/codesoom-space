@@ -25,6 +25,7 @@ public class Plan {
     @Column(name="plan_id")
     private Long id;
 
+    @Column(length = 1000)
     private String content;
 
     public void update(String content) {

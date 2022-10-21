@@ -3,11 +3,13 @@ package com.codesoom.myseat.services.reservations.retrospectives;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.exceptions.ContentTooLongException;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,6 +32,7 @@ public class RetrospectiveService {
      * @param content 회고 내용
      * @return 생성된 회고
      * @throws NotOwnedReservationException 예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 한다면 예외를 던집니다.
+     * @throws ContentTooLongException 회고의 길이가 너무 길면 던집니다.
      */
     public Retrospective createRetrospective(final User user,
                                              final Long reservationId,
@@ -51,7 +54,12 @@ public class RetrospectiveService {
 
         log.info("회고 요청: " + retrospective.getContent());
 
-        return retrospectiveRepository.save(retrospective);
+        try {
+            return retrospectiveRepository.save(retrospective);
+        } catch (InvalidDataAccessResourceUsageException e) {
+            e.printStackTrace();
+            throw new ContentTooLongException();
+        }
     }
 
     /**

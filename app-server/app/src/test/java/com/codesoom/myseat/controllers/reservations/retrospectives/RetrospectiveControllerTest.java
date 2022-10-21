@@ -1,6 +1,5 @@
 package com.codesoom.myseat.controllers.reservations.retrospectives;
 
-import com.codesoom.myseat.controllers.reservations.retrospectives.RetrospectiveController;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
@@ -82,7 +81,9 @@ class RetrospectiveControllerTest {
                 .willReturn(mockReservation);
 
         RetrospectiveRequest request = RetrospectiveRequest.builder()
-                .content("잘했다.")
+                .content("상호작용의 첫 단계는 사용자로부터 시작합니다. \n" +
+                        "직관적인 입력을 제공하여 사용하기 쉬운 편안한 환경을 사용자에게 제공해 줄 수 있습니다. \n" +
+                        "우리가 만드는 코드숨 공부방 좌석 예약 api에서 좌석을 예약하는 기능을 예로 들어보겠습니다. ")
                 .build();
 
         given(authService.parseToken(ACCESS_TOKEN))

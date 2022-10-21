@@ -28,6 +28,7 @@ public class Retrospective {
     @Column(name = "retrospective_id")
     private Long id;
 
+    @Column(length = 1000)
     private String content;
 
     @OneToOne(cascade = PERSIST)
