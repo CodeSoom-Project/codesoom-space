@@ -45,7 +45,7 @@ interface TablePaginationActionsProps {
   onPageChange: (
     event: React.MouseEvent<HTMLButtonElement>,
     newPage: number,
-  ) => void;
+  )=> void;
 }
 
 const StyledTableCell = styled(TableCell)({
