@@ -4,23 +4,24 @@ import { useEffect } from 'react';
 
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from './hooks';
-
-import { get } from './utils';
+import PrivateRoute from './routes/PrivateRoute';
 
 import { logout, setAccessToken } from './redux/authSlice';
 
 import { loadItem, removeItem } from './services/stoage';
 
-import PrivateRoute from './routes/PrivateRoute';
+import { useAppDispatch, useAppSelector } from './hooks';
+
+import { get } from './utils';
 
 import NotFound from './NotFound';
 import Reservations from './pages/Reservations';
 
 import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
-import Alert from './components/Alert';
 import HeaderContainer from './HeaderContainer';
+
+import Alert from './components/Alert';
 
 export default function App() {
   const navigate = useNavigate();
