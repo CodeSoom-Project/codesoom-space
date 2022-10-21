@@ -4,7 +4,7 @@ import { store } from '../store';
 
 import { loadItem, saveItem } from './stoage';
 
-import { setIsTokenExpired } from '../redux/authSlice';
+import { setTokenExpired } from '../redux/authSlice';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
@@ -16,7 +16,7 @@ instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
-      return store.dispatch(setIsTokenExpired());
+      return store.dispatch(setTokenExpired());
     }
 
     return Promise.reject(error);

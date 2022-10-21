@@ -21,7 +21,7 @@ const authSlice = createSlice({
       accessToken,
     }),
 
-    setIsTokenExpired: (state) => ({
+    setTokenExpired: (state) => ({
       ...state,
       isTokenExpired: true,
     }),
@@ -36,7 +36,7 @@ const authSlice = createSlice({
 
 export const {
   setAccessToken,
-  setIsTokenExpired,
+  setTokenExpired,
   logout,
 } = authSlice.actions;
 
