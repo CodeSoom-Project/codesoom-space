@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { ReactEventHandler } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -16,7 +16,7 @@ interface Props {
   open: boolean;
   content: string;
   text?: string;
-  onClick: React.ReactEventHandler;
+  onClick: ReactEventHandler;
 }
 
 export default function Alert({ open, content, text = '확인', onClick }: Props) {
