@@ -48,10 +48,16 @@ export default function Reservations() {
 
   const dispatch = useAppDispatch();
 
-  const { isOpenReservationsModal, date, content, id } = useAppSelector(get('reservations'));
+  const { isOpenReservationsModal, isUpdate, date, content, id } = useAppSelector(get('reservations'));
   const { isOpenRetrospectModal, retrospectives } = useAppSelector(get('retrospectives'));
 
   const onClickToggleReservationsModal = () => {
+    if (isUpdate) {
+      dispatch(saveIsDetail(true));
+      dispatch(saveIsUpdate(false));
+      return;
+    }
+
     dispatch(toggleReservationsModal());
     dispatch(resetReservations());
   };
