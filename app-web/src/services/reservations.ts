@@ -1,4 +1,4 @@
-import { instance } from './api';
+import { api } from './api';
 
 import { loadItem } from './stoage';
 
@@ -9,7 +9,7 @@ export const reservationsKeys = {
 export const getReservation = async () => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await instance.get('/reservations', {
+  const { data } = await api.get('/reservations', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -21,7 +21,7 @@ export const getReservation = async () => {
 export const fetchReservation = async ({ date, content }: { date: string, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await instance.post('/reservations', {
+  const response = await api.post('/reservations', {
     date,
     content,
   }, {
@@ -34,7 +34,7 @@ export const fetchReservation = async ({ date, content }: { date: string, conten
 export const updateReservation = async ({ id, date, content }: { id: number, date: string, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await instance.put(`/reservations/${id}`, {
+  const response = await api.put(`/reservations/${id}`, {
     date,
     content,
   }, {
@@ -47,7 +47,7 @@ export const updateReservation = async ({ id, date, content }: { id: number, dat
 export const getReservations = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await instance.get(`reservations/${id}`, {
+  const { data } = await api.get(`reservations/${id}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 

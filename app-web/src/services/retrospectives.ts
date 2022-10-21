@@ -1,4 +1,4 @@
-import { instance } from './api';
+import { api } from './api';
 
 import { loadItem } from './stoage';
 
@@ -9,7 +9,7 @@ export const retrospectivesKeys = {
 export const fetchRetrospectives = async ({ id, content }: { id: number, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await instance.post(`reservations/${id}/retrospectives`, {
+  const response = await api.post(`reservations/${id}/retrospectives`, {
     content,
   }, {
     headers: { Authorization: `Bearer ${accessToken}` },
@@ -21,7 +21,7 @@ export const fetchRetrospectives = async ({ id, content }: { id: number, content
 export const getRetrospective = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await instance.get(`/reservations/${id}/retrospectives`, {
+  const { data } = await api.get(`/reservations/${id}/retrospectives`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 

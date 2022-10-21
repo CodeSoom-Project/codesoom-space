@@ -8,11 +8,11 @@ import { setTokenExpired } from '../redux/authSlice';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
-export const instance = axios.create({
+export const api = axios.create({
   baseURL: BASE_URL,
 });
 
-instance.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
@@ -22,10 +22,6 @@ instance.interceptors.response.use(
 
     return Promise.reject(error);
   });
-
-const api = axios.create({
-  baseURL: BASE_URL,
-});
 
 export const request = ({ ...options }) => {
   const token = loadItem('accessToken');
