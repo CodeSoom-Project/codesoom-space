@@ -56,31 +56,6 @@ const Text = styled(TextField)({
   margin: '1rem 3rem 1rem 0',
 });
 
-const DateTitle = styled.p({
-  margin: '0',
-  fontWeight: 'normal',
-  fontSize: '1.3rem',
-});
-
-const TextTitle = styled.p({
-  marginBottom: '1rem',
-  fontWeight: 'normal',
-  fontSize: '1.3rem',
-});
-
-const TextBox = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  width: '100%',
-  minHeight: '10rem',
-  marginBottom: '2rem',
-  backgroundColor: '#f2f2f2',
-
-  'p': {
-    margin: '0 0 1rem 0',
-  },
-});
-
 interface Props {
   loading: boolean;
   updateLoading: boolean;
@@ -115,31 +90,50 @@ function DetailReservationDialog({ onClose }: {
 
 
   return (
-    <TextFieldWrap>
-      <DateTitle>예약일 : {date}</DateTitle>
+    <>
+      <Title>
+        예약 상세보기
+      </Title>
+      <TextFieldWrap>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="방문일자"
+            onChange={() => {}}
+            value={date === null ? null : dayjs(date)}
+            disabled={true}
+            renderInput={(params) => {
+              return (<TextField {...params} />);
+            }}
+          />
+        </LocalizationProvider>
 
-      <TextTitle>계획</TextTitle>
-      <TextBox>
-        {content.split('\n').map((line: string) => (<p key={id}>{line}</p>))}
-      </TextBox>
-
-      <ButtonWrap>
-        <Button
-          onClick={onClose}
+        <Text
+          label="계획"
+          value={content}
           variant="outlined"
-          size="small"
-        >
-            닫기
-        </Button>
-        <Button
-          onClick={changeReservationMode}
-          variant="contained"
-          size="small"
-        >
-            수정
-        </Button>
-      </ButtonWrap>
-    </TextFieldWrap>
+          multiline
+          rows={3}
+          fullWidth
+          disabled={true}
+        />
+        <ButtonWrap>
+          <Button
+            onClick={onClose}
+            variant="outlined"
+            size="small"
+          >
+          닫기
+          </Button>
+          <Button
+            onClick={changeReservationMode}
+            variant="contained"
+            size="small"
+          >
+          수정
+          </Button>
+        </ButtonWrap>
+      </TextFieldWrap>
+    </>
   );
 }
 
@@ -169,7 +163,8 @@ function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
   return (
     <>
       <Title>
-          공부방 예약하기
+        {isUpdate && '예약 수정하기'}
+        {!isUpdate && '공부방 예약하기'}
       </Title>
       <TextFieldWrap>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
