@@ -43,6 +43,6 @@ public class RetrospectiveUpdateController {
         User user = userService.findById(principal.getId());
         String content = request.getContent();
 
-        retrospectiveUpdateService.updateRetrospective(id, user, content);
+        retrospectiveUpdateService.update(id, user, content);
     }
 }
