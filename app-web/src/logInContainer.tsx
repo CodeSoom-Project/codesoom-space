@@ -1,17 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+
 import { useForm } from 'react-hook-form';
 
 import { useMutation } from 'react-query';
 
-import { useDispatch } from 'react-redux';
+import { setAccessToken } from './redux/authSlice';
 
+import { saveItem } from './services/stoage';
 import { login } from './services/api';
 
-
 import LogIn from './logIn';
-import { saveItem } from './services/stoage';
-import { setAccessToken } from './redux/authSlice';
 
 export default function LogInContainer() {
   const dispatch = useDispatch();
@@ -34,13 +34,11 @@ export default function LogInContainer() {
   });
 
   return (
-    <>
-      <LogIn
-        register={register}
-        errors={errors}
-        handleSubmit={handleSubmit}
-        login={mutate}
-      />
-    </>
+    <LogIn
+      register={register}
+      errors={errors}
+      handleSubmit={handleSubmit}
+      login={mutate}
+    />
   );
 }

@@ -12,12 +12,13 @@ import { loadItem } from './services/stoage';
 
 import { useAppDispatch } from './hooks';
 
-import HeaderContainer from './HeaderContainer';
 
 import NotFound from './NotFound';
+import Reservations from './pages/Reservations';
+
 import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
-import Reservations from './pages/Reservations';
+import HeaderContainer from './HeaderContainer';
 
 export default function App() {
   const dispatch = useAppDispatch();
