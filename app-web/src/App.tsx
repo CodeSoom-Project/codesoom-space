@@ -27,8 +27,6 @@ export default function App() {
 
   const dispatch = useAppDispatch();
 
-  const accessToken = loadItem('accessToken');
-
   const { isTokenExpired } = useAppSelector(get('auth'));
 
   const removeToken = () => {
