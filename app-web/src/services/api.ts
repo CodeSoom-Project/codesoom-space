@@ -16,8 +16,10 @@ instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
-      store.dispatch(setIsTokenExpired());
+      return store.dispatch(setIsTokenExpired());
     }
+
+    return Promise.reject(error);
   });
 
 const api = axios.create({
