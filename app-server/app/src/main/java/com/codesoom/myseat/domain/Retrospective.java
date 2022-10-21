@@ -35,4 +35,7 @@ public class Retrospective {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
