@@ -218,20 +218,32 @@ export default function ReservationsTable({
               <TableCell align="center">{date}</TableCell>
               <TableCell align="left">{content}</TableCell>
               <TableCell align="center">
-                <Button onClick={(e) => {
-                  handleClickRetrospective(e, id, status);
-                }}>
-                  {statusName[status]}
-                </Button>
+                {status === 'CANCELED' ? (
+                  <div>
+                    {statusName[status]}
+                  </div>
+                ) : (
+                  <Button onClick={(e) => {
+                    handleClickRetrospective(e, id, status);
+                  }}>
+                    {statusName[status]}
+                  </Button>
+                )}
               </TableCell>
               <TableCell align="center">
-                <Button
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    handleClickReservation(e, id);
-                    dispatch(saveIsDetail(true));
-                  }}>
-                  상세보기
-                </Button>
+                {status === 'CANCELED' ? (
+                  <div>
+                    상세보기
+                  </div>
+                ) : (
+                  <Button
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      handleClickReservation(e, id);
+                      dispatch(saveIsDetail(true));
+                    }}>
+                    상세보기
+                  </Button>
+                )}
               </TableCell>
               <TableCell align="center">
                 {status === 'CANCELED' ? (
