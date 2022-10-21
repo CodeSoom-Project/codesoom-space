@@ -40,7 +40,7 @@ interface TablePaginationActionsProps {
   onPageChange: (
     event: React.MouseEvent<HTMLButtonElement>,
     newPage: number,
-  )=> void;
+  ) => void;
 }
 
 const StyledTableCell = styled(TableCell)({
@@ -150,7 +150,10 @@ export default function ReservationsTable({
   });
 
   const onClickCancelReservation = (id: number) => {
-    cancelReservationMutate(id);
+    if (confirm('예약을 취소하시겠습니까?')) {
+      cancelReservationMutate(id);
+    }
+    return;
   };
 
   const handleChangePage = (
