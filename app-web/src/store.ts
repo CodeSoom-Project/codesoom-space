@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import reservationReducer from './ReservationSlice';
-import authSlice from './authSlice';
+import authSlice from './redux/authSlice';
 import retrospectivesReducer from './redux/retrospectivesSlice';
 import reservationsSlice from './redux/reservationsSlice';
 
