@@ -14,20 +14,20 @@ const Content = styled.div({
 
 interface Props {
   open: boolean;
-  text: string;
-  buttonText?: string;
+  content: string;
+  text?: string;
   onClick: React.ReactEventHandler;
 }
 
-export default function Alert({ open, text, buttonText = '확인', onClick }: Props) {
+export default function Alert({ open, content, text = '확인', onClick }: Props) {
   return (
     <Dialog open={open}>
       <Content>
         <p>
-          {text}
+          {content}
         </p>
         <Button onClick={onClick} variant="contained">
-          {buttonText}
+          {text}
         </Button>
       </Content>
     </Dialog>
