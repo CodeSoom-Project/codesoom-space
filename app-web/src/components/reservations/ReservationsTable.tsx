@@ -150,7 +150,9 @@ export default function ReservationsTable({
   });
 
   const onClickCancelReservation = (id: number) => {
-    cancelReservationMutate(id);
+    if (confirm('예약을 취소하시겠습니까?')) {
+      cancelReservationMutate(id);
+    }
   };
 
   const handleChangePage = (
