@@ -55,8 +55,6 @@ const StyledTableCell = styled(TableCell)({
   },
 });
 
-
-
 function TablePaginationActions(props: TablePaginationActionsProps) {
   const { count, page, rowsPerPage, onPageChange } = props;
 
@@ -77,8 +75,6 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     onPageChange(event, LastPage);
   };
-
-
 
   return (
     <Box sx={{ flexShrink: 0, ml: 5 }}>
@@ -199,7 +195,6 @@ export default function ReservationsTable({
     'RETROSPECTIVE_COMPLETE': '회고 상세보기',
     'RETROSPECTIVE_WAITING': '회고 작성',
   };
-
 
   if (isLoading) {
     return <div>Loading...</div>;
