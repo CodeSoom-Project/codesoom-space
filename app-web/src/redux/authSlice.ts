@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface State {
-  isTokenExpired: boolean;
+  tokenExpired: boolean;
 
   accessToken: string;
 }
 
 const initialState: State = {
-  isTokenExpired: false,
+  tokenExpired: false,
 
   accessToken: '',
 };
@@ -23,13 +23,13 @@ const authSlice = createSlice({
 
     setTokenExpired: (state) => ({
       ...state,
-      isTokenExpired: true,
+      tokenExpired: true,
     }),
 
     logout: (state) => ({
       ...state,
       accessToken: '',
-      isTokenExpired: false,
+      tokenExpired: false,
     }),
   },
 });

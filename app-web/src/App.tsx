@@ -28,7 +28,7 @@ export default function App() {
 
   const dispatch = useAppDispatch();
 
-  const { isTokenExpired } = useAppSelector(get('auth'));
+  const { tokenExpired } = useAppSelector(get('auth'));
 
   const removeToken = () => {
     removeItem('accessToken');
@@ -49,7 +49,7 @@ export default function App() {
   return (
     <div>
       <Alert
-        open={isTokenExpired}
+        open={tokenExpired}
         content="토큰이 만료되었습니다. 다시로그인해주세요."
         onClick={handleClickLogout}
       />
