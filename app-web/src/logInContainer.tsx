@@ -21,15 +21,15 @@ export default function LogInContainer() {
   const navigate = useNavigate();
 
   const { mutate } = useMutation('login', login, {
-    onSuccess: async (accessToken) => {
+    onSuccess: (accessToken) => {
       saveItem('accessToken', accessToken);
 
       dispatch(setAccessToken(accessToken));
 
       navigate('/', { replace: true });
     },
-    onError: async (e) => {
-      console.error(e);
+    onError: (e: any) => {
+      alert(e.response.data);
     },
   });
 
