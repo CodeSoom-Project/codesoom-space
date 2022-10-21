@@ -1,6 +1,5 @@
 package com.codesoom.myseat.domain;
 
-import com.codesoom.myseat.utils.DateUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
