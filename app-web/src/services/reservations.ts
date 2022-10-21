@@ -68,5 +68,4 @@ export const cancelReservation = async (id: number) => {
     url: `reservations/${id}`,
     headers: { Authorization: `Bearer ${accessToken}` },
   });
-
 };
