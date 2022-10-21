@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 
 import { useMutation } from 'react-query';
 
+import { AxiosError } from 'axios';
+
 import { setAccessToken } from './redux/authSlice';
 
 import { saveItem } from './services/stoage';
@@ -28,8 +30,9 @@ export default function LogInContainer() {
 
       navigate('/', { replace: true });
     },
-    onError: (e: any) => {
-      alert(e.response.data);
+    onError: (error) => {
+      const response = (error as AxiosError).response;
+      alert(response!.data);
     },
   });
 
