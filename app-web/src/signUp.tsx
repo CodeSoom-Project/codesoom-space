@@ -7,6 +7,9 @@ const FormWrapper = styled.form({
   alignItems: 'center',
   padding: '1rem 0',
   justifyContent: 'center',
+  '@media (max-width: 375px)': {
+    flexDirection: 'column',
+  },
 });
 
 const LabelWrapper = styled.div({
@@ -22,6 +25,9 @@ const Label = styled.label({
 
 const ButtonWrapper = styled.div({
   marginLeft: '12px',
+  '@media (max-width: 375px)': {
+    marginTop: '12px',
+  },
 });
 
 interface Props {
