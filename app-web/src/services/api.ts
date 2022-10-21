@@ -44,15 +44,8 @@ export const cancelReservation = async ({ seatNumber }: { seatNumber: number }) 
 };
 
 export const login = async ({ email, password }: { email: string, password: string }) => {
-  return api
-    .post('/login', {
-      email,
-      password,
-    }).then((res) => {
-      return res.data.accessToken;
-    }).catch((error) => {
-      window.alert(error.message);
-    });
+  const { data } = await api.post('/login', { email, password });
+  return data.accessToken;
 };
 
 export const signUp = async ({
