@@ -15,9 +15,7 @@ const PrivateRoute: FC<Props> = ({ children }) => {
   if (!accessToken) {
     return <Navigate to='/login' replace/>;
   }
-
   return children;
-
 };
 
 export default PrivateRoute;

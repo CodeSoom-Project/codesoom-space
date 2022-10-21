@@ -3,6 +3,7 @@ import './App.css';
 import { useEffect } from 'react';
 
 import { Routes, Route } from 'react-router-dom';
+
 import PrivateRoute from './routes/PrivateRoute';
 
 import { setAccessToken } from './redux/authSlice';
@@ -13,12 +14,10 @@ import { get } from './utils';
 
 import HeaderContainer from './HeaderContainer';
 
-
 import NotFound from './NotFound';
 import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
 import Reservations from './pages/Reservations';
-
 
 export default function App() {
   const dispatch = useAppDispatch();
