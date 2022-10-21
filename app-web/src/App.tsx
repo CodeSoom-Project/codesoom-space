@@ -2,19 +2,15 @@ import './App.css';
 
 import { useEffect } from 'react';
 
-import styled from '@emotion/styled';
-
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
-import { Button, Dialog } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from './hooks';
 
 import { get } from './utils';
 
-import { logout, setAccessToken } from './authSlice';
+import { logout, setAccessToken } from './redux/authSlice';
 
-import { setAccessToken } from './redux/authSlice';
 
 import { loadItem } from './services/stoage';
 
@@ -25,16 +21,8 @@ import Reservations from './pages/Reservations';
 
 import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
+import Alert from './components/Alert';
 import HeaderContainer from './HeaderContainer';
-
-
-const TokenExpiredDialogContent = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-end',
-  backgroundColor: '#fffff',
-  padding: '2rem',
-});
 
 export default function App() {
   const navigate = useNavigate();
@@ -57,16 +45,11 @@ export default function App() {
 
   return (
     <div>
-      <Dialog open={isTokenExpired}>
-        <TokenExpiredDialogContent>
-          <p>
-              토큰이 만료되었습니다. 다시로그인해주세요
-          </p>
-          <Button onClick={handleClickLogout} variant="contained">
-              확인
-          </Button>
-        </TokenExpiredDialogContent>
-      </Dialog>
+      <Alert
+        open={isTokenExpired}
+        text='토큰이 만료되었습니다. 다시로그인해주세요.'
+        onClick={handleClickLogout}
+      />
 
       <HeaderContainer/>
       <Routes>
