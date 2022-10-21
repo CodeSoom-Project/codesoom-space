@@ -1,0 +1,7 @@
+PUT http://localhost:8080/reservations/1/retrospectives/1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer
+
+{
+  "content" : "아쉽다."
+}
