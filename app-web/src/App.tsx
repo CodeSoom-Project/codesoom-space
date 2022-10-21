@@ -8,9 +8,9 @@ import PrivateRoute from './routes/PrivateRoute';
 
 import { setAccessToken } from './redux/authSlice';
 
-import { useAppDispatch, useAppSelector } from './hooks';
+import { loadItem } from './services/stoage';
 
-import { get } from './utils';
+import { useAppDispatch } from './hooks';
 
 import HeaderContainer from './HeaderContainer';
 
@@ -22,13 +22,9 @@ import Reservations from './pages/Reservations';
 export default function App() {
   const dispatch = useAppDispatch();
 
-  const { accessToken } = useAppSelector(get('auth'));
-
   useEffect(() => {
-    if (accessToken) {
-      dispatch(setAccessToken(accessToken));
-    }
-  }, [accessToken]);
+    dispatch(setAccessToken(loadItem('accessToken')));
+  }, []);
 
   return (
     <div>
