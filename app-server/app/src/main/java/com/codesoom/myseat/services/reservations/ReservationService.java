@@ -4,10 +4,12 @@ import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
+import com.codesoom.myseat.exceptions.ContentTooLongException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.PlanRepository;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,6 +39,7 @@ public class ReservationService {
      * @param content 계획 내용
      * @return 생성된 예약
      * @throws AlreadyReservedException 방문 일자에 대한 예약 내역이 이미 존재하면 던집니다.
+     * @throws ContentTooLongException 계획의 길이가 너무 길면 던집니다.
      */
     @Transactional
     public Reservation createReservation(
@@ -58,7 +61,12 @@ public class ReservationService {
                 .plan(plan)
                 .build();
 
-        planRepo.save(plan);
+        try {
+            planRepo.save(plan);
+        } catch (InvalidDataAccessResourceUsageException e) {
+            e.printStackTrace();
+            throw new ContentTooLongException();
+        }
         reservationRepo.save(reservation);
 
         return reservation;

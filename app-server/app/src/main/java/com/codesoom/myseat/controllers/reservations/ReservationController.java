@@ -3,6 +3,7 @@ package com.codesoom.myseat.controllers.reservations;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
+import com.codesoom.myseat.exceptions.ContentTooLongException;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.reservations.ReservationService;
 import com.codesoom.myseat.services.users.UserService;
@@ -36,6 +37,7 @@ public class ReservationController {
      * 
      * @param request 예약 폼에 입력된 데이터
      * @throws AlreadyReservedException 방문 일자에 대한 예약 내역이 이미 존재하면 던집니다.
+     * @throws ContentTooLongException 계획의 길이가 너무 길면 던집니다.
      */
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)

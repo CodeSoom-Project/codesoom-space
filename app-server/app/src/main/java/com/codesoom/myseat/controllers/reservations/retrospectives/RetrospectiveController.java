@@ -4,6 +4,8 @@ import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
 import com.codesoom.myseat.exceptions.AlreadyPostedRetrospectiveException;
+import com.codesoom.myseat.exceptions.ContentTooLongException;
+import com.codesoom.myseat.exceptions.ContentTooShortException;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.security.UserAuthentication;
@@ -45,6 +47,8 @@ public class RetrospectiveController {
      * @param request 회고 폼에 입력된 데이터
      * @throws NotOwnedReservationException 예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 한다면 예외를 던집니다.
      * @throws ReservationNotFoundException 예약 조회에 실패하면 던집니다.
+     * @throws ContentTooShortException 회고의 길이가 너무 짧을 경우 던집니다.
+     * @throws ContentTooLongException 회고의 길이가 너무 길면 던집니다.
      */
     @PostMapping("/{id}/retrospectives")
     @PreAuthorize("isAuthenticated()")
@@ -63,6 +67,9 @@ public class RetrospectiveController {
         
         String content = request.getContent();
         log.info("회고 요청: " + content);
+        if(content.length() < 100) {
+            throw new ContentTooShortException();
+        }
 
         retrospectiveService.createRetrospective(user, id, content);
     }

@@ -79,4 +79,16 @@ public class ControllerErrorAdvice {
     public String handleAlreadyPostedRetrospective() {
         return "이미 회고를 작성했습니다.";
     }
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ContentTooLongException.class)
+    public String handleContentTooLong() {
+        return "입력값 길이가 너무 깁니다. 1000자 이하로 입력해주세요.";
+    }
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ContentTooShortException.class)
+    public String handleContentTooShort() {
+        return "입력값 길이가 너무 짧습니다. 100자 이상으로  입력해주세요.";
+    }
 }
