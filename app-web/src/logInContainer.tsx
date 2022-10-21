@@ -20,13 +20,7 @@ export default function LogInContainer() {
 
   const navigate = useNavigate();
 
-  const loginMutate =
-  async ({ email, password }: { email: string, password: string }) => {
-    const accessToken = await login({ email, password });
-    return accessToken;
-  };
-
-  const { mutate } = useMutation('login', loginMutate, {
+  const { mutate } = useMutation('login', login, {
     onSuccess: async (accessToken) => {
       saveItem('accessToken', accessToken);
 
