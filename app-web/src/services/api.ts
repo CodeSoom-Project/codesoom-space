@@ -48,11 +48,7 @@ export const login = async ({ email, password }: { email: string, password: stri
   return data.accessToken;
 };
 
-export const signUp = async ({
-  email,
-  password,
-  name,
-}: { email: string, password: string, name: string }) => {
-  const { data } = await api.post('/signup', { email, password, name });
+export const signUp = async (form: { email: string, password: string, name: string }) => {
+  const { data } = await api.post('/signup', form);
   return data;
 };
