@@ -4,7 +4,6 @@ import { loadItem } from './stoage';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
-
 const api = axios.create({
   baseURL: BASE_URL,
 });
@@ -55,6 +54,5 @@ export const signUp = async ({
   name,
 }: { email: string, password: string, name: string }) => {
   const { data } = await api.post('/signup', { email, password, name });
-
   return data;
 };
