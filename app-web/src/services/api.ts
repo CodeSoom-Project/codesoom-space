@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { store } from '../store';
 
+import { SignUpFormData, User } from '../typings/auth';
+
 import { loadItem } from './stoage';
 
 import { setTokenExpired } from '../redux/authSlice';
@@ -58,12 +60,12 @@ export const cancelReservation = async ({ seatNumber }: { seatNumber: number }) 
   }
 };
 
-export const login = async ({ email, password }: { email: string, password: string }) => {
-  const { data } = await httpClient.post('/login', { email, password });
+export const login = async (formData: User) => {
+  const { data } = await httpClient.post('/login', formData);
   return data.accessToken;
 };
 
-export const signUp = async (formData: { email: string, password: string, name: string }) => {
+export const signUp = async (formData: SignUpFormData) => {
   const { data } = await httpClient.post('/signup', formData);
   return data;
 };
