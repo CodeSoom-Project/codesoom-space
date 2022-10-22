@@ -2,6 +2,8 @@ import { Button } from '@mui/material';
 
 import styled from '@emotion/styled';
 
+import { SignUpFormData } from './typings/auth';
+
 const FormWrapper = styled.form({
   display: 'flex',
   alignItems: 'center',
@@ -40,11 +42,11 @@ interface Props {
 export default function SignUp({ register, errors, handleSubmit, signUp }: Props) {
   return (
     <FormWrapper
-      onSubmit={handleSubmit(async (data: any) => {
+      onSubmit={handleSubmit(async ({ email, password, name }: SignUpFormData) => {
         await signUp({
-          email: data.email,
-          password: data.password,
-          name: data.name,
+          email,
+          password,
+          name,
         });
       })
       }>

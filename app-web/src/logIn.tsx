@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
+
 import { Button } from '@mui/material';
+
+import { User } from './typings/auth';
 
 const FormWrapper = styled.form({
   display: 'flex',
@@ -34,10 +37,10 @@ export default function LogIn({ register, errors, handleSubmit, login }: Props) 
   return (
     <FormWrapper
       style={{ padding: '1rem 0' }}
-      onSubmit={handleSubmit(async (data: any) => {
+      onSubmit={handleSubmit(async ({ email, password }: User) => {
         await login({
-          email: data.email,
-          password: data.password,
+          email,
+          password,
         });
       })
       }>
