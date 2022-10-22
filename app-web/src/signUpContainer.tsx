@@ -16,12 +16,12 @@ export default function SignUpContainer() {
   const navigate = useNavigate();
 
   const { mutate } = useMutation('signup', signUp, {
-    onSuccess: async () => {
+    onSuccess: () => {
       alert('회원가입 되었습니다');
 
       navigate('/login', { replace: true });
     },
-    onError: async (error) => {
+    onError: (error) => {
       const response = (error as AxiosError).response;
       alert(response!.data);
     },
