@@ -46,7 +46,6 @@ export default function SignUp({ register, errors, handleSubmit, signUp }: Props
           password: data.password,
           name: data.name,
         });
-        console.log('회원가입동작');
       })
       }>
 
