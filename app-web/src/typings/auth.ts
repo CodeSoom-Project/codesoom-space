@@ -5,4 +5,5 @@ export interface User {
 
 export interface SignUpFormData extends User {
   name: string;
+  passwordMatch?: string;
 }
