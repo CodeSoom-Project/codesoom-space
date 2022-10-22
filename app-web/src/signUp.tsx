@@ -2,6 +2,15 @@ import { Button } from '@mui/material';
 
 import styled from '@emotion/styled';
 
+import {
+  DeepRequired,
+  FieldErrorsImpl,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from 'react-hook-form/dist';
+
+import { UseMutateFunction } from 'react-query';
+
 import { SignUpFormData } from './typings/auth';
 
 const FormWrapper = styled.form({
@@ -33,17 +42,17 @@ const ButtonWrapper = styled.div({
 });
 
 interface Props {
-  register: any;
-  errors: any;
-  handleSubmit: any;
-  signUp: any;
+  register: UseFormRegister<SignUpFormData>;
+  errors: FieldErrorsImpl<DeepRequired<SignUpFormData>>;
+  handleSubmit: UseFormHandleSubmit<SignUpFormData>;
+  signUp: UseMutateFunction<any, unknown, SignUpFormData, unknown>;
 }
 
 export default function SignUp({ register, errors, handleSubmit, signUp }: Props) {
   return (
     <FormWrapper
-      onSubmit={handleSubmit(async ({ email, password, name }: SignUpFormData) => {
-        await signUp({
+      onSubmit={handleSubmit(({ email, password, name }: SignUpFormData) => {
+        signUp({
           email,
           password,
           name,

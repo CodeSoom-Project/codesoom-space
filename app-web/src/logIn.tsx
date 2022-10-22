@@ -2,6 +2,15 @@ import styled from '@emotion/styled';
 
 import { Button } from '@mui/material';
 
+import {
+  DeepRequired,
+  FieldErrorsImpl,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from 'react-hook-form/dist';
+
+import { UseMutateFunction } from 'react-query';
+
 import { User } from './typings/auth';
 
 const FormWrapper = styled.form({
@@ -27,18 +36,18 @@ const ButtonWrapper = styled.div({
 });
 
 interface Props {
-  register: any;
-  errors: any;
-  handleSubmit: any;
-  login: any;
+  register: UseFormRegister<User>;
+  errors: FieldErrorsImpl<DeepRequired<User>>;
+  handleSubmit: UseFormHandleSubmit<User>;
+  login: UseMutateFunction<any, unknown, User, unknown>;
 }
 
 export default function LogIn({ register, errors, handleSubmit, login }: Props) {
   return (
     <FormWrapper
       style={{ padding: '1rem 0' }}
-      onSubmit={handleSubmit(async ({ email, password }: User) => {
-        await login({
+      onSubmit={handleSubmit(({ email, password }: User) => {
+        login({
           email,
           password,
         });
@@ -59,7 +68,7 @@ export default function LogIn({ register, errors, handleSubmit, login }: Props) 
           <input {...register('password', {
             required: true,
           })} type="password" id="password" />
-          {errors.name?.type === 'required' && '이름을 입력 해 주세요'}
+          {errors.email?.type === 'required' && '이메일을 입력 해 주세요'}
           {errors.password?.type === 'required' && '비밀번호를 입력 해 주세요'}
         </div>
       </LabelWrapper>
