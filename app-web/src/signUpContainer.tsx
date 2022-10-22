@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 
 import { useMutation } from 'react-query';
 
+import { AxiosError } from 'axios';
+
 import { signUp } from './services/api';
 
 import SignUp from './signUp';
@@ -13,23 +15,15 @@ export default function SignUpContainer() {
 
   const navigate = useNavigate();
 
-  const signUpMutate = async ({
-    name,
-    email,
-    password,
-  }: { email: any, password: string, name: any }) => {
-    const signUpResult = await signUp({ name, email, password });
-    return signUpResult;
-  };
-
-  const { mutate } = useMutation('signup', signUpMutate, {
+  const { mutate } = useMutation('signup', signUp, {
     onSuccess: async () => {
-      console.log('회원가입 성공');
       alert('회원가입 되었습니다');
+
       navigate('/login', { replace: true });
     },
-    onError: async (e) => {
-      console.error(e);
+    onError: async (error) => {
+      const response = (error as AxiosError).response;
+      alert(response!.data);
     },
   });
 
