@@ -9,4 +9,3 @@ export function loadItem(key: string) {
 export function removeItem(key: string) {
   return localStorage.removeItem(key);
 }
-
