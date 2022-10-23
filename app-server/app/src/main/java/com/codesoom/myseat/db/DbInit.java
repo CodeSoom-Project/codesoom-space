@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @Component
-@Profile("local-test")
+@Profile("!mariadb")
 public class DbInit {
     private final UserRepository userRepo;
     private final RoleRepository roleRepo;
