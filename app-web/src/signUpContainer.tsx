@@ -9,6 +9,7 @@ import { AxiosError } from 'axios';
 import { signUp } from './services/api';
 
 import SignUp from './signUp';
+
 import { SignUpFormData } from './typings/auth';
 
 export default function SignUpContainer() {
