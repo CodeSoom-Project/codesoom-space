@@ -1,6 +1,7 @@
 package com.codesoom.myseat.controllers.reservations;
 
 import com.codesoom.myseat.dto.ReservationRequest;
+import com.codesoom.myseat.exceptions.CannotUpdateCanceledReservationException;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.reservations.ReservationUpdateService;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ public class ReservationUpdateController {
      * @param principal 요청한 회원의 인증 정보
      * @param id 수정할 예약의 id
      * @param request 수정 데이터
+     * @throws CannotUpdateCanceledReservationException 취소된 예약을 수정하려고 하면 던집니다.
      */
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -91,4 +91,13 @@ public class Reservation {
         return !this.date.equals(date);
     }
 
+    /**
+     * 취소된 예약이면 true, 그렇지 않으면 false를 반환합니다.
+     * 
+     * @return 취소된 예약이면 true, 그렇지 않으면 false
+     */
+    public boolean isCanceled() {
+        return this.status == ReservationStatus.CANCELED;
+    }
+
 }

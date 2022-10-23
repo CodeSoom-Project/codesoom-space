@@ -91,4 +91,11 @@ public class ControllerErrorAdvice {
     public String handleContentTooShort() {
         return "입력값 길이가 너무 짧습니다. 100자 이상으로  입력해주세요.";
     }
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CannotUpdateCanceledReservationException.class)
+    public String handleCannotUpdateCanceledReservation() {
+        return "취소된 예약은 수정할 수 없습니다. 취소되지 않은 예약으로 다시 시도해주세요.";
+    }
+    
 }

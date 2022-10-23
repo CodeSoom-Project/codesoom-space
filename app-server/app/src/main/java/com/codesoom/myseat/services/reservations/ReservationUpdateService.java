@@ -3,6 +3,7 @@ package com.codesoom.myseat.services.reservations;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
+import com.codesoom.myseat.exceptions.CannotUpdateCanceledReservationException;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
@@ -28,11 +29,16 @@ public class ReservationUpdateService {
      * @throws ReservationNotFoundException 주어진 예약 id로 예약을 찾지 못한 경우
      * @throws NotOwnedReservationException 요청한 회원 소유의 예약이 아닌 경우
      * @throws AlreadyReservedException 수정하려는 날짜에 예약한 기록이 이미 있는 경우
+     * @throws CannotUpdateCanceledReservationException 취소된 예약을 수정하려고 하면 던집니다.
      */
     @Transactional
     public void updateReservation(Long userId, Long id, ReservationRequest request) {
         Reservation reservation = repository.findById(id)
                 .orElseThrow(ReservationNotFoundException::new);
+        
+        if(reservation.isCanceled()) {
+            throw new CannotUpdateCanceledReservationException();
+        }
         if (!reservation.isOwnReservation(userId)) {
             throw new NotOwnedReservationException();
         }

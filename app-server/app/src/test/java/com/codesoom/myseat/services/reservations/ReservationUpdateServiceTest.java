@@ -4,6 +4,8 @@ import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.ReservationRequest;
+import com.codesoom.myseat.enums.ReservationStatus;
+import com.codesoom.myseat.exceptions.CannotUpdateCanceledReservationException;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
@@ -19,7 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.BDDMockito.given;
@@ -117,6 +118,43 @@ class ReservationUpdateServiceTest {
                 //when & then
                 assertThrows(ReservationNotFoundException.class,
                         ()-> service.updateReservation(USER_ID, NOT_EXIST_ID, request));
+            }
+        }
+
+        @DisplayName("취소된 예약이면")
+        @Nested
+        class Context_with_canceled_reservation{
+            @BeforeEach
+            void setUp() {
+                Plan plan = Plan.builder()
+                        .content("코테풀기")
+                        .build();
+                
+                User user = User.builder()
+                        .email("soo@email.com").build();
+                
+                Reservation reservation = Reservation.builder()
+                        .id(1L)
+                        .user(user)
+                        .date("2022-10-17")
+                        .plan(plan)
+                        .status(ReservationStatus.CANCELED)
+                        .build();
+
+                given(repository.findById(1L))
+                        .willReturn(Optional.of(reservation));
+            }
+
+            @DisplayName("CannotUpdateCanceledReservationException을 던진다.")
+            @Test
+            void will_throw_cannot_update_canceled_reservation_exception() {
+                //given
+                ReservationRequest request
+                        = new ReservationRequest("2022-10-18", "수정 데이터");
+
+                //when
+                assertThrows(CannotUpdateCanceledReservationException.class,
+                        () -> service.updateReservation(USER_ID, 1L, request));
             }
         }
     }
