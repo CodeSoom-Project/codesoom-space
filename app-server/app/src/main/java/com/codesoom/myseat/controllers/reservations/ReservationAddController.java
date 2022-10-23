@@ -5,7 +5,7 @@ import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.exceptions.ContentTooLongException;
 import com.codesoom.myseat.security.UserAuthentication;
-import com.codesoom.myseat.services.reservations.ReservationService;
+import com.codesoom.myseat.services.reservations.ReservationAddService;
 import com.codesoom.myseat.services.users.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reservations")
 @CrossOrigin
 @Slf4j
-public class ReservationController {
-    private final ReservationService reservationService;
+public class ReservationAddController {
+    private final ReservationAddService reservationAddService;
     private final UserService userService;
 
-    public ReservationController(
-            ReservationService reservationService, 
+    public ReservationAddController(
+            ReservationAddService reservationAddService, 
             UserService userService
     ) {
-        this.reservationService = reservationService;
+        this.reservationAddService = reservationAddService;
         this.userService = userService;
     }
 
@@ -51,6 +51,6 @@ public class ReservationController {
         String date = request.getDate();
         String content = request.getContent();
 
-        reservationService.createReservation(user, date, content);
+        reservationAddService.createReservation(user, date, content);
     }
 }

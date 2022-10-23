@@ -5,8 +5,8 @@ import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
 import com.codesoom.myseat.services.auth.AuthenticationService;
-import com.codesoom.myseat.services.reservations.ReservationService;
-import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveService;
+import com.codesoom.myseat.services.reservations.ReservationAddService;
+import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveAddService;
 import com.codesoom.myseat.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,8 +24,8 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@WebMvcTest(RetrospectiveController.class)
-class RetrospectiveControllerTest {
+@WebMvcTest(RetrospectiveAddController.class)
+class RetrospectiveAddControllerTest {
 
     private static final String ACCESS_TOKEN
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
@@ -42,10 +42,10 @@ class RetrospectiveControllerTest {
     private AuthenticationService authService;
 
     @MockBean
-    private RetrospectiveService retrospectiveService;
+    private RetrospectiveAddService retrospectiveAddService;
     
     @MockBean
-    private ReservationService reservationService;
+    private ReservationAddService reservationAddService;
 
     @MockBean
     private UserService userService;
@@ -77,7 +77,7 @@ class RetrospectiveControllerTest {
         given(userService.findById(1L))
                 .willReturn(mockUser);
 
-        given(reservationService.findReservation(1L))
+        given(reservationAddService.findReservation(1L))
                 .willReturn(mockReservation);
 
         RetrospectiveRequest request = RetrospectiveRequest.builder()

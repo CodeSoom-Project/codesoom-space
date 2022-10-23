@@ -6,7 +6,6 @@ import com.codesoom.myseat.enums.ReservationStatus;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.repositories.PlanRepository;
 import com.codesoom.myseat.repositories.ReservationRepository;
-import com.codesoom.myseat.services.reservations.ReservationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 
-class ReservationServiceTest {
-    private ReservationService service;
+class ReservationAddServiceTest {
+    private ReservationAddService service;
 
     @Mock
     private ReservationRepository reservationRepo;
@@ -30,7 +29,7 @@ class ReservationServiceTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         
-        service = new ReservationService(planRepo, reservationRepo);
+        service = new ReservationAddService(planRepo, reservationRepo);
     }
     
     @Test

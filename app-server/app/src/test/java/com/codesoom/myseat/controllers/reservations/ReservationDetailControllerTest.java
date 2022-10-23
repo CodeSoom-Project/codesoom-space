@@ -1,13 +1,12 @@
 package com.codesoom.myseat.controllers.reservations;
 
-import com.codesoom.myseat.controllers.reservations.ReservationQueryController;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.InvalidTokenException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.services.auth.AuthenticationService;
-import com.codesoom.myseat.services.reservations.ReservationQueryService;
+import com.codesoom.myseat.services.reservations.ReservationDetailService;
 import com.codesoom.myseat.services.users.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -36,9 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(ReservationQueryController.class)
-class ReservationQueryControllerTest {
-
+@WebMvcTest(ReservationDetailController.class)
+class ReservationDetailControllerTest {
     private static final String ACCESS_TOKEN
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
@@ -52,7 +48,7 @@ class ReservationQueryControllerTest {
     private UserService userService;
 
     @MockBean
-    private ReservationQueryService reservationQueryService;
+    private ReservationDetailService reservationDetailService;
 
     @Autowired
     private WebApplicationContext context;
@@ -80,37 +76,13 @@ class ReservationQueryControllerTest {
                 .willReturn(mockUser);
     }
 
-    @DisplayName("요청한 유저의 모든 예약 목록을 응답한다.")
-    @Test
-    void GET_reservations_with_200_status() throws Exception {
-        //given
-        String content = "코테풀기, 공부, 과제";
-        given(reservationQueryService.reservations(1L))
-                .willReturn(List.of(
-                        Reservation.builder()
-                                .id(1L)
-                                .plan(Plan.builder().id(1L).content(content).build())
-                                .date("2022-10-13")
-                                .build()
-                ));
-
-        //when
-        ResultActions perform = mockMvc.perform(get("/reservations")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN));
-
-        //then
-        MvcResult result = perform.andReturn();
-        assertThat(result.getResponse().getStatus()).isEqualTo(200);
-        assertThat(result.getResponse().getContentAsString()).contains(content);
-    }
-
     @DisplayName("주어진 예약 id로 예약 정보를 찾을 수 있으면 예약 정보를 응답한다.")
     @Test
     void GET_reservation_with_200_status() throws Exception {
         //given
         Long reservationId = 1L;
         String content = "코테풀기, 공부, 과제";
-        given(reservationQueryService.reservation(1L, reservationId))
+        given(reservationDetailService.reservation(reservationId, 1L))
                 .willReturn(Reservation.builder()
                         .id(reservationId)
                         .plan(Plan.builder().id(1L).content(content).build())
@@ -133,7 +105,7 @@ class ReservationQueryControllerTest {
         //given
         Long notExistReservationId = 100L;
         String content = "코테풀기, 공부, 과제";
-        given(reservationQueryService.reservation(notExistReservationId, 1L))
+        given(reservationDetailService.reservation(notExistReservationId, 1L))
                 .willThrow(ReservationNotFoundException.class);
 
         //when & then
@@ -148,7 +120,7 @@ class ReservationQueryControllerTest {
         //given
         Long reservationId = 1L;
         String content = "코테풀기, 공부, 과제";
-        given(reservationQueryService.reservation(1L, reservationId))
+        given(reservationDetailService.reservation(1L, reservationId))
                 .willReturn(Reservation.builder()
                         .id(reservationId)
                         .plan(Plan.builder().id(1L).content(content).build())
@@ -163,5 +135,5 @@ class ReservationQueryControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + "akdjfisdlkfajsdlk"))
                 .andExpect(status().isUnauthorized());
     }
-
+    
 }

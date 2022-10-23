@@ -1,11 +1,10 @@
 package com.codesoom.myseat.controllers.reservations;
 
-import com.codesoom.myseat.controllers.reservations.ReservationController;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.services.auth.AuthenticationService;
-import com.codesoom.myseat.services.reservations.ReservationService;
+import com.codesoom.myseat.services.reservations.ReservationAddService;
 import com.codesoom.myseat.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,8 +24,8 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(ReservationController.class)
-class ReservationControllerTest {
+@WebMvcTest(ReservationAddController.class)
+class ReservationAddControllerTest {
     private static final String ACCESS_TOKEN 
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
@@ -40,7 +39,7 @@ class ReservationControllerTest {
     private UserService userService;
     
     @MockBean
-    private ReservationService reservationService;
+    private ReservationAddService reservationAddService;
 
     @Test
     @DisplayName("POST /reservations 요청 시 상태코드 204를 응답한다")
@@ -87,7 +86,7 @@ class ReservationControllerTest {
         given(userService.findById(1L))
                 .willReturn(mockUser);
 
-        given(reservationService.createReservation(mockUser, "2022-10-11", "책읽기, 코테풀기"))
+        given(reservationAddService.createReservation(mockUser, "2022-10-11", "책읽기, 코테풀기"))
                 .willThrow(AlreadyReservedException.class);
 
         ReservationRequest request = ReservationRequest.builder()

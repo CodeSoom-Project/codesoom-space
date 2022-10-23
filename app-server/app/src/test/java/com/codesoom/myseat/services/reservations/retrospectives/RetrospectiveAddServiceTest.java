@@ -22,9 +22,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 
-class RetrospectiveServiceTest {
+class RetrospectiveAddServiceTest {
 
-    private RetrospectiveService service;
+    private RetrospectiveAddService service;
 
     @Mock
     private RetrospectiveRepository retrospectiveRepository;
@@ -38,7 +38,7 @@ class RetrospectiveServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new RetrospectiveService(retrospectiveRepository, reservationRepository);
+        service = new RetrospectiveAddService(retrospectiveRepository, reservationRepository);
     }
 
     @Test
