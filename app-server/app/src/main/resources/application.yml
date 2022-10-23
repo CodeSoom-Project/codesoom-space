@@ -1,5 +1,4 @@
 spring:
-  profiles: local-test
   datasource:
     url: ${url:jdbc:mariadb://localhost:3306/myseattest}
     username: root
