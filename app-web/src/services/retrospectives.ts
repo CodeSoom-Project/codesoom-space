@@ -1,4 +1,4 @@
-import { axios } from './api';
+import { httpClient } from './api';
 
 import { loadItem } from './stoage';
 
@@ -9,7 +9,7 @@ export const retrospectivesKeys = {
 export const fetchRetrospectives = async ({ id, content }: { id: number, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await axios.post(`reservations/${id}/retrospectives`, {
+  const response = await httpClient.post(`reservations/${id}/retrospectives`, {
     content,
   }, {
     headers: { Authorization: `Bearer ${accessToken}` },
@@ -21,7 +21,7 @@ export const fetchRetrospectives = async ({ id, content }: { id: number, content
 export const getRetrospective = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await axios.get(`/reservations/${id}/retrospectives`, {
+  const { data } = await httpClient.get(`/reservations/${id}/retrospectives`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
@@ -31,7 +31,7 @@ export const getRetrospective = async (id: number) => {
 export const updateRetrospectives = ({ id, content }: { id: number, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  return api.put(`/reservations/${id}/retrospectives`, { content }, {
+  return httpClient.put(`/reservations/${id}/retrospectives`, { content }, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

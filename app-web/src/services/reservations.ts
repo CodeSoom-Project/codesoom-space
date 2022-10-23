@@ -1,4 +1,4 @@
-import { axios } from './api';
+import { httpClient } from './api';
 
 import { loadItem } from './stoage';
 
@@ -9,7 +9,7 @@ export const reservationsKeys = {
 export const getReservation = async () => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await axios.get('/reservations', {
+  const { data } = await httpClient.get('/reservations', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -21,7 +21,7 @@ export const getReservation = async () => {
 export const fetchReservation = async ({ date, content }: { date: string, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await axios.post('/reservations', {
+  const response = await httpClient.post('/reservations', {
     date,
     content,
   }, {
@@ -34,7 +34,7 @@ export const fetchReservation = async ({ date, content }: { date: string, conten
 export const updateReservation = async ({ id, date, content }: { id: number, date: string, content: string }) => {
   const accessToken = loadItem('accessToken');
 
-  const response = await axios.put(`/reservations/${id}`, {
+  const response = await httpClient.put(`/reservations/${id}`, {
     date,
     content,
   }, {
@@ -47,7 +47,7 @@ export const updateReservation = async ({ id, date, content }: { id: number, dat
 export const getReservations = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
-  const { data } = await axios.get(`reservations/${id}`, {
+  const { data } = await httpClient.get(`reservations/${id}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
@@ -57,7 +57,7 @@ export const getReservations = async (id: number) => {
 export const cancelReservation = async (id: number) => {
   const accessToken = loadItem('accessToken');
 
-  await axios.patch(`reservations/${id}`, {}, {
+  await httpClient.patch(`reservations/${id}`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

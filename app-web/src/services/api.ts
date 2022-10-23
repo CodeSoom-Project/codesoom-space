@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import axios from 'axios';
 
 import { store } from '../store';
 
@@ -8,11 +8,11 @@ import { setTokenExpired } from '../redux/authSlice';
 
 const BASE_URL = 'https://api.codesoom-myseat.site';
 
-export const axios = Axios.create({
+export const httpClient = axios.create({
   baseURL: BASE_URL,
 });
 
-axios.interceptors.response.use(
+httpClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
@@ -25,17 +25,17 @@ axios.interceptors.response.use(
 
 export const request = ({ ...options }) => {
   const token = loadItem('accessToken');
-  axios.defaults.headers.common.Authorization = token ? `Bearer ${token}` : '';
+  httpClient.defaults.headers.common.Authorization = token ? `Bearer ${token}` : '';
   const onSuccess = (response: any) => response;
   const onError = (error: any) => {
     return error;
   };
 
-  return axios(options).then(onSuccess).catch(onError);
+  return httpClient(options).then(onSuccess).catch(onError);
 };
 
 export const getSeats = () => {
-  return axios.get('/seats');
+  return httpClient.get('/seats');
 };
 
 export const getSeatDetail = (seatNumber: number) => {
@@ -59,11 +59,11 @@ export const cancelReservation = async ({ seatNumber }: { seatNumber: number }) 
 };
 
 export const login = async ({ email, password }: { email: string, password: string }) => {
-  const { data } = await axios.post('/login', { email, password });
+  const { data } = await httpClient.post('/login', { email, password });
   return data.accessToken;
 };
 
 export const signUp = async (formData: { email: string, password: string, name: string }) => {
-  const { data } = await axios.post('/signup', formData);
+  const { data } = await httpClient.post('/signup', formData);
   return data;
 };
