@@ -35,12 +35,12 @@ export default function Header({ accessToken, onClick }: any) {
       </MainText>
       {accessToken ? (
         <>
-          <TextButton onClick={onClick}>
-            로그아웃
-          </TextButton>
           <LinkButton to="/reservations" >
             <TextButton>예약</TextButton>
           </LinkButton>
+          <TextButton onClick={onClick}>
+            로그아웃
+          </TextButton>
         </>
       ) : (
         <>
