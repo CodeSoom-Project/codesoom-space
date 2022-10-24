@@ -55,12 +55,10 @@ const reservationsSlice = createSlice({
       ...state,
       id: payload,
     }),
-    reservationStatus: (state, { payload }) => {
-      return {
-        ...state,
-        status: payload,
-      };
-    },
+    reservationStatus: (state, { payload }) => ({
+      ...state,
+      status: payload,
+    }),
   },
 });
 
