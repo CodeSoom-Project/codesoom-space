@@ -1,5 +1,6 @@
 package com.codesoom.myseat.services.reservations;
 
+import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
@@ -62,7 +63,7 @@ class ReservationDetailServiceTest {
                                 .id(1L)
                                 .user(mockUser)
                                 .plan(plan)
-                                .date("2022-10-12")
+                                .date(new Date("2022-10-12"))
                                 .build()));
 
                 //when

@@ -1,5 +1,6 @@
 package com.codesoom.myseat.services.reservations;
 
+import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
@@ -54,7 +55,7 @@ class ReservationUpdateServiceTest {
                     .build();
             private final Plan PLAN = Plan.builder().content("공부").build();
             private Reservation RESERVATION;
-
+            
             @DisplayName("요청한 회원 소유의 예약이면")
             @Nested
             class Context_with_own_reservation{
@@ -62,7 +63,7 @@ class ReservationUpdateServiceTest {
                 void setUp() {
                     RESERVATION = Reservation.builder()
                             .user(USER)
-                            .date("2022-10-17")
+                            .date(new Date("2022-10-17"))
                             .plan(PLAN)
                             .build();
                     given(repository.findById(same(EXIST_ID)))
@@ -80,7 +81,7 @@ class ReservationUpdateServiceTest {
 
                     //then
                     assertThat(RESERVATION.getPlan().getContent()).isEqualTo(request.getContent());
-                    assertThat(RESERVATION.getDate()).isEqualTo(request.getDate());
+                    assertThat(RESERVATION.getDate().getDate()).isEqualTo(request.getDate());
                 }
             }
 
@@ -91,7 +92,7 @@ class ReservationUpdateServiceTest {
                 void setUp() {
                     RESERVATION = Reservation.builder()
                             .user(USER)
-                            .date("2022-10-17")
+                            .date(new Date("2022-10-17"))
                             .plan(PLAN)
                             .build();
                     given(repository.findById(same(EXIST_ID)))
@@ -118,7 +119,7 @@ class ReservationUpdateServiceTest {
                 void setUp() {
                     RESERVATION = Reservation.builder()
                             .user(USER)
-                            .date("2022-10-17")
+                            .date(new Date("2022-10-17"))
                             .plan(PLAN)
                             .status(ReservationStatus.CANCELED)
                             .build();
@@ -159,7 +160,6 @@ class ReservationUpdateServiceTest {
                         ()-> service.updateReservation(USER_ID, NOT_EXIST_ID, request));
             }
         }
-
     }
 
 }

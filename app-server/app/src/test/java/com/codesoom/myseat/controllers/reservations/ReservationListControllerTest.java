@@ -1,5 +1,6 @@
 package com.codesoom.myseat.controllers.reservations;
 
+import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
@@ -84,7 +85,7 @@ class ReservationListControllerTest {
                         Reservation.builder()
                                 .id(1L)
                                 .plan(Plan.builder().id(1L).content(content).build())
-                                .date("2022-10-13")
+                                .date(new Date("2022-10-13"))
                                 .build()
                 ));
 

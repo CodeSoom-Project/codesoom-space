@@ -30,7 +30,8 @@ public class Reservation {
     @Column(name="reservation_id")
     private Long id;
 
-    private String date;
+    @Embedded
+    private Date date;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -60,7 +61,7 @@ public class Reservation {
     }
 
     public void update(ReservationRequest updateData) {
-        this.date = updateData.getDate();
+        this.date = new Date(updateData.getDate());
         this.plan.update(updateData.getContent());
     }
 
@@ -96,7 +97,7 @@ public class Reservation {
      * @param date 비교하려는 날짜
      * @return 원래 날짜와 주어진 날짜가 다르면 true, 같으면 false
      */
-    public boolean isDifferentDate(String date) {
+    public boolean isDifferentDate(Date date) {
         return !this.date.equals(date);
     }
 

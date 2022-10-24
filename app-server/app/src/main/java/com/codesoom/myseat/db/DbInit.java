@@ -73,7 +73,7 @@ public class DbInit {
                 .content("잘했다.")
                 .build();
         Reservation reservation1 = Reservation.builder()
-                .date("2022-10-11")
+                .date(new Date("2022-10-11"))
                 .user(user1)
                 .plan(plan1)
                 .retrospective(retrospective)
@@ -86,7 +86,7 @@ public class DbInit {
                 .content("깃 공부")
                 .build();
         Reservation reservation2 = Reservation.builder()
-                .date("2022-10-19")
+                .date(new Date("2022-10-19"))
                 .user(user1)
                 .plan(plan2)
                 .build();

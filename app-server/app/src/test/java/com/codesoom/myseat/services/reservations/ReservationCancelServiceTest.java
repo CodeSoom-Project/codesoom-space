@@ -1,5 +1,6 @@
 package com.codesoom.myseat.services.reservations;
 
+import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
@@ -55,7 +56,7 @@ class ReservationCancelServiceTest {
             void setUp() {
                 RESERVATION = Reservation.builder()
                         .user(USER)
-                        .date("2022-10-17")
+                        .date(new Date("2022-10-17"))
                         .plan(PLAN)
                         .build();
                 given(repository.findById(same(EXIST_ID)))

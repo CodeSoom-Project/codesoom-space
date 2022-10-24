@@ -1,5 +1,6 @@
 package com.codesoom.myseat.services.reservations;
 
+import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.enums.ReservationStatus;
@@ -46,7 +47,7 @@ class ReservationAddServiceTest {
                 = service.createReservation(mockUser, "2022-10-11", "책읽기, 코테 풀기");
         
         assertThat(reservation.getUser().getEmail()).isEqualTo("soo@email.com");
-        assertThat(reservation.getDate()).isEqualTo("2022-10-11");
+        assertThat(reservation.getDate().getDate()).isEqualTo("2022-10-11");
         assertThat(reservation.getPlan().getContent()).isEqualTo("책읽기, 코테 풀기");
         assertThat(reservation.getStatus()).isEqualTo(ReservationStatus.RETROSPECTIVE_WAITING);
     }
