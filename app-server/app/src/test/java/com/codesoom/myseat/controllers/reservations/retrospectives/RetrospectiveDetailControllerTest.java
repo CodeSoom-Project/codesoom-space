@@ -1,5 +1,6 @@
 package com.codesoom.myseat.controllers.reservations.retrospectives;
 
+import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
@@ -64,7 +65,7 @@ class RetrospectiveDetailControllerTest {
         
         Reservation mockReservation = Reservation.builder()
                 .id(3L)
-                .date("2022-10-18")
+                .date(new Date("2022-10-18"))
                 .user(mockUser)
                 .plan(mockPlan)
                 .build();
