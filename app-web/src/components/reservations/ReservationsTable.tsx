@@ -164,12 +164,6 @@ export default function ReservationsTable({
     setPage(newPage);
   };
 
-  const handleClickReservation = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
-    onOpenReservationModal(e);
-
-    dispatch(selectReservationId(id));
-  };
-
   const handleClickRetrospective = (
     e: React.MouseEvent<HTMLButtonElement>,
     id: number,
@@ -188,6 +182,16 @@ export default function ReservationsTable({
     if (status === 'RETROSPECTIVE_WAITING') {
       dispatch(saveIsDetailRetrospectives(false));
     }
+  };
+
+  const handleClickReservationDetail = (id: number, status: string) => (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    onOpenReservationModal(e);
+
+    dispatch(selectReservationId(id));
+    dispatch(saveIsDetail(true));
+    dispatch(reservationStatus(status));
   };
 
   const statusName: StatusType = {
@@ -237,12 +241,7 @@ export default function ReservationsTable({
                 )}
               </TableCell>
               <TableCell align="center">
-                <Button
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    handleClickReservation(e, id);
-                    dispatch(saveIsDetail(true));
-                    dispatch(reservationStatus(status));
-                  }}>
+                <Button onClick={handleClickReservationDetail(id, status)}>
                   상세보기
                 </Button>
               </TableCell>
