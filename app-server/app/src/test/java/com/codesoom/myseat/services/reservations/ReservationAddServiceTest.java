@@ -62,7 +62,7 @@ class ReservationAddServiceTest {
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
 
-        given(reservationRepo.existsByDateAndUser_Id("2022-10-11", 1L))
+        given(reservationRepo.existsByDateAndUser_Id(new Date("2022-10-11"), 1L))
                 .willReturn(true);
          
         assertThatThrownBy(() -> service.createReservation(mockUser, "2022-10-11", "책읽기, 코테 풀기"))
