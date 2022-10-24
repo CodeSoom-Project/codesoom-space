@@ -1,13 +1,11 @@
 package com.codesoom.myseat.controllers.reservations.retrospectives;
 
-import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
-import com.codesoom.myseat.exceptions.RetrospectiveNotFoundException;
+import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.services.auth.AuthenticationService;
-import com.codesoom.myseat.services.reservations.ReservationService;
 import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveUpdateService;
 import com.codesoom.myseat.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,7 +20,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,9 +42,6 @@ class RetrospectiveUpdateControllerTest {
     private AuthenticationService authService;
 
     @MockBean
-    private ReservationService reservationService;
-
-    @MockBean
     private UserService userService;
 
     @MockBean
@@ -50,7 +49,6 @@ class RetrospectiveUpdateControllerTest {
 
     private User mockUser;
     private Reservation mockReservation;
-    private Plan mockPlan;
     private Retrospective mockRetrospective;
 
     @BeforeEach
@@ -62,36 +60,23 @@ class RetrospectiveUpdateControllerTest {
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
 
-        mockPlan = Plan.builder()
-                .id(1L)
-                .content("밥먹기, 코테풀기")
-                .build();
+        mockRetrospective.builder().content("잘했다.").build();
 
         mockReservation = Reservation.builder()
                 .id(1L)
                 .user(mockUser)
-                .plan(mockPlan)
-                .build();
-
-        mockRetrospective.builder()
-                .id(1L)
-                .content("잘했다.")
-                .reservation(mockReservation)
+                .retrospective(mockRetrospective)
                 .build();
 
         given(userService.findById(1L)).willReturn(mockUser);
 
         given(authService.parseToken(ACCESS_TOKEN))
                 .willReturn(1L);
-
-        given(reservationService.findReservation(1L))
-                .willReturn(mockReservation);
-
     }
 
     @Test
-    @DisplayName("Put /reservations/{id}/retrospectives 요청 시 상태코드 204를 응답한다")
-    void put_retrospectiveDto_returns_retrospective_and_responses_status_code_204() throws Exception {
+    @DisplayName("회고 내용 수정을 요청하면 204 no content를 응답한다")
+    void PUT_responses_status_code_204() throws Exception {
         RetrospectiveRequest request = new RetrospectiveRequest("수정했다.");
 
         mockMvc.perform(put("/reservations/1/retrospectives")
@@ -99,17 +84,16 @@ class RetrospectiveUpdateControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + ACCESS_TOKEN)
                         .content(toJson(request)))
-                .andExpect(status().isNoContent())
-                .andDo(print());
+                .andExpect(status().isNoContent());
     }
 
     @Test
-    @DisplayName("예약자 Id를 찾지 못한 경우 403 에러를 응답한다.")
-    void If_Not_Found_RetrospectiveId_responses_status_code_400() throws Exception {
+    @DisplayName("본인 소유가 아닌 예약 id가 회고 수정을 요청하면 403 forbidden를 응답한다")
+    void PUT_responses_status_code_403() throws Exception {
         RetrospectiveRequest request = new RetrospectiveRequest("수정했다.");
 
-        given(retrospectiveUpdateService.updateRetrospective(1000L,  mockUser, "수정했다."))
-                .willThrow(new RetrospectiveNotFoundException());
+        doThrow(NotOwnedReservationException.class).when(retrospectiveUpdateService)
+                .update(anyLong(), any(User.class), anyString());
 
         mockMvc.perform(put("/reservations/1000/retrospectives")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN)
