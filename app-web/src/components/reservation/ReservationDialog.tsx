@@ -71,7 +71,7 @@ function DetailReservationDialog({ onClose }: {
 }) {
   const dispatch = useDispatch();
 
-  const { id } = useAppSelector(get('reservations'));
+  const { id, status } = useAppSelector(get('reservations'));
 
   const { isLoading, data } = useQuery(
     reservationsKeys.reservationsById(id),
@@ -88,7 +88,6 @@ function DetailReservationDialog({ onClose }: {
     dispatch(saveContent(content));
     dispatch(saveDate(date));
   };
-
 
   return (
     <>
@@ -123,17 +122,20 @@ function DetailReservationDialog({ onClose }: {
             variant="outlined"
             size="small"
           >
-          닫기
+            닫기
           </Button>
-          <Button
-            onClick={changeReservationMode}
-            variant="contained"
-            size="small"
-          >
-          수정
-          </Button>
+          {status !== 'CANCELED' && (
+            <Button
+              onClick={changeReservationMode}
+              variant="contained"
+              size="small"
+            >
+              수정
+            </Button>
+          )}
         </ButtonWrap>
       </TextFieldWrap>
+
     </>
   );
 }
