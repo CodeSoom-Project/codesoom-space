@@ -24,16 +24,16 @@ public class Date {
      * @return 예약이 가능한 날짜라면 true, 아니라면 false
      */
     public boolean isReservable() {
-        return !isBeforeDate() && !isNow() && isWeekend();
+        return isAfterDate() && isWeekend();
     }
 
     /**
-     * 날짜가 오늘보다 과거인지 확인합니다.
+     * 날짜가 오늘 이후인지 확인합니다.
      *
-     * @return 오늘보다 과거라면 true, 아니라면 false
+     * @return 날짜가 오늘보다 클 경우 true, 아닐경우 false
      */
-    private boolean isBeforeDate() {
-        return toLocalDate().isBefore(LocalDate.now());
+    private boolean isAfterDate() {
+        return toLocalDate().isAfter(LocalDate.now());
     }
 
     /**
@@ -43,15 +43,6 @@ public class Date {
      */
     private boolean isWeekend() {
         return toLocalDate().getDayOfWeek().getValue() > 5;
-    }
-
-    /**
-     * 날짜가 오늘 날짜와 동일한지 확인합니다.
-     *
-     * @return 오늘 날짜와 동일하면 true, 아니라면 false
-     */
-    private boolean isNow() {
-        return toLocalDate().equals(LocalDate.now());
     }
 
     /**
