@@ -65,6 +65,15 @@ public class Reservation {
     }
 
     /**
+     * 회고내용을 수정합니다.
+     *
+     * @return 회고 내용 수정
+     */
+    public void updateRetrospective(String content) {
+        this.retrospective.updateContent(content);
+    }
+
+    /**
      * 회고가 null이 아니면 true, 그렇지 않으면 false를 반환합니다.
      * 
      * @return 회고가 null이면 true, 그렇지 않으면 false
