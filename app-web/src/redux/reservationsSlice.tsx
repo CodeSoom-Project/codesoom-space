@@ -8,6 +8,7 @@ interface ReservationState {
   date: string | null;
   id: number;
   content: string;
+  status: string;
 }
 
 export const initialState: ReservationState = {
@@ -18,6 +19,7 @@ export const initialState: ReservationState = {
   date: null,
   id: 0,
   content: '',
+  status: '',
 };
 
 const reservationsSlice = createSlice({
@@ -53,6 +55,10 @@ const reservationsSlice = createSlice({
       ...state,
       id: payload,
     }),
+    reservationStatus: (state, { payload }) => ({
+      ...state,
+      status: payload,
+    }),
   },
 });
 
@@ -64,6 +70,7 @@ export const {
   saveIsUpdate,
   resetReservations,
   selectReservationId,
+  reservationStatus,
 } = reservationsSlice.actions;
 
 export default reservationsSlice.reducer;
