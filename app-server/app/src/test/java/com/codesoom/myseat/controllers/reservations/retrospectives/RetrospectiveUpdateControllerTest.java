@@ -6,6 +6,7 @@ import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.services.auth.AuthenticationService;
+import com.codesoom.myseat.services.reservations.ReservationAddService;
 import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveUpdateService;
 import com.codesoom.myseat.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,6 +43,9 @@ class RetrospectiveUpdateControllerTest {
     private AuthenticationService authService;
 
     @MockBean
+    private ReservationAddService reservationAddService;
+
+    @MockBean
     private UserService userService;
 
     @MockBean
@@ -72,6 +76,10 @@ class RetrospectiveUpdateControllerTest {
 
         given(authService.parseToken(ACCESS_TOKEN))
                 .willReturn(1L);
+
+        given(reservationAddService.findReservation(1L))
+                .willReturn(mockReservation);
+
     }
 
     @Test

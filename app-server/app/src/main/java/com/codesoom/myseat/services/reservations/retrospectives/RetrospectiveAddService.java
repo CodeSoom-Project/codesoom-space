@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class RetrospectiveService {
+public class RetrospectiveAddService {
 
     private final RetrospectiveRepository retrospectiveRepository;
     private final ReservationRepository reservationRepository;
 
-    public RetrospectiveService(RetrospectiveRepository retrospectiveRepository, ReservationRepository reservationRepository) {
+    public RetrospectiveAddService(RetrospectiveRepository retrospectiveRepository, ReservationRepository reservationRepository) {
         this.retrospectiveRepository = retrospectiveRepository;
         this.reservationRepository = reservationRepository;
     }

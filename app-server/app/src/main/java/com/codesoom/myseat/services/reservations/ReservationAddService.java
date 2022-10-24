@@ -19,11 +19,11 @@ import javax.transaction.Transactional;
  */
 @Service
 @Slf4j
-public class ReservationService {
+public class ReservationAddService {
     private final PlanRepository planRepo;
     private final ReservationRepository reservationRepo;
 
-    public ReservationService(
+    public ReservationAddService(
             PlanRepository planRepo, 
             ReservationRepository reservationRepo
     ) {

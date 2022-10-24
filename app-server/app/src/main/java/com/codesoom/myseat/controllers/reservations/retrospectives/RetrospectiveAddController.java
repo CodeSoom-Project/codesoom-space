@@ -9,8 +9,8 @@ import com.codesoom.myseat.exceptions.ContentTooShortException;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.security.UserAuthentication;
-import com.codesoom.myseat.services.reservations.ReservationService;
-import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveService;
+import com.codesoom.myseat.services.reservations.ReservationAddService;
+import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveAddService;
 import com.codesoom.myseat.services.users.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,16 +28,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/reservations")
 @Slf4j
-public class RetrospectiveController {
+public class RetrospectiveAddController {
 
-    private final RetrospectiveService retrospectiveService;
+    private final RetrospectiveAddService retrospectiveAddService;
     private final UserService userService;
-    private final ReservationService reservationService;
+    private final ReservationAddService reservationAddService;
 
-    public RetrospectiveController(RetrospectiveService retrospectiveService, UserService userService, ReservationService reservationService) {
-        this.retrospectiveService = retrospectiveService;
+    public RetrospectiveAddController(RetrospectiveAddService retrospectiveAddService, UserService userService, ReservationAddService reservationAddService) {
+        this.retrospectiveAddService = retrospectiveAddService;
         this.userService = userService;
-        this.reservationService = reservationService;
+        this.reservationAddService = reservationAddService;
     }
 
     /**
@@ -60,7 +60,7 @@ public class RetrospectiveController {
     {
         User user = userService.findById(principal.getId());
         
-        Reservation reservation = reservationService.findReservation(id);
+        Reservation reservation = reservationAddService.findReservation(id);
         if(reservation.haveRetrospective()) {
             throw new AlreadyPostedRetrospectiveException();
         }
@@ -71,7 +71,7 @@ public class RetrospectiveController {
             throw new ContentTooShortException();
         }
 
-        retrospectiveService.createRetrospective(user, id, content);
+        retrospectiveAddService.createRetrospective(user, id, content);
     }
 
 }

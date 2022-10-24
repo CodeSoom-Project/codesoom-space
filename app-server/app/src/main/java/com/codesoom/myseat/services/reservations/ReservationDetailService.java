@@ -7,28 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-/** 예약 조회 담당 */
+/** 예약 상세 조회 서비스 */
 @Slf4j
 @Service
-public class ReservationQueryService {
+public class ReservationDetailService {
 
     private final ReservationRepository repository;
 
-    public ReservationQueryService(ReservationRepository repository) {
+    public ReservationDetailService(ReservationRepository repository) {
         this.repository = repository;
-    }
-
-    /**
-     * 주어진 user id로 예약 목록을 조회합니다.
-     *
-     * @param userId 유저 아이디(PK)
-     * @return 해당 유저의 모든 예약 목록
-     */
-    @Transactional(readOnly = true)
-    public List<Reservation> reservations(Long userId) {
-        return repository.findAllByUser_IdOrderByDateDesc(userId);
     }
 
     /**

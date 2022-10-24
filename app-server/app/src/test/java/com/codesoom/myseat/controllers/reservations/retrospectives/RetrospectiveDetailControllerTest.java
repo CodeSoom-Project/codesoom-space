@@ -5,9 +5,9 @@ import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.services.auth.AuthenticationService;
-import com.codesoom.myseat.services.reservations.ReservationQueryService;
+import com.codesoom.myseat.services.reservations.ReservationDetailService;
 import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveDetailService;
-import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveService;
+import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveAddService;
 import com.codesoom.myseat.services.users.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,13 +36,13 @@ class RetrospectiveDetailControllerTest {
     private AuthenticationService authService;
 
     @MockBean
-    private RetrospectiveService retrospectiveService;
+    private RetrospectiveAddService retrospectiveAddService;
 
     @MockBean
     private UserService userService;
     
     @MockBean
-    private ReservationQueryService reservationQueryService;
+    private ReservationDetailService reservationDetailService;
     
     @MockBean
     private RetrospectiveDetailService retrospectiveDetailService;
@@ -81,7 +81,7 @@ class RetrospectiveDetailControllerTest {
         given(userService.findById(1L))
                 .willReturn(mockUser);
         
-        given(reservationQueryService.reservation(3L, 1L))
+        given(reservationDetailService.reservation(3L, 1L))
                 .willReturn(mockReservation);
         
         given(retrospectiveDetailService.retrospective(3L))
