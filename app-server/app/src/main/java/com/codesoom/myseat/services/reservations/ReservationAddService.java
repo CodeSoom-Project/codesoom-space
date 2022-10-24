@@ -48,7 +48,7 @@ public class ReservationAddService {
             String date,
             String content
     ) {
-        if(isDuplicateReservation(date, user.getId())) {
+        if(isDuplicateReservation(new Date(date), user.getId())) {
             throw new AlreadyReservedException();
         }
         
@@ -80,7 +80,7 @@ public class ReservationAddService {
      * @param id 회원 id
      * @return 중복된 예약이면 true, 그렇지 않으면 false
      */
-    public boolean isDuplicateReservation(String date, Long id) {
+    public boolean isDuplicateReservation(Date date, Long id) {
         return reservationRepo.existsByDateAndUser_Id(date, id);
     }
 
