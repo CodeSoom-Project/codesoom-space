@@ -1,5 +1,6 @@
 package com.codesoom.myseat.services.reservations;
 
+import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
@@ -53,7 +54,7 @@ class ReservationListServiceTest {
             Reservation reservation = Reservation.builder()
                     .user(mockUser)
                     .plan(plan)
-                    .date("2022-10-12")
+                    .date(new Date("2022-10-12"))
                     .build();
 
             given(reservationRepository.findAllByUser_IdOrderByDateDesc(same(1L)))

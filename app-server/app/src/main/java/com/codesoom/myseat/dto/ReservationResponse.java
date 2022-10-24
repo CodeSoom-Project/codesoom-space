@@ -16,7 +16,7 @@ public class ReservationResponse {
 
     public ReservationResponse(Reservation reservation) {
         this.id = reservation.getId();
-        this.date = reservation.getDate();
+        this.date = reservation.getDate().getDate();
         this.content = reservation.getPlan().getContent();
         this.status = reservation.getStatus().name();
     }
