@@ -22,7 +22,8 @@ import { useAppSelector } from '../../hooks';
 
 import { get } from '../../utils';
 
-import { saveIsDetail,
+import {
+  saveIsDetail,
   saveDate,
   saveContent,
   saveIsUpdate,
@@ -98,7 +99,7 @@ function DetailReservationDialog({ onClose }: {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="방문일자"
-            onChange={() => {}}
+            onChange={() => { }}
             value={date === null ? null : dayjs(date)}
             disabled={true}
             renderInput={(params) => {
@@ -160,6 +161,8 @@ function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
     onApply(e);
   };
 
+  const characterMaximum = 1000;
+
   return (
     <>
       <Title>
@@ -180,15 +183,17 @@ function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
 
         <Text
           label="계획"
+          inputProps={{ maxLength: characterMaximum }}
+          placeholder="계획을 입력해주세요."
+          helperText={`${content.length} / ${characterMaximum}`}
           value={content}
           onChange={(e) => {
             dispatch(saveContent(e.target.value));
           }}
           variant="outlined"
+          fullWidth
           multiline
           rows={3}
-          placeholder="계획을 입력해주세요."
-          fullWidth
         />
 
         <ButtonWrap>
