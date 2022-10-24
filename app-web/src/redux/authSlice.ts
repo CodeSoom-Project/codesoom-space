@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { loadItem } from '../services/stoage';
+
 interface State {
   tokenExpired: boolean;
 
@@ -9,7 +11,7 @@ interface State {
 const initialState: State = {
   tokenExpired: false,
 
-  accessToken: '',
+  accessToken: loadItem('accessToken') ?? '',
 };
 
 const authSlice = createSlice({

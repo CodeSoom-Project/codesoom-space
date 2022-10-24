@@ -1,14 +1,12 @@
 import './App.css';
 
-import { useEffect } from 'react';
-
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import PrivateRoute from './routes/PrivateRoute';
 
-import { logout, setAccessToken } from './redux/authSlice';
+import { logout } from './redux/authSlice';
 
-import { loadItem, removeItem } from './services/stoage';
+import { removeItem } from './services/stoage';
 
 import { useAppDispatch, useAppSelector } from './hooks';
 
@@ -42,10 +40,6 @@ export default function App() {
     navigate('/login');
   };
 
-  useEffect(() => {
-    dispatch(setAccessToken(loadItem('accessToken')));
-  }, []);
-
   return (
     <div>
       <Alert
@@ -58,12 +52,14 @@ export default function App() {
       <Routes>
         <Route path="/"/>
         <Route path="signup" element={<SignUpContainer/>}/>
-        <Route path="login" element={<LogInContainer/>}/>
-        <Route path="reservations" element={
-          <PrivateRoute>
-            <Reservations/>
-          </PrivateRoute>
-        }/>
+        <Route path="login" element={<LogInContainer />} />
+        <Route
+          path="reservations"
+          element={
+            <PrivateRoute>
+              <Reservations />
+            </PrivateRoute>}
+        />
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </div>
