@@ -24,9 +24,14 @@ class DateTest {
     @DisplayName("예약 가능한 날짜라면 true, 아니라면 false를 반환한다.")
     @Test
     void isReservableTest() {
-        LocalDate friday = LocalDate.parse("2022-10-21", DATE_FORMAT);
-        Date ableDate = new Date(friday.plusDays(1L).format(DATE_FORMAT));
-        Date notAbleDate = new Date(friday.minusDays(1L).format(DATE_FORMAT));
+        long plusDays = 0;
+        LocalDate now = LocalDate.now();
+        if (now.getDayOfWeek().getValue() < 6) {
+            plusDays = 6 - now.getDayOfWeek().getValue();
+        }
+        LocalDate saturday = now.plusDays(plusDays);
+        Date ableDate = new Date(saturday.format(DATE_FORMAT));
+        Date notAbleDate = new Date(now.format(DATE_FORMAT));
 
         assertThat(ableDate.isReservable()).isTrue();
         assertThat(notAbleDate.isReservable()).isFalse();
