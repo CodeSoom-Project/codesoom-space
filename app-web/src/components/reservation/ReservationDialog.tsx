@@ -123,14 +123,14 @@ function DetailReservationDialog({ onClose }: {
             variant="outlined"
             size="small"
           >
-            닫기
+          닫기
           </Button>
           <Button
             onClick={changeReservationMode}
             variant="contained"
             size="small"
           >
-            수정
+          수정
           </Button>
         </ButtonWrap>
       </TextFieldWrap>
@@ -183,7 +183,7 @@ function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
 
         <Text
           label="계획"
-          inputProps={{ minLength: characterMaximum }}
+          inputProps={{ maxLength: characterMaximum }}
           placeholder="계획을 입력해주세요."
           helperText={`${content.length} /${characterMaximum}`}
           value={content}
