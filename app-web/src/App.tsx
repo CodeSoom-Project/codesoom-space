@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
+
 import PrivateRoute from './routes/PrivateRoute';
 
 import { logout, setAccessToken } from './redux/authSlice';
@@ -42,8 +43,10 @@ export default function App() {
     navigate('/login');
   };
 
+  const accessToken = loadItem('accessToken');
   useEffect(() => {
     dispatch(setAccessToken(loadItem('accessToken')));
+
   }, []);
 
   return (
@@ -58,12 +61,14 @@ export default function App() {
       <Routes>
         <Route path="/"/>
         <Route path="signup" element={<SignUpContainer/>}/>
-        <Route path="login" element={<LogInContainer/>}/>
-        <Route path="reservations" element={
-          <PrivateRoute>
-            <Reservations/>
-          </PrivateRoute>
-        }/>
+        <Route path="login" element={<LogInContainer />} />
+        <Route
+          path="reservations"
+          element={
+            <PrivateRoute accessToken={accessToken}>
+              <Reservations />
+            </PrivateRoute>}
+        />
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </div>
