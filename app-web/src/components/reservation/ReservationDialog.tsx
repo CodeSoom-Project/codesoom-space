@@ -185,7 +185,7 @@ function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
           label="계획"
           inputProps={{ maxLength: characterMaximum }}
           placeholder="계획을 입력해주세요."
-          helperText={`${content.length} /${characterMaximum}`}
+          helperText={`${content.length} / ${characterMaximum}`}
           value={content}
           onChange={(e) => {
             dispatch(saveContent(e.target.value));
