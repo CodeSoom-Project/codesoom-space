@@ -1,5 +1,6 @@
 package com.codesoom.myseat.services.reservations;
 
+import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
@@ -56,7 +57,7 @@ public class ReservationAddService {
                     .build();
 
         Reservation reservation = Reservation.builder()
-                .date(date)
+                .date(new Date(date))
                 .user(user)
                 .plan(plan)
                 .build();

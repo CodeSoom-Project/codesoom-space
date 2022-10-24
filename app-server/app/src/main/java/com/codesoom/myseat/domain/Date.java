@@ -2,10 +2,12 @@ package com.codesoom.myseat.domain;
 
 import lombok.Getter;
 
+import javax.persistence.Embeddable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+@Embeddable
 public class Date {
 
     private static final DateTimeFormatter DATE_FORMAT
@@ -13,6 +15,9 @@ public class Date {
 
     @Getter
     private String date;
+
+    public Date() {
+    }
 
     public Date(String date) {
         this.date = date;

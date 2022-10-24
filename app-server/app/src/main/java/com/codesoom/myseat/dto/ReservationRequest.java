@@ -14,6 +14,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReservationRequest {
     private String date;
-    
     private String content;
 }
