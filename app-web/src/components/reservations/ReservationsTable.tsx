@@ -1,12 +1,18 @@
 import * as React from 'react';
 
+import { useMutation } from 'react-query';
+
+import { AxiosError } from 'axios';
+
+import { styled } from '@mui/material/styles';
+
+import { cancelReservation } from '../../services/reservations';
+
 import { saveIsDetailRetrospectives, saveIsUpdateRetrospectives } from '../../redux/retrospectivesSlice';
 
 import { saveIsDetail, selectReservationId } from '../../redux/reservationsSlice';
 
 import { useAppDispatch } from '../../hooks';
-
-import { styled } from '@mui/material/styles';
 
 import {
   Box,
@@ -28,10 +34,6 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-
-import { useMutation } from 'react-query';
-
-import { cancelReservation } from '../../services/reservations';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -144,8 +146,8 @@ export default function ReservationsTable({
     onSuccess: () => {
       alert('예약이 취소되셨습니다.');
     },
-    onError: () => {
-      alert('예약 취소에 실패하였습니다. 다시 신청해주세요.');
+    onError: (error: AxiosError) => {
+      alert(error.response?.data);
     },
   });
 
