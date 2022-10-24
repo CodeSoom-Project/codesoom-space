@@ -1,15 +1,12 @@
 import './App.css';
 
-import { useEffect } from 'react';
-
 import { Routes, Route, useNavigate } from 'react-router-dom';
-
 
 import PrivateRoute from './routes/PrivateRoute';
 
-import { logout, setAccessToken } from './redux/authSlice';
+import { logout } from './redux/authSlice';
 
-import { loadItem, removeItem } from './services/stoage';
+import { removeItem } from './services/stoage';
 
 import { useAppDispatch, useAppSelector } from './hooks';
 
@@ -43,12 +40,6 @@ export default function App() {
     navigate('/login');
   };
 
-  const accessToken = loadItem('accessToken');
-  useEffect(() => {
-    dispatch(setAccessToken(loadItem('accessToken')));
-
-  }, []);
-
   return (
     <div>
       <Alert
@@ -65,7 +56,7 @@ export default function App() {
         <Route
           path="reservations"
           element={
-            <PrivateRoute accessToken={accessToken}>
+            <PrivateRoute>
               <Reservations />
             </PrivateRoute>}
         />
