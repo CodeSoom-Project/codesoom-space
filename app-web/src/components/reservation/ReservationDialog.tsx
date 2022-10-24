@@ -170,7 +170,7 @@ function ApplyReservationDialog({ onClose, onApply, onUpdate }: {
       <Title>
         {isUpdate && '예약 수정하기'}
         {!isUpdate && '공부방 예약하기'}
-      </Title >
+      </Title>
       <TextFieldWrap>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
