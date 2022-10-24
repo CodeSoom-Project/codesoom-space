@@ -2,11 +2,13 @@ package com.codesoom.myseat.services.reservations;
 
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.repositories.ReservationRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /** 예약 목록 조회 서비스 */
+@Service
 public class ReservationListService {
     
     private final ReservationRepository repository;
