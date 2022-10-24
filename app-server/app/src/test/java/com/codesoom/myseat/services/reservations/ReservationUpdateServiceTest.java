@@ -55,20 +55,20 @@ class ReservationUpdateServiceTest {
             private final Plan PLAN = Plan.builder().content("공부").build();
             private Reservation RESERVATION;
 
-            @BeforeEach
-            void setUp() {
-                RESERVATION = Reservation.builder()
-                        .user(USER)
-                        .date("2022-10-17")
-                        .plan(PLAN)
-                        .build();
-                given(repository.findById(same(EXIST_ID)))
-                        .willReturn(Optional.of(RESERVATION));
-            }
-
             @DisplayName("요청한 회원 소유의 예약이면")
             @Nested
             class Context_with_own_reservation{
+                @BeforeEach
+                void setUp() {
+                    RESERVATION = Reservation.builder()
+                            .user(USER)
+                            .date("2022-10-17")
+                            .plan(PLAN)
+                            .build();
+                    given(repository.findById(same(EXIST_ID)))
+                            .willReturn(Optional.of(RESERVATION));
+                }
+                
                 @DisplayName("성공적으로 예약을 수정한다")
                 @Test
                 void will_update_successfully() {
@@ -87,6 +87,17 @@ class ReservationUpdateServiceTest {
             @DisplayName("요청한 회원이 소유한 예약이 아니면")
             @Nested
             class Context_with_not_own_reservation{
+                @BeforeEach
+                void setUp() {
+                    RESERVATION = Reservation.builder()
+                            .user(USER)
+                            .date("2022-10-17")
+                            .plan(PLAN)
+                            .build();
+                    given(repository.findById(same(EXIST_ID)))
+                            .willReturn(Optional.of(RESERVATION));
+                }
+                
                 @DisplayName("예외를 던진다")
                 @Test
                 void will_throw_exception() {
@@ -97,6 +108,34 @@ class ReservationUpdateServiceTest {
                     //when
                     assertThrows(NotOwnedReservationException.class,
                             () -> service.updateReservation(NOT_OWNED_USER_ID, EXIST_ID, request));
+                }
+            }
+
+            @DisplayName("취소된 예약이면")
+            @Nested
+            class Context_with_canceled_reservation{
+                @BeforeEach
+                void setUp() {
+                    RESERVATION = Reservation.builder()
+                            .user(USER)
+                            .date("2022-10-17")
+                            .plan(PLAN)
+                            .status(ReservationStatus.CANCELED)
+                            .build();
+                    given(repository.findById(same(1L)))
+                            .willReturn(Optional.of(RESERVATION));
+                }
+
+                @DisplayName("CannotUpdateCanceledReservationException을 던진다.")
+                @Test
+                void will_throw_cannot_update_canceled_reservation_exception() {
+                    //given
+                    ReservationRequest request
+                            = new ReservationRequest("2022-10-18", "수정 데이터");
+
+                    //when
+                    assertThrows(CannotUpdateCanceledReservationException.class,
+                            () -> service.updateReservation(USER_ID, 1L, request));
                 }
             }
         }
@@ -121,42 +160,6 @@ class ReservationUpdateServiceTest {
             }
         }
 
-        @DisplayName("취소된 예약이면")
-        @Nested
-        class Context_with_canceled_reservation{
-            @BeforeEach
-            void setUp() {
-                Plan plan = Plan.builder()
-                        .content("코테풀기")
-                        .build();
-                
-                User user = User.builder()
-                        .email("soo@email.com").build();
-                
-                Reservation reservation = Reservation.builder()
-                        .id(1L)
-                        .user(user)
-                        .date("2022-10-17")
-                        .plan(plan)
-                        .status(ReservationStatus.CANCELED)
-                        .build();
-
-                given(repository.findById(1L))
-                        .willReturn(Optional.of(reservation));
-            }
-
-            @DisplayName("CannotUpdateCanceledReservationException을 던진다.")
-            @Test
-            void will_throw_cannot_update_canceled_reservation_exception() {
-                //given
-                ReservationRequest request
-                        = new ReservationRequest("2022-10-18", "수정 데이터");
-
-                //when
-                assertThrows(CannotUpdateCanceledReservationException.class,
-                        () -> service.updateReservation(USER_ID, 1L, request));
-            }
-        }
     }
 
 }
