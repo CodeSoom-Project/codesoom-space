@@ -4,6 +4,8 @@ import { Button } from '@mui/material';
 
 import { useMutation, useQuery } from 'react-query';
 
+import { AxiosError } from 'axios';
+
 import { useAppDispatch, useAppSelector } from '../hooks';
 
 import { get } from '../utils';
@@ -43,7 +45,6 @@ const Title = styled.h1({
   margin: '0',
 });
 
-
 export default function Reservations() {
 
   const dispatch = useAppDispatch();
@@ -75,8 +76,8 @@ export default function Reservations() {
       onClickToggleReservationsModal();
       dispatch(saveIsUpdate(false));
     },
-    onError: () => {
-      alert('수정이 실패하였습니다 다시 시도해주세요.');
+    onError: (error: AxiosError) => {
+      alert(error.response?.data);
     },
   });
 
@@ -85,11 +86,10 @@ export default function Reservations() {
       alert('예약이 신청되셨습니다.');
       onClickToggleReservationsModal();
     },
-    onError: () => {
-      alert('예약이 실패하였습니다 다시 신청해주세요.');
+    onError: (error: AxiosError) => {
+      alert(error.response?.data);
     },
   });
-
 
   const onClickUpdateRservation = () => {
     updateReservationMutate({
@@ -112,8 +112,8 @@ export default function Reservations() {
       alert('회고가 제출되었습니다.');
       onClickToggleRetrospectModal();
     },
-    onError: () => {
-      alert('회고 제출에 실패했습니다. 다시 시도해주세요.');
+    onError: (error: AxiosError) => {
+      alert(error.response?.data);
     },
   });
 
@@ -129,8 +129,8 @@ export default function Reservations() {
       alert('회고가 수정되었습니다.');
       onClickToggleRetrospectModal();
     },
-    onError: () => {
-      alert('회고 수정에 실패했습니다. 다시 시도해주세요.');
+    onError: (error: AxiosError) => {
+      alert(error.response?.data);
     },
   });
 
