@@ -1,4 +1,4 @@
-PUT http://localhost:8080/reservations/1/retrospectives/1
+PUT http://localhost:8080/reservations/1/retrospectives
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer
 
