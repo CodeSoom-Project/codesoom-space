@@ -3,8 +3,8 @@ package com.codesoom.myseat.services.reservations.retrospectives;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.dto.RetrospectiveRequest;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
-import com.codesoom.myseat.exceptions.RetrospectiveNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
 import com.codesoom.myseat.repositories.UserRepository;
@@ -20,15 +20,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 
-class RetrospectiveUpdateServiceTest {
+public class RetrospectiveUpdateServiceTest {
 
     private RetrospectiveUpdateService service;
 
     @Mock
-    private RetrospectiveRepository retrospectiveRepository;
+    private ReservationRepository reservationRepository;
 
     @Mock
-    private ReservationRepository reservationRepository;
+    private RetrospectiveRepository retrospectiveRepository;
 
     @Mock
     private UserRepository userRepository;
@@ -41,13 +41,12 @@ class RetrospectiveUpdateServiceTest {
     private final Long RETROSPECTIVE_ID = 1L;
     private final Long RESERVATION_ID = 1L;
 
-    private final Long ANOTHER_RETROSPECTIVE_ID = 1000L;
     private final Long ANOTHER_RESERVATION_ID = 1000L;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new RetrospectiveUpdateService(retrospectiveRepository, reservationRepository);
+        service = new RetrospectiveUpdateService(reservationRepository);
 
         mockUser = User.builder()
                 .id(USER_ID)
@@ -56,39 +55,36 @@ class RetrospectiveUpdateServiceTest {
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
 
+        mockRetrospective = Retrospective.builder()
+                .content("잘했다.")
+                .build();
+
         mockReservation = Reservation.builder()
                 .id(RESERVATION_ID)
                 .user(mockUser)
+                .retrospective(mockRetrospective)
                 .build();
 
-        mockRetrospective = Retrospective.builder()
-                .id(RETROSPECTIVE_ID)
-                .content("잘했다.")
-                .reservation(mockReservation)
-                .build();
+        given(reservationRepository.findByIdAndUser_Id(RESERVATION_ID, USER_ID)).willReturn(Optional.of(mockReservation));
 
-        given(reservationRepository.findByIdAndUser_Id(RESERVATION_ID,USER_ID)).willReturn(Optional.of(mockReservation));
+        given(retrospectiveRepository.findById(RETROSPECTIVE_ID)).willReturn(Optional.of(mockRetrospective));
 
-        given(retrospectiveRepository.findByReservationId(RESERVATION_ID)).willReturn(Optional.of(mockRetrospective));
-
-        given(retrospectiveRepository.findByReservationId(ANOTHER_RETROSPECTIVE_ID))
-                .willThrow(new RetrospectiveNotFoundException());
     }
 
     @Test
-    @DisplayName("updateRetrospective 메서드는 retrospective을 반환한다.")
-    void updateRetrospective_will_return_retrospective() {
-        Retrospective retrospective = service.updateRetrospective(RESERVATION_ID, mockUser, "수정했다.");
+    @DisplayName("예약한 회원이 회고 내용을 수정 하면 회고를 수정한다.")
+    void will_update_content() {
+        RetrospectiveRequest request = new RetrospectiveRequest("수정했다.");
 
-        assertThat(retrospective.getContent()).isEqualTo("수정했다.");
-        assertThat(retrospective.getId()).isEqualTo(RETROSPECTIVE_ID);
-        assertThat(retrospective.getReservation().getId()).isEqualTo(RESERVATION_ID);
+        service.update(RESERVATION_ID, mockUser, request.getContent());
+
+        assertThat(mockRetrospective.getContent()).isEqualTo(request.getContent());
     }
 
     @Test
-    @DisplayName("예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 NotOwnedReservationException 예외를 던진다.")
-    void NotFound_RetrospectiveId_will_throw_RetrospectiveNotFoundException() {
-        assertThatThrownBy(() -> service.updateRetrospective(ANOTHER_RESERVATION_ID, mockUser, "수정했다."))
+    @DisplayName("예약을 소유하지 않은 회원이 회고 내용을 수정을 하면 NotOwnedReservationException 예외를 던진다.")
+    void will_throw_RetrospectiveNotFoundException() {
+        assertThatThrownBy(() -> service.update(ANOTHER_RESERVATION_ID, mockUser, "수정했다."))
                 .isInstanceOf(NotOwnedReservationException.class);
     }
 
