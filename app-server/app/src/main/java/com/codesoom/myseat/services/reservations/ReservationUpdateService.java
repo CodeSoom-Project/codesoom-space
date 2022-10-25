@@ -1,5 +1,6 @@
 package com.codesoom.myseat.services.reservations;
 
+import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
@@ -43,7 +44,7 @@ public class ReservationUpdateService {
             throw new NotOwnedReservationException();
         }
         if (reservation.isDifferentDate(reservation.getDate())) {
-            if (hasSameDateReservation(request.getDate(), userId)) {
+            if (hasSameDateReservation(new Date(request.getDate()), userId)) {
                 throw new AlreadyReservedException();
             }
         }
@@ -57,7 +58,7 @@ public class ReservationUpdateService {
      * @param userId 회원 id
      * @return 기록이 있으면 true, 없으면 false
      */
-    private boolean hasSameDateReservation(String date, Long userId) {
+    private boolean hasSameDateReservation(Date date, Long userId) {
         return repository.existsByDateAndUser_Id(date, userId);
     }
 
