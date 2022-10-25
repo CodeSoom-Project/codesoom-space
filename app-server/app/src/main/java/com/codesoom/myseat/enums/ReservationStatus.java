@@ -4,7 +4,7 @@ import lombok.Getter;
 
 import java.util.Arrays;
 
-/** 예약 상태 정의 */
+/** 예약 상태 */
 public enum ReservationStatus {
 
     RESERVED(0),    // 예약 완료
@@ -19,7 +19,9 @@ public enum ReservationStatus {
         this.num = num;
     }
 
-    public static ReservationStatus ofNum(Integer storedData) {
+    public static ReservationStatus ofNum(
+            Integer storedData
+    ) {
         return Arrays.stream(ReservationStatus.values())
                 .filter(it -> it.num == storedData)
                 .findAny()

@@ -13,15 +13,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 좌석 예약 요청 컨트롤러
- */
+/** 예약 추가 컨트롤러 */
 @RestController
 @RequestMapping("/reservations")
 @CrossOrigin
 @Slf4j
 public class ReservationAddController {
+    
     private final ReservationAddService reservationAddService;
+    
     private final UserService userService;
 
     public ReservationAddController(
@@ -53,4 +53,5 @@ public class ReservationAddController {
 
         reservationAddService.createReservation(user, date, content);
     }
+    
 }

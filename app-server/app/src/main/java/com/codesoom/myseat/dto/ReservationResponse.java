@@ -10,11 +10,16 @@ import lombok.NoArgsConstructor;
 public class ReservationResponse {
 
     private Long id;
+    
     private String date;
+    
     private String content;
+    
     private String status;
 
-    public ReservationResponse(Reservation reservation) {
+    public ReservationResponse(
+            Reservation reservation
+    ) {
         this.id = reservation.getId();
         this.date = reservation.getDate().getDate();
         this.content = reservation.getPlan().getContent();

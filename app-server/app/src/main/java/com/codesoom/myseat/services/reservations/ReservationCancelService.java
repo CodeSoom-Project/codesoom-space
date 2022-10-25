@@ -7,16 +7,16 @@ import com.codesoom.myseat.repositories.ReservationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-/**
- * 좌석 예약 취소 서비스
- */
+/** 예약 취소 서비스 */
 @Service
 @Slf4j
 public class ReservationCancelService {
 
     private final ReservationRepository repository;
 
-    public ReservationCancelService(ReservationRepository repository) {
+    public ReservationCancelService(
+            ReservationRepository repository
+    ) {
         this.repository = repository;
     }
 
@@ -28,7 +28,10 @@ public class ReservationCancelService {
      * @throws ReservationNotFoundException 주어진 예약 id로 예약을 찾지 못한 경우
      * @throws NotOwnedReservationException 요청한 회원의 소유한 예약이 아닌 경우
      */
-    public void cancelReservation(Long userId, Long id) {
+    public void cancelReservation(
+            Long userId, 
+            Long id
+    ) {
         Reservation reservation = repository.findById(id)
                 .orElseThrow(ReservationNotFoundException::new);
         if (!reservation.isOwnReservation(userId)) {

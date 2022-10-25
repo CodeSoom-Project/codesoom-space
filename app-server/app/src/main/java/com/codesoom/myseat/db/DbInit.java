@@ -10,13 +10,19 @@ import javax.annotation.PostConstruct;
 @Component
 @Profile("!mariadb")
 public class DbInit {
+    
     private final UserRepository userRepo;
+    
     private final RoleRepository roleRepo;
+    
     private final ReservationRepository reservationRepo;
+    
     private final PlanRepository planRepo;
+    
     private final RetrospectiveRepository retrospectiveRepo;
 
     User user1;
+    
     User user2;
     
     public DbInit(
@@ -93,4 +99,5 @@ public class DbInit {
         planRepo.save(plan2);
         reservationRepo.save(reservation2);
     }
+    
 }

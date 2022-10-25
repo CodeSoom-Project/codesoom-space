@@ -10,14 +10,15 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-/**
- * 회원 가입 서비스
- */
+/** 회원 가입 서비스 */
 @Service
 @Slf4j
 public class SignupService {
+    
     private final PasswordEncoder passwordEncoder;
+    
     private final UserRepository userRepo;
+    
     private final RoleRepository roleRepo;
 
     public SignupService(
@@ -59,4 +60,5 @@ public class SignupService {
         
         return user;
     }
+    
 }

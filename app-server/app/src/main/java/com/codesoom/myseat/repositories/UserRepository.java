@@ -5,9 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-/**
- * 회원 레포지토리
- */
+/** 회원 레포지토리 */
 public interface UserRepository
         extends JpaRepository<User, Long> {
 
@@ -42,4 +40,5 @@ public interface UserRepository
      * @return 회원 조회에 성공하면 true, 그렇지 않으면 false
      */
     Boolean existsByEmail(String email);
+    
 }

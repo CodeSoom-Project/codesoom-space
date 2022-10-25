@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 @CrossOrigin
 public class HealthCheckController {
+    
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public String healthCheck() {
         return "Hello";
     }
+    
 }

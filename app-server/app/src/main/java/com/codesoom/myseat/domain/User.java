@@ -11,9 +11,7 @@ import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * 회원 엔티티
- */
+/** 회원 엔티티 */
 @Entity
 @Getter
 @Builder
@@ -21,6 +19,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @Slf4j
 public class User {
+    
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name="user_id")
@@ -43,8 +42,7 @@ public class User {
             String password, 
             PasswordEncoder passwordEncoder
     ) {
-        log.info("password: " + password);
-        log.info("this.password: " + this.password);
         return passwordEncoder.matches(password, this.password);
     }
+    
 }

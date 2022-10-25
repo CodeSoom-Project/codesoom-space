@@ -21,7 +21,8 @@ import java.io.IOException;
 import java.util.List;
 
 @Slf4j
-public class AuthenticationFilter extends BasicAuthenticationFilter {
+public class AuthenticationFilter 
+        extends BasicAuthenticationFilter {
 
     private static final String TOKEN_PREFIX = "Bearer ";
 
@@ -72,7 +73,9 @@ public class AuthenticationFilter extends BasicAuthenticationFilter {
      * @return accessToken
      * @throws InvalidTokenException 유효하지 않은 토큰일 경우 던짐
      */
-    private String getAccessToken(HttpServletRequest request) {
+    private String getAccessToken(
+            HttpServletRequest request
+    ) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         log.info("header: " + token);
         if (Strings.isBlank(token)) {

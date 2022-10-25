@@ -14,7 +14,9 @@ public class RetrospectiveUpdateService {
 
     private final ReservationRepository reservationRepository;
 
-    public RetrospectiveUpdateService(ReservationRepository reservationRepository) {
+    public RetrospectiveUpdateService(
+            ReservationRepository reservationRepository
+    ) {
         this.reservationRepository = reservationRepository;
     }
 
@@ -27,10 +29,13 @@ public class RetrospectiveUpdateService {
      * @throws NotOwnedReservationException 회원이 해당 예약을 소유하지 않는 경우
      */
     @Transactional
-    public void update(final Long reservationId,
-                       final User user,
-                       final String content) {
-        Reservation reservation = reservationRepository.findByIdAndUser_Id(reservationId, user.getId())
+    public void update(
+            final Long reservationId, 
+            final User user, 
+            final String content
+    ) {
+        Reservation reservation 
+                = reservationRepository.findByIdAndUser_Id(reservationId, user.getId())
                 .orElseThrow(NotOwnedReservationException::new);
 
         reservation.updateRetrospective(content);

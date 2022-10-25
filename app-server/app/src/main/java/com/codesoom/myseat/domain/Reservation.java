@@ -14,9 +14,7 @@ import javax.persistence.*;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * 좌석 예약 엔티티
- */
+/** 예약 엔티티 */
 @Entity
 @Getter
 @Builder

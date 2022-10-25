@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 예약 상세 조회 컨트롤러
- */
+/** 예약 상세 조회 컨트롤러 */
 @CrossOrigin
 @RequestMapping("/reservations")
 @RestController
 public class ReservationDetailController {
     
     private final UserService userService;
+    
     private final ReservationDetailService service;
 
     public ReservationDetailController(

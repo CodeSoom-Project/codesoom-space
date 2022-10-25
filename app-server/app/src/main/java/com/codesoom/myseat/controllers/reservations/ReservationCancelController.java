@@ -8,9 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 좌석 예약 취소 컨트롤러
- */
+/** 예약 취소 컨트롤러 */
 @Slf4j
 @CrossOrigin
 @RequestMapping("/reservations")
@@ -19,7 +17,9 @@ public class ReservationCancelController {
 
     private final ReservationCancelService cancelService;
 
-    public ReservationCancelController(ReservationCancelService cancelService) {
+    public ReservationCancelController(
+            ReservationCancelService cancelService
+    ) {
         this.cancelService = cancelService;
     }
 
@@ -32,8 +32,10 @@ public class ReservationCancelController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{id}")
-    public void cancelReservation(@AuthenticationPrincipal UserAuthentication principal,
-                                  @PathVariable Long id) {
+    public void cancelReservation(
+            @AuthenticationPrincipal UserAuthentication principal, 
+            @PathVariable Long id
+    ) {
         log.debug("--------- 예약 취소 요쳥");
         log.debug("예약 id: {}", id);
         cancelService.cancelReservation(principal.getId(), id);

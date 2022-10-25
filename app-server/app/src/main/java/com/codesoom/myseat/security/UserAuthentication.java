@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class UserAuthentication 
         extends AbstractAuthenticationToken {
+    
     private final Long id;
 
     public UserAuthentication(
@@ -51,4 +52,5 @@ public class UserAuthentication
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
                 .collect(Collectors.toList());
     }
+    
 }

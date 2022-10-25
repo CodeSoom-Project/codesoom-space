@@ -8,15 +8,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 회원 가입 컨트롤러
- */
+/** 회원 가입 컨트롤러 */
 @RestController
 @RequestMapping("/signup")
 @CrossOrigin
 @Slf4j
 public class SignupController {
+    
     private final SignupService service;
+    
     private final UserService userService;
 
     public SignupController(
@@ -38,8 +38,6 @@ public class SignupController {
     public void signUp(
             @RequestBody SignupRequest request
     ) {
-        log.info("request: " + request.toString());
-
         String email = request.getEmail();
         if(userService.isDuplicatedEmail(email)) {
             throw new DuplicatedEmailException();
@@ -50,4 +48,5 @@ public class SignupController {
 
         service.createUser(name, email, password);
     }
+    
 }

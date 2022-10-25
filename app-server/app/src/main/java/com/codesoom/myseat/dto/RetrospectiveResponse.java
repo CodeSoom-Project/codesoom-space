@@ -9,7 +9,9 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class RetrospectiveResponse {
+    
     private Long id;
     
     private String content;
+    
 }

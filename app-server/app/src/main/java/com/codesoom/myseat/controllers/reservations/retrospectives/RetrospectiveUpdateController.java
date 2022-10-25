@@ -24,9 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class RetrospectiveUpdateController {
 
     private final RetrospectiveUpdateService retrospectiveUpdateService;
+    
     private final UserService userService;
 
-    public RetrospectiveUpdateController(RetrospectiveUpdateService retrospectiveUpdateService, UserService userService) {
+    public RetrospectiveUpdateController(
+            RetrospectiveUpdateService retrospectiveUpdateService, 
+            UserService userService
+    ) {
         this.retrospectiveUpdateService = retrospectiveUpdateService;
         this.userService = userService;
     }
@@ -35,14 +39,14 @@ public class RetrospectiveUpdateController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateRetrospective(
-            @AuthenticationPrincipal final UserAuthentication principal,
-            @PathVariable("id") final Long id,
-            @RequestBody final RetrospectiveRequest request
+            @AuthenticationPrincipal UserAuthentication principal,
+            @PathVariable("id") Long id,
+            @RequestBody RetrospectiveRequest request
     ) {
-
         User user = userService.findById(principal.getId());
         String content = request.getContent();
 
         retrospectiveUpdateService.update(id, user, content);
     }
+    
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class RetrospectiveDetailService {
+    
     private final RetrospectiveRepository retrospectiveRepo;
 
     public RetrospectiveDetailService(
@@ -30,4 +31,5 @@ public class RetrospectiveDetailService {
         return retrospectiveRepo.findByReservationId(id)
                 .orElseThrow(() -> new RetrospectiveNotFoundException());
     }
+    
 }

@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 마이페이지 컨트롤러
- */
+/** 마이페이지 컨트롤러 */
 @RestController
 @RequestMapping("/mypage")
 @CrossOrigin
 @Slf4j
 public class MyPageController {
+    
     private final UserService userService;
 
     public MyPageController(

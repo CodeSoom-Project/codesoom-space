@@ -11,14 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/** 토큰 검증 필터에서 발생한 예외 처리 담당 */
+/** 토큰 검증 필터에서 발생한 예외를 처리합니다 */
 @Slf4j
-public class AuthenticationErrorFilter extends HttpFilter {
+public class AuthenticationErrorFilter 
+        extends HttpFilter {
 
     @Override
-    protected void doFilter(HttpServletRequest request,
-                            HttpServletResponse response,
-                            FilterChain chain) throws IOException, ServletException {
+    protected void doFilter(
+            HttpServletRequest request, 
+            HttpServletResponse response, 
+            FilterChain chain
+    ) throws IOException, ServletException {
         try {
             chain.doFilter(request, response);
         } catch (InvalidTokenException e) {

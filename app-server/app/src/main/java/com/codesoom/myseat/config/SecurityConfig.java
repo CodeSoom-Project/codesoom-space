@@ -18,7 +18,9 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig 
+        extends WebSecurityConfigurerAdapter {
+    
     private final AuthenticationService authService;
 
     public SecurityConfig(
@@ -39,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers()
                 .addHeaderWriter(
                         new XFrameOptionsHeaderWriter(
-                                new WhiteListedAllowFromStrategy(Arrays.asList("localhost"))    // 여기!
+                                new WhiteListedAllowFromStrategy(Arrays.asList("localhost"))
                         )
                 )
                 .frameOptions().sameOrigin()

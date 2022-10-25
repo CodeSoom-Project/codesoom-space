@@ -8,16 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * 좌석 예약 레포지토리
- */
+/** 예약 레포지토리 */
 public interface ReservationRepository
         extends JpaRepository<Reservation, Long> {
-    /**
-     * 
-     * @param s must not be {@literal null}.
-     * @return
-     */
+    
     Reservation save(Reservation s);
 
     /**
@@ -64,7 +58,6 @@ public interface ReservationRepository
      */
     Optional<Reservation> findByIdAndUser_Id(Long id, Long userId);
 
-
     /**
      * 예약한 회원이면 true, 그렇지 않으면 false를 반환합니다.
      *
@@ -91,4 +84,5 @@ public interface ReservationRepository
      * @return 주어진 방문 일자와 회원 id로 취소된 예약이 존재하면 true, 그렇지 않으면 false
      */
     boolean existsByDateAndUser_IdAndStatusNot(Date date, Long userId, ReservationStatus status);
+    
 }

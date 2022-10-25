@@ -13,18 +13,18 @@ import java.util.List;
 
 @Service
 public class AuthenticationService {
-    private final UserRepository userRepo;
+    
     private final RoleRepository roleRepo;
+    
     private final JwtUtil jwtUtil;
+    
     private final PasswordEncoder passwordEncoder;
 
     public AuthenticationService(
-            UserRepository userRepo, 
             RoleRepository roleRepo, 
             JwtUtil jwtUtil, 
             PasswordEncoder passwordEncoder
     ) {
-        this.userRepo = userRepo;
         this.roleRepo = roleRepo;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
@@ -72,4 +72,5 @@ public class AuthenticationService {
     ) {
         return roleRepo.findAllByUserId(id);
     }
+    
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class UserService {
+    
     private final UserRepository userRepo;
 
     public UserService(
@@ -54,7 +55,10 @@ public class UserService {
      * @param email 이메일
      * @return 이미 가입된 이메일이면 true, 그렇지 않으면 false
      */
-    public Boolean isDuplicatedEmail(String email) {
+    public Boolean isDuplicatedEmail(
+            String email
+    ) {
         return userRepo.existsByEmail(email);
     }
+    
 }

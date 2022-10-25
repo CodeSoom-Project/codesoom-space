@@ -12,13 +12,15 @@ import com.codesoom.myseat.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/** 예약 수정 담당 */
+/** 예약 수정 서비스 */
 @Service
 public class ReservationUpdateService {
 
     private final ReservationRepository repository;
 
-    public ReservationUpdateService(ReservationRepository repository) {
+    public ReservationUpdateService(
+            ReservationRepository repository
+    ) {
         this.repository = repository;
     }
 
@@ -34,7 +36,11 @@ public class ReservationUpdateService {
      * @throws CannotUpdateCanceledReservationException 취소된 예약을 수정하려고 하면 던집니다.
      */
     @Transactional
-    public void updateReservation(Long userId, Long id, ReservationRequest request) {
+    public void updateReservation(
+            Long userId, 
+            Long id, 
+            ReservationRequest request
+    ) {
         Reservation reservation = repository.findById(id)
                 .orElseThrow(ReservationNotFoundException::new);
         Date date = new Date(request.getDate());
@@ -62,7 +68,10 @@ public class ReservationUpdateService {
      * @param userId 회원 id
      * @return 기록이 있으면 true, 없으면 false
      */
-    private boolean hasSameDateReservation(Date date, Long userId) {
+    private boolean hasSameDateReservation(
+            Date date, 
+            Long userId
+    ) {
         return repository.existsByDateAndUser_Id(date, userId);
     }
 

@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @Slf4j
 public class RetrospectiveDetailController {
+    
     private final ReservationDetailService reservationDetailService;
+    
     private final RetrospectiveDetailService retrospectiveDetailService;
 
     public RetrospectiveDetailController(
@@ -56,4 +58,5 @@ public class RetrospectiveDetailController {
                 .content(retrospective.getContent())
                 .build();
     }
+    
 }

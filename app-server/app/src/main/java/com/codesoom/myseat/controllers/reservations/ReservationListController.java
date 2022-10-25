@@ -17,18 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.stream.Collectors;
 
-/**
- * 예약 목록 조회 컨트롤러
- */
+/** 예약 목록 조회 컨트롤러 */
 @CrossOrigin
 @RequestMapping("/reservations")
 @RestController
 public class ReservationListController {
 
     private final UserService userService;
+    
     private final ReservationListService service;
 
-    public ReservationListController(UserService userService, ReservationListService service) {
+    public ReservationListController(
+            UserService userService, 
+            ReservationListService service
+    ) {
         this.userService = userService;
         this.service = service;
     }
@@ -42,7 +44,9 @@ public class ReservationListController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public ReservationListResponse reservations(@AuthenticationPrincipal UserAuthentication principal) {
+    public ReservationListResponse reservations(
+            @AuthenticationPrincipal UserAuthentication principal
+    ) {
         User user = userService.findById(principal.getId());
 
         return new ReservationListResponse(

@@ -10,9 +10,7 @@ import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * 계획 엔티티
- */
+/** 계획 엔티티 */
 @Entity
 @Getter
 @Builder
@@ -20,6 +18,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @Slf4j
 public class Plan {
+    
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name="plan_id")
@@ -31,4 +30,5 @@ public class Plan {
     public void update(String content) {
         this.content = content;
     }
+    
 }

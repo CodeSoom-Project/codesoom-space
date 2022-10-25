@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-/**
- * 좌석 예약 서비스
- */
+/** 예약 추가 서비스 */
 @Service
 @Slf4j
 public class ReservationAddService {
+    
     private final PlanRepository planRepo;
+    
     private final ReservationRepository reservationRepo;
 
     public ReservationAddService(
@@ -85,7 +85,10 @@ public class ReservationAddService {
      * @param userId 회원 id
      * @return 중복된 예약이면 true, 그렇지 않으면 false
      */
-    public boolean isDuplicateReservation(Date date, Long userId) {
+    public boolean isDuplicateReservation(
+            Date date, 
+            Long userId
+    ) {
         return reservationRepo.existsByDateAndUser_IdAndStatusNot(date, userId, ReservationStatus.CANCELED);
     }
 
@@ -96,7 +99,9 @@ public class ReservationAddService {
      * @return 조회된 예약
      * @throws ReservationNotFoundException 예약 조회에 실패하면 던집니다.
      */
-    public Reservation findReservation(Long id) {
+    public Reservation findReservation(
+            Long id
+    ) {
         return reservationRepo.findById(id)
                 .orElseThrow(() -> new ReservationNotFoundException());
     }

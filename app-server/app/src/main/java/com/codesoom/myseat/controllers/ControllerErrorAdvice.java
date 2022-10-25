@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-/**
- * 컨트롤러에서 발생하는 예외를 처리한다.
- */
+/** 컨트롤러에서 발생하는 예외를 처리합니다. */
 @ResponseBody
 @ControllerAdvice
 public class ControllerErrorAdvice {

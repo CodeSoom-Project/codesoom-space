@@ -13,7 +13,9 @@ public class ReservationListService {
     
     private final ReservationRepository repository;
 
-    public ReservationListService(ReservationRepository repository) {
+    public ReservationListService(
+            ReservationRepository repository
+    ) {
         this.repository = repository;
     }
 
@@ -24,7 +26,9 @@ public class ReservationListService {
      * @return 해당 유저의 모든 예약 목록
      */
     @Transactional(readOnly = true)
-    public List<Reservation> reservations(Long userId) {
+    public List<Reservation> reservations(
+            Long userId
+    ) {
         return repository.findAllByUser_IdOrderByDateDesc(userId);
     }
     

@@ -17,6 +17,7 @@ import java.util.Date;
 @Slf4j
 @Component
 public class JwtUtil {
+    
     private final Key key;
 
     public JwtUtil(
@@ -31,7 +32,9 @@ public class JwtUtil {
      * @param id 토큰을 부여할 회원의 id
      * @return 토큰 
      */
-    public String makeAccessToken(Long id) {
+    public String makeAccessToken(
+            Long id
+    ) {
         Date now = new Date();
 
         return Jwts.builder()
@@ -50,7 +53,9 @@ public class JwtUtil {
      * @param accessToken
      * @return 이메일
      */
-    public Long parseAccessToken(String accessToken) {
+    public Long parseAccessToken(
+            String accessToken
+    ) {
         log.info("accessToken: " + accessToken);
 
         try {
@@ -66,4 +71,5 @@ public class JwtUtil {
             throw new InvalidTokenException();
         }
     }
+    
 }

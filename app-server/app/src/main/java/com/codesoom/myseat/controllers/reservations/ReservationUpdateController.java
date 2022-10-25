@@ -23,7 +23,9 @@ public class ReservationUpdateController {
 
     private final ReservationUpdateService service;
 
-    public ReservationUpdateController(ReservationUpdateService service) {
+    public ReservationUpdateController(
+            ReservationUpdateService service
+    ) {
         this.service = service;
     }
 
@@ -38,9 +40,11 @@ public class ReservationUpdateController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void updateReservation(@AuthenticationPrincipal UserAuthentication principal,
-                                  @PathVariable Long id,
-                                  @RequestBody ReservationRequest request) {
+    public void updateReservation(
+            @AuthenticationPrincipal UserAuthentication principal, 
+            @PathVariable Long id, 
+            @RequestBody ReservationRequest request
+    ) {
         service.updateReservation(principal.getId(), id, request);
     }
 

@@ -9,15 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 로그인 컨트롤러
- */
+/** 로그인 컨트롤러 */
 @RestController
 @RequestMapping("/login")
 @CrossOrigin
 @Slf4j
 public class LoginController {
+    
     private final AuthenticationService authService;
+    
     private final UserService userService;
 
     public LoginController(
@@ -54,4 +54,5 @@ public class LoginController {
                 .name(name)
                 .build();
     }
+    
 }

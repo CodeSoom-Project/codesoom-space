@@ -16,6 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @Builder
 public class Role {
+    
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -24,4 +25,5 @@ public class Role {
 
     @Getter
     private String roleName;
+    
 }

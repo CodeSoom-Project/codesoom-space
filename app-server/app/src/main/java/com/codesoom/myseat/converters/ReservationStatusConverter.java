@@ -7,15 +7,20 @@ import javax.persistence.Converter;
 
 /** DB에 저장된 값과, 정의한 ReservationStatus Enum을 매핑합니다. */
 @Converter
-public class ReservationStatusConverter implements AttributeConverter<ReservationStatus, Integer> {
+public class ReservationStatusConverter 
+        implements AttributeConverter<ReservationStatus, Integer> {
 
     @Override
-    public Integer convertToDatabaseColumn(ReservationStatus attribute) {
+    public Integer convertToDatabaseColumn(
+            ReservationStatus attribute
+    ) {
         return attribute.getNum();
     }
 
     @Override
-    public ReservationStatus convertToEntityAttribute(Integer dbData) {
+    public ReservationStatus convertToEntityAttribute(
+            Integer dbData
+    ) {
         return ReservationStatus.ofNum(dbData);
     }
 

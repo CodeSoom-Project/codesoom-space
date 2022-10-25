@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.IDENTITY;
 
-
 @Entity
 @Getter
 @NoArgsConstructor
@@ -38,4 +37,5 @@ public class Retrospective {
     public void updateContent(String content) {
         this.content = content;
     }
+    
 }

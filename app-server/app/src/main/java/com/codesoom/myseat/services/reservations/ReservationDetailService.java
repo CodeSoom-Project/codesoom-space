@@ -14,7 +14,9 @@ public class ReservationDetailService {
 
     private final ReservationRepository repository;
 
-    public ReservationDetailService(ReservationRepository repository) {
+    public ReservationDetailService(
+            ReservationRepository repository
+    ) {
         this.repository = repository;
     }
 
@@ -27,7 +29,10 @@ public class ReservationDetailService {
      * @throws ReservationNotFoundException 예약 정보를 찾지 못한 경우 던짐
      */
     @Transactional(readOnly = true)
-    public Reservation reservation(Long reservationId, Long userId) {
+    public Reservation reservation(
+            Long reservationId, 
+            Long userId
+    ) {
         return repository.findByIdAndUser_Id(reservationId, userId)
                 .orElseThrow(ReservationNotFoundException::new);
     }
