@@ -97,5 +97,11 @@ public class ControllerErrorAdvice {
     public String handleCannotUpdateCanceledReservation() {
         return "취소된 예약은 수정할 수 없습니다. 취소되지 않은 예약으로 다시 시도해주세요.";
     }
-    
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NotReservableDateException.class)
+    public String handleNotReservableDateException(NotReservableDateException e) {
+        return e.getMessage();
+    }
+
 }
