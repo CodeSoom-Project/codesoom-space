@@ -35,14 +35,9 @@ const Wrap = styled.div({
 
 const Header = styled.div({
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'flex-end',
   width: '100%',
   marginBottom: '1rem',
-});
-
-const Title = styled.h1({
-  fontSize: '2rem',
-  margin: '0',
 });
 
 export default function Reservations() {
@@ -165,10 +160,9 @@ export default function Reservations() {
 
       <Wrap>
         <Header>
-          <Title>예약내역</Title>
-
           <Button
-            style={{ fontSize: '2rem' }}
+            variant="outlined"
+            size="large"
             onClick={() => {
               onClickToggleReservationsModal();
               dispatch(saveIsDetail(false));
