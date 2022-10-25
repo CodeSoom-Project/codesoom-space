@@ -3,10 +3,12 @@ package com.codesoom.myseat.controllers.reservations;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
+import com.codesoom.myseat.exceptions.NotReservableDateException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.services.auth.AuthenticationService;
 import com.codesoom.myseat.services.reservations.ReservationUpdateService;
 import com.codesoom.myseat.services.users.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -120,4 +122,20 @@ class ReservationUpdateControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound());
     }
+
+    @DisplayName("예약 불가능한 날짜가 주어지면 400 bad request를 응답한다.")
+    @Test
+    void PUT_reservation_update_with_400_status() throws Exception {
+        ReservationRequest request = new ReservationRequest("2022-10-18", "수정 데이터");
+        doThrow(NotReservableDateException.class)
+                .when(reservationUpdateService)
+                .updateReservation(anyLong(), anyLong(), any(ReservationRequest.class));
+
+        mockMvc.perform(put("/reservations/999")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
 }

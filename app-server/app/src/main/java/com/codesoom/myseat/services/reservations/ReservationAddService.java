@@ -7,6 +7,7 @@ import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.enums.ReservationStatus;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.exceptions.ContentTooLongException;
+import com.codesoom.myseat.exceptions.NotReservableDateException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.PlanRepository;
 import com.codesoom.myseat.repositories.ReservationRepository;
@@ -49,16 +50,19 @@ public class ReservationAddService {
             String date,
             String content
     ) {
-        if(isDuplicateReservation(new Date(date), user.getId())) {
+        Date givenDate = new Date(date);
+        if (!givenDate.isReservable()) {
+            throw new NotReservableDateException();
+        }
+        if(isDuplicateReservation(givenDate, user.getId())) {
             throw new AlreadyReservedException();
         }
-        
+
         Plan plan = Plan.builder()
                     .content(content)
                     .build();
-
         Reservation reservation = Reservation.builder()
-                .date(new Date(date))
+                .date(givenDate)
                 .user(user)
                 .plan(plan)
                 .build();
