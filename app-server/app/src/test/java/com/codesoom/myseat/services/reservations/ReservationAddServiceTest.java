@@ -37,10 +37,22 @@ class ReservationAddServiceTest {
         
         service = new ReservationAddService(planRepo, reservationRepo);
     }
-    
+
+    Date getReservableDate() {
+        long plusDays = 0;
+        LocalDate now = LocalDate.now();
+        if (now.getDayOfWeek().getValue() < 6) {
+            plusDays = 6 - now.getDayOfWeek().getValue();
+        }
+        LocalDate saturday = now.plusDays(plusDays);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return new Date(saturday.format(dateFormat));
+    }
+
     @Test
     @DisplayName("createReservation 메서드는 Reservation을 반환한다")
     void createReservation_returns_SeatReservation() {
+        Date date = getReservableDate();
         User mockUser = User.builder()
                 .id(1L)
                 .name("김철수")
@@ -51,11 +63,11 @@ class ReservationAddServiceTest {
         given(reservationRepo.existsByDateAndUser_IdAndStatusNot(new Date("2022-10-11"), 1L, ReservationStatus.CANCELED))
                 .willReturn(false);
 
-        Reservation reservation 
-                = service.createReservation(mockUser, "2022-10-11", "책읽기, 코테 풀기");
+        Reservation reservation
+                = service.createReservation(mockUser, date.getDate(), "책읽기, 코테 풀기");
         
         assertThat(reservation.getUser().getEmail()).isEqualTo("soo@email.com");
-        assertThat(reservation.getDate().getDate()).isEqualTo("2022-10-11");
+        assertThat(reservation.getDate()).isEqualTo(date);
         assertThat(reservation.getPlan().getContent()).isEqualTo("책읽기, 코테 풀기");
         assertThat(reservation.getStatus()).isEqualTo(ReservationStatus.RETROSPECTIVE_WAITING);
     }
@@ -63,6 +75,7 @@ class ReservationAddServiceTest {
     @Test
     @DisplayName("이미 예약 했던 방문 일자가 주어지면 AlreadyReservedException를 던진다")
     void If_date_that_already_reserved_given_It_throws_AlreadyReservedException() {
+        Date date = getReservableDate();
         User mockUser = User.builder()
                 .id(1L)
                 .name("김철수")
@@ -72,24 +85,25 @@ class ReservationAddServiceTest {
         
         Reservation mockReservation = Reservation.builder()
                 .id(2L)
-                .date(new Date("2022-10-11"))
+                .date(date)
                 .status(ReservationStatus.RETROSPECTIVE_WAITING)
                 .user(mockUser)
                 .build();
 
-        given(reservationRepo.existsByDateAndUser_IdAndStatusNot(new Date("2022-10-11"), 1L, ReservationStatus.CANCELED))
+        given(reservationRepo.existsByDateAndUser_IdAndStatusNot(date, 1L, ReservationStatus.CANCELED))
                 .willReturn(true);
         
-        given(reservationRepo.findByDateAndUser_Id(new Date("2022-10-11"), 1L))
+        given(reservationRepo.findByDateAndUser_Id(date, 1L))
                 .willReturn(Optional.of(mockReservation));
          
-        assertThatThrownBy(() -> service.createReservation(mockUser, "2022-10-11", "책읽기, 코테 풀기"))
+        assertThatThrownBy(() -> service.createReservation(mockUser, date.getDate(), "책읽기, 코테 풀기"))
                 .isInstanceOf(AlreadyReservedException.class);
     }
     
     @Test
     @DisplayName("해당 방문 일자의 예약이 존재하지만 취소된 예약이면 생성된 Reservation을 반환한다.")
     void If_date_that_already_reserved_but_canceled_given_It_returns_reservation() {
+        Date date = getReservableDate();
         User mockUser = User.builder()
                 .id(1L)
                 .name("김철수")
@@ -99,7 +113,7 @@ class ReservationAddServiceTest {
 
         Reservation mockReservation = Reservation.builder()
                 .id(2L)
-                .date(new Date("2022-10-11"))
+                .date(date)
                 .status(ReservationStatus.CANCELED)
                 .user(mockUser)
                 .build();
@@ -111,10 +125,10 @@ class ReservationAddServiceTest {
                 .willReturn(Optional.of(mockReservation));
 
         Reservation reservation
-                = service.createReservation(mockUser, "2022-10-11", "책읽기, 코테 풀기");
+                = service.createReservation(mockUser, date.getDate(), "책읽기, 코테 풀기");
 
         assertThat(reservation.getUser().getEmail()).isEqualTo("soo@email.com");
-        assertThat(reservation.getDate().getDate()).isEqualTo("2022-10-11");
+        assertThat(reservation.getDate()).isEqualTo(date);
         assertThat(reservation.getPlan().getContent()).isEqualTo("책읽기, 코테 풀기");
         assertThat(reservation.getStatus()).isEqualTo(ReservationStatus.RETROSPECTIVE_WAITING);
     }
