@@ -20,6 +20,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,6 +41,17 @@ class ReservationUpdateServiceTest {
 
     private final Long USER_ID = 1L;
 
+    Date getReservableDate() {
+        long plusDays = 0;
+        LocalDate now = LocalDate.now();
+        if (now.getDayOfWeek().getValue() < 6) {
+            plusDays = 6 - now.getDayOfWeek().getValue();
+        }
+        LocalDate saturday = now.plusDays(plusDays);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return new Date(saturday.format(dateFormat));
+    }
+
     @DisplayName("updateReservation 메소드는")
     @Nested
     class Describe_update_reservation {
@@ -56,6 +69,7 @@ class ReservationUpdateServiceTest {
                     .build();
             private final Plan PLAN = Plan.builder().content("공부").build();
             private Reservation RESERVATION;
+            private Date DATE = getReservableDate();
             
             @DisplayName("요청한 회원 소유의 예약이면")
             @Nested
@@ -64,7 +78,7 @@ class ReservationUpdateServiceTest {
                 void setUp() {
                     RESERVATION = Reservation.builder()
                             .user(USER)
-                            .date(new Date("2022-10-17"))
+                            .date(DATE)
                             .plan(PLAN)
                             .build();
                     given(repository.findById(same(EXIST_ID)))
@@ -75,7 +89,7 @@ class ReservationUpdateServiceTest {
                 @Test
                 void will_update_successfully() {
                     //given
-                    ReservationRequest request = new ReservationRequest("2022-10-18", "수정 데이터");
+                    ReservationRequest request = new ReservationRequest(DATE.getDate(), "수정 데이터");
 
                     //when
                     service.updateReservation(USER_ID, EXIST_ID, request);
@@ -93,7 +107,7 @@ class ReservationUpdateServiceTest {
                 void setUp() {
                     RESERVATION = Reservation.builder()
                             .user(USER)
-                            .date(new Date("2022-10-17"))
+                            .date(DATE)
                             .plan(PLAN)
                             .build();
                     given(repository.findById(same(EXIST_ID)))
@@ -105,7 +119,7 @@ class ReservationUpdateServiceTest {
                 void will_throw_exception() {
                     //given
                     Long NOT_OWNED_USER_ID = 888L;
-                    ReservationRequest request = new ReservationRequest("2022-10-18", "수정 데이터");
+                    ReservationRequest request = new ReservationRequest(DATE.getDate(), "수정 데이터");
 
                     //when
                     assertThrows(NotOwnedReservationException.class,
@@ -120,7 +134,7 @@ class ReservationUpdateServiceTest {
                 void setUp() {
                     RESERVATION = Reservation.builder()
                             .user(USER)
-                            .date(new Date("2022-10-17"))
+                            .date(DATE)
                             .plan(PLAN)
                             .status(ReservationStatus.CANCELED)
                             .build();
@@ -133,7 +147,7 @@ class ReservationUpdateServiceTest {
                 void will_throw_cannot_update_canceled_reservation_exception() {
                     //given
                     ReservationRequest request
-                            = new ReservationRequest("2022-10-18", "수정 데이터");
+                            = new ReservationRequest(DATE.getDate(), "수정 데이터");
 
                     //when
                     assertThrows(CannotUpdateCanceledReservationException.class,
