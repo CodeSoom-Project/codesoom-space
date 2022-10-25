@@ -1,0 +1,8 @@
+POST http://localhost:8080/signup
+Content-Type: application/json;charset=UTF-8
+
+{
+  "name" : "관리자",
+  "email" : "admin@email.com",
+  "password" : "admin1234"
+}
