@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 )
 class AdminListControllerTest {
     private static final String ACCESS_TOKEN
-            = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmcmVzaCIsImlhdCI6MTY2NjY5MjY4MSwiZXhwIjoxNjY2Nzc5MDgxLCJpZCI6M30.udchjJzhd8NLWVZbeX9N4-mVr8GjG0d55wvYKQhdHSw";
+            = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmcmVzaCIsImlhdCI6MTY2NjcwMTY4OCwiZXhwIjoxNjY2Nzg4MDg4LCJpZCI6M30.2LkYoN1A2RAdSulenVeusy3iC7UZVjPrvmffHVIJfyg";
 
     @Autowired
     private MockMvc mockMvc;
@@ -84,7 +84,6 @@ class AdminListControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
     @DisplayName("요청한 유저가 관리자가 아닌 경우 403으로 응답한다.")
     void GET_admin_with_403_status() throws Exception {
         mockMvc.perform(get("/admin/reservation")

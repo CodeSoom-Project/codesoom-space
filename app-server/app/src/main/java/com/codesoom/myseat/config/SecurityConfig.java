@@ -63,13 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin@email.com").password(getPasswordEncoder().encode("admin1234")).roles("ADMIN");
-    }
-
     private Filter authenticationFilter() throws Exception {
         return new AuthenticationFilter(authenticationManager(), authService);
     }

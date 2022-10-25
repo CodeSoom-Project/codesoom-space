@@ -68,7 +68,7 @@ public class DbInit {
         admin = User.builder()
                 .name("관리자")
                 .email("admin@email.com")
-                .password("$2a$10$nxgZpupbdazaYtyQY/5siOLt9RJBlvGzrX1klaB7xJgEFkD31hqPa")
+                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
         Role role3 = Role.builder()
                 .userId(3L)

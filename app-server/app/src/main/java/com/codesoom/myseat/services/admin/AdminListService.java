@@ -12,15 +12,15 @@ public class AdminListService {
 
     private final ReservationRepository reservationRepository;
 
+    public AdminListService(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
+    }
+
     /**
      * 회원 예약 목록을 조회합니다.
      *
      * @return 회원의 모든 예약 목록
      */
-    public AdminListService(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
-    }
-
     public List<Reservation> reservations() {
         return reservationRepository.findAll();
     }
