@@ -4,5 +4,5 @@ Content-Type: application/json;charset=UTF-8
 {
   "name" : "관리자",
   "email" : "admin@email.com",
-  "password" : "admin1234"
+  "password" : "1111"
 }
