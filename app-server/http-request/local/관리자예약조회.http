@@ -1,2 +1,2 @@
 GET http://localhost:8080/admin/reservations
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmcmVzaCIsImlhdCI6MTY2NjY5MjgzMiwiZXhwIjoxNjY2Nzc5MjMyLCJpZCI6M30.SpbJai2nm3AbOF6LkdmfYfdRhn-iPBkmbXJHnFg7Glo
+Authorization: Bearer
