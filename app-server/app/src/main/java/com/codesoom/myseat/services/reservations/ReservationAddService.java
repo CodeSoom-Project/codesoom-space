@@ -4,6 +4,7 @@ import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.User;
+import com.codesoom.myseat.enums.ReservationStatus;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.exceptions.ContentTooLongException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
@@ -77,11 +78,11 @@ public class ReservationAddService {
      * 중복된 예약이면 true, 그렇지 않으면 false를 반환합니다.
      * 
      * @param date 방문 일자
-     * @param id 회원 id
+     * @param userId 회원 id
      * @return 중복된 예약이면 true, 그렇지 않으면 false
      */
-    public boolean isDuplicateReservation(Date date, Long id) {
-        return reservationRepo.existsByDateAndUser_Id(date, id);
+    public boolean isDuplicateReservation(Date date, Long userId) {
+        return reservationRepo.existsByDateAndUser_IdAndStatusNot(date, userId, ReservationStatus.CANCELED);
     }
 
     /**
@@ -95,4 +96,5 @@ public class ReservationAddService {
         return reservationRepo.findById(id)
                 .orElseThrow(() -> new ReservationNotFoundException());
     }
+    
 }

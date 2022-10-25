@@ -2,6 +2,7 @@ package com.codesoom.myseat.repositories;
 
 import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Reservation;
+import com.codesoom.myseat.enums.ReservationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -38,6 +39,15 @@ public interface ReservationRepository
     boolean existsByDateAndUser_Id(Date date, Long id);
 
     /**
+     * 주어진 방문 일자와 회원 id로 예약 내역을 조회합니다.
+     * 
+     * @param date 방문 일자
+     * @param userId 회원 id
+     * @return 예약 내역
+     */
+    Optional<Reservation> findByDateAndUser_Id(Date date, Long userId);
+
+    /**
      * 주어진 회원 id로 예약 내역을 모두 조회합니다.
      *
      * @param id 회원 id
@@ -71,4 +81,14 @@ public interface ReservationRepository
      * @return 조회된 예약
      */
     Optional<Reservation> findById(Long id);
+
+    /**
+     * 주어진 방문 일자와 회원 id, 특정 상태가 아닌 예약이 존재하면 true, 그렇지 않으면 false를 반환합니다.
+     * 
+     * @param date 방문 일자
+     * @param userId 회원 id
+     * @param status 예약 상태
+     * @return 주어진 방문 일자와 회원 id로 취소된 예약이 존재하면 true, 그렇지 않으면 false
+     */
+    boolean existsByDateAndUser_IdAndStatusNot(Date date, Long userId, ReservationStatus status);
 }
