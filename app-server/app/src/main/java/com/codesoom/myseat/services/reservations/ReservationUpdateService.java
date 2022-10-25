@@ -6,6 +6,7 @@ import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
 import com.codesoom.myseat.exceptions.CannotUpdateCanceledReservationException;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
+import com.codesoom.myseat.exceptions.NotReservableDateException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,10 @@ public class ReservationUpdateService {
     public void updateReservation(Long userId, Long id, ReservationRequest request) {
         Reservation reservation = repository.findById(id)
                 .orElseThrow(ReservationNotFoundException::new);
-        
+        Date date = new Date(request.getDate());
+        if (!date.isReservable()) {
+            throw new NotReservableDateException();
+        }
         if(reservation.isCanceled()) {
             throw new CannotUpdateCanceledReservationException();
         }
@@ -44,7 +48,7 @@ public class ReservationUpdateService {
             throw new NotOwnedReservationException();
         }
         if (reservation.isDifferentDate(reservation.getDate())) {
-            if (hasSameDateReservation(new Date(request.getDate()), userId)) {
+            if (hasSameDateReservation(date, userId)) {
                 throw new AlreadyReservedException();
             }
         }

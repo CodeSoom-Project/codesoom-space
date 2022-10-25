@@ -8,6 +8,7 @@ import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.enums.ReservationStatus;
 import com.codesoom.myseat.exceptions.CannotUpdateCanceledReservationException;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
+import com.codesoom.myseat.exceptions.NotReservableDateException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -136,6 +137,34 @@ class ReservationUpdateServiceTest {
 
                     //when
                     assertThrows(CannotUpdateCanceledReservationException.class,
+                            () -> service.updateReservation(USER_ID, 1L, request));
+                }
+            }
+
+            @DisplayName("주어진 날짜가 예약 가능한 날짜가 아니면")
+            @Nested
+            class Context_with_invalid_date {
+                @BeforeEach
+                void setUp() {
+                    RESERVATION = Reservation.builder()
+                            .user(USER)
+                            .date(new Date("2022-10-17"))
+                            .plan(PLAN)
+                            .status(ReservationStatus.CANCELED)
+                            .build();
+                    given(repository.findById(same(1L)))
+                            .willReturn(Optional.of(RESERVATION));
+                }
+
+                @DisplayName("NotReservableDateException을 던진다.")
+                @Test
+                void will_throw_not_reservable_exception() {
+                    //given
+                    ReservationRequest request
+                            = new ReservationRequest("2022-10-18", "수정 데이터");
+
+                    //when
+                    assertThrows(NotReservableDateException.class,
                             () -> service.updateReservation(USER_ID, 1L, request));
                 }
             }
