@@ -45,10 +45,27 @@ interface TablePaginationActionsProps {
   )=> void;
 }
 
+const StyledTable = styled(Table)({
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+});
+
 const StyledTableCell = styled(TableCell)({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#1976d2',
     color: '#ffff',
+  },
+});
+
+const StyledPTag = styled('p')({
+  width: 800,
+  height: 20,
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  '@media (max-width: 767px)': {
+    width: 150,
   },
 });
 
@@ -211,7 +228,7 @@ export default function ReservationsTable({
 
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <StyledTable>
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">계획 일자</StyledTableCell>
@@ -225,9 +242,9 @@ export default function ReservationsTable({
         <TableBody>
           {reservations.slice(startRow, endRow).map(({ id, date, content, status }: Reservations) => (
             <TableRow key={id}>
-              <TableCell align="center">{date}</TableCell>
-              <TableCell align="left">{content}</TableCell>
-              <TableCell align="center">
+              <StyledTableCell align="center">{date}</StyledTableCell>
+              <StyledTableCell align="left"><StyledPTag>{content}</StyledPTag></StyledTableCell>
+              <StyledTableCell align="center">
                 {status === 'CANCELED' ? (
                   <div>
                     {statusName[status]}
@@ -239,23 +256,33 @@ export default function ReservationsTable({
                     {statusName[status]}
                   </Button>
                 )}
-              </TableCell>
-              <TableCell align="center">
-                <Button onClick={handleClickReservationDetail(id, status)}>
-                  상세보기
-                </Button>
-              </TableCell>
-              <TableCell align="center">
+              </StyledTableCell>
+              <StyledTableCell align="center">
                 {status === 'CANCELED' ? (
                   <div>
-                    예약이 취소되었습니다.
+                    상세보기
+                  </div>
+                ) : (
+                  <Button
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      handleClickReservationDetail(e, id);
+                      dispatch(saveIsDetail(true));
+                    }}>
+                    상세보기
+                  </Button>
+                )}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {status === 'CANCELED' ? (
+                  <div>
+                    X
                   </div>
                 ) : (
                   <Button onClick={() => onClickCancelReservation(id)}>
                     예약취소
                   </Button>
                 )}
-              </TableCell>
+              </StyledTableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -273,7 +300,7 @@ export default function ReservationsTable({
             />
           </TableRow>
         </TableFooter>
-      </Table>
+      </StyledTable>
     </TableContainer>
   );
 }
