@@ -17,16 +17,24 @@ export default function Modal({ open, title, content, text = '확인', onClose, 
       open={open}
       onClose={onClose}
     >
-      <DialogTitle >
+      <DialogTitle data-testid="title" >
         {title}
       </DialogTitle>
 
-      <DialogContent sx={{ whiteSpace: 'pre-line' }}>
+      <DialogContent
+        sx={{ whiteSpace: 'pre-line' }}
+        data-testid="content"
+      >
         {content}
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onClick}>{text}</Button>
+        <Button
+          onClick={onClick}
+          data-testid="text"
+        >
+          {text}
+        </Button>
       </DialogActions>
     </Dialog>
   );
