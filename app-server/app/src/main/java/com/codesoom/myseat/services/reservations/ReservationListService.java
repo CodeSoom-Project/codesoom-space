@@ -2,6 +2,8 @@ package com.codesoom.myseat.services.reservations;
 
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.repositories.ReservationRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +35,7 @@ public class ReservationListService {
      *
      * @return 모든 유저의 예약 목록
      */
-    public List<Reservation> allReservations() {
-        return repository.findAll();
+    public Page<Reservation> allReservations(PageRequest pageRequest) {
+        return repository.findAll(pageRequest);
     }
 }
