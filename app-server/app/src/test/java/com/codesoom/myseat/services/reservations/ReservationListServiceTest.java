@@ -30,35 +30,40 @@ class ReservationListServiceTest {
     @Mock
     private PlanRepository planRepository;
 
+    private User mockUser;
+    private Reservation mockReservation;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         service = new ReservationListService(reservationRepository);
     }
 
+    @BeforeEach()
+    void dataSetUp() {
+        mockUser = User.builder()
+                .id(1L)
+                .name("김철수")
+                .email("soo@email.com")
+                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
+                .build();
+        Plan plan = Plan.builder().content("공부").build();
+        mockReservation = Reservation.builder()
+                .user(mockUser)
+                .plan(plan)
+                .date(new Date("2022-10-12"))
+                .build();
+    }
+
     @DisplayName("reservations 메소드는")
     @Nested
-    class Describe_reservations{
+    class Describe_reservations {
 
         @DisplayName("주어진 사용자 정보와 일치하는 모든 예약 목록을 조회한다")
         @Test
         void will_return_reservations() {
-            //given
-            User mockUser = User.builder()
-                    .id(1L)
-                    .name("김철수")
-                    .email("soo@email.com")
-                    .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
-                    .build();
-            Plan plan = Plan.builder().content("공부").build();
-            Reservation reservation = Reservation.builder()
-                    .user(mockUser)
-                    .plan(plan)
-                    .date(new Date("2022-10-12"))
-                    .build();
-
             given(reservationRepository.findAllByUser_IdOrderByDateDesc(same(1L)))
-                    .willReturn(List.of(reservation));
+                    .willReturn(List.of(mockReservation));
 
             //when
             List<Reservation> reservations = service.reservations(mockUser.getId());
@@ -68,5 +73,24 @@ class ReservationListServiceTest {
             assertThat(reservations.get(0).getUser().getId()).isEqualTo(mockUser.getId());
         }
     }
-    
+
+    @DisplayName("allReservations 메소드는")
+    @Nested
+    class Describe_allReseravtions {
+        @BeforeEach()
+        void setUp() {
+            given(reservationRepository.findAll())
+                    .willReturn(List.of(mockReservation));
+        }
+
+        @DisplayName("모든 예약 목록을 반환한다")
+        @Test
+        void it_returns_all_reservations() {
+            List<Reservation> reservations = service.allReservations();
+
+            assertThat(reservations.size()).isEqualTo(1);
+            assertThat(reservations.get(0).getPlan().getContent())
+                    .isEqualTo("공부");
+        }
+    }
 }
