@@ -1,6 +1,5 @@
 package com.codesoom.myseat.controllers.reservations;
 
-import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.ReservationListResponse;
 import com.codesoom.myseat.dto.ReservationResponse;
 import com.codesoom.myseat.security.UserAuthentication;
@@ -25,11 +24,9 @@ import java.util.stream.Collectors;
 @RestController
 public class ReservationListController {
 
-    private final UserService userService;
     private final ReservationListService service;
 
-    public ReservationListController(UserService userService, ReservationListService service) {
-        this.userService = userService;
+    public ReservationListController(ReservationListService service) {
         this.service = service;
     }
 
@@ -42,11 +39,10 @@ public class ReservationListController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public ReservationListResponse reservations(@AuthenticationPrincipal UserAuthentication principal) {
-        User user = userService.findById(principal.getId());
-
+    public ReservationListResponse reservations(
+            @AuthenticationPrincipal final UserAuthentication principal) {
         return new ReservationListResponse(
-                service.reservations(user.getId())
+                service.reservations(principal.getId())
                 .stream()
                 .map(ReservationResponse::new)
                 .collect(Collectors.toList())

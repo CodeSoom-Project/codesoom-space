@@ -32,8 +32,9 @@ public class ReservationCancelController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{id}")
-    public void cancelReservation(@AuthenticationPrincipal UserAuthentication principal,
-                                  @PathVariable Long id) {
+    public void cancelReservation(
+            @AuthenticationPrincipal final UserAuthentication principal,
+            @PathVariable final Long id) {
         log.debug("--------- 예약 취소 요쳥");
         log.debug("예약 id: {}", id);
         cancelService.cancelReservation(principal.getId(), id);

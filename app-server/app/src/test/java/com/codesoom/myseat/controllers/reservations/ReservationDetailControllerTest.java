@@ -26,7 +26,8 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.assertj.core.api.Assertions.within;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -36,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ReservationDetailController.class)
 class ReservationDetailControllerTest {
+
     private static final String ACCESS_TOKEN
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
@@ -57,24 +59,15 @@ class ReservationDetailControllerTest {
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
-                .addFilters(new CharacterEncodingFilter("UTF-8", true))
+                .addFilters(
+                        new CharacterEncodingFilter(
+                                "UTF-8", true))
+                .defaultRequest(get("/reservations/*")
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Bearer " + ACCESS_TOKEN))
                 .apply(springSecurity())
                 .alwaysDo(print())
                 .build();
-
-        //given
-        User mockUser = User.builder()
-                .id(1L)
-                .name("김철수")
-                .email("soo@email.com")
-                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
-                .build();
-
-        given(authService.parseToken(ACCESS_TOKEN))
-                .willReturn(1L);
-
-        given(userService.findById(1L))
-                .willReturn(mockUser);
     }
 
     @DisplayName("주어진 예약 id로 예약 정보를 찾을 수 있으면 예약 정보를 응답한다.")
@@ -83,7 +76,7 @@ class ReservationDetailControllerTest {
         //given
         Long reservationId = 1L;
         String content = "코테풀기, 공부, 과제";
-        given(reservationDetailService.reservation(reservationId, 1L))
+        given(reservationDetailService.reservation(anyLong(), anyLong()))
                 .willReturn(Reservation.builder()
                         .id(reservationId)
                         .plan(Plan.builder().id(1L).content(content).build())
@@ -91,8 +84,9 @@ class ReservationDetailControllerTest {
                         .build());
 
         //when
-        ResultActions perform = mockMvc.perform(get(String.format("/reservations/%d", reservationId))
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN));
+        ResultActions perform
+                = mockMvc.perform(get(
+                        String.format("/reservations/%d", reservationId)));
 
         //then
         MvcResult result = perform.andReturn();
@@ -105,13 +99,13 @@ class ReservationDetailControllerTest {
     void GET_reservation_with_404_status() throws Exception {
         //given
         Long notExistReservationId = 100L;
-        String content = "코테풀기, 공부, 과제";
-        given(reservationDetailService.reservation(notExistReservationId, 1L))
+        given(reservationDetailService.reservation(
+                eq(notExistReservationId), anyLong()))
                 .willThrow(ReservationNotFoundException.class);
 
         //when & then
-        mockMvc.perform(get(String.format("/reservations/%d", notExistReservationId))
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        mockMvc.perform(get(
+                String.format("/reservations/%d", notExistReservationId)))
                 .andExpect(status().isNotFound());
     }
 
@@ -120,20 +114,13 @@ class ReservationDetailControllerTest {
     void GET_reservation_with_401_status() throws Exception {
         //given
         Long reservationId = 1L;
-        String content = "코테풀기, 공부, 과제";
-        given(reservationDetailService.reservation(1L, reservationId))
-                .willReturn(Reservation.builder()
-                        .id(reservationId)
-                        .plan(Plan.builder().id(1L).content(content).build())
-                        .date(new Date("2022-10-13"))
-                        .build());
-
         given(authService.parseToken(anyString()))
                 .willThrow(new InvalidTokenException());
 
         //when & then
         mockMvc.perform(get(String.format("/reservations/%d", reservationId))
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + "akdjfisdlkfajsdlk"))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Bearer " + "akdjfisdlkfajsdlk"))
                 .andExpect(status().isUnauthorized());
     }
     
