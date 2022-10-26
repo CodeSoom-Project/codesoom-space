@@ -7,7 +7,6 @@ import styled from '@emotion/styled';
 const MainText = styled.h1({
   color: 'black',
   textShadow: '-1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000',
-
   'a': {
     color: 'inherit',
     textDecoration: 'none',
@@ -25,6 +24,7 @@ const TextButton = styled(Button)({
 });
 
 const LinkButton = styled(Link)({
+  whiteSpace: 'nowrap',
   textDecoration: 'none',
 });
 
