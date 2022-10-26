@@ -10,8 +10,14 @@ import { signUp } from './services/api';
 
 import SignUp from './signUp';
 
+import { SignUpFormData } from './typings/auth';
+
 export default function SignUpContainer() {
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<SignUpFormData>();
 
   const navigate = useNavigate();
 

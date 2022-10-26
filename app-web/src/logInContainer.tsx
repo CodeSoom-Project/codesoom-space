@@ -15,10 +15,12 @@ import { login } from './services/api';
 
 import LogIn from './logIn';
 
+import { User } from './typings/auth';
+
 export default function LogInContainer() {
   const dispatch = useDispatch();
 
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, formState: { errors }, handleSubmit } = useForm<User>();
 
   const navigate = useNavigate();
 
