@@ -1,11 +1,9 @@
 package com.codesoom.myseat.controllers.reservations;
 
-import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.services.auth.AuthenticationService;
 import com.codesoom.myseat.services.reservations.ReservationCancelService;
-import com.codesoom.myseat.services.users.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +19,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -42,9 +39,6 @@ class ReservationCancelControllerTest {
     private AuthenticationService authService;
 
     @MockBean
-    private UserService userService;
-
-    @MockBean
     private ReservationCancelService reservationCancelService;
 
     @Autowired
@@ -53,30 +47,21 @@ class ReservationCancelControllerTest {
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
-                .addFilters(new CharacterEncodingFilter("UTF-8", true))
+                .addFilters(new CharacterEncodingFilter(
+                        "UTF-8", true))
+                .defaultRequest(
+                        patch("/reservations/*")
+                                .header(HttpHeaders.AUTHORIZATION,
+                                        "Bearer " + ACCESS_TOKEN))
                 .apply(springSecurity())
                 .alwaysDo(print())
                 .build();
-
-        User mockUser = User.builder()
-                .id(1L)
-                .name("김철수")
-                .email("soo@email.com")
-                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
-                .build();
-
-        given(authService.parseToken(ACCESS_TOKEN))
-                .willReturn(1L);
-
-        given(userService.findById(1L))
-                .willReturn(mockUser);
     }
 
     @DisplayName("예약을 성공적으로 취소하면 204 no content를 응답한다.")
     @Test
     void PUT_reservation_cancel_with_204_status() throws Exception {
-        mockMvc.perform(patch("/reservations/1")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        mockMvc.perform(patch("/reservations/1"))
                 .andExpect(status().isNoContent());
     }
 
@@ -87,8 +72,7 @@ class ReservationCancelControllerTest {
                 .when(reservationCancelService)
                 .cancelReservation(anyLong(), anyLong());
 
-        mockMvc.perform(patch("/reservations/999")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        mockMvc.perform(patch("/reservations/999"))
                 .andExpect(status().isForbidden());
     }
 
@@ -99,8 +83,8 @@ class ReservationCancelControllerTest {
                 .when(reservationCancelService)
                 .cancelReservation(anyLong(), anyLong());
 
-        mockMvc.perform(patch("/reservations/999")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + ACCESS_TOKEN))
+        mockMvc.perform(patch("/reservations/999"))
                 .andExpect(status().isNotFound());
     }
+
 }
