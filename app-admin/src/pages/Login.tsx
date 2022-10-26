@@ -1,3 +1,7 @@
+import LoginContainer from '../Containers/LoginContainer';
+
 export default function Login() {
-  return <div>Login</div>;
+  return (
+    <LoginContainer/>
+  );
 }
