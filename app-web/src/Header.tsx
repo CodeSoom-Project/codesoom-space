@@ -18,6 +18,7 @@ const MainText = styled.h1({
 });
 
 const TextButton = styled(Button)({
+  width: '80px',
   '&: hover': {
     color: 'grey',
   },
@@ -36,7 +37,10 @@ export default function Header({ accessToken, onClick }: any) {
       {accessToken ? (
         <>
           <LinkButton to="/reservations" >
-            <TextButton>예약</TextButton>
+            <TextButton>예약목록</TextButton>
+          </LinkButton>
+          <LinkButton to="/mypage" >
+            <TextButton>마이페이지</TextButton>
           </LinkButton>
           <TextButton onClick={onClick}>
             로그아웃
@@ -55,4 +59,3 @@ export default function Header({ accessToken, onClick }: any) {
     </header>
   );
 }
-
