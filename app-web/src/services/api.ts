@@ -67,3 +67,15 @@ export const signUp = async (formData: { email: string, password: string, name: 
   const { data } = await httpClient.post('/signup', formData);
   return data;
 };
+
+export const getUserInfo = async () => {
+  const accessToken = loadItem('accessToken');
+
+  const { data } = await httpClient.get('/mypage', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return data;
+};
