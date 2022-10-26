@@ -11,10 +11,6 @@ const Wrapper = styled.div({
   padding: '3rem 0',
 });
 
-const Form = styled.form({
-  display: 'block',
-});
-
 const LabelWrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
@@ -28,7 +24,7 @@ const ButtonWrapper = styled.div({
 export default function LoginForm() {
   return (
     <Wrapper>
-      <Form>
+      <form>
         <LabelWrapper>
           <TextField id="outlined-basic" label="아이디" variant="outlined"/>
           <TextField
@@ -42,7 +38,7 @@ export default function LoginForm() {
         <ButtonWrapper>
           <Button type="submit" variant="outlined">로그인</Button>
         </ButtonWrapper>
-      </Form>
+      </form>
     </Wrapper>
   );
 }
