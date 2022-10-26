@@ -8,11 +8,11 @@ import java.util.List;
 
 /** 관리자 회원 예약 목록 조회 서비스 */
 @Service
-public class AdminListService {
+public class AdminReservationListService {
 
     private final ReservationRepository reservationRepository;
 
-    public AdminListService(ReservationRepository reservationRepository) {
+    public AdminReservationListService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
 

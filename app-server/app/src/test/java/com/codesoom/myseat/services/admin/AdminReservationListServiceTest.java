@@ -17,18 +17,17 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
-class AdminListServiceTest {
+class AdminReservationListServiceTest {
 
-    private AdminListService adminListService;
+    private AdminReservationListService adminReservationListService;
 
     @Mock
     private ReservationRepository reservationRepository;
 
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        adminListService = new AdminListService(reservationRepository);
+        adminReservationListService = new AdminReservationListService(reservationRepository);
     }
 
     @DisplayName("회원의 모든 예약 목록을 조회한다")
@@ -50,7 +49,7 @@ class AdminListServiceTest {
         given(reservationRepository.findAll())
                 .willReturn(List.of(reservation));
 
-        List<Reservation> reservations = adminListService.reservations();
+        List<Reservation> reservations = adminReservationListService.reservations();
 
         assertThat(reservations.size()).isEqualTo(1);
 
