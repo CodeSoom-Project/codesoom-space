@@ -1,3 +1,7 @@
+import LoginFormContainer from '../Containers/LoginFormContainer';
+
 export default function Login() {
-  return <div>Login</div>;
+  return (
+    <LoginFormContainer/>
+  );
 }
