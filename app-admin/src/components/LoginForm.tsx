@@ -30,9 +30,13 @@ export default function LoginForm() {
     <Wrapper>
       <Form>
         <LabelWrapper>
+          <TextField id="outlined-basic" label="아이디" variant="outlined"/>
           <TextField
-            id="outlined-basic" label="아이디" variant="outlined"/>
-          <TextField margin="dense" id="outlined-basic" label="비밀번호" variant="outlined" type="password"
+            margin="dense"
+            id="outlined-basic"
+            label="비밀번호"
+            variant="outlined"
+            type="password"
           />
         </LabelWrapper>
         <ButtonWrapper>
