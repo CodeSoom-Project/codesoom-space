@@ -21,7 +21,7 @@ public class ReservationListPageResponse {
                 .map(ReservationResponse::new)
                 .collect(Collectors.toList());
         this.pagination = new Pagination(
-                pageReservation.getNumber() + 1,
+                pageReservation.getNumber(),
                 pageReservation.getSize(),
                 pageReservation.getTotalPages()
         );

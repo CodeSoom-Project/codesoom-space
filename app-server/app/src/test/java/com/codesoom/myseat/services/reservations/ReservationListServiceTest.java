@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -21,6 +24,8 @@ import static org.mockito.BDDMockito.given;
 
 @DisplayName("ReservationListService 클래스")
 class ReservationListServiceTest {
+
+    private final static PageRequest PAGE_REQUEST = PageRequest.of(1, 10);
 
     private ReservationListService service;
 
@@ -79,17 +84,19 @@ class ReservationListServiceTest {
     class Describe_allReseravtions {
         @BeforeEach()
         void setUp() {
-            given(reservationRepository.findAll())
-                    .willReturn(List.of(mockReservation));
+            Page page = new PageImpl(List.of(mockReservation));
+            given(reservationRepository.findAll(PAGE_REQUEST))
+                    .willReturn(page);
         }
 
         @DisplayName("모든 예약 목록을 반환한다")
         @Test
         void it_returns_all_reservations() {
-            List<Reservation> reservations = service.allReservations();
+            Page<Reservation> page = service.allReservations(PAGE_REQUEST);
 
-            assertThat(reservations.size()).isEqualTo(1);
-            assertThat(reservations.get(0).getPlan().getContent())
+            List<Reservation> reservationList = page.getContent();
+
+            assertThat(reservationList.get(0).getPlan().getContent())
                     .isEqualTo("공부");
         }
     }
