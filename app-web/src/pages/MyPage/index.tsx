@@ -14,7 +14,6 @@ const Container = styled.div({
   width: '400px',
   margin: '50px auto 0',
   '& .MuiBox-root': {
-    width: '100%',
     marginTop: '5px',
   },
 
