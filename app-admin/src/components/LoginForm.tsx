@@ -12,8 +12,9 @@ const Wrapper = styled.div({
 });
 
 const LabelWrapper = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
+  'div:not(:first-of-type)': {
+    marginTop: '8px',
+  },
 });
 
 const ButtonWrapper = styled.div({
@@ -21,23 +22,30 @@ const ButtonWrapper = styled.div({
   marginTop: '1rem',
 });
 
+const ButtonStyles = {
+  width: '100%',
+  padding: '10px',
+};
+
 export default function LoginForm() {
+
   return (
     <Wrapper>
       <form>
         <LabelWrapper>
-          <TextField id="outlined-basic" label="아이디" variant="outlined"/>
+          <div>
+            <TextField id="outlined-basic" label="아이디" variant="outlined"/>
+          </div>
           <TextField
-            margin="dense"
             id="outlined-basic"
             label="비밀번호"
             variant="outlined"
             type="password"
           />
+          <ButtonWrapper>
+            <Button sx={ButtonStyles} type="submit" variant="outlined">로그인</Button>
+          </ButtonWrapper>
         </LabelWrapper>
-        <ButtonWrapper>
-          <Button type="submit" variant="outlined">로그인</Button>
-        </ButtonWrapper>
       </form>
     </Wrapper>
   );
