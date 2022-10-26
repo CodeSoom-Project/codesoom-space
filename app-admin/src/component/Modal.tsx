@@ -29,7 +29,7 @@ export default function Modal({
       </DialogTitle>
 
       <DialogContent
-        sx={{ whiteSpace: 'pre-line' }}
+        sx={{ maxHeight: '20rem', whiteSpace: 'pre-line' }}
         data-testid="content"
       >
         {content}
