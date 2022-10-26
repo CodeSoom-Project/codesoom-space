@@ -1,13 +1,21 @@
 import { render } from '@testing-library/react';
 
+import { MemoryRouter } from 'react-router-dom';
+
 import App from './App';
 
 describe('App', () => {
-  const renderApp = () => render(<App/>);
+  const renderApp = ({ path }: { path: string }) => render(
+    <MemoryRouter initialEntries={[path]}>
+      <App/>
+    </MemoryRouter>,
+  );
 
-  it('좌석 예약 어드민이 보인다', () => {
-    const { container } = renderApp();
+  context('경로가 / 라면', () => {
+    it('login page가 렌더링된다', () => {
+      const { container } = renderApp({ path: '/' });
 
-    expect(container).toHaveTextContent('좌석 예약 어드민');
+      expect(container).toHaveTextContent('Login');
+    });
   });
 });
