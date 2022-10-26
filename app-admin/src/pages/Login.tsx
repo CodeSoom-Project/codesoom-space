@@ -1,7 +1,7 @@
-import LoginContainer from '../Containers/LoginContainer';
+import LoginFormContainer from '../Containers/LoginFormContainer';
 
 export default function Login() {
   return (
-    <LoginContainer/>
+    <LoginFormContainer/>
   );
 }

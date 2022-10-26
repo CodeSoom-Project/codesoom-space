@@ -11,7 +11,7 @@ const Wrapper = styled.div({
   padding: '3rem 0',
 });
 
-const LoginForm = styled.form({
+const Form = styled.form({
   display: 'block',
 });
 
@@ -26,28 +26,24 @@ const ButtonWrapper = styled.div({
   marginTop: '1rem',
 });
 
-export default function LoginContainer() {
+export default function LoginForm() {
   return (
     <Wrapper>
-      <LoginForm>
+      <Form>
         <LabelWrapper>
           <div>
             <TextField
               id="outlined-basic" label="아이디" variant="outlined"/>
           </div>
           <div>
-            <TextField
-              id="outlined-basic"
-              label="비밀번호"
-              variant="outlined"
-              type="password"
+            <TextField id="outlined-basic" label="비밀번호" variant="outlined" type="password"
             />
           </div>
         </LabelWrapper>
         <ButtonWrapper>
           <Button type="submit" variant="outlined">로그인</Button>
         </ButtonWrapper>
-      </LoginForm>
+      </Form>
     </Wrapper>
   );
 }
