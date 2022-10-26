@@ -27,24 +27,6 @@ public class ControllerErrorAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(SeatNotFoundException.class)
-    public String handleSeatNotFound() {
-        return "존재하지 않는 좌석입니다.";
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @ExceptionHandler(SeatListNotFoundException.class)
-    public String handleSeatListNotFound() {
-        return "좌석 목록이 존재하지 않습니다.";
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(AlreadyHaveSeatException.class)
-    public String handleAlreadyHaveSeat() {
-        return "당일 예약 내역이 존재합니다.";
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AlreadyReservedException.class)
     public String handleAlreadyReserved() {
         return "방문 일자에 대한 예약 내역이 이미 존재합니다.";
