@@ -1,6 +1,6 @@
 import './App.css';
 
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import PrivateRoute from './routes/PrivateRoute';
 
@@ -23,6 +23,7 @@ import SignUpContainer from './signUpContainer';
 import HeaderContainer from './HeaderContainer';
 
 import Alert from './components/Alert';
+import Footer from './components/Footer';
 
 export default function App() {
   const navigate = useNavigate();
@@ -73,6 +74,7 @@ export default function App() {
         />
         <Route path="*" element={<NotFound/>}/>
       </Routes>
+      <Footer />
     </div>
   );
 }
