@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.codesoom.myseat.enums.ReservationStatus.RETROSPECTIVE_COMPLETE;
@@ -35,10 +36,15 @@ class RetrospectiveAddServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    private LocalDateTime NOW = LocalDateTime.of(2022, 10, 26, 0, 0, 0);
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new RetrospectiveAddService(retrospectiveRepository, reservationRepository);
+        service = new RetrospectiveAddService(
+                retrospectiveRepository,
+                reservationRepository
+        );
     }
 
     @Test
@@ -59,15 +65,21 @@ class RetrospectiveAddServiceTest {
         Retrospective mockRetrospective = Retrospective.builder()
                 .content("잘했다.")
                 .reservation(mockReservation)
+                .createdDate(NOW)
                 .build();
 
-        given(reservationRepository.findById(1L)).willReturn(Optional.of(mockReservation));
-        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId())).willReturn(true);
-        given(retrospectiveRepository.save(any())).willReturn(mockRetrospective);
+        given(reservationRepository.findById(1L))
+                .willReturn(Optional.of(mockReservation));
+        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId()))
+                .willReturn(true);
+        given(retrospectiveRepository.save(any()))
+                .willReturn(mockRetrospective);
 
-        Retrospective retrospective = service.createRetrospective(mockUser, 1L, "잘했다.");
+        Retrospective retrospective =
+                service.createRetrospective(mockUser, 1L, "잘했다.");
 
         assertThat(retrospective.getContent()).isEqualTo("잘했다.");
+        assertThat(retrospective.getCreatedDate()).isEqualTo(NOW);
     }
 
     @Test
@@ -105,15 +117,22 @@ class RetrospectiveAddServiceTest {
         Retrospective mockRetrospective = Retrospective.builder()
                 .content("잘했다.")
                 .reservation(mockReservation)
+                .createdDate(NOW)
                 .build();
 
-        given(reservationRepository.findById(1L)).willReturn(Optional.of(mockReservation));
-        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId())).willReturn(true);
-        given(retrospectiveRepository.save(any())).willReturn(mockRetrospective);
+        given(reservationRepository.findById(1L))
+                .willReturn(Optional.of(mockReservation));
+        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId()))
+                .willReturn(true);
+        given(retrospectiveRepository.save(any()))
+                .willReturn(mockRetrospective);
 
-        Retrospective retrospective = service.createRetrospective(mockUser, 1L, "잘했다.");
+        Retrospective retrospective =
+                service.createRetrospective(mockUser, 1L, "잘했다.");
 
-        assertThat(retrospective.getReservation().getStatus()).isEqualTo(RETROSPECTIVE_COMPLETE);
+        assertThat(retrospective.getReservation().getStatus())
+                .isEqualTo(RETROSPECTIVE_COMPLETE);
+        assertThat(retrospective.getCreatedDate()).isEqualTo(NOW);
     }
 
 }
