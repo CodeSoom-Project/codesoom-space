@@ -19,7 +19,9 @@ public class RetrospectiveAddService {
     private final RetrospectiveRepository retrospectiveRepository;
     private final ReservationRepository reservationRepository;
 
-    public RetrospectiveAddService(RetrospectiveRepository retrospectiveRepository, ReservationRepository reservationRepository) {
+    public RetrospectiveAddService(
+            RetrospectiveRepository retrospectiveRepository,
+            ReservationRepository reservationRepository) {
         this.retrospectiveRepository = retrospectiveRepository;
         this.reservationRepository = reservationRepository;
     }
@@ -73,4 +75,5 @@ public class RetrospectiveAddService {
                                   final Long userId) {
         return reservationRepository.existsByIdAndUser_Id(reservationId, userId);
     }
+
 }
