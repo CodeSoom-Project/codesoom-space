@@ -27,5 +27,13 @@ public class ReservationListService {
     public List<Reservation> reservations(Long userId) {
         return repository.findAllByUser_IdOrderByDateDesc(userId);
     }
-    
+
+    /**
+     * 예약 목록을 조회합니다.
+     *
+     * @return 모든 유저의 예약 목록
+     */
+    public List<Reservation> allReservations() {
+        return repository.findAll();
+    }
 }
