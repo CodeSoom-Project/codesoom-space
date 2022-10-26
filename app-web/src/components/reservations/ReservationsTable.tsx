@@ -263,11 +263,7 @@ export default function ReservationsTable({
                     상세보기
                   </div>
                 ) : (
-                  <Button
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      handleClickReservationDetail(e, id);
-                      dispatch(saveIsDetail(true));
-                    }}>
+                  <Button onClick={handleClickReservationDetail(id, status)}>
                     상세보기
                   </Button>
                 )}
