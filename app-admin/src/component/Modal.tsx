@@ -11,7 +11,14 @@ interface Props {
   onClick: React.ReactEventHandler;
 }
 
-export default function Modal({ open, title, content, text = '확인', onClose, onClick }: Props) {
+export default function Modal({
+  open,
+  title,
+  content,
+  text = '확인',
+  onClose,
+  onClick,
+}: Props) {
   return (
     <Dialog
       open={open}
