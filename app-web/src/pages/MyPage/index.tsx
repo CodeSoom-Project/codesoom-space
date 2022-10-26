@@ -29,6 +29,10 @@ const Container = styled.div({
 
 export default function MyPage() {
 
+  const handleClick = () => {
+    alert('아직 준비중입니다^^');
+  };
+
   const { isLoading, data } = useQuery('mypage', getUserInfo, {
     retry: 1,
   });
@@ -60,10 +64,11 @@ export default function MyPage() {
             disabled
             margin="normal"
           />
-          <Button>인증하기</Button>
+          <Button onClick={handleClick}>인증하기</Button>
         </Box>
       </Box>
       <Button
+        onClick={handleClick}
         sx={{
           margin: '30px auto 0',
         }}
