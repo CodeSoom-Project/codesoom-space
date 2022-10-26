@@ -14,6 +14,7 @@ import { get } from './utils';
 
 import NotFound from './NotFound';
 import Reservations from './pages/Reservations';
+import MyPage from './pages/MyPage';
 
 import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
@@ -58,6 +59,13 @@ export default function App() {
           element={
             <PrivateRoute>
               <Reservations />
+            </PrivateRoute>}
+        />
+        <Route
+          path="mypage"
+          element={
+            <PrivateRoute>
+              <MyPage />
             </PrivateRoute>}
         />
         <Route path="*" element={<NotFound/>}/>
