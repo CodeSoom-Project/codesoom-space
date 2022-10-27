@@ -1,4 +1,4 @@
-export const column = [{
+const columns = [{
   id: 1,
   label: '이름',
 }, {
@@ -11,3 +11,6 @@ export const column = [{
   id: 4,
   label: '회고',
 }];
+
+
+export default columns;

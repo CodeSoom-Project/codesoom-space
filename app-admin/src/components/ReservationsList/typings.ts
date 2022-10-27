@@ -18,5 +18,5 @@ interface Column {
 
 export interface Props {
   reservations: Reservation[],
-  column: Column[]
+  columns: Column[]
 }

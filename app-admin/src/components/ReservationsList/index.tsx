@@ -23,7 +23,7 @@ const StyledPaper = styled(Paper)({
   marginTop: '4rem',
 });
 
-export default function ReservationsList({ reservations, column }: Props) {
+export default function ReservationsList({ reservations, columns }: Props) {
   return (
     <Wrapper>
       <StyledPaper>
@@ -31,7 +31,7 @@ export default function ReservationsList({ reservations, column }: Props) {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                {column.map(({ label, id }) => (
+                {columns.map(({ label, id }) => (
                   <TableCell align="center" key={id}>
                     {label}
                   </TableCell>
