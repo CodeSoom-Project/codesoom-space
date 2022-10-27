@@ -22,6 +22,7 @@ import HeaderContainer from './HeaderContainer';
 
 import Alert from './components/Alert';
 import Main from './pages/Main';
+import Email from './pages/Verification/Email';
 
 export default function App() {
   const navigate = useNavigate();
@@ -55,6 +56,7 @@ export default function App() {
         <Route path="/" element={<Main/>}/>
         <Route path="signup" element={<SignUpContainer/>}/>
         <Route path="login" element={<LogInContainer />} />
+        <Route path="verification/email" element={<Email/>} />
         <Route
           path="reservations"
           element={
