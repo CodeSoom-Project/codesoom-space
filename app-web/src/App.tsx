@@ -15,13 +15,14 @@ import { get } from './utils';
 import NotFound from './NotFound';
 import Reservations from './pages/Reservations';
 import MyPage from './pages/MyPage';
+import MainPage from './pages/MainPage';
+import EmailVerificationPage from './pages/Verification/EmailVerificationPage';
 
 import LogInContainer from './logInContainer';
 import SignUpContainer from './signUpContainer';
 import HeaderContainer from './HeaderContainer';
 
 import Alert from './components/Alert';
-import Main from './pages/Main';
 
 export default function App() {
   const navigate = useNavigate();
@@ -52,9 +53,10 @@ export default function App() {
 
       <HeaderContainer/>
       <Routes>
-        <Route path="/" element={<Main/>}/>
+        <Route path="/" element={<MainPage/>}/>
         <Route path="signup" element={<SignUpContainer/>}/>
         <Route path="login" element={<LogInContainer />} />
+        <Route path="verification/email" element={<EmailVerificationPage/>} />
         <Route
           path="reservations"
           element={
