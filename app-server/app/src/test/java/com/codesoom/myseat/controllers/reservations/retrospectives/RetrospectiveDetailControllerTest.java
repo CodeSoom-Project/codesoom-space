@@ -82,7 +82,7 @@ class RetrospectiveDetailControllerTest {
         given(userService.findById(1L))
                 .willReturn(mockUser);
         
-        given(reservationDetailService.reservation(3L, 1L))
+        given(reservationDetailService.reservationOfUser(3L, 1L))
                 .willReturn(mockReservation);
         
         given(retrospectiveDetailService.retrospective(3L))

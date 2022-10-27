@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/** 예약 상세 조회 서비스 */
+/**
+ * 예약 상세 조회 서비스
+ */
 @Slf4j
 @Service
 public class ReservationDetailService {
@@ -27,8 +29,21 @@ public class ReservationDetailService {
      * @throws ReservationNotFoundException 예약 정보를 찾지 못한 경우 던짐
      */
     @Transactional(readOnly = true)
-    public Reservation reservation(Long reservationId, Long userId) {
+    public Reservation reservationOfUser(Long reservationId, Long userId) {
         return repository.findByIdAndUser_Id(reservationId, userId)
+                .orElseThrow(ReservationNotFoundException::new);
+    }
+
+    /**
+     * 주어진 reservation id로 예약 내용을 상세 조회합니다.
+     *
+     * @param reservationId 예약 아이디
+     * @return 주어진 정보로 조회한 예약 정보
+     * @throws ReservationNotFoundException 예약 정보를 찾지 못한 경우 던짐
+     */
+    @Transactional(readOnly = true)
+    public Reservation reservation(Long reservationId) {
+        return repository.findById(reservationId)
                 .orElseThrow(ReservationNotFoundException::new);
     }
 
