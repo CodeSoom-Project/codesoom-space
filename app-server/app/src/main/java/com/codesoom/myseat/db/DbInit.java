@@ -18,7 +18,7 @@ public class DbInit {
 
     User user1;
     User user2;
-    
+
     public DbInit(
             UserRepository userRepo, 
             RoleRepository roleRepo, 
@@ -63,6 +63,18 @@ public class DbInit {
                 .build();
         userRepo.save(user2);
         roleRepo.save(role2);
+
+        User adminUser = User.builder()
+                .name("어드민")
+                .email("admin@email.com")
+                .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
+                .build();
+        adminUser = userRepo.save(adminUser);
+        Role role3 = Role.builder()
+                .userId(adminUser.getId())
+                .roleName("ADMIN")
+                .build();
+        roleRepo.save(role3);
     }
     
     private void addReservations() {
