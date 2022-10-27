@@ -15,7 +15,7 @@ describe('App', () => {
     it('login page가 렌더링된다', () => {
       const { container } = renderApp({ path: '/' });
 
-      expect(container).toHaveTextContent('Login');
+      expect(container).toHaveTextContent('로그인');
     });
   });
 });
