@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import Reservations from '.';
 
-import { column } from '../../data/column';
+import columns from '../../data/columns';
 
 describe('Reservations', () => {
   const renderReservations = () =>
@@ -13,6 +13,6 @@ describe('Reservations', () => {
   it('List가 렌더링됩니다.', () => {
     const { container } = renderReservations();
 
-    column.forEach(({ label }) => expect(container).toHaveTextContent(label));
+    columns.forEach(({ label }) => expect(container).toHaveTextContent(label));
   });
 });

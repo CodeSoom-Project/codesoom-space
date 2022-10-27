@@ -4,21 +4,21 @@ import ReservationsList from '.';
 
 import { reservations } from '../../fixtures/reservations';
 
-import { column } from '../../data/column';
+import columns from '../../data/columns';
 
 describe('LoginFormContainer', () => {
   const renderReservationsList = () =>
     render(
       <ReservationsList
         reservations={reservations}
-        column={column}
+        columns={columns}
       />,
     );
 
   it('column이 보여집니다.', () => {
     const { container } = renderReservationsList();
 
-    column.forEach(({ label }) => expect(container).toHaveTextContent(label));
+    columns.forEach(({ label }) => expect(container).toHaveTextContent(label));
   });
 
   it('예약 목록이 보여집니다.', () => {
