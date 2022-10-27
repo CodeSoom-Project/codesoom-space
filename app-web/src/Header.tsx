@@ -8,6 +8,10 @@ const Container = styled.div({
   marginTop: '30px',
 });
 
+const StyledHeader = styled.header({
+  textAlign: 'center',
+});
+
 const MainText = styled.h1({
   marginBottom: '20px',
   color: 'black',
@@ -37,7 +41,7 @@ const LinkButton = styled(Link)({
 export default function Header({ accessToken, onClick }: any) {
   return (
     <Container>
-      <header style={{ textAlign: 'center' }}>
+      <StyledHeader>
         <MainText>
           <Link to="/">CodeSoom Space</Link>
         </MainText>
@@ -63,7 +67,7 @@ export default function Header({ accessToken, onClick }: any) {
             </LinkButton>
           </>
         )}
-      </header>
+      </StyledHeader>
     </Container>
   );
 }
