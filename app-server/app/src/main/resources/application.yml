@@ -13,3 +13,8 @@ spring:
         format_sql: false
 jwt:
   secret: "12345678901234567890123456789012"
+
+email:
+  auth:
+    subject: "코드숨 공부방 이메일 인증 안내입니다."
+    url: "https://space.codesoom.com/verification/email?token="
