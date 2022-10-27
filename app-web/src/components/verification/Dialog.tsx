@@ -36,8 +36,11 @@ export default function AlertDialog({ title, message }: Props) {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>
-              확인
+        <Button
+          type="button"
+          onClick={handleClose}
+        >
+          확인
         </Button>
       </DialogActions>
     </Dialog>
