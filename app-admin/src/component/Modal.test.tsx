@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Modal from './Modal';
 
-describe('', () => {
+describe('modal', () => {
   const onClick = jest.fn();
   const onClose = jest.fn();
 

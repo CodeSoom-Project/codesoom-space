@@ -1,4 +1,12 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+} from '@mui/material';
+
+const DialogContentStyle = { maxHeight: '20rem', whiteSpace: 'pre-line' };
 
 interface Props {
   open: boolean;
@@ -29,7 +37,7 @@ export default function Modal({
       </DialogTitle>
 
       <DialogContent
-        sx={{ maxHeight: '20rem', whiteSpace: 'pre-line' }}
+        sx={DialogContentStyle}
         data-testid="content"
       >
         {content}
