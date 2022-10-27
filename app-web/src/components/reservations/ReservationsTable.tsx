@@ -59,7 +59,7 @@ const StyledTableCell = styled(TableCell)({
 });
 
 const StyledPTag = styled('p')({
-  width: 800,
+  width: 300,
   height: 20,
   whiteSpace: 'nowrap',
   overflow: 'hidden',
@@ -242,9 +242,21 @@ export default function ReservationsTable({
         <TableBody>
           {reservations.slice(startRow, endRow).map(({ id, date, content, status }: Reservations) => (
             <TableRow key={id}>
-              <StyledTableCell align="center">{date}</StyledTableCell>
-              <StyledTableCell align="left"><StyledPTag>{content}</StyledPTag></StyledTableCell>
-              <StyledTableCell align="center">
+              <StyledTableCell
+                width="15%"
+                align="center"
+              >
+                {date}
+              </StyledTableCell>
+              <StyledTableCell
+                width="65%"
+                align="left"
+              >
+                <StyledPTag>{content}</StyledPTag>
+              </StyledTableCell>
+              <StyledTableCell
+                width="10%"
+                align="center">
                 {status === 'CANCELED' ? (
                   <div>
                     {statusName[status]}
@@ -257,7 +269,10 @@ export default function ReservationsTable({
                   </Button>
                 )}
               </StyledTableCell>
-              <StyledTableCell align="center">
+              <StyledTableCell
+                width="10%"
+                align="center"
+              >
                 {status === 'CANCELED' ? (
                   <div>
                     상세보기
@@ -268,7 +283,10 @@ export default function ReservationsTable({
                   </Button>
                 )}
               </StyledTableCell>
-              <StyledTableCell align="center">
+              <StyledTableCell
+                width="10%"
+                align="center"
+              >
                 {status === 'CANCELED' ? (
                   <div>
                     X
