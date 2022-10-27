@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import {
   Button,
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function AlertDialog({ title, message }: Props) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
