@@ -4,8 +4,14 @@ import { Button } from '@mui/material';
 
 import styled from '@emotion/styled';
 
+const Container = styled.div({
+  marginTop: '30px',
+});
+
 const MainText = styled.h1({
+  marginBottom: '20px',
   color: 'black',
+  fontSize: '2rem',
   textShadow: '-1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000',
   'a': {
     color: 'inherit',
@@ -30,32 +36,34 @@ const LinkButton = styled(Link)({
 
 export default function Header({ accessToken, onClick }: any) {
   return (
-    <header style={{ textAlign: 'center' }}>
-      <MainText>
-        <Link to="/">CodeSoom Space</Link>
-      </MainText>
-      {accessToken ? (
-        <>
-          <LinkButton to="/reservations" >
-            <TextButton>예약목록</TextButton>
-          </LinkButton>
-          <LinkButton to="/mypage" >
-            <TextButton>마이페이지</TextButton>
-          </LinkButton>
-          <TextButton onClick={onClick}>
+    <Container>
+      <header style={{ textAlign: 'center' }}>
+        <MainText>
+          <Link to="/">CodeSoom Space</Link>
+        </MainText>
+        {accessToken ? (
+          <>
+            <LinkButton to="/reservations" >
+              <TextButton>예약목록</TextButton>
+            </LinkButton>
+            <LinkButton to="/mypage" >
+              <TextButton>마이페이지</TextButton>
+            </LinkButton>
+            <TextButton onClick={onClick}>
             로그아웃
-          </TextButton>
-        </>
-      ) : (
-        <>
-          <LinkButton to="/signup">
-            <TextButton>회원 가입</TextButton>
-          </LinkButton>
-          <LinkButton to="/login">
-            <TextButton>로그인</TextButton>
-          </LinkButton>
-        </>
-      )}
-    </header>
+            </TextButton>
+          </>
+        ) : (
+          <>
+            <LinkButton to="/signup">
+              <TextButton>회원 가입</TextButton>
+            </LinkButton>
+            <LinkButton to="/login">
+              <TextButton>로그인</TextButton>
+            </LinkButton>
+          </>
+        )}
+      </header>
+    </Container>
   );
 }
