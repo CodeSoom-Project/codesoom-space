@@ -50,7 +50,7 @@ export default function App() {
         onClick={handleClickLogout}
       />
 
-      <HeaderContainer />
+      <HeaderContainer/>
       <Routes>
         <Route path="/" element={<Main/>}/>
         <Route path="signup" element={<SignUpContainer/>}/>

@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 interface Props {
   columns: number
 }
+
 const COURSE_SPACING = '1.6em';
 
 const Column = styled.li(({ columns }: Props) => ({
@@ -16,6 +17,7 @@ const Column = styled.li(({ columns }: Props) => ({
 
   '@media (max-width: 767px)': {
     width: '100%',
+    marginBottom: '1em',
   },
 }));
 

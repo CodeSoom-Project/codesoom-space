@@ -36,6 +36,7 @@ const Columns = styled.ul({
   flexWrap: 'wrap',
   justifyContent: 'space-between',
   width: '800px',
+
   '@media (max-width: 767px)': {
     display: 'unset',
     width: '100%',
