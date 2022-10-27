@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import LoginFormContainer from './LoginFormContainer';
+import LoginFormContainer from '.';
 
 describe('LoginFormContainer', () => {
   const renderLoginContainer = () =>
