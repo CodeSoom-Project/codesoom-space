@@ -3,13 +3,18 @@ package com.codesoom.myseat.domain;
 import com.codesoom.myseat.converters.ReservationStatusConverter;
 import com.codesoom.myseat.dto.ReservationRequest;
 import com.codesoom.myseat.enums.ReservationStatus;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
 
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -21,7 +26,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @Slf4j
 public class Reservation {
 
@@ -48,6 +54,9 @@ public class Reservation {
 
     @OneToOne(mappedBy = "reservation", cascade = PERSIST)
     private Retrospective retrospective;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
 
     @PrePersist
     public void prePersist() {
