@@ -1,6 +1,6 @@
 import Rules from '../../components/main/Rules';
 
-export default function Main() {
+export default function MainPage() {
   return (
     <Rules/>
   );
