@@ -21,6 +21,7 @@ import SignUpContainer from './signUpContainer';
 import HeaderContainer from './HeaderContainer';
 
 import Alert from './components/Alert';
+import Main from './pages/Main';
 
 export default function App() {
   const navigate = useNavigate();
@@ -49,9 +50,9 @@ export default function App() {
         onClick={handleClickLogout}
       />
 
-      <HeaderContainer/>
+      <HeaderContainer />
       <Routes>
-        <Route path="/"/>
+        <Route path="/" element={<Main/>}/>
         <Route path="signup" element={<SignUpContainer/>}/>
         <Route path="login" element={<LogInContainer />} />
         <Route
