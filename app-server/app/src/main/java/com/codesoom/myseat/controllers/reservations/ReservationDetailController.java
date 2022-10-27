@@ -24,14 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ReservationDetailController {
     
-    private final UserService userService;
     private final ReservationDetailService service;
 
     public ReservationDetailController(
-            UserService userService, 
             ReservationDetailService service
     ) {
-        this.userService = userService;
         this.service = service;
     }
 
@@ -47,12 +44,11 @@ public class ReservationDetailController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public ReservationResponse reservation(
-            @AuthenticationPrincipal UserAuthentication principal, 
-            @PathVariable(name = "id") Long reservationId
+            @AuthenticationPrincipal final UserAuthentication principal,
+            @PathVariable(name = "id") final Long reservationId
     ) {
-        User user = userService.findById(principal.getId());
-
-        return new ReservationResponse(service.reservation(reservationId, user.getId()));
+        return new ReservationResponse(
+                service.reservation(reservationId, principal.getId()));
     }
     
 }
