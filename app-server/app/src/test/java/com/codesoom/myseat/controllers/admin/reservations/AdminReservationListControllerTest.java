@@ -4,6 +4,7 @@ import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Role;
+import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.services.auth.AuthenticationService;
 import com.codesoom.myseat.services.reservations.ReservationListService;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,12 +52,21 @@ class AdminReservationListControllerTest {
     @MockBean
     private ReservationListService reservationListService;
 
+    User user;
+
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .addFilters(new CharacterEncodingFilter("UTF-8", true))
                 .apply(springSecurity())
                 .build();
+
+        this.user = new User(
+                1L,
+                "홍길동",
+                "test@email.com",
+                "password"
+        );
     }
 
     @DisplayName("GET /admin/reservations을 admin인 사람이 요청하면 " +
@@ -73,6 +83,7 @@ class AdminReservationListControllerTest {
                                                 .id(1L)
                                                 .plan(Plan.builder().id(1L).content(content).build())
                                                 .date(new Date("2022-10-13"))
+                                                .user(this.user)
                                                 .build()
                                 ),
                                 PageRequest.of(1, 10),
@@ -86,6 +97,8 @@ class AdminReservationListControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.reservations[0].content")
                         .value(content))
+                .andExpect(jsonPath("$.reservations[0].user.name")
+                        .value(this.user.getName()))
                 .andExpect(jsonPath("$.pagination.page")
                         .value(1))
                 .andExpect(jsonPath("$.pagination.size")
