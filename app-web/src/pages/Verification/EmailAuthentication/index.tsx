@@ -11,9 +11,9 @@ const StyledBox = styled(Box)({
   height: '50vh',
 });
 
-export default function Email() {
+export default function EmailAuthentication() {
   const isSuccess = false;
-  const isError = false;
+  const isError = true;
 
   if (isSuccess) {
     return (
