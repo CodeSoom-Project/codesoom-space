@@ -66,9 +66,8 @@ dependencies {
 
     // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
-//    testImplementation 'org.springframework.security:spring-security-test:5.5.1'
     testImplementation 'org.springframework.security:spring-security-test'
-    
+
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     runtime 'io.jsonwebtoken:jjwt-impl:0.11.2'
@@ -76,6 +75,9 @@ dependencies {
 
     // p6spy
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.8'
+
+    // sendgrid
+    implementation 'com.sendgrid:sendgrid-java:4.9.3'
 }
 
 application {
