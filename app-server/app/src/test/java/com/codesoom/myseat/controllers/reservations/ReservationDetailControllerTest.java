@@ -3,7 +3,6 @@ package com.codesoom.myseat.controllers.reservations;
 import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
-import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.InvalidTokenException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.services.auth.AuthenticationService;
@@ -26,7 +25,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.within;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -76,7 +74,7 @@ class ReservationDetailControllerTest {
         //given
         Long reservationId = 1L;
         String content = "코테풀기, 공부, 과제";
-        given(reservationDetailService.reservation(anyLong(), anyLong()))
+        given(reservationDetailService.reservationOfUser(anyLong(), anyLong()))
                 .willReturn(Reservation.builder()
                         .id(reservationId)
                         .plan(Plan.builder().id(1L).content(content).build())
@@ -86,7 +84,7 @@ class ReservationDetailControllerTest {
         //when
         ResultActions perform
                 = mockMvc.perform(get(
-                        String.format("/reservations/%d", reservationId)));
+                String.format("/reservations/%d", reservationId)));
 
         //then
         MvcResult result = perform.andReturn();
@@ -99,13 +97,12 @@ class ReservationDetailControllerTest {
     void GET_reservation_with_404_status() throws Exception {
         //given
         Long notExistReservationId = 100L;
-        given(reservationDetailService.reservation(
-                eq(notExistReservationId), anyLong()))
+        given(reservationDetailService.reservationOfUser(eq(notExistReservationId), anyLong()))
                 .willThrow(ReservationNotFoundException.class);
 
         //when & then
         mockMvc.perform(get(
-                String.format("/reservations/%d", notExistReservationId)))
+                        String.format("/reservations/%d", notExistReservationId)))
                 .andExpect(status().isNotFound());
     }
 
@@ -114,6 +111,7 @@ class ReservationDetailControllerTest {
     void GET_reservation_with_401_status() throws Exception {
         //given
         Long reservationId = 1L;
+
         given(authService.parseToken(anyString()))
                 .willThrow(new InvalidTokenException());
 
@@ -123,5 +121,5 @@ class ReservationDetailControllerTest {
                                 "Bearer " + "akdjfisdlkfajsdlk"))
                 .andExpect(status().isUnauthorized());
     }
-    
+
 }

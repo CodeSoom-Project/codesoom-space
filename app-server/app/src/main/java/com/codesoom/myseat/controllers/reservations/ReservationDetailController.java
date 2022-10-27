@@ -1,11 +1,9 @@
 package com.codesoom.myseat.controllers.reservations;
 
-import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.ReservationResponse;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.security.UserAuthentication;
 import com.codesoom.myseat.services.reservations.ReservationDetailService;
-import com.codesoom.myseat.services.users.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/reservations")
 @RestController
 public class ReservationDetailController {
-    
+
     private final ReservationDetailService service;
 
     public ReservationDetailController(
@@ -35,7 +33,7 @@ public class ReservationDetailController {
     /**
      * 예약 id와 회원 id로 예약 내용을 상세 조회합니다.
      *
-     * @param principal 회원 인증 정보
+     * @param principal     회원 인증 정보
      * @param reservationId 예약 id
      * @return 예약 정보
      * @throws ReservationNotFoundException 주어진 예약 id와 회원 id로 예약 정보를 찾지 못한 경우
@@ -48,7 +46,7 @@ public class ReservationDetailController {
             @PathVariable(name = "id") final Long reservationId
     ) {
         return new ReservationResponse(
-                service.reservation(reservationId, principal.getId()));
+                service.reservationOfUser(reservationId, principal.getId()));
     }
-    
+
 }

@@ -67,7 +67,7 @@ class ReservationDetailServiceTest {
                                 .build()));
 
                 //when
-                Reservation reservation = service.reservation(1L, 1L);
+                Reservation reservation = service.reservationOfUser(1L, 1L);
 
                 //then
                 assertThat(reservation).isNotNull();
@@ -88,7 +88,7 @@ class ReservationDetailServiceTest {
 
                 //when & then
                 assertThrows(ReservationNotFoundException.class,
-                        ()-> service.reservation(100L, 100L));
+                        ()-> service.reservationOfUser(100L, 100L));
             }
         }
     }

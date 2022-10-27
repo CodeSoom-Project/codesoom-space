@@ -42,7 +42,7 @@ public class RetrospectiveDetailController {
             @AuthenticationPrincipal UserAuthentication principal,
             @PathVariable Long id
     ) {
-        Reservation reservation = reservationDetailService.reservation(id, principal.getId());
+        Reservation reservation = reservationDetailService.reservationOfUser(id, principal.getId());
         Retrospective retrospective = retrospectiveDetailService.retrospective(id);
         
         return toResponse(retrospective);
