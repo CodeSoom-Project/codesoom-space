@@ -1,3 +1,5 @@
+import ReservationsContainer from '../../Containers/ReservationsContainer';
+
 export default function Reservations() {
-  return <div>Reservations</div>;
+  return <ReservationsContainer/>;
 }
