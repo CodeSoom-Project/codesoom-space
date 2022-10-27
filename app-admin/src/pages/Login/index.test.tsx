@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import Login from './Login';
+import Login from '.';
 
 describe('Login', () => {
   const renderLogin = () =>
