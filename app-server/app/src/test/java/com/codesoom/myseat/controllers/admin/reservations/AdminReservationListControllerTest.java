@@ -86,7 +86,7 @@ class AdminReservationListControllerTest {
                                                 .user(this.user)
                                                 .build()
                                 ),
-                                PageRequest.of(1, 10),
+                                PageRequest.of(0, 10),
                                 100
                         )
                 );

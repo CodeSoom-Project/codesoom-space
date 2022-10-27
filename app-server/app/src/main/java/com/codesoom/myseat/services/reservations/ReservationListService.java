@@ -4,6 +4,7 @@ import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,7 @@ import java.util.List;
 /** 예약 목록 조회 서비스 */
 @Service
 public class ReservationListService {
-    
+
     private final ReservationRepository repository;
 
     public ReservationListService(ReservationRepository repository) {
@@ -35,7 +36,7 @@ public class ReservationListService {
      *
      * @return 모든 유저의 예약 목록
      */
-    public Page<Reservation> allReservations(PageRequest pageRequest) {
-        return repository.findAll(pageRequest);
+    public Page<Reservation> allReservations(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 }

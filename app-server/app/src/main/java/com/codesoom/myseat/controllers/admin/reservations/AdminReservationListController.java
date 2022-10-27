@@ -5,6 +5,8 @@ import com.codesoom.myseat.dto.ReservationListPageResponse;
 import com.codesoom.myseat.services.reservations.ReservationListService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,13 +31,10 @@ public class AdminReservationListController {
     @PreAuthorize("isAuthenticated() and hasAuthority('ADMIN')")
     @GetMapping
     public ReservationListPageResponse reservations(
-            @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = "10") Integer size
+            @PageableDefault() Pageable pageable
     ) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-
         Page<Reservation> pageReservation =
-                service.allReservations(pageRequest);
+                service.allReservations(pageable);
         return new ReservationListPageResponse(pageReservation);
     }
 }

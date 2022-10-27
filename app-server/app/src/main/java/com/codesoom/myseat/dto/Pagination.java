@@ -16,7 +16,7 @@ public class Pagination {
     private int totalPages;
 
     public Pagination(int page, int size, int totalPages) {
-        this.page = page;
+        this.page = page + 1;
         this.size = size;
         this.totalPages = totalPages;
     }
