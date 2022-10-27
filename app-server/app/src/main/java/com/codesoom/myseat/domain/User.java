@@ -36,7 +36,7 @@ public class User {
 
     @Builder.Default
     @OneToMany
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "userId")
     private List<Role> roles = new ArrayList<>();
 
     public User(final Long id,
