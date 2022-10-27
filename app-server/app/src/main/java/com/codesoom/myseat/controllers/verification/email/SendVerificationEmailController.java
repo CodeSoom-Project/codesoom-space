@@ -17,8 +17,8 @@ import java.io.IOException;
 /** 인증 이메일 전송 컨트롤러 */
 @Slf4j
 @CrossOrigin
-@RequestMapping("/verification/email")
-@RestController
+//@RequestMapping("/verification/email")
+//@RestController
 public class SendVerificationEmailController {
 
     private final SendEmailService service;
