@@ -27,3 +27,4 @@ ehthumbs_vista.db
 *.war
 
 secret.yml
+application-secret.yml
