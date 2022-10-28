@@ -15,6 +15,8 @@ resource "aws_iam_policy" "policy" {
         "Resource" = [
           aws_s3_bucket.bucket.arn,
           "${aws_s3_bucket.bucket.arn}/*",
+          aws_s3_bucket.admin-bucket.arn,
+          "${aws_s3_bucket.admin-bucket.arn}/*",
         ]
       },
     ]
