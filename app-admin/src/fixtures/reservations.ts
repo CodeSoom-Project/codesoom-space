@@ -2,7 +2,7 @@ export const reservations = [{
   id: 1,
   date: '2022-10-25',
   content: '알고리즘 풀기',
-  status: 'RETROSPECTIVE_WATING',
+  status: 'RETROSPECTIVE_WAITING',
   user: {
     id: 1,
     name: '홍길동',
@@ -20,7 +20,7 @@ export const reservations = [{
   id: 3,
   date: '2022-10-27',
   content: '리액트 공부',
-  status: 'RETROSPECTIVE_WATING',
+  status: 'RETROSPECTIVE_WAITING',
   user: {
     id: 3,
     name: '김현지',
