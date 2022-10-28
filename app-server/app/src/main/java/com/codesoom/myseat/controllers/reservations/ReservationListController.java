@@ -36,16 +36,16 @@ public class ReservationListController {
      * @param principal 회원 인증 정보
      * @return 회원의 모든 예약 정보
      */
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() and hasAuthority('VERIFIED_USER')")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public ReservationListResponse reservations(
             @AuthenticationPrincipal final UserAuthentication principal) {
         return new ReservationListResponse(
                 service.reservations(principal.getId())
-                .stream()
-                .map(ReservationResponse::new)
-                .collect(Collectors.toList())
+                        .stream()
+                        .map(ReservationResponse::new)
+                        .collect(Collectors.toList())
         );
     }
 

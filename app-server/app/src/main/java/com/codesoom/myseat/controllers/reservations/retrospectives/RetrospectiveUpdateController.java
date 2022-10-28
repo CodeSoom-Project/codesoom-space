@@ -32,7 +32,7 @@ public class RetrospectiveUpdateController {
     }
 
     @PutMapping("/{id}/retrospectives")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() and hasAuthority('VERIFIED_USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateRetrospective(
             @AuthenticationPrincipal final UserAuthentication principal,
