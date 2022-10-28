@@ -10,11 +10,9 @@ const DialogContentStyle = { maxHeight: '20rem', whiteSpace: 'pre-line' };
 
 interface Props {
   open: boolean;
-
-  title?: string;
+  title: string;
   content: string;
   text?: string;
-
   onClick: React.ReactEventHandler;
 }
 
@@ -28,7 +26,7 @@ export default function Modal({
   return (
     <Dialog
       open={open}
-      onClick={onClick}
+      onClose={onClick}
     >
       <DialogTitle data-testid="title" >
         {title}
