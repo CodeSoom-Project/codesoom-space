@@ -21,11 +21,10 @@ public class EmailVerificationRequestService {
     private final UserRepository userRepository;
     private final EmailHelper helper;
 
-    @Value("${email.auth.subject}")
-    private static String SUBJECT;
+    private static final String SUBJECT = "코드숨 공부방 이메일 인증 안내입니다.";
 
     @Value("${email.auth.url}")
-    private static String URL;
+    private String URL;
 
     public EmailVerificationRequestService(
             final EmailTokenRepository emailTokenRepository,
@@ -54,8 +53,7 @@ public class EmailVerificationRequestService {
                 .save(EmailToken.createEmailToken(userId));
 
         String email = user.getEmail();
-        String content = URL + token;
-
+        String content = emailVerificationContent(URL + token.getId());
         try {
             helper.send(email, SUBJECT, content);
         } catch (IOException e) {
@@ -64,6 +62,17 @@ public class EmailVerificationRequestService {
         }
 
         return token;
+    }
+
+    private String emailVerificationContent(String href) {
+        StringBuilder content = new StringBuilder();
+        content.append("<div>");
+        content.append("<p>안녕하세요.</p>");
+        content.append("<p>코드숨 공부방을 이용해주셔서 감사합니다.</p>");
+        content.append("<p>아래 링크를 클릭하여 이메일 인증을 완료해주세요.");
+        content.append(String.format("<p><a href=\"%s\">이메일 인증하기</a></p>", href));
+        content.append("</div>");
+        return content.toString();
     }
 
 }

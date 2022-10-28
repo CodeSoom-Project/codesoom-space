@@ -1,5 +1,6 @@
 package com.codesoom.myseat.helpers;
 
+import com.codesoom.myseat.properties.SendGridProperties;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -16,11 +17,11 @@ import java.io.IOException;
 @Component
 public class EmailHelper {
 
-    @Value("${email.api-key}")
-    private static String API_KEY;
+    private final SendGridProperties properties;
 
-    @Value("${email.from}")
-    private static String FROM;
+    public EmailHelper(final SendGridProperties properties) {
+        this.properties = properties;
+    }
 
     /**
      * 인증 이메일을 전송합니다.
@@ -33,13 +34,13 @@ public class EmailHelper {
             final String content
     ) throws IOException {
         Mail mail = new Mail(
-                new Email(FROM),
+                new Email(properties.getFrom()),
                 subject,
                 new Email(sendTo),
-                new Content("text/plain", content)
+                new Content("text/html", content)
         );
 
-        SendGrid sg = new SendGrid(API_KEY);
+        SendGrid sg = new SendGrid(properties.getApiKey());
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
