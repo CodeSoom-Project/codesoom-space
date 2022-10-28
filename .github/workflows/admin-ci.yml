@@ -3,8 +3,8 @@ name: Admin CI
 on:
   push:
     branches: ["main"]
-    # paths:
-    #   - "app-admin/**"
+    paths:
+      - "app-admin/**"
   pull_request:
     branches: ["main"]
     paths:
