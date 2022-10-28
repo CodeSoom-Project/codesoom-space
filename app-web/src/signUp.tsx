@@ -1,10 +1,12 @@
-import { Button } from '@mui/material';
-
 import styled from '@emotion/styled';
+
+import { Button } from '@mui/material';
 
 import { DeepRequired, FieldErrorsImpl, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form/dist';
 
 import { UseMutateFunction } from 'react-query';
+
+import Layout from './layouts/Layout';
 
 import { SignUpFormData } from './typings/auth';
 
@@ -45,59 +47,61 @@ interface Props {
 
 export default function SignUp({ register, errors, handleSubmit, signUp }: Props) {
   return (
-    <FormWrapper
-      onSubmit={handleSubmit(({ email, password, name }: SignUpFormData) => {
-        signUp({
-          email,
-          password,
-          name,
-        });
-      })
-      }>
+    <Layout>
+      <FormWrapper
+        onSubmit={handleSubmit(({ email, password, name }: SignUpFormData) => {
+          signUp({
+            email,
+            password,
+            name,
+          });
+        })
+        }>
 
-      <LabelWrapper>
-        <div>
-          <Label htmlFor="name">이름</Label>
-          <input {...register('name', {
-            required: true,
-          })} type="text" id="name" />
-        </div>
+        <LabelWrapper>
+          <div>
+            <Label htmlFor="name">이름</Label>
+            <input {...register('name', {
+              required: true,
+            })} type="text" id="name" />
+          </div>
 
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <input {...register('email', {
-            required: true,
-          },
-          )} type="email" id="email" />
-        </div>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <input {...register('email', {
+              required: true,
+            },
+            )} type="email" id="email" />
+          </div>
 
-        <div>
-          <Label htmlFor="password">비밀번호</Label>
+          <div>
+            <Label htmlFor="password">비밀번호</Label>
 
-          <input {...register('password', {
-            required: true,
-          })} type="password" id="password" />
-        </div>
+            <input {...register('password', {
+              required: true,
+            })} type="password" id="password" />
+          </div>
 
-        <div>
-          <Label htmlFor="passwordMatch">비밀번호 확인</Label>
-          <input {...register('passwordMatch', {
-            required: true,
-          })} type="password" id="passwordMatch" />
-          {errors.passwordMatch && (
-            <>
-              <p>{errors.passwordMatch?.message}</p>
-              {errors.name?.type === 'required' && '이름을 입력 해 주세요'}
-              {errors.email?.type === 'required' && '이메일을 입력 해 주세요'}
-              {errors.password?.type === 'required' && '비밀번호를 입력 해 주세요'}
-            </>
-          )}
-        </div>
-      </LabelWrapper>
+          <div>
+            <Label htmlFor="passwordMatch">비밀번호 확인</Label>
+            <input {...register('passwordMatch', {
+              required: true,
+            })} type="password" id="passwordMatch" />
+            {errors.passwordMatch && (
+              <>
+                <p>{errors.passwordMatch?.message}</p>
+                {errors.name?.type === 'required' && '이름을 입력 해 주세요'}
+                {errors.email?.type === 'required' && '이메일을 입력 해 주세요'}
+                {errors.password?.type === 'required' && '비밀번호를 입력 해 주세요'}
+              </>
+            )}
+          </div>
+        </LabelWrapper>
 
-      <ButtonWrapper>
-        <Button type="submit" variant="outlined">회원가입하기</Button>
-      </ButtonWrapper>
-    </FormWrapper>
+        <ButtonWrapper>
+          <Button type="submit" variant="outlined">회원가입하기</Button>
+        </ButtonWrapper>
+      </FormWrapper>
+    </Layout>
   );
 }

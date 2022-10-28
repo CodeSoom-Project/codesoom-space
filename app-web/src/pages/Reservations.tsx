@@ -8,6 +8,8 @@ import { AxiosError } from 'axios';
 
 import { useAppDispatch, useAppSelector } from '../hooks';
 
+import Layout from '../layouts/Layout';
+
 import { get } from '../utils';
 
 import { resetReservations, saveIsDetail, saveIsUpdate, toggleReservationsModal } from '../redux/reservationsSlice';
@@ -141,44 +143,46 @@ export default function Reservations() {
   });
 
   return (
-    <Container>
-      <ReservationDialog
-        loading={reservationIsLoading}
-        updateLoading={updateReservationisLoading}
-        open={isOpenReservationsModal}
-        onClose={onClickToggleReservationsModal}
-        onApply={onClickApplyReservation}
-        onUpdate={onClickUpdateRservation}
-      />
-
-      <RetrospectivesModal
-        open={isOpenRetrospectModal}
-        onClose={onClickToggleRetrospectModal}
-        onApply={onClickApplyRetrospectives}
-        onUpdate={onClickUpdateRetrospectives}
-      />
-
-      <Wrap>
-        <Header>
-          <Button
-            variant="outlined"
-            size="large"
-            onClick={() => {
-              onClickToggleReservationsModal();
-              dispatch(saveIsDetail(false));
-            }}
-          >예약하기
-          </Button>
-        </Header>
-
-        <ReservationsTable
-          onOpenReservationModal={onClickToggleReservationsModal}
-          onOpenRetrospectModal={onClickToggleRetrospectModal}
-          isLoading={isLoading}
-          reservations={data?.reservations}
-          isError={isError}
+    <Layout>
+      <Container>
+        <ReservationDialog
+          loading={reservationIsLoading}
+          updateLoading={updateReservationisLoading}
+          open={isOpenReservationsModal}
+          onClose={onClickToggleReservationsModal}
+          onApply={onClickApplyReservation}
+          onUpdate={onClickUpdateRservation}
         />
-      </Wrap>
-    </Container >
+
+        <RetrospectivesModal
+          open={isOpenRetrospectModal}
+          onClose={onClickToggleRetrospectModal}
+          onApply={onClickApplyRetrospectives}
+          onUpdate={onClickUpdateRetrospectives}
+        />
+
+        <Wrap>
+          <Header>
+            <Button
+              variant="outlined"
+              size="large"
+              onClick={() => {
+                onClickToggleReservationsModal();
+                dispatch(saveIsDetail(false));
+              }}
+            >예약하기
+            </Button>
+          </Header>
+
+          <ReservationsTable
+            onOpenReservationModal={onClickToggleReservationsModal}
+            onOpenRetrospectModal={onClickToggleRetrospectModal}
+            isLoading={isLoading}
+            reservations={data?.reservations}
+            isError={isError}
+          />
+        </Wrap>
+      </Container>
+    </Layout>
   );
 }
