@@ -1,0 +1,50 @@
+name: Admin CI
+
+on:
+  push:
+    branches: ["main"]
+    # paths:
+    #   - "app-admin/**"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "app-admin/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./app-admin
+
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node.js 16.17.1
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.17.1
+          cache: "npm"
+          cache-dependency-path: app-admin/package-lock.json
+      - name: Install dependecies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      # - name: Test
+      #   run: npm run test
+      # - name: Run lint
+      #   run: npm run lint
+      - name: Configure AWS Credentials
+        if: github.ref == 'refs/heads/main'
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: ap-northeast-2
+      - name: Deploy
+        if: github.ref == 'refs/heads/main'
+        run: |
+          aws s3 cp dist s3://space-admin.codesoom.com --recursive --exclude index.html --acl public-read --region ap-northeast-2
+          aws s3 cp dist/index.html s3://space-admin.codesoom.com --cache-control max-age=0 --acl public-read --region ap-northeast-2
