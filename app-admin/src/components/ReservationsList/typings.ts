@@ -26,5 +26,7 @@ export interface Props {
   reservations: Reservation[];
   columns: Column[];
   pagination: Pagination;
+  open: boolean;
   onChange: (e: React.ChangeEvent<unknown>, value: number)=> void;
+  onClick: (id: number)=> void;
 }

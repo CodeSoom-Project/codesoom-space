@@ -25,7 +25,10 @@ const StyledPaper = styled(Paper)({
   marginTop: '4rem',
 });
 
-const ContentRow = styled(TableRow)(({ backgroundcolor, color }: { backgroundcolor?: string, color?: string }) => ({
+const ContentRow = styled(TableRow)(({
+  backgroundcolor,
+  color,
+}: { backgroundcolor?: string, color?: string }) => ({
   backgroundColor: backgroundcolor ?? '#FFFFFF',
 
   'td, button': {
@@ -33,14 +36,25 @@ const ContentRow = styled(TableRow)(({ backgroundcolor, color }: { backgroundcol
   },
 }));
 
-export default function ReservationsList({ reservations, columns, pagination, onChange }: Props) {
+export default function ReservationsList({
+  reservations,
+  columns,
+  pagination,
+  onChange,
+  onClick }: Props) {
   const { totalPages } = pagination;
 
-  const statuses: { [key: string]: { text: string, backgroundColor?: string, color?: string }; } = {
+  const statuses: { [key: string]: {
+    text: string,
+    backgroundColor?: string,
+    color?: string }
+  } = {
     'RESERVED': { text: '예약 완료' },
     'CANCELED': { text: '예약 취소', backgroundColor: '#D5D5D5' },
     'RETROSPECTIVE_WAITING': { text: '회고작성 전' },
-    'RETROSPECTIVE_COMPLETE': { text: '회고작성 완료', backgroundColor: '#10B5E8', color: '#FFFFFF' },
+    'RETROSPECTIVE_COMPLETE': { text: '상세보기',
+      backgroundColor: '#10B5E8',
+      color: '#FFFFFF' },
   };
 
   return (
@@ -63,7 +77,12 @@ export default function ReservationsList({ reservations, columns, pagination, on
             </TableHead>
 
             <TableBody>
-              {reservations.map(({ id, date, status, user: { name } }) => {
+              {reservations.map(({
+                id,
+                date,
+                status,
+                content,
+                user: { name } }) => {
                 const { text, backgroundColor, color } = statuses[status];
 
                 const waiting = status === 'RETROSPECTIVE_WAITING';
@@ -78,10 +97,13 @@ export default function ReservationsList({ reservations, columns, pagination, on
                     <TableCell align="center">{name}</TableCell>
                     <TableCell align="center">{date}</TableCell>
                     <TableCell align="center">
-                      <Button disabled={canceled} >상세보기</Button>
+                      <Button disabled={canceled} >{content}</Button>
                     </TableCell>
                     <TableCell align="center">
-                      <Button disabled={waiting || canceled}>
+                      <Button
+                        onClick={() => onClick(id)}
+                        disabled={waiting || canceled}
+                      >
                         {text}
                       </Button>
                     </TableCell>
@@ -93,7 +115,10 @@ export default function ReservationsList({ reservations, columns, pagination, on
             <TableFooter>
               <TableRow>
                 <TableCell align="center">
-                  <Pagination count={totalPages} onChange={onChange} color="primary" />
+                  <Pagination
+                    count={totalPages}
+                    onChange={onChange}
+                    color="primary" />
                 </TableCell>
               </TableRow>
             </TableFooter>

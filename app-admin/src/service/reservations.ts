@@ -10,4 +10,4 @@ export const getReservations = async ({ page, size }: { page: number; size: numb
   return data;
 };
 
-export const x = () => {};
+export const x = () => { };
