@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseBody
 @ControllerAdvice
 public class ControllerErrorAdvice {
-    
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(UserNotFoundException.class)
     public String handleUserNotFound() {
         return "존재하지 않는 회원입니다.";
     }
-    
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AuthenticationFailureException.class)
     public String handleAuthenticationFailure() {
@@ -43,37 +43,37 @@ public class ControllerErrorAdvice {
     public String handleNotRegisteredReservation(NotOwnedReservationException e) {
         return e.getMessage();
     }
-    
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(RetrospectiveNotFoundException.class)
     public String handleRetrospectiveNotFound() {
         return "회고 조회에 실패했습니다.";
     }
-    
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicatedEmailException.class)
     public String handleDuplicatedEmail() {
         return "이미 가입된 이메일입니다. 다른 이메일로 회원 가입을 해주세요";
     }
-    
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(AlreadyPostedRetrospectiveException.class)
     public String handleAlreadyPostedRetrospective() {
         return "이미 회고를 작성했습니다.";
     }
-    
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ContentTooLongException.class)
     public String handleContentTooLong() {
         return "입력값 길이가 너무 깁니다. 1000자 이하로 입력해주세요.";
     }
-    
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ContentTooShortException.class)
     public String handleContentTooShort() {
         return "입력값 길이가 너무 짧습니다. 100자 이상으로  입력해주세요.";
     }
-    
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CannotUpdateCanceledReservationException.class)
     public String handleCannotUpdateCanceledReservation() {
