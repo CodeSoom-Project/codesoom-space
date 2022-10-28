@@ -43,7 +43,6 @@ export default function LogIn({ register, errors, handleSubmit, login }: Props) 
   return (
     <Layout>
       <FormWrapper
-        style={{ padding: '1rem 0' }}
         onSubmit={handleSubmit(({ email, password }: User) => {
           login({
             email,
