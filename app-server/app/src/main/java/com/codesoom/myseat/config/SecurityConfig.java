@@ -47,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/docs/**", "/signup", "/login", "/seats").permitAll()
+                .antMatchers("/", "/docs/**", "/signup", "/login",
+                        "/seats", "/verification/email/verify").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(authenticationFilter())
