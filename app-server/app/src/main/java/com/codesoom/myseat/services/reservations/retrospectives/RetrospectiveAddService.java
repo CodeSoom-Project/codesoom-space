@@ -5,7 +5,6 @@ import com.codesoom.myseat.domain.Retrospective;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.exceptions.ContentTooLongException;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
-import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.repositories.ReservationRepository;
 import com.codesoom.myseat.repositories.RetrospectiveRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -36,23 +35,20 @@ public class RetrospectiveAddService {
      * @throws NotOwnedReservationException 예약자가 아닌 회원이 해당 예약에 대해 회고를 작성하려고 한다면 예외를 던집니다.
      * @throws ContentTooLongException 회고의 길이가 너무 길면 던집니다.
      */
-    public Retrospective createRetrospective(final User user,
-                                             final Long reservationId,
-                                             final String content) {
-        if (!isReservedUser(reservationId, user.getId())) {
-            throw new NotOwnedReservationException();
-        }
+    public Retrospective create(final User user,
+                                final Long reservationId,
+                                final String content) {
+
         log.info("회고 요청: " + content);
 
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(ReservationNotFoundException::new);
+        Reservation reservation = reservationRepository
+                .findByIdAndUser_Id(reservationId, user.getId())
+                .orElseThrow(NotOwnedReservationException::new);
 
         reservation.completeRetrospective();
 
-        Retrospective retrospective = Retrospective.builder()
-                .reservation(reservation)
-                .content(content)
-                .build();
+        Retrospective retrospective = reservation
+                .addRetrospective(reservation, content);
 
         log.info("회고 요청: " + retrospective.getContent());
 
@@ -62,18 +58,6 @@ public class RetrospectiveAddService {
             e.printStackTrace();
             throw new ContentTooLongException();
         }
-    }
-
-    /**
-     * 예약한 회원이면 true, 그렇지 않으면 false를 반환합니다.
-     *
-     * @param reservationId 예약 id
-     * @param userId 회원 id
-     * @return 예약한 회원이면 true, 그렇지 않으면 false
-     */
-    public boolean isReservedUser(final Long reservationId,
-                                  final Long userId) {
-        return reservationRepository.existsByIdAndUser_Id(reservationId, userId);
     }
 
 }
