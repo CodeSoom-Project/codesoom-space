@@ -4,35 +4,31 @@ import { AxiosError } from 'axios';
 
 import styled from '@emotion/styled';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-
 import { Box, Button, TextField } from '@mui/material';
 
 import { verifyEmail } from '../../services/mypage';
-import { sendEmail } from '../../redux/mypageSlice';
-import { get } from '../../utils';
-import { useState } from 'react';
 
 interface Props {
+  emailVerified: boolean,
   email: string
 }
 
-const ExpirationTime = styled.p({
-  fontSize: '.7rem',
-  color: '#F15F5F',
+const Container = styled(Box)({
+  display: 'flex',
+  alignItems: 'baseline',
 });
 
-export default function EmailField({ email }: Props) {
-  const [time, setTime] = useState();
-  const dispatch = useAppDispatch();
+const Message = styled.p({
+  marginLeft: 5,
+  fontSize: '.7em',
+  color: '#000000',
+});
 
-  const { emailVerification } = useAppSelector(get('mypage'));
+export default function EmailField({ emailVerified, email }: Props) {
 
   const { mutate: verifyEmailMutate } = useMutation(verifyEmail, {
-    onSuccess: ({ data }) => {
-      setTime(data.expirationMinutes);
-      dispatch(sendEmail('success'));
-      alert(`인증 메일이 전송되었습니다. 이메일을 확인해주세요. ${time}분입니다.`);
+    onSuccess: () => {
+      alert('인증 메일이 전송되었습니다. 10분 내에 인증을 완료해 주세요.');
     },
     onError: (error: AxiosError) => {
       alert(error.response?.data);
@@ -44,11 +40,7 @@ export default function EmailField({ email }: Props) {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'baseline',
-      }}>
+    <Container>
       <TextField
         value={email}
         label="e-mail"
@@ -56,11 +48,8 @@ export default function EmailField({ email }: Props) {
         disabled
         margin="normal"
       />
-      <Button onClick={handleClick}>인증하기</Button>
-
-      {emailVerification === 'success' && (
-        <ExpirationTime>유효시간 {time}분</ExpirationTime>
-      )}
-    </Box>
+      {emailVerified && (<Message>인증완료</Message>)}
+      {!emailVerified && (<Button onClick={handleClick}>인증하기</Button>)}
+    </Container>
   );
 }

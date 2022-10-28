@@ -37,7 +37,7 @@ export default function MyPage() {
     return <CircularProgress />;
   }
 
-  const { name, email } = data;
+  const { name, email, emailVerified } = data;
 
   return (
     <Container>
@@ -48,7 +48,9 @@ export default function MyPage() {
           size="small"
           disabled
         />
-        <EmailField email={email} />
+        <EmailField
+          emailVerified={emailVerified}
+          email={email} />
       </Box>
     </Container>
   );
