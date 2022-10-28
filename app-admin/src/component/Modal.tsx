@@ -15,7 +15,6 @@ interface Props {
   content: string;
   text?: string;
 
-  onClose: React.ReactEventHandler;
   onClick: React.ReactEventHandler;
 }
 
@@ -24,13 +23,12 @@ export default function Modal({
   title,
   content,
   text = '확인',
-  onClose,
   onClick,
 }: Props) {
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClick={onClick}
     >
       <DialogTitle data-testid="title" >
         {title}
