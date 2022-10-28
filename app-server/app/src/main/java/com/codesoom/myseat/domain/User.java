@@ -12,6 +12,7 @@ import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -72,6 +73,14 @@ public class User {
                 .userId(this.id)
                 .roleName("VERIFIED_USER")
                 .build());
+    }
+
+    /** 이메일 인증된 회원이면 true, 아니라면 false를 반환합니다. */
+    public boolean isEmailVerified() {
+        return this.roles.stream()
+                .map(Role::getRoleName)
+                .collect(Collectors.toList())
+                .contains("VERIFIED_USER");
     }
 
 }

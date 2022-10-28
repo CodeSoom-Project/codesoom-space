@@ -1,5 +1,6 @@
 package com.codesoom.myseat.controllers.mypage;
 
+import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.services.auth.AuthenticationService;
 import com.codesoom.myseat.services.users.UserService;
@@ -12,6 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -42,6 +45,9 @@ class MyPageControllerTest {
                 .name("김철수")
                 .email("soo@email.com")
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
+                .roles(List.of(
+                        new Role(1L, 1L, "USER"),
+                        new Role(2L, 1L, "VERIFIED_USER")))
                 .build();
 
         given(authService.parseToken(ACCESS_TOKEN))
@@ -55,7 +61,8 @@ class MyPageControllerTest {
 
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("김철수"))
-                .andExpect(jsonPath("$.email").value("soo@email.com"));
+                .andExpect(jsonPath("$.email").value("soo@email.com"))
+                .andExpect(jsonPath("$.emailVerified").value(true));
     }
 
 }
