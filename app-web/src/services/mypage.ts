@@ -13,3 +13,13 @@ export const getUserInfo = async () => {
 
   return data;
 };
+
+export const verifyEmail = async () => {
+  const accessToken = loadItem('accessToken');
+
+  const response = await httpClient.post('/verification/email', {}, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+  return response;
+};
