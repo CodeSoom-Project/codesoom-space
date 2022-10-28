@@ -16,7 +16,6 @@ describe('modal', () => {
       open={true}
       title="제목"
       content='내용입니다'
-      onClose={onClose}
       onClick={onClick}
     />,
   );

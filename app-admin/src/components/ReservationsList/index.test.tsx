@@ -14,6 +14,8 @@ describe('LoginFormContainer', () => {
         reservations={reservations}
         columns={columns}
         onChange={() => {}}
+        onClick={() => {}}
+        open={false}
       />,
     );
 
