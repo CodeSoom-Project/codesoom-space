@@ -1,33 +1,53 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { getRetrospectives } from '../service/retrospectives';
+
+import { AppDispatch } from '../store';
+
+import { AxiosError } from 'axios';
+
 interface RetrospectivesState {
-  retrospectives: string;
-  isOpenRetrospectivesModal: boolean;
+  content: string;
+  showRetrospectivesModal: boolean;
 }
 
 export const initialState: RetrospectivesState = {
-  retrospectives: '',
-  isOpenRetrospectivesModal: false,
+  content: '',
+  showRetrospectivesModal: false,
 };
 
 const { actions, reducer } = createSlice({
   name: 'retrospectives',
   initialState,
   reducers: {
-    viewRetrospectives: (state, { payload }) => ({
+    saveDetailRetrospectives: (state, { payload }) => ({
       ...state,
-      retrospectives: payload,
+      content: payload,
+      showRetrospectivesModal: true,
     }),
     toggleRetrospectivesModal: (state) => ({
       ...state,
-      isOpenRetrospectivesModal: !state.isOpenRetrospectivesModal,
+      showRetrospectivesModal: !state.showRetrospectivesModal,
     }),
   },
 });
 
 export const {
-  viewRetrospectives,
+  saveDetailRetrospectives,
   toggleRetrospectivesModal,
 } = actions;
+
+export const loadRetrospectives = (id: number) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const { content } = await getRetrospectives(id);
+
+      dispatch(saveDetailRetrospectives(content));
+    } catch (error) {
+      const response = (error as AxiosError).response;
+      alert(response!.data);
+    }
+  };
+};
 
 export default reducer;
