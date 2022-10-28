@@ -22,7 +22,7 @@ public class RetrospectiveDetailController {
     private final RetrospectiveDetailService retrospectiveDetailService;
 
     public RetrospectiveDetailController(
-            ReservationDetailService reservationDetailService, 
+            ReservationDetailService reservationDetailService,
             RetrospectiveDetailService retrospectiveDetailService
     ) {
         this.reservationDetailService = reservationDetailService;
@@ -31,23 +31,24 @@ public class RetrospectiveDetailController {
 
     /**
      * 회고 상세 조회에 성공하면 상태 코드 200과 함께 응답 정보를 반환합니다.
+     *
      * @param principal 인증 정보
-     * @param id 예약 id
+     * @param id        예약 id
      * @return 응답 정보
      */
     @GetMapping("/{id}/retrospectives")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("isAuthenticated()")
-    public RetrospectiveResponse retrospectiveDetail  (
+    @PreAuthorize("isAuthenticated() and hasAuthority('VERIFIED_USER')")
+    public RetrospectiveResponse retrospectiveDetail(
             @AuthenticationPrincipal UserAuthentication principal,
             @PathVariable Long id
     ) {
         Reservation reservation = reservationDetailService.reservationOfUser(id, principal.getId());
         Retrospective retrospective = retrospectiveDetailService.retrospective(id);
-        
+
         return toResponse(retrospective);
     }
-    
+
     private RetrospectiveResponse toResponse(
             Retrospective retrospective
     ) {

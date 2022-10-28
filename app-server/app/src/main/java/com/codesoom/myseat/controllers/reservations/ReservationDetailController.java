@@ -38,7 +38,7 @@ public class ReservationDetailController {
      * @return 예약 정보
      * @throws ReservationNotFoundException 주어진 예약 id와 회원 id로 예약 정보를 찾지 못한 경우
      */
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() and hasAuthority('VERIFIED_USER')")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public ReservationResponse reservation(
