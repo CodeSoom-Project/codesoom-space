@@ -44,11 +44,13 @@ export default function EmailVerificationPage() {
     navigate('/', { replace: true });
   };
 
-  const { mutate: verificationMutate, isLoading, isSuccess, isError } = useMutation('EmailVerification', verification, {
-    onError: (error: AxiosError) => {
-      dispatch(saveError(error.response?.data));
-    },
-  });
+  const { mutate: verificationMutate, isLoading, isSuccess, isError } = useMutation(
+    'EmailVerification', verification,
+    {
+      onError: (error: AxiosError) => {
+        dispatch(saveError(error.response?.data));
+      },
+    });
 
   useEffect(() => {
     return () => {
