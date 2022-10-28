@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
@@ -68,6 +69,7 @@ class AdminRetrospectiveDetailControllerTest {
     @Test
     void GET_reservation_responses_retrospective() throws Exception {
         Long reservationId = 1L;
+        LocalDateTime NOW = LocalDateTime.of(2022, 10, 26, 17, 22, 0);
 
         given(authService.roles(any())).willReturn(List.of(ADMIN_ROLE));
 
@@ -75,6 +77,7 @@ class AdminRetrospectiveDetailControllerTest {
                 .willReturn(Retrospective.builder()
                         .id(reservationId)
                         .content("잘했다.")
+                        .createdDate(NOW)
                         .build());
 
         ResultActions perform
@@ -84,7 +87,9 @@ class AdminRetrospectiveDetailControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(
                         containsString(
-                                "{\"id\":1,\"content\":\"잘했다.\"}"))
+                                "{\"id\":1,\"content\":\"잘했다.\",\"" +
+                                        "createdDate\":\"2022-10-26T17:22:00\"}")
+                        )
                 );
 
     }
