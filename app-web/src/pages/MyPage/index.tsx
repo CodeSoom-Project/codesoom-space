@@ -2,11 +2,11 @@ import { useQuery } from 'react-query';
 
 import styled from '@emotion/styled';
 
-import { Box, Button, CircularProgress, TextField } from '@mui/material';
+import { TextField, CircularProgress, Box } from '@mui/material';
 
-import Layout from '../../layouts/Layout';
+import { getUserInfo } from '../../services/mypage';
 
-import { getUserInfo } from '../../services/api';
+import EmailField from '../../components/mypage/EmailFiled';
 
 const Container = styled.div({
   display: 'flex',
@@ -29,11 +29,6 @@ const Container = styled.div({
 });
 
 export default function MyPage() {
-
-  const handleClick = () => {
-    alert('아직 준비중입니다^^');
-  };
-
   const { isLoading, data } = useQuery('mypage', getUserInfo, {
     retry: 1,
   });
@@ -45,39 +40,16 @@ export default function MyPage() {
   const { name, email } = data;
 
   return (
-    <Layout>
-      <Container>
-        <Box>
-          <TextField
-            value={name}
-            label="이름"
-            size="small"
-            disabled
-          />
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-            }}>
-            <TextField
-              value={email}
-              label="e-mail"
-              size="small"
-              disabled
-              margin="normal"
-            />
-            <Button onClick={handleClick}>인증하기</Button>
-          </Box>
-        </Box>
-        <Button
-          onClick={handleClick}
-          sx={{
-            margin: '30px auto 0',
-          }}
-          variant="contained">
-         저장하기
-        </Button>
-      </Container>
-    </Layout>
+    <Container>
+      <Box>
+        <TextField
+          value={name}
+          label="이름"
+          size="small"
+          disabled
+        />
+        <EmailField email={email} />
+      </Box>
+    </Container>
   );
 }
