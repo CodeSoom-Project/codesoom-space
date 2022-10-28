@@ -80,7 +80,7 @@ class VerifyEmailTokenControllerTest {
 
     @DisplayName("이메일 인증 토큰이 올바르지 않으면 404 not found를 반환한다.")
     @Test
-    void POST_verify_email_not_found() throws Exception {
+    void POST_verify_email_with_invalid_token_returns_not_found() throws Exception {
         VerifyEmailTokenRequest request
                 = new VerifyEmailTokenRequest("lfkd8122lMSD32k");
         doThrow(EmailTokenException.class)

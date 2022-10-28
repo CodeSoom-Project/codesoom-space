@@ -66,7 +66,7 @@ class VerifyEmailTokenServiceTest {
 
     @DisplayName("토큰을 찾을 수 없으면 EmailTokenException을 던진다.")
     @Test
-    void throw_when_not_found_token() {
+    void throw_when_token_not_found() {
         given(repository.findById(anyString()))
                 .willReturn(Optional.empty());
 
