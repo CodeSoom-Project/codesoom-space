@@ -6,6 +6,8 @@ import { DeepRequired, FieldErrorsImpl, UseFormHandleSubmit, UseFormRegister } f
 
 import { UseMutateFunction } from 'react-query';
 
+import Layout from './layouts/Layout';
+
 import { User } from './typings/auth';
 
 const FormWrapper = styled.form({
@@ -39,38 +41,39 @@ interface Props {
 
 export default function LogIn({ register, errors, handleSubmit, login }: Props) {
   return (
-    <FormWrapper
-      style={{ padding: '1rem 0' }}
-      onSubmit={handleSubmit(({ email, password }: User) => {
-        login({
-          email,
-          password,
-        });
-      })
-      }>
+    <Layout>
+      <FormWrapper
+        onSubmit={handleSubmit(({ email, password }: User) => {
+          login({
+            email,
+            password,
+          });
+        })
+        }>
 
-      <LabelWrapper >
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <input {...register('email', {
-            required: true,
-          },
-          )} type="email" id="email" />
-        </div>
+        <LabelWrapper >
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <input {...register('email', {
+              required: true,
+            },
+            )} type="email" id="email" />
+          </div>
 
-        <div>
-          <Label htmlFor="password">비밀번호</Label>
-          <input {...register('password', {
-            required: true,
-          })} type="password" id="password" />
-          {errors.email?.type === 'required' && '이메일을 입력 해 주세요'}
-          {errors.password?.type === 'required' && '비밀번호를 입력 해 주세요'}
-        </div>
-      </LabelWrapper>
+          <div>
+            <Label htmlFor="password">비밀번호</Label>
+            <input {...register('password', {
+              required: true,
+            })} type="password" id="password" />
+            {errors.email?.type === 'required' && '이메일을 입력 해 주세요'}
+            {errors.password?.type === 'required' && '비밀번호를 입력 해 주세요'}
+          </div>
+        </LabelWrapper>
 
-      <ButtonWrapper>
-        <Button type="submit" variant="outlined">로그인</Button>
-      </ButtonWrapper>
-    </FormWrapper >
+        <ButtonWrapper>
+          <Button type="submit" variant="outlined">로그인</Button>
+        </ButtonWrapper>
+      </FormWrapper>
+    </Layout>
   );
 }

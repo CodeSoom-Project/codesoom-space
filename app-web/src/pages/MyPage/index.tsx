@@ -2,7 +2,9 @@ import { useQuery } from 'react-query';
 
 import styled from '@emotion/styled';
 
-import { Box, Button, TextField, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, TextField } from '@mui/material';
+
+import Layout from '../../layouts/Layout';
 
 import { getUserInfo } from '../../services/api';
 
@@ -43,37 +45,39 @@ export default function MyPage() {
   const { name, email } = data;
 
   return (
-    <Container>
-      <Box>
-        <TextField
-          value={name}
-          label="이름"
-          size="small"
-          disabled
-        />
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-          }}>
+    <Layout>
+      <Container>
+        <Box>
           <TextField
-            value={email}
-            label="e-mail"
+            value={name}
+            label="이름"
             size="small"
             disabled
-            margin="normal"
           />
-          <Button onClick={handleClick}>인증하기</Button>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+            <TextField
+              value={email}
+              label="e-mail"
+              size="small"
+              disabled
+              margin="normal"
+            />
+            <Button onClick={handleClick}>인증하기</Button>
+          </Box>
         </Box>
-      </Box>
-      <Button
-        onClick={handleClick}
-        sx={{
-          margin: '30px auto 0',
-        }}
-        variant="contained">
+        <Button
+          onClick={handleClick}
+          sx={{
+            margin: '30px auto 0',
+          }}
+          variant="contained">
          저장하기
-      </Button>
-    </Container>
+        </Button>
+      </Container>
+    </Layout>
   );
 }
