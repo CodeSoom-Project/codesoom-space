@@ -14,4 +14,6 @@ public class MyPageResponse {
     String name;
     
     String email;
+
+    boolean emailVerified;
 }
