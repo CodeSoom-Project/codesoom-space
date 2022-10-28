@@ -21,10 +21,9 @@ public class EmailToken {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(
-            name = "uuid2", 
+            name = "uuid2",
             strategy = "uuid2"
     )
-    @Column(length = 30)
     private String id;
 
     private LocalDateTime expirationDate;
@@ -35,7 +34,7 @@ public class EmailToken {
 
     /**
      * 주어진 회원 id에 대해 생성된 이메일 인증 토큰을 반환합니다.
-     * 
+     *
      * @param userId 회원 id
      * @return 이메일 인증 토큰
      */
@@ -57,4 +56,3 @@ public class EmailToken {
     }
 
 }
-
