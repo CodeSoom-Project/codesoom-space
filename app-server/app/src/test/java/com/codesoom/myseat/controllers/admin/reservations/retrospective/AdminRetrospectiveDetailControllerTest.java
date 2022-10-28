@@ -87,7 +87,9 @@ class AdminRetrospectiveDetailControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(
                         containsString(
-                                "{\"id\":1,\"content\":\"잘했다.\",\"createdDate\":\"2022-10-26T17:22:00\"}"))
+                                "{\"id\":1,\"content\":\"잘했다.\",\"" +
+                                        "createdDate\":\"2022-10-26T17:22:00\"}")
+                    )
                 );
 
     }
