@@ -36,7 +36,7 @@ public class User {
     private String password;
 
     @Builder.Default
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
     private List<Role> roles = new ArrayList<>();
 
