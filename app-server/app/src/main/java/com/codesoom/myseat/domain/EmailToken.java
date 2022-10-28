@@ -32,6 +32,16 @@ public class EmailToken {
 
     private Long userId;
 
+    public EmailToken(final String id,
+                      final LocalDateTime expirationDate,
+                      final boolean expired,
+                      final Long userId) {
+        this.id = id;
+        this.expirationDate = expirationDate;
+        this.expired = expired;
+        this.userId = userId;
+    }
+
     /**
      * 주어진 회원 id에 대해 생성된 이메일 인증 토큰을 반환합니다.
      *
@@ -53,6 +63,16 @@ public class EmailToken {
      */
     public void setTokenExpired() {
         this.expired = true;
+    }
+
+    /**
+     * 토큰의 만료 여부를 확인합니다.
+     *
+     * @return 토큰 만료 일시가 현재보다 이전이라면 true, 아니라면 false
+     */
+    public boolean isExpired() {
+        return this.expirationDate
+                .isBefore(LocalDateTime.now());
     }
 
 }
