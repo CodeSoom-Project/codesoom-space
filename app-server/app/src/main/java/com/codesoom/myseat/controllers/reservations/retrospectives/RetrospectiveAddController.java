@@ -34,7 +34,10 @@ public class RetrospectiveAddController {
     private final UserService userService;
     private final ReservationAddService reservationAddService;
 
-    public RetrospectiveAddController(RetrospectiveAddService retrospectiveAddService, UserService userService, ReservationAddService reservationAddService) {
+    public RetrospectiveAddController(
+            RetrospectiveAddService retrospectiveAddService,
+            UserService userService,
+            ReservationAddService reservationAddService) {
         this.retrospectiveAddService = retrospectiveAddService;
         this.userService = userService;
         this.reservationAddService = reservationAddService;
@@ -71,7 +74,7 @@ public class RetrospectiveAddController {
             throw new ContentTooShortException();
         }
 
-        retrospectiveAddService.createRetrospective(user, id, content);
+        retrospectiveAddService.create(user, id, content);
     }
 
 }
