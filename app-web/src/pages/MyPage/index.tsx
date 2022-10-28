@@ -2,9 +2,11 @@ import { useQuery } from 'react-query';
 
 import styled from '@emotion/styled';
 
-import { TextField, CircularProgress, Box } from '@mui/material';
+import { Box, CircularProgress, TextField } from '@mui/material';
 
 import { getUserInfo } from '../../services/mypage';
+
+import Layout from '../../layouts/Layout';
 
 import EmailField from '../../components/mypage/EmailFiled';
 
@@ -40,18 +42,20 @@ export default function MyPage() {
   const { name, email, emailVerified } = data;
 
   return (
-    <Container>
-      <Box>
-        <TextField
-          value={name}
-          label="이름"
-          size="small"
-          disabled
-        />
-        <EmailField
-          emailVerified={emailVerified}
-          email={email} />
-      </Box>
-    </Container>
+    <Layout>
+      <Container>
+        <Box>
+          <TextField
+            value={name}
+            label="이름"
+            size="small"
+            disabled
+          />
+          <EmailField
+            emailVerified={emailVerified}
+            email={email} />
+        </Box>
+      </Container>
+    </Layout>
   );
 }
