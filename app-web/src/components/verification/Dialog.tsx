@@ -1,24 +1,24 @@
+import * as React from 'react';
 import { useState } from 'react';
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 interface Props {
-  title: string,
-  message: string
+  title: string;
+  message: string;
+  onClick: React.ReactEventHandler;
 }
 
-export default function AlertDialog({ title, message }: Props) {
+export default function AlertDialog({ title, message, onClick }: Props) {
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClick = () => {
+    setOpen(false);
+    onClick();
   };
 
   return (
@@ -38,7 +38,7 @@ export default function AlertDialog({ title, message }: Props) {
       <DialogActions>
         <Button
           type="button"
-          onClick={handleClose}
+          onClick={handleClick}
         >
           확인
         </Button>
