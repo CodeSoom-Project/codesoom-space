@@ -86,4 +86,10 @@ public class ControllerErrorAdvice {
         return e.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(EmailTokenException.class)
+    public String handleEmailTokenException(EmailTokenException e) {
+        return e.getMessage();
+    }
+
 }
