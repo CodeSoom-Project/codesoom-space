@@ -4,6 +4,7 @@ import reservationReducer from './ReservationSlice';
 import authSlice from './redux/authSlice';
 import retrospectivesReducer from './redux/retrospectivesSlice';
 import reservationsSlice from './redux/reservationsSlice';
+import verificationSlice from './redux/verificationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authSlice,
     retrospectives: retrospectivesReducer,
     reservations: reservationsSlice,
+    verification: verificationSlice,
   },
 
 });
