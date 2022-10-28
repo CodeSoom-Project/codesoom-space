@@ -55,5 +55,5 @@ jobs:
           docker pull jiy0ung/myseat-backend:${GITHUB_SHA::7}
           docker stop myseat-backend-container
           docker rm myseat-backend-container
-          docker run -d -e "SPRING_PROFILES_ACTIVE=mariadb" --name myseat-backend-container -v $(pwd)/application.yml:/application.yml -p 8080:8080 jiy0ung/myseat-backend:${GITHUB_SHA::7}
+          docker run -d -e "SPRING_PROFILES_ACTIVE=mariadb" --name myseat-backend-container -v $(pwd)/application.yml:/application.yml -v $(pwd)/application-secret.yml:/application-secret.yml -p 8080:8080 jiy0ung/myseat-backend:${GITHUB_SHA::7}
           docker network connect myseat-backend-network myseat-backend-container 
