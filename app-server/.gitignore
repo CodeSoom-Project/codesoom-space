@@ -25,3 +25,5 @@ ehthumbs_vista.db
 *.log
 *.jar
 *.war
+
+application.yml
