@@ -10,8 +10,10 @@ describe('LoginFormContainer', () => {
   const renderReservationsList = () =>
     render(
       <ReservationsList
+        pagination={{ page: 1, size: 10, totalPages: 1 }}
         reservations={reservations}
         columns={columns}
+        onChange={() => {}}
       />,
     );
 
