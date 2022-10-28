@@ -1,6 +1,7 @@
 package com.codesoom.myseat.db;
 
 import com.codesoom.myseat.domain.*;
+import com.codesoom.myseat.enums.ReservationStatus;
 import com.codesoom.myseat.repositories.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -20,9 +21,9 @@ public class DbInit {
     User user2;
 
     public DbInit(
-            UserRepository userRepo, 
-            RoleRepository roleRepo, 
-            ReservationRepository reservationRepo, 
+            UserRepository userRepo,
+            RoleRepository roleRepo,
+            ReservationRepository reservationRepo,
             PlanRepository planRepo,
             RetrospectiveRepository retrospectiveRepo
     ) {
@@ -38,7 +39,7 @@ public class DbInit {
         addUsers();
         addReservations();
     }
-    
+
     private void addUsers() {
         user1 = User.builder()
                 .name("김철수")
@@ -51,7 +52,7 @@ public class DbInit {
                 .build();
         userRepo.save(user1);
         roleRepo.save(role1);
-        
+
         user2 = User.builder()
                 .name("김영희")
                 .email("young@email.com")
@@ -76,7 +77,7 @@ public class DbInit {
                 .build();
         roleRepo.save(role3);
     }
-    
+
     private void addReservations() {
         Plan plan1 = Plan.builder()
                 .content("책읽기, 코테풀기")
@@ -88,6 +89,7 @@ public class DbInit {
                 .date(new Date("2022-10-11"))
                 .user(user1)
                 .plan(plan1)
+                .status(ReservationStatus.RETROSPECTIVE_COMPLETE)
                 .retrospective(retrospective)
                 .build();
         planRepo.save(plan1);
@@ -101,8 +103,27 @@ public class DbInit {
                 .date(new Date("2022-10-19"))
                 .user(user1)
                 .plan(plan2)
+                .status(ReservationStatus.CANCELED)
                 .build();
         planRepo.save(plan2);
         reservationRepo.save(reservation2);
+
+        Plan plan3;
+        Reservation reservation3;
+        for (int i = 1; i <= 20; i++) {
+            plan3 = Plan.builder()
+                    .content("깃 공부")
+                    .build();
+
+            reservation3 = Reservation.builder()
+                    .date(new Date("2022-11-" + i))
+                    .user(user1)
+                    .plan(plan2)
+                    .status(ReservationStatus.RETROSPECTIVE_WAITING)
+                    .build();
+            planRepo.save(plan3);
+            reservationRepo.save(reservation3);
+        }
+
     }
 }
