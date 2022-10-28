@@ -7,31 +7,46 @@ import { loadReservations, savePage } from '../../redux/reservationsSlice';
 import ReservationsList from '../../components/ReservationsList';
 
 import columns from '../../data/columns';
+
 import Modal from '../../component/Modal';
-import { toggleRetrospectivesModal } from '../../redux/retrospectivesSlice';
+
+import {
+  loadRetrospectives,
+  toggleRetrospectivesModal,
+} from '../../redux/retrospectivesSlice';
 
 export default function ReserVationsContainer() {
   const dispatch = useAppDispatch();
 
-  const { pagination, reservations } = useAppSelector((store) => store.reservations);
-  const { isOpenRetrospectivesModal } = useAppSelector((store) => store.retrospectives);
+  const {
+    pagination,
+    reservations,
+  } = useAppSelector((store) => store.reservations);
+
+  const {
+    showRetrospectivesModal,
+    content,
+  } = useAppSelector((store) => store.retrospectives);
 
   const { page } = pagination;
 
-  const handleChangePage = (e: React.ChangeEvent<unknown>, value: number): void => {
+  const handleChangePage = (
+    e: React.ChangeEvent<unknown>,
+    value: number): void => {
     dispatch(savePage(value));
+  };
+
+  const handleClickDetailRetrospectives = (id: number) => {
+    dispatch(loadRetrospectives(id));
   };
 
   useEffect(() => {
     dispatch(loadReservations());
   }, [page]);
 
-  const handleClickOpenModal = () => {
-    console.log('dd');
+  const modalHandler = () => {
     dispatch(toggleRetrospectivesModal());
   };
-
-  console.log(isOpenRetrospectivesModal);
 
   return (
     <>
@@ -39,13 +54,15 @@ export default function ReserVationsContainer() {
         pagination={pagination}
         reservations={reservations}
         columns={columns}
-        onClick={handleClickOpenModal}
-        onChange={handleChangePage} />
+        open={showRetrospectivesModal}
+        onClick={handleClickDetailRetrospectives}
+        onChange={handleChangePage}
+      />
       <Modal
-        title='test'
-        content='test'
-        open={isOpenRetrospectivesModal}
-        onClick={handleClickOpenModal}
+        title='회고 내용'
+        content={content}
+        open={showRetrospectivesModal}
+        onClick={modalHandler}
       />
     </>
   );
