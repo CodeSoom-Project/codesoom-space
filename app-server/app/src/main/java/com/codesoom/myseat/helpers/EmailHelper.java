@@ -16,7 +16,7 @@ import java.io.IOException;
 @Component
 public class EmailHelper {
 
-    @Value("${email.api-key}")
+    @Value("${email.auth.key}")
     private static String API_KEY;
 
     @Value("${email.from}")
