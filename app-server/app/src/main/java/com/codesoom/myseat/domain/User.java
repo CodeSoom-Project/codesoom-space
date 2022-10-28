@@ -66,4 +66,12 @@ public class User {
         return passwordEncoder.matches(password, this.password);
     }
 
+    /** 이메일 인증이 완료된 유저에게 새로운 role을 추가합니다.*/
+    public void verifyEmail() {
+        this.roles.add(Role.builder()
+                .userId(this.id)
+                .roleName("VERIFIED_USER")
+                .build());
+    }
+
 }
