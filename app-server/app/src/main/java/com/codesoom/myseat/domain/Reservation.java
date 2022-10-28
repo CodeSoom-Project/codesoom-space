@@ -119,4 +119,19 @@ public class Reservation {
         return this.status == ReservationStatus.CANCELED;
     }
 
+    /**
+     * 회고를 등록합니다.
+     *
+     * @param reservation 예약 정보
+     * @param content 회고 내용
+     * @return 회고 내용 등록
+     */
+    public Retrospective addRetrospective(final Reservation reservation,
+                                          final String content) {
+        return Retrospective.builder()
+                .reservation(reservation)
+                .content(content)
+                .build();
+    }
+
 }
