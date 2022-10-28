@@ -1,5 +1,6 @@
 package com.codesoom.myseat.domain;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Getter
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Slf4j
 public class User {
