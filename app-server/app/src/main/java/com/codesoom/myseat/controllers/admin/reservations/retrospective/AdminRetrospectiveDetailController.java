@@ -1,7 +1,7 @@
 package com.codesoom.myseat.controllers.admin.reservations.retrospective;
 
 import com.codesoom.myseat.domain.Retrospective;
-import com.codesoom.myseat.dto.RetrospectiveResponse;
+import com.codesoom.myseat.dto.AdminRetrospectiveResponse;
 import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveDetailService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,14 +30,15 @@ public class AdminRetrospectiveDetailController {
      */
     @PreAuthorize("isAuthenticated() and hasAuthority('ADMIN')")
     @RequestMapping("/{id}/retrospectives")
-    public RetrospectiveResponse retrospectives(
+    public AdminRetrospectiveResponse retrospectives(
             @PathVariable(name = "id") final Long id
     ) {
         Retrospective retrospective = service.retrospective(id);
 
-        return RetrospectiveResponse.builder()
+        return AdminRetrospectiveResponse.builder()
                 .id(retrospective.getId())
                 .content(retrospective.getContent())
+                .createdDate(retrospective.getCreatedDate())
                 .build();
     }
 
