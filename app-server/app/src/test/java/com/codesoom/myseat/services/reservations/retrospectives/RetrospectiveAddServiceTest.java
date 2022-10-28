@@ -70,13 +70,14 @@ class RetrospectiveAddServiceTest {
 
         given(reservationRepository.findById(1L))
                 .willReturn(Optional.of(mockReservation));
-        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId()))
-                .willReturn(true);
         given(retrospectiveRepository.save(any()))
                 .willReturn(mockRetrospective);
+        given(reservationRepository.
+                findByIdAndUser_Id(mockReservation.getId(), mockUser.getId()))
+                .willReturn(Optional.of(mockReservation));
 
         Retrospective retrospective =
-                service.createRetrospective(mockUser, 1L, "잘했다.");
+                service.create(mockUser, 1L, "잘했다.");
 
         assertThat(retrospective.getContent()).isEqualTo("잘했다.");
         assertThat(retrospective.getCreatedDate()).isEqualTo(NOW);
@@ -95,7 +96,7 @@ class RetrospectiveAddServiceTest {
         given(reservationRepository.existsByIdAndUser_Id(1000L, mockUser.getId()))
                 .willReturn(false);
 
-        assertThatThrownBy(() -> service.createRetrospective(mockUser, 1000L, "잘했다."))
+        assertThatThrownBy(() -> service.create(mockUser, 1000L, "잘했다."))
                 .isInstanceOf(NotOwnedReservationException.class);
     }
 
@@ -122,13 +123,14 @@ class RetrospectiveAddServiceTest {
 
         given(reservationRepository.findById(1L))
                 .willReturn(Optional.of(mockReservation));
-        given(reservationRepository.existsByIdAndUser_Id(1L, mockUser.getId()))
-                .willReturn(true);
         given(retrospectiveRepository.save(any()))
                 .willReturn(mockRetrospective);
+        given(reservationRepository.
+                findByIdAndUser_Id(mockReservation.getId(), mockUser.getId()))
+                .willReturn(Optional.of(mockReservation));
 
         Retrospective retrospective =
-                service.createRetrospective(mockUser, 1L, "잘했다.");
+                service.create(mockUser, 1L, "잘했다.");
 
         assertThat(retrospective.getReservation().getStatus())
                 .isEqualTo(RETROSPECTIVE_COMPLETE);
