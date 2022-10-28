@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState } from 'react';
 
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
@@ -6,7 +5,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 interface Props {
   title: string;
   message: string;
-  onClick: React.ReactEventHandler;
+  onClick: ()=> void;
 }
 
 export default function AlertDialog({ title, message, onClick }: Props) {
