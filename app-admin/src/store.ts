@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import reservationsReudcer from './redux/reservationsSlice';
+import authSlice from './redux/authSlice';
 
 export const store = configureStore({
   reducer: {
     reservations: reservationsReudcer,
+    auth: authSlice,
   },
 });
 

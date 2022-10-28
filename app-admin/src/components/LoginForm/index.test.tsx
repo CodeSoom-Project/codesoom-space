@@ -4,9 +4,16 @@ import LoginForm from '.';
 
 describe('LoginForm', () => {
   const renderLoginForm = () =>
-    render(
-      <LoginForm/>,
-    );
+    render((
+      <LoginForm
+        handleSubmit={() => {}}
+        onChange={() => {}}
+        fields={{
+          email: '',
+          password: '',
+        }}
+      />
+    ));
 
   it('LoginForm이 렌더링됩니다.', () => {
     const { container } = renderLoginForm();
