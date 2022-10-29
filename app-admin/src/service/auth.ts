@@ -5,7 +5,7 @@ import { LoginFields } from '../redux/authSlice';
 export const postLogin = async ({ email, password }: LoginFields) => {
   const { data } = await httpClient.post('/login', { email, password });
 
-  return data;
+  return data.accessToken;
 };
 
 export const x = () => { };
