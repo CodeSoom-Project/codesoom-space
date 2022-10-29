@@ -1,14 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { AxiosError } from 'axios';
+
 import { AppDispatch, RootState } from './../store';
 
 import { getReservations } from '../service/reservations';
 
-import { Pagination, Reservation } from '../components/ReservationsList/typings';
+import {
+  Pagination,
+  Reservation,
+} from '../components/ReservationsList/typings';
 
 interface ReservationsState {
   pagination: Pagination;
   reservations: Reservation[];
+  errorMessage: string;
 }
 
 export const initialState: ReservationsState = {
@@ -18,6 +24,7 @@ export const initialState: ReservationsState = {
     totalPages: 1,
   },
   reservations: [],
+  errorMessage: '',
 };
 
 const { actions, reducer } = createSlice({
@@ -39,6 +46,10 @@ const { actions, reducer } = createSlice({
       ...state,
       reservations: payload,
     }),
+    setErrorMessage: (state, { payload }) => ({
+      ...state,
+      errorMessage: payload,
+    }),
   },
 });
 
@@ -46,6 +57,7 @@ export const {
   savePagination,
   savePage,
   saveReservations,
+  setErrorMessage,
 } = actions;
 
 export function loadReservations() {
@@ -58,7 +70,17 @@ export function loadReservations() {
       dispatch(savePagination(pagination));
       dispatch(saveReservations(reservations));
     } catch (error) {
-      alert('정보가 없습니다');
+      const status = (error as AxiosError).response?.status;
+
+      if (status === 403) {
+        return dispatch(setErrorMessage('권한이 없습니다.'));
+      }
+
+      if (status === 401) {
+        return dispatch(setErrorMessage('로그인 후 이용해주세요.'));
+      }
+
+      dispatch(setErrorMessage('예기치 못한 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'));
     }
   };
 }
