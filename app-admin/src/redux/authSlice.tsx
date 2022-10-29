@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { postLogin } from '../service/auth';
 import { saveItem } from '../services/storage';
+
 import { AppDispatch, RootState } from '../store';
 
 export interface LoginFields {
@@ -11,6 +13,7 @@ export interface LoginFields {
 interface LoginState {
   loginFields: LoginFields;
   accessToken: string;
+  errorMessage: string;
 }
 
 const initialState: LoginState = {
@@ -19,6 +22,7 @@ const initialState: LoginState = {
     password: '',
   },
   accessToken: '',
+  errorMessage: '',
 };
 
 const { reducer, actions } = createSlice({
@@ -40,26 +44,34 @@ const { reducer, actions } = createSlice({
         accessToken: payload,
       };
     },
+    setErrorMessage: (state, { payload }) => {
+      return {
+        ...state,
+        errorMessage: payload,
+      };
+    },
   },
 });
 
 export const {
   changeLoginField,
   setAccessToken,
+  setErrorMessage,
 } = actions;
 
 export const requestLogin = () => {
   return async (dispatch: AppDispatch, getState: ()=> RootState) => {
     const { loginFields: { email, password } } = getState().auth;
 
-    await postLogin({ email, password })
-      .then(({ accessToken }) => {
-        saveItem('accessToken', accessToken);
+    try {
+      const accessToken = await postLogin({ email, password });
 
-        dispatch(setAccessToken(accessToken));
-      }).catch((error) => {
-        alert(error.response.data);
-      });
+      saveItem('accessToken', accessToken);
+
+      dispatch(setAccessToken(accessToken));
+    } catch (error) {
+      dispatch(setErrorMessage('아이디와 비밀번호를 확인해주세요.'));
+    }
   };
 };
 
