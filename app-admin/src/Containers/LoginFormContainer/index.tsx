@@ -42,11 +42,13 @@ const LoginFormContainer = () => {
     if (accessToken) {
       navigate('reservations');
     }
+  }, [errorMessage, accessToken]);
 
+  useEffect(() => {
     return () => {
       dispatch(setErrorMessage(''));
     };
-  }, [errorMessage, accessToken]);
+  }, [errorMessage]);
 
   return (
     <LoginForm
