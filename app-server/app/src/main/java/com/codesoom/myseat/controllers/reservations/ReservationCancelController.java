@@ -27,9 +27,9 @@ public class ReservationCancelController {
      * 좌석 예약을 취소한 후 상태코드 200을 응답한다.
      *
      * @param principal 회원 인증 정보
-     * @param id 예약 취소할 좌석 번호
+     * @param id        예약 취소할 좌석 번호
      */
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() and hasAuthority('VERIFIED_USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/{id}")
     public void cancelReservation(
@@ -39,5 +39,5 @@ public class ReservationCancelController {
         log.debug("예약 id: {}", id);
         cancelService.cancelReservation(principal.getId(), id);
     }
-    
+
 }

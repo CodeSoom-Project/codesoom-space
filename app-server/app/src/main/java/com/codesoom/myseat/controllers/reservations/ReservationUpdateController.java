@@ -31,11 +31,11 @@ public class ReservationUpdateController {
      * 예약 수정 정보를 받아 수정합니다.
      *
      * @param principal 요청한 회원의 인증 정보
-     * @param id 수정할 예약의 id
-     * @param request 수정 데이터
+     * @param id        수정할 예약의 id
+     * @param request   수정 데이터
      * @throws CannotUpdateCanceledReservationException 취소된 예약을 수정하려고 하면 던집니다.
      */
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() and hasAuthority('VERIFIED_USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void updateReservation(@AuthenticationPrincipal UserAuthentication principal,

@@ -25,7 +25,7 @@ public class ReservationAddController {
     private final UserService userService;
 
     public ReservationAddController(
-            ReservationAddService reservationAddService, 
+            ReservationAddService reservationAddService,
             UserService userService
     ) {
         this.reservationAddService = reservationAddService;
@@ -34,14 +34,14 @@ public class ReservationAddController {
 
     /**
      * 좌석을 예약하고 상태 코드 204를 응답합니다.
-     * 
+     *
      * @param request 예약 폼에 입력된 데이터
      * @throws AlreadyReservedException 방문 일자에 대한 예약 내역이 이미 존재하면 던집니다.
-     * @throws ContentTooLongException 계획의 길이가 너무 길면 던집니다.
+     * @throws ContentTooLongException  계획의 길이가 너무 길면 던집니다.
      */
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() and hasAuthority('VERIFIED_USER')")
     public void reserve(
             @AuthenticationPrincipal UserAuthentication principal,
             @RequestBody ReservationRequest request
