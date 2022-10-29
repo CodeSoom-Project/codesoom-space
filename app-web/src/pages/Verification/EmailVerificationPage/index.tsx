@@ -18,6 +18,8 @@ import { get } from '../../../utils';
 
 import { saveError } from '../../../redux/verificationSlice';
 
+import Layout from '../../../layouts/Layout';
+
 import AlertDialog from '../../../components/verification/Dialog';
 
 const StyledBox = styled(Box)({
@@ -53,39 +55,49 @@ export default function EmailVerificationPage() {
     });
 
   useEffect(() => {
-    return () => {
-      verificationMutate(token);
-    };
+    verificationMutate(token);
   }, []);
 
   if (isLoading) {
     return (
-      <StyledBox>
-        <CircularProgress/>
-      </StyledBox>
+      <Layout>
+        <StyledBox>
+          <CircularProgress/>
+        </StyledBox>
+      </Layout>
     );
   }
 
   if (isSuccess) {
     return (
-      <AlertDialog
-        title="이메일 인증 완료"
-        message={`이메일 알림 인증을 완료했습니다.
+      <Layout>
+        <AlertDialog
+          title="이메일 인증 완료"
+          message={`이메일 알림 인증을 완료했습니다.
              계획/회고 미작성시 이메일이 발송됩니다.`}
-        onClick={handleClick}
-      />
+          onClick={handleClick}
+        />
+      </Layout>
     );
   }
 
   if (isError) {
     return (
-      <AlertDialog
-        title="이메일 인증 실패"
-        message={verificationError}
-        onClick={handleClick}
-      />
+      <Layout>
+        <AlertDialog
+          title="이메일 인증 실패"
+          message={verificationError}
+          onClick={handleClick}
+        />
+      </Layout>
     );
   }
 
-  return <></>;
+  return (
+    <Layout>
+      <StyledBox>
+        <CircularProgress/>
+      </StyledBox>
+    </Layout>
+  );
 }
