@@ -1,8 +1,14 @@
 import { useEffect } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
-import { loadReservations, savePage } from '../../redux/reservationsSlice';
+import {
+  loadReservations,
+  savePage,
+  setErrorMessage,
+} from '../../redux/reservationsSlice';
 
 import ReservationsList from '../../components/ReservationsList';
 
@@ -16,11 +22,13 @@ import {
 } from '../../redux/retrospectivesSlice';
 
 export default function ReserVationsContainer() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const {
     pagination,
     reservations,
+    errorMessage,
   } = useAppSelector((store) => store.reservations);
 
   const {
@@ -40,13 +48,26 @@ export default function ReserVationsContainer() {
     dispatch(loadRetrospectives(id));
   };
 
+  const modalHandler = () => {
+    dispatch(toggleRetrospectivesModal());
+  };
+
   useEffect(() => {
     dispatch(loadReservations());
   }, [page]);
 
-  const modalHandler = () => {
-    dispatch(toggleRetrospectivesModal());
-  };
+  useEffect(() => {
+    if (errorMessage) {
+      alert(errorMessage);
+      navigate('/');
+    }
+  }, [errorMessage]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setErrorMessage(''));
+    };
+  }, [errorMessage]);
 
   return (
     <>
