@@ -3,6 +3,7 @@ package com.codesoom.myseat.controllers.reservations;
 import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
+import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.exceptions.InvalidTokenException;
 import com.codesoom.myseat.exceptions.ReservationNotFoundException;
 import com.codesoom.myseat.services.auth.AuthenticationService;
@@ -24,6 +25,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
@@ -36,6 +39,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ReservationDetailController.class)
 class ReservationDetailControllerTest {
 
+    private static final Role VERIFIED_USER_ROLE
+            = new Role(1L, 1L, "VERIFIED_USER");
+    
     private static final String ACCESS_TOKEN
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
@@ -66,6 +72,9 @@ class ReservationDetailControllerTest {
                 .apply(springSecurity())
                 .alwaysDo(print())
                 .build();
+
+        given(authService.roles(any()))
+                .willReturn(List.of(VERIFIED_USER_ROLE));
     }
 
     @DisplayName("주어진 예약 id로 예약 정보를 찾을 수 있으면 예약 정보를 응답한다.")

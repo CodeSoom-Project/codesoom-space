@@ -10,7 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DateTest {
 
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter DATE_FORMAT
+            = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @DisplayName("Date의 date 문자열이 동일하면 equals의 결과가 true이다.")
     @Test

@@ -2,6 +2,7 @@ package com.codesoom.myseat.controllers.reservations.retrospectives;
 
 import com.codesoom.myseat.domain.Plan;
 import com.codesoom.myseat.domain.Reservation;
+import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
 import com.codesoom.myseat.services.auth.AuthenticationService;
@@ -10,6 +11,7 @@ import com.codesoom.myseat.services.reservations.retrospectives.RetrospectiveAdd
 import com.codesoom.myseat.services.users.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,23 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest(RetrospectiveAddController.class)
 class RetrospectiveAddControllerTest {
+
+    private static final Role VERIFIED_USER_ROLE
+            = new Role(1L, 1L, "VERIFIED_USER");
 
     private static final String ACCESS_TOKEN
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
@@ -43,12 +55,28 @@ class RetrospectiveAddControllerTest {
 
     @MockBean
     private RetrospectiveAddService retrospectiveAddService;
-    
+
     @MockBean
     private ReservationAddService reservationAddService;
 
     @MockBean
     private UserService userService;
+
+    @Autowired
+    private WebApplicationContext context;
+
+    @BeforeEach
+    void setUp() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                .addFilters(new CharacterEncodingFilter(
+                        "UTF-8", true))
+                .apply(springSecurity())
+                .alwaysDo(print())
+                .build();
+
+        given(authService.roles(any()))
+                .willReturn(List.of(VERIFIED_USER_ROLE));
+    }
 
     @Test
     @DisplayName("POST /retrospectives 요청 시 상태코드 204를 응답한다")
@@ -59,12 +87,12 @@ class RetrospectiveAddControllerTest {
                 .email("soo@email.com")
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
-        
+
         Plan mockPlan = Plan.builder()
                 .id(2L)
                 .content("밥먹기, 코테풀기")
                 .build();
-        
+
         Reservation mockReservation = Reservation.builder()
                 .id(3L)
                 .user(mockUser)

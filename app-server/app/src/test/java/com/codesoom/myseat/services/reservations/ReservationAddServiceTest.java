@@ -2,6 +2,7 @@ package com.codesoom.myseat.services.reservations;
 
 import com.codesoom.myseat.domain.Date;
 import com.codesoom.myseat.domain.Reservation;
+import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.enums.ReservationStatus;
 import com.codesoom.myseat.exceptions.AlreadyReservedException;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 
 class ReservationAddServiceTest {
+
     private ReservationAddService service;
 
     @Mock
@@ -30,11 +32,11 @@ class ReservationAddServiceTest {
 
     @Mock
     private PlanRepository planRepo;
-    
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        
+
         service = new ReservationAddService(planRepo, reservationRepo);
     }
 
@@ -60,12 +62,13 @@ class ReservationAddServiceTest {
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
 
-        given(reservationRepo.existsByDateAndUser_IdAndStatusNot(new Date("2022-10-11"), 1L, ReservationStatus.CANCELED))
+        given(reservationRepo.existsByDateAndUser_IdAndStatusNot(
+                getReservableDate(), 1L, ReservationStatus.CANCELED))
                 .willReturn(false);
 
         Reservation reservation
                 = service.createReservation(mockUser, date.getDate(), "책읽기, 코테 풀기");
-        
+
         assertThat(reservation.getUser().getEmail()).isEqualTo("soo@email.com");
         assertThat(reservation.getDate()).isEqualTo(date);
         assertThat(reservation.getPlan().getContent()).isEqualTo("책읽기, 코테 풀기");
@@ -82,7 +85,7 @@ class ReservationAddServiceTest {
                 .email("soo@email.com")
                 .password("$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW")
                 .build();
-        
+
         Reservation mockReservation = Reservation.builder()
                 .id(2L)
                 .date(date)
@@ -90,16 +93,18 @@ class ReservationAddServiceTest {
                 .user(mockUser)
                 .build();
 
-        given(reservationRepo.existsByDateAndUser_IdAndStatusNot(date, 1L, ReservationStatus.CANCELED))
+        given(reservationRepo.existsByDateAndUser_IdAndStatusNot(
+                date, 1L, ReservationStatus.CANCELED))
                 .willReturn(true);
-        
+
         given(reservationRepo.findByDateAndUser_Id(date, 1L))
                 .willReturn(Optional.of(mockReservation));
-         
-        assertThatThrownBy(() -> service.createReservation(mockUser, date.getDate(), "책읽기, 코테 풀기"))
+
+        assertThatThrownBy(() -> service.createReservation(
+                mockUser, date.getDate(), "책읽기, 코테 풀기"))
                 .isInstanceOf(AlreadyReservedException.class);
     }
-    
+
     @Test
     @DisplayName("해당 방문 일자의 예약이 존재하지만 취소된 예약이면 생성된 Reservation을 반환한다.")
     void If_date_that_already_reserved_but_canceled_given_It_returns_reservation() {

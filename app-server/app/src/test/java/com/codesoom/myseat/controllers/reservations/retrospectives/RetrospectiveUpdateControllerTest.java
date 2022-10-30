@@ -2,6 +2,7 @@ package com.codesoom.myseat.controllers.reservations.retrospectives;
 
 import com.codesoom.myseat.domain.Reservation;
 import com.codesoom.myseat.domain.Retrospective;
+import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.RetrospectiveRequest;
 import com.codesoom.myseat.exceptions.NotOwnedReservationException;
@@ -21,6 +22,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -32,6 +35,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(RetrospectiveUpdateController.class)
 class RetrospectiveUpdateControllerTest {
+
+    private static final Role VERIFIED_USER_ROLE
+            = new Role(1L, 1L, "VERIFIED_USER");
 
     @Autowired
     private MockMvc mockMvc;
@@ -71,6 +77,9 @@ class RetrospectiveUpdateControllerTest {
                 .user(mockUser)
                 .retrospective(mockRetrospective)
                 .build();
+        
+        given(authService.roles(any()))
+                .willReturn(List.of(VERIFIED_USER_ROLE));
 
         given(userService.findById(1L)).willReturn(mockUser);
 

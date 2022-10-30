@@ -32,18 +32,19 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doReturn;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ReservationListController.class)
 class ReservationListControllerTest {
+
+    private static final Role VERIFIED_USER_ROLE
+            = new Role(1L, 1L, "VERIFIED_USER");
 
     private static final String ACCESS_TOKEN
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
@@ -75,6 +76,9 @@ class ReservationListControllerTest {
                 .apply(springSecurity())
                 .alwaysDo(print())
                 .build();
+
+        given(authService.roles(any()))
+                .willReturn(List.of(VERIFIED_USER_ROLE));
     }
 
     @DisplayName("요청한 유저의 모든 예약 목록을 응답한다.")

@@ -1,6 +1,7 @@
 package com.codesoom.myseat.controllers.verification.email;
 
 import com.codesoom.myseat.domain.EmailToken;
+import com.codesoom.myseat.domain.Role;
 import com.codesoom.myseat.services.auth.AuthenticationService;
 import com.codesoom.myseat.services.verification.email.EmailVerificationRequestService;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -27,6 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(EmailVerificationController.class)
 class EmailVerificationControllerTest {
+
+    private static final Role VERIFIED_USER_ROLE
+            = new Role(1L, 1L, "VERIFIED_USER");
 
     private static final String ACCESS_TOKEN
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
@@ -56,6 +63,9 @@ class EmailVerificationControllerTest {
                 .apply(springSecurity())
                 .alwaysDo(print())
                 .build();
+
+        given(authService.roles(any()))
+                .willReturn(List.of(VERIFIED_USER_ROLE));
     }
 
     @DisplayName("이메일 인증 요청이 성공적으로 이루어지면 202 accepted를 반환한다.")
@@ -64,9 +74,9 @@ class EmailVerificationControllerTest {
         given(service.requestEmailVerification(anyLong()))
                 .willReturn(EmailToken.createEmailToken(1L));
         mockMvc.perform(
-                post("/verification/email"))
+                        post("/verification/email"))
                 .andExpect(
-                status().isAccepted());
+                        status().isAccepted());
     }
 
 }

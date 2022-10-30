@@ -49,7 +49,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ReservationAddController.class)
 class ReservationAddControllerTest {
 
-    private static final String ACCESS_TOKEN 
+    private static final Role VERIFIED_USER_ROLE
+            = new Role(1L, 1L, "VERIFIED_USER");
+
+    private static final String ACCESS_TOKEN
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
     @Autowired
@@ -57,10 +60,10 @@ class ReservationAddControllerTest {
 
     @MockBean
     private AuthenticationService authService;
-    
+
     @MockBean
     private UserService userService;
-    
+
     @MockBean
     private ReservationAddService reservationAddService;
 
@@ -87,7 +90,7 @@ class ReservationAddControllerTest {
     }
 
     Date getNotReservableDate() {
-        LocalDate notReservableDate =  LocalDate.now().minusDays(1);
+        LocalDate notReservableDate = LocalDate.now().minusDays(1);
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return new Date(notReservableDate.format(dateFormat));
     }
@@ -104,6 +107,9 @@ class ReservationAddControllerTest {
                 .apply(springSecurity())
                 .alwaysDo(print())
                 .build();
+
+        given(authService.roles(any()))
+                .willReturn(List.of(VERIFIED_USER_ROLE));
     }
 
     @Test
@@ -147,8 +153,8 @@ class ReservationAddControllerTest {
                 .willThrow(AlreadyReservedException.class);
 
         mockMvc.perform(post("/reservations")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(request)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(request)))
                 .andExpect(status().isBadRequest());
     }
 
