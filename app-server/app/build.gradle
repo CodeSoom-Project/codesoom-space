@@ -5,9 +5,6 @@ plugins {
     // Spring
     id 'org.springframework.boot' version '2.3.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-
-    // Asciidoctor
-    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 repositories {
@@ -20,11 +17,6 @@ configurations {
     runtimeClasspath {
         extendsFrom developmentOnly
     }
-    asciidoctorExtensions
-}
-
-ext {
-    snippetsDir = file('build/generated-snippets')
 }
 
 dependencies {
@@ -61,9 +53,6 @@ dependencies {
     // Spring REST Docs
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
-    // Asciidoctor
-    asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
-
     // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -86,20 +75,5 @@ application {
 }
 
 test {
-    outputs.dir snippetsDir
     useJUnitPlatform()
-}
-
-asciidoctor {
-    configurations 'asciidoctorExtensions'
-    inputs.dir snippetsDir
-    dependsOn test
-}
-
-bootJar {
-    dependsOn asciidoctor
-    copy {
-        from "${asciidoctor.outputDir}"
-        into 'src/main/resources/static/docs'
-    }
 }

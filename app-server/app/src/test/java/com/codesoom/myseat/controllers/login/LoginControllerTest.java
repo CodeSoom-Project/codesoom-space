@@ -1,6 +1,5 @@
 package com.codesoom.myseat.controllers.login;
 
-import com.codesoom.myseat.controllers.login.LoginController;
 import com.codesoom.myseat.domain.User;
 import com.codesoom.myseat.dto.LoginRequest;
 import com.codesoom.myseat.services.auth.AuthenticationService;
@@ -14,25 +13,15 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LoginController.class)
-@AutoConfigureRestDocs(
-        uriScheme = "https", 
-        uriHost = "api.codesoom-myseat.site"
-)
 class LoginControllerTest {
     private static final Long ID = 1L;
     private static final String NAME = "테스터";
@@ -41,7 +30,7 @@ class LoginControllerTest {
     private static final String ENCODED_PASSWORD
             = "$2a$10$hxqWrlGa7SQcCEGURjmuQup4J9kN6qnfr4n7j7R3LvzHEoEOUTWeW";
 
-    private static final String ACCESS_TOKEN 
+    private static final String ACCESS_TOKEN
             = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.ZZ3CUl0jxeLGvQ1Js5nG2Ty5qGTlqai5ubDMXZOdaDk";
 
     @Autowired
@@ -84,20 +73,6 @@ class LoginControllerTest {
         subject.andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken").value(ACCESS_TOKEN))
                 .andExpect(jsonPath("$.name").value(NAME));
-
-        // docs
-        subject.andDo(document("login",
-                preprocessRequest(prettyPrint()),
-                preprocessResponse(prettyPrint()),
-                requestFields(
-                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
-                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
-                ),
-                responseFields(
-                        fieldWithPath("accessToken").type(JsonFieldType.STRING).description("토큰"),
-                        fieldWithPath("name").type(JsonFieldType.STRING).description("회원 이름")
-                )
-        ));
     }
 
     private String toJson(
