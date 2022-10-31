@@ -1,9 +1,9 @@
 const columns = [{
   id: 1,
-  label: '이름',
+  label: '에약 날짜',
 }, {
   id: 2,
-  label: '예약 날짜',
+  label: '이름',
 }, {
   id: 3,
   label: '계획',

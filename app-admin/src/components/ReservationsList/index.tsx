@@ -94,12 +94,14 @@ export default function ReservationsList({
                     backgroundcolor={backgroundColor}
                     color={color}
                   >
-                    <TableCell align="center">{name}</TableCell>
-                    <TableCell align="center">{date}</TableCell>
-                    <TableCell align="center">
+                    <TableCell sx={{ width: '20%' }} align="center">{date}</TableCell>
+                    <TableCell sx={{ width: '10%' }} align="center">{name}</TableCell>
+                    <TableCell sx={{ width: '60%' }} align="center">
                       <Button disabled={canceled} >{content}</Button>
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell
+                      sx={{ width: '10%' }}
+                      align="center">
                       <Button
                         onClick={() => onClick(id)}
                         disabled={waiting || canceled}
