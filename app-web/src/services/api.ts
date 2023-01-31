@@ -8,7 +8,13 @@ import { SignUpFormData, User } from '../typings/auth';
 
 import { setTokenExpired } from '../redux/authSlice';
 
-const BASE_URL = 'https://api.codesoom-myseat.site';
+let BASE_URL = '';
+
+if (import.meta.env.MODE === 'development') {
+  BASE_URL = 'http://localhost:8080';
+} else {
+  BASE_URL = 'https://api.codesoom-myseat.site';
+}
 
 export const httpClient = axios.create({
   baseURL: BASE_URL,
