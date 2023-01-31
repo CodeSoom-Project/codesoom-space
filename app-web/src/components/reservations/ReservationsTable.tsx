@@ -161,7 +161,7 @@ export default function ReservationsTable({
 
   const { mutate: cancelReservationMutate } = useMutation(cancelReservation, {
     onSuccess: () => {
-      alert('예약이 취소되셨습니다.');
+      alert('예약이 취소되었습니다.');
     },
     onError: (error: AxiosError) => {
       alert(error.response?.data);
@@ -231,7 +231,7 @@ export default function ReservationsTable({
       <StyledTable>
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">계획 일자</StyledTableCell>
+            <StyledTableCell align="center">방문 일자</StyledTableCell>
             <StyledTableCell align="center">계획 내용</StyledTableCell>
             <StyledTableCell align="center">회고 상세보기</StyledTableCell>
             <StyledTableCell align="center">계획 상세보기</StyledTableCell>
