@@ -80,7 +80,7 @@ export default function Reservations() {
 
   const { mutate: reservationMutate, isLoading: reservationIsLoading } = useMutation(fetchReservation, {
     onSuccess: () => {
-      alert('예약이 신청되셨습니다.');
+      alert('예약이 완료되었습니다.');
       onClickToggleReservationsModal();
     },
     onError: (error: AxiosError) => {
