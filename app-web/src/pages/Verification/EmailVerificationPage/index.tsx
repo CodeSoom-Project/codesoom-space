@@ -53,9 +53,7 @@ export default function EmailVerificationPage() {
     });
 
   useEffect(() => {
-    return () => {
       verificationMutate(token);
-    };
   }, []);
 
   if (isLoading) {
