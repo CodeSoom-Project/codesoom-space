@@ -72,7 +72,7 @@ docker-compose down
 
 ### 1. 의존성 목록 설치
 ```bash
-npm ci -f
+npm ci
 ```
 
 ### 2. 서버 실행
